@@ -4,6 +4,7 @@ return [
     "Menu" => "Menu",
     "Dashboard" => "Dashboard",
     "Apps" => "Apps",
+    "Master" => "Master",
     "Calendar" => "Calendar",
     "Chat" => "Chat",
     "Email" => "Email",
