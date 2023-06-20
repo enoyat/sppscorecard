@@ -10,13 +10,13 @@
                 <li class="menu-title" data-key="t-menu">@lang('translation.Menu')</li>
 
                 <li>
-                    <a href="index">
+                    <a href="{{ route('root') }}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">@lang('translation.Dashboard')</span>
                     </a>
                 </li>
                 <li>
-                    <a href="layouts-horizontal">
+                    <a href="{{ route('delivery.index') }}">
                     <i class="fas fa-car-side"></i> 
                         <span data-key="t-horizontal">Delivery Schedule</span>
                     </a>
