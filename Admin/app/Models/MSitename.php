@@ -19,4 +19,8 @@ class MSitename extends Model
     //protected $keyType = 'string';
 
     protected $guarded = [];
+    public function getregion()
+    {
+        return $this->belongsTo(MRegion::class,'idregion','id');
+    }
 }

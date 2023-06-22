@@ -19,4 +19,16 @@ class MDelivery extends Model
     //protected $keyType = 'string';
 
     protected $guarded = [];
+    public function getcbu(){
+        return $this->belongsTo(MCbu::class,'idcbu','id');
+    }
+    public function getregion(){
+        return $this->belongsTo(MRegion::class,'idregion','id');
+    }   
+    public function getsitename(){
+        return $this->belongsTo(MSitename::class,'idsitename','id');
+    }
+    public function getforklifttype(){
+        return $this->belongsTo(MForklifttype::class,'idforklifttype','id');
+    }
 }

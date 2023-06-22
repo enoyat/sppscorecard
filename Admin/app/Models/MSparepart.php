@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MRegion extends Model
+class MSparepart extends Model
 {
 
     use HasFactory;
-    protected $table = 'region';
+    protected $table = 'sparepart';
 
     #kalau kolom primary keynya bernama id, maka baris dibawah ini boleh diisi, dan boleh juga tidak buat
     protected $primaryKey = 'id';
@@ -18,9 +18,4 @@ class MRegion extends Model
     // In Laravel 6.0+ make sure to also set $keyType
     //protected $keyType = 'string';
 
-    protected $guarded = [];
-    public function getcbu()
-    {
-        return $this->belongsTo(MCbu::class,'idcbu','id');
-    }
 }

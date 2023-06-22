@@ -6,7 +6,7 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Forms @endslot
-@slot('title') Create Delivery @endslot
+@slot('title') Create Sparepart Stock @endslot
 @endcomponent
 
 
@@ -14,11 +14,11 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Form Delivery</h4>
+                <h4 class="card-title">Form Sparepart Stok</h4>
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('delivery.store') }}" method="POST">
+                <form action="{{ route('sparepartstok.store') }}" method="POST">
                     <div class="row">
                         @if ($message = Session::get('success'))
                         <div class="alert alert-success">
@@ -40,7 +40,7 @@
                         @csrf
                         <div class="col-lg-6">
                             <div>
-                                <div class="mb-3">
+                            <div class="mb-3">
                                     <label for="example-text-input" class="form-label">CBU</label>
                                     <select class="form-select" aria-label="Default select example" name="idcbu"
                                         id="idcbu">
@@ -68,55 +68,35 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Serial Number</label>
-                                    <input class="form-control" type="text" value="" name="serialnumber"
-                                        id="serialnumber">
+                                    <label for="example-password-input" class="form-label">Nama Spare Part</label>
+                                    <input class="form-control" type="text" value="" name="namasparepart" id="namasparepart">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-url-input" class="form-label">Forklif Type</label>
-                                    <select class="form-select" aria-label="Default select example" name="idforklifttype"
-                                        id="idforklifttype">
-                                        <option value="" selected>select</option>
-                                        @foreach ($forklifttype as $itemforklifttype)
-                                        <option value="{{ $itemforklifttype->id }}">{{ $itemforklifttype->namaforklifttype }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="example-date-input" class="form-label">Qty</label>
+                                    <input class="form-control" type="text" value="" name="qty" id="qty">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-tel-input" class="form-label">Capacity</label>
-                                    <input class="form-control" type="tel" value="" name="capacity"
-                                        id="capacity">
+                                    <label for="example-date-input" class="form-label">Uom</label>
+                                    <input class="form-control" type="text" value="" name="uom" id="uom">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Mas Height (m)</label>
-                                    <input class="form-control" type="text" value="" name="masheight"
-                                        id="masheight">
-                                </div>
+                                
 
 
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="mt-3 mt-lg-0">
-                                <div class="mb-3">
-                                    <label for="example-date-input" class="form-label">Estimated Delivery</label>
-                                    <input class="form-control" type="date" value="" name="dateestimated"
-                                        id="dateestimated">
+                            <div class="mb-3">
+                                    <label for="example-month-input" class="form-label">Tanggal</label>
+                                    <input class="form-control" type="date" value="" name="tanggal" id="tanggal">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="example-month-input" class="form-label">Reason of Lapse</label>
-                                    <input class="form-control" type="text" value="" name="reason" id="reason">
+                            <div class="mb-3">
+                                    <label for="example-month-input" class="form-label">Qty (Uom)</label>
+                                    <input class="form-control" type="text" value="" name="qtyuom" id="qtyuom">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="example-week-input" class="form-label">Mitigation Plant</label>
-                                    <input class="form-control" type="date" value="" name="mitigationplan"
-                                        id="mitigationplan">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-time-input" class="form-label">Actual Delivery</label>
-                                    <input class="form-control" type="date" value="" name="dateactual"
-                                        id="dateactual">
+                            <div class="mb-3">
+                                    <label for="example-week-input" class="form-label">Stock (%)</label>
+                                    <input class="form-control" type="text" value="" name="stokprosentase" id="stokprosentase">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-color-input" class="form-label">Confirmation by Plant</label>
@@ -124,22 +104,10 @@
                                         id="confirmationplan">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Status SPP</label>
-                                    <select class="form-select" name="statusspp" id="statusspp">
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
+                                    <label for="example-color-input" class="form-label">Average</label>
+                                    <input class="form-control" type="text" value="" name="average" id="average">
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status Customer</label>
-                                    <select class="form-select" name="statuscustomer" id="statuscustomer">
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
-                                </div>
-
+                                
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
@@ -148,6 +116,7 @@
                             </div>
                         </div>
 
+                        
                     </div>
                 </form>
             </div>
@@ -208,9 +177,5 @@
     });
     });
 </script>
-
-
-
-
 
 @endsection

@@ -6,7 +6,7 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Forms @endslot
-@slot('title') Create Delivery @endslot
+@slot('title') Update maintenance @endslot
 @endcomponent
 
 
@@ -14,11 +14,12 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Form Delivery</h4>
+                <h4 class="card-title">Form maintenance</h4>
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('delivery.store') }}" method="POST">
+                <form action="{{ route('maintenance.update',$maintenance->id) }}" method="POST">
+                    @method('PUT')
                     <div class="row">
                         @if ($message = Session::get('success'))
                         <div class="alert alert-success">
@@ -44,7 +45,8 @@
                                     <label for="example-text-input" class="form-label">CBU</label>
                                     <select class="form-select" aria-label="Default select example" name="idcbu"
                                         id="idcbu">
-                                        <option value="" selected>select</option>
+                                        <option value="{{ $maintenance->idcbu }}" selected>{{ $maintenance->getcbu->namacbu }}</option>
+                                        <option value="" >select</option>
                                         @foreach ($cbu as $itemcbu)
                                         <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
                                         @endforeach
@@ -53,9 +55,10 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Region</label>
+                                    
                                     <select class="form-select" aria-label="Default select example" name="idregion"
                                         id="idregion">
-
+                                        <option value="{{ $maintenance->idregion }}">{{ $maintenance->getregion->namaregion }}</option>
                                     </select>
 
                                 </div>
@@ -63,69 +66,25 @@
                                     <label for="example-text-input" class="form-label">Site Name</label>
                                     <select class="form-select" aria-label="Default select example" name="idsitename"
                                         id="idsitename">
-
+                                        <option value="{{ $maintenance->idsitename }}">{{ $maintenance->getsitename->namasitename }}</option>
                                     </select>
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Serial Number</label>
-                                    <input class="form-control" type="text" value="" name="serialnumber"
-                                        id="serialnumber">
+                                    <label for="example-password-input" class="form-label">Kode Unit</label>
+                                    <input class="form-control" type="text" value="{{ $maintenance->kdunit }}" name="kdunit"
+                                        id="kdunit">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-url-input" class="form-label">Forklif Type</label>
-                                    <select class="form-select" aria-label="Default select example" name="idforklifttype"
-                                        id="idforklifttype">
-                                        <option value="" selected>select</option>
-                                        @foreach ($forklifttype as $itemforklifttype)
-                                        <option value="{{ $itemforklifttype->id }}">{{ $itemforklifttype->namaforklifttype }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="example-time-input" class="form-label">Tanggal</label>
+                                    <input class="form-control" type="date" value="{{ $maintenance->tanggal }}" name="tanggal"
+                                        id="tanggal">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="example-tel-input" class="form-label">Capacity</label>
-                                    <input class="form-control" type="tel" value="" name="capacity"
-                                        id="capacity">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Mas Height (m)</label>
-                                    <input class="form-control" type="text" value="" name="masheight"
-                                        id="masheight">
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="mt-3 mt-lg-0">
-                                <div class="mb-3">
-                                    <label for="example-date-input" class="form-label">Estimated Delivery</label>
-                                    <input class="form-control" type="date" value="" name="dateestimated"
-                                        id="dateestimated">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-month-input" class="form-label">Reason of Lapse</label>
-                                    <input class="form-control" type="text" value="" name="reason" id="reason">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-week-input" class="form-label">Mitigation Plant</label>
-                                    <input class="form-control" type="date" value="" name="mitigationplan"
-                                        id="mitigationplan">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-time-input" class="form-label">Actual Delivery</label>
-                                    <input class="form-control" type="date" value="" name="dateactual"
-                                        id="dateactual">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-color-input" class="form-label">Confirmation by Plant</label>
-                                    <input class="form-control" type="text" value="" name="confirmationplan"
-                                        id="confirmationplan">
-                                </div>
-                                <div class="mb-3">
+                               
+                             <div class="mb-3">
                                     <label class="form-label">Status SPP</label>
                                     <select class="form-select" name="statusspp" id="statusspp">
+                                    <option value="{{ $maintenance->statusspp }}">{{ $maintenance->statusspp }}</option>
                                         <option value="">Select</option>
                                         <option value="OPEN">OPEN</option>
                                         <option value="CLOSE">CLOSE</option>
@@ -134,17 +93,16 @@
                                 <div class="mb-3">
                                     <label class="form-label">Status Customer</label>
                                     <select class="form-select" name="statuscustomer" id="statuscustomer">
+                                    <option value="{{ $maintenance->statuscustomer }}">{{ $maintenance->statuscustomer }}</option>
                                         <option value="">Select</option>
                                         <option value="OPEN">OPEN</option>
                                         <option value="CLOSE">CLOSE</option>
                                     </select>
                                 </div>
-
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
                                 </div>
-
                             </div>
                         </div>
 

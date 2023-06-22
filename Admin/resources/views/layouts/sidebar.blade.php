@@ -22,22 +22,37 @@
                     </a>
                 </li>
                 <li>
-                    <a href="layouts-horizontal">
+                    <a href="{{ route('maintenance.index') }}">
                         <i class=" fas fa-cogs"></i>
                         <span data-key="t-horizontal">Maintenance</span>
                     </a>
                 </li>               
                 <li>
-                    <a href="layouts-horizontal">
+                    <a href="{{ route('physical.index') }}">
                         <i class=" fas fa-coins"></i>
                         <span data-key="t-horizontal">Phisical Availibility</span>
                     </a>
                 </li>
                 <li>
-                    <a href="layouts-horizontal">
-                        <i class="fas fa-cube"></i>
-                        <span data-key="t-horizontal">Sparepart</span>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Sparepart</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('sparepart.index') }}">
+                                <span data-key="t-calendar">Master Sparepart</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('sparepartstok.index') }}">
+                                <span data-key="t-chat">Spare Part Stok</span>
+                            </a>
+                        </li>
+                        
+                        
+                    </ul>
                 </li>
                 <li>
                     <a href="layouts-horizontal">

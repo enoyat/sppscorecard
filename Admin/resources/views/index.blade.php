@@ -4,18 +4,16 @@
 
 @section('css')
 
-<link href="{{ URL::asset('build/libs/jquery-vectormap/jquery-vectormap.min.css') }}" rel="stylesheet"
-    type="text/css" />
+<link href="{{ URL::asset('build/libs/jquery-vectormap/jquery-vectormap.min.css') }}" rel="stylesheet" type="text/css" />
 <!-- glightbox css -->
 <link rel="stylesheet" href="{{ URL::asset('build/libs/glightbox/css/glightbox.min.css') }}">
-    <!-- DataTables -->
-    <link href="{{ URL::asset('build/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    {{-- <link href="{{ URL::asset('build/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}"
-        rel="stylesheet" type="text/css" />
+<!-- DataTables -->
+<link href="{{ URL::asset('build/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+{{-- <link href="{{ URL::asset('build/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}"
+rel="stylesheet" type="text/css" />
 
-    <!-- Responsive datatable examples -->
-    <link href="{{ URL::asset('build/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
-        rel="stylesheet" type="text/css" /> --}}
+<!-- Responsive datatable examples -->
+<link href="{{ URL::asset('build/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" /> --}}
 
 @endsection
 
@@ -28,56 +26,56 @@
 @slot('title') Dashboard @endslot
 @endcomponent
 <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">KPI Dashboard</h4>
-                    
-                </div>
-                <div class="card-body">
-                    <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
-                        <thead>
-                            <tr>
-                                <th>Site Name</th>
-                                <th>Total Hour Availability</th>
-                                <th>Target Hour Availability</th>
-                                <th>Achievement</th>
-                            </tr>
-                        </thead>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">KPI Dashboard</h4>
 
-
-                        <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                            </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                            </tr>
-                            <tr>
-                                <td>Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td>Edinburgh</td>
-                                <td>22</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
-            <!-- end cardaa -->
-        </div> <!-- end col -->
-    </div> <!-- end row -->
+            <div class="card-body">
+                <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+                    <thead>
+                        <tr>
+                            <th>Site Name</th>
+                            <th>Total Hour Availability</th>
+                            <th>Target Hour Availability</th>
+                            <th>Achievement</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        <tr>
+                            <td>Tiger Nixon</td>
+                            <td>System Architect</td>
+                            <td>Edinburgh</td>
+                            <td>61</td>
+                        </tr>
+                        <tr>
+                            <td>Garrett Winters</td>
+                            <td>Accountant</td>
+                            <td>Tokyo</td>
+                            <td>63</td>
+                        </tr>
+                        <tr>
+                            <td>Ashton Cox</td>
+                            <td>Junior Technical Author</td>
+                            <td>San Francisco</td>
+                            <td>66</td>
+                        </tr>
+                        <tr>
+                            <td>Cedric Kelly</td>
+                            <td>Senior Javascript Developer</td>
+                            <td>Edinburgh</td>
+                            <td>22</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- end cardaa -->
+    </div> <!-- end col -->
+</div> <!-- end row -->
 
 
 
@@ -98,26 +96,26 @@
 
 <!-- lightbox init -->
 <script src="{{ URL::asset('build/js/pages/lightbox.init.js') }}"></script>
-    <!-- Required datatable js -->
-    <script src="{{ URL::asset('build/libs/datatables/datatables.min.js') }}"></script>
-    {{-- <script src="{{ URL::asset('build/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script> --}}
+<!-- Required datatable js -->
+<script src="{{ URL::asset('build/libs/datatables/datatables.min.js') }}"></script>
+{{-- <script src="{{ URL::asset('build/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script> --}}
 
-    <!-- Buttons examples -->
-    {{-- <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script> --}}
-    <script src="{{ URL::asset('build/libs/jszip/jszip.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/pdfmake/build/pdfmake.min.js') }}"></script>
-    {{-- <script src="{{ URL::asset('build/libs/pdfmake/vfs_fonts.js') }}"></script> --}}
-    {{-- <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
+<!-- Buttons examples -->
+{{-- <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ URL::asset('build/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script> --}}
+<script src="{{ URL::asset('build/libs/jszip/jszip.min.js') }}"></script>
+<script src="{{ URL::asset('build/libs/pdfmake/build/pdfmake.min.js') }}"></script>
+{{-- <script src="{{ URL::asset('build/libs/pdfmake/vfs_fonts.js') }}"></script> --}}
+{{-- <script src="{{ URL::asset('build/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ URL::asset('build/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ URL::asset('build/libs/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
 
-    <!-- Responsive examples -->
-    <script src="{{ URL::asset('build/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ URL::asset('build/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}">
-    </script> --}}
+<!-- Responsive examples -->
+<script src="{{ URL::asset('build/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ URL::asset('build/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}">
+</script> --}}
 
-    <!-- Datatable init js -->
-    <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+<!-- Datatable init js -->
+<script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
 
 @endsection

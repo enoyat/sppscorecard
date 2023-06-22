@@ -6,7 +6,7 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Forms @endslot
-@slot('title') Create Delivery @endslot
+@slot('title') Update Physical @endslot
 @endcomponent
 
 
@@ -14,11 +14,12 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Form Delivery</h4>
+                <h4 class="card-title">Form physical</h4>
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('delivery.store') }}" method="POST">
+                <form action="{{ route('physical.update',$physical->id) }}" method="POST">
+                    @method('PUT')
                     <div class="row">
                         @if ($message = Session::get('success'))
                         <div class="alert alert-success">
@@ -44,7 +45,8 @@
                                     <label for="example-text-input" class="form-label">CBU</label>
                                     <select class="form-select" aria-label="Default select example" name="idcbu"
                                         id="idcbu">
-                                        <option value="" selected>select</option>
+                                        <option value="{{ $physical->idcbu }}" selected>{{ $physical->getcbu->namacbu }}</option>
+                                        <option value="" >select</option>
                                         @foreach ($cbu as $itemcbu)
                                         <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
                                         @endforeach
@@ -53,9 +55,10 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Region</label>
+                                    
                                     <select class="form-select" aria-label="Default select example" name="idregion"
                                         id="idregion">
-
+                                        <option value="{{ $physical->idregion }}">{{ $physical->getregion->namaregion }}</option>
                                     </select>
 
                                 </div>
@@ -63,35 +66,39 @@
                                     <label for="example-text-input" class="form-label">Site Name</label>
                                     <select class="form-select" aria-label="Default select example" name="idsitename"
                                         id="idsitename">
-
+                                        <option value="{{ $physical->idsitename }}">{{ $physical->getsitename->namasitename }}</option>
                                     </select>
 
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Tanggal</label>
+                                    <input class="form-control" type="date" value="{{ $physical->tanggal }}" name="tanggal"
+                                        id="tanggal">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Kode Unit</label>
+                                    <input class="form-control" type="text" value="{{ $physical->kdunit }}" name="kdunit"
+                                        id="kdunit">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Serial Number</label>
-                                    <input class="form-control" type="text" value="" name="serialnumber"
+                                    <input class="form-control" type="text" value="{{ $physical->kdunit }}" name="serialnumber"
                                         id="serialnumber">
                                 </div>
+
                                 <div class="mb-3">
-                                    <label for="example-url-input" class="form-label">Forklif Type</label>
-                                    <select class="form-select" aria-label="Default select example" name="idforklifttype"
-                                        id="idforklifttype">
-                                        <option value="" selected>select</option>
-                                        @foreach ($forklifttype as $itemforklifttype)
-                                        <option value="{{ $itemforklifttype->id }}">{{ $itemforklifttype->namaforklifttype }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="example-tel-input" class="form-label">Hari Kerja</label>
+                                    <input class="form-control" type="tel" value="{{ $physical->harikerja }}" name="harikerja" id="harikerja">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-tel-input" class="form-label">Capacity</label>
-                                    <input class="form-control" type="tel" value="" name="capacity"
-                                        id="capacity">
+                                    <label for="example-password-input" class="form-label">Plan Hari Kerja (Minutes)</label>
+                                    <input class="form-control" type="text" value="{{ $physical->planunitkerja }}" name="planunitkerja" id="planunitkerja">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Mas Height (m)</label>
-                                    <input class="form-control" type="text" value="" name="masheight"
-                                        id="masheight">
+                                    <label for="example-password-input" class="form-label">Total Break Down (Minutes)</label>
+                                    <input class="form-control" type="text" value="{{ $physical->totalbreakdown }}" name="totalbreakdown" id="totalbreakdown">
                                 </div>
+
 
 
                             </div>
@@ -99,33 +106,34 @@
 
                         <div class="col-lg-6">
                             <div class="mt-3 mt-lg-0">
-                                <div class="mb-3">
-                                    <label for="example-date-input" class="form-label">Estimated Delivery</label>
-                                    <input class="form-control" type="date" value="" name="dateestimated"
-                                        id="dateestimated">
+                            <div class="mb-3">
+                                    <label for="example-month-input" class="form-label">Total Jam Kerja Unit</label>
+                                    <input class="form-control" type="text" value="{{ $physical->totaljamkerja }}" name="totaljamkerja" id="totaljamkerja">
+                                </div>
+                            <div class="mb-3">
+                                    <label for="example-week-input" class="form-label">PA Forklift</label>
+                                    <input class="form-control" type="text" value="{{ $physical->paforklift }}" name="paforklift"
+                                        id="paforklift">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-month-input" class="form-label">Reason of Lapse</label>
-                                    <input class="form-control" type="text" value="" name="reason" id="reason">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-week-input" class="form-label">Mitigation Plant</label>
-                                    <input class="form-control" type="date" value="" name="mitigationplan"
-                                        id="mitigationplan">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-time-input" class="form-label">Actual Delivery</label>
-                                    <input class="form-control" type="date" value="" name="dateactual"
-                                        id="dateactual">
+                                    <label for="example-time-input" class="form-label">Remark Unit</label>
+                                    <input class="form-control" type="text" value="{{ $physical->remarkunit }}" name="remarkunit"
+                                        id="remarkunit">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-color-input" class="form-label">Confirmation by Plant</label>
-                                    <input class="form-control" type="text" value="" name="confirmationplan"
+                                    <input class="form-control" type="text" value="{{ $physical->confirmationplan }}" name="confirmationplan"
                                         id="confirmationplan">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-color-input" class="form-label">Remarks</label>
+                                    <input class="form-control" type="text" value="{{ $physical->remarks }}" name="remarks"
+                                        id="remarks">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Status SPP</label>
                                     <select class="form-select" name="statusspp" id="statusspp">
+                                    <option value="{{ $physical->statusspp }}">{{ $physical->statusspp }}</option>
                                         <option value="">Select</option>
                                         <option value="OPEN">OPEN</option>
                                         <option value="CLOSE">CLOSE</option>
@@ -134,6 +142,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Status Customer</label>
                                     <select class="form-select" name="statuscustomer" id="statuscustomer">
+                                    <option value="{{ $physical->statuscustomer }}">{{ $physical->statuscustomer }}</option>
                                         <option value="">Select</option>
                                         <option value="OPEN">OPEN</option>
                                         <option value="CLOSE">CLOSE</option>

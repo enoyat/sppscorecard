@@ -1,8 +1,6 @@
 @extends('layouts.master')
 
-@section('title') 
-Delivery 
-@endsection
+@section('title') sparepart @endsection
 
 @section('css')
 
@@ -15,8 +13,8 @@ Delivery
 @include('header_select')
 <!-- start page title -->
 @component('components.breadcrumb')
-@slot('li_1') Contacts @endslot
-@slot('title') Delivery @endslot
+@slot('li_1') Sparepart @endslot
+@slot('title') sparepart @endslot
 @endcomponent
 
 <div class="row align-items-center">
@@ -29,14 +27,14 @@ Delivery
             <div>
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('delivery.index') }}" data-bs-toggle="tooltip"
+                        <a class="nav-link active" href="{{ route('sparepartstok.index') }}" data-bs-toggle="tooltip"
                             data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
                     </li>
 
                 </ul>
             </div>
             <div>
-                <a href="{{ route('delivery.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
+                <a href="{{ route('sparepartstok.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
             </div>
 
             <!-- <div class="dropdown">
@@ -57,7 +55,7 @@ Delivery
 <!-- end row -->
 
 <div class="table-responsive mb-4" id="tablecontent">
-    @include('delivery.content')
+    @include('sparepartstok.content')
     
     <!-- end table -->
 </div>

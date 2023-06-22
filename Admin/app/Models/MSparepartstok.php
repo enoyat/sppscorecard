@@ -5,22 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MRegion extends Model
+class MSparepartstok extends Model
 {
 
     use HasFactory;
-    protected $table = 'region';
+    protected $table = 'sparepartstok';
 
     #kalau kolom primary keynya bernama id, maka baris dibawah ini boleh diisi, dan boleh juga tidak buat
     protected $primaryKey = 'id';
     public $incrementing = false;
     public $timestamps = false;
+    public function getsparepart()
+    {
+        return $this->belongsTo(MSparepart::class, 'idsparepart', 'id');
+    }
     // In Laravel 6.0+ make sure to also set $keyType
     //protected $keyType = 'string';
 
-    protected $guarded = [];
-    public function getcbu()
-    {
-        return $this->belongsTo(MCbu::class,'idcbu','id');
-    }
 }

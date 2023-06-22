@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MRegion extends Model
+class MMaintenance extends Model
 {
 
     use HasFactory;
-    protected $table = 'region';
+    protected $table = 'maintenance';
 
     #kalau kolom primary keynya bernama id, maka baris dibawah ini boleh diisi, dan boleh juga tidak buat
     protected $primaryKey = 'id';
@@ -19,8 +19,13 @@ class MRegion extends Model
     //protected $keyType = 'string';
 
     protected $guarded = [];
-    public function getcbu()
-    {
+    public function getcbu(){
         return $this->belongsTo(MCbu::class,'idcbu','id');
+    }
+    public function getregion(){
+        return $this->belongsTo(MRegion::class,'idregion','id');
+    }   
+    public function getsitename(){
+        return $this->belongsTo(MSitename::class,'idsitename','id');
     }
 }

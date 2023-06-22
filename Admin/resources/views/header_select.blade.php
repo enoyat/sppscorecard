@@ -9,16 +9,17 @@
 
                     <div class="col-12">
 
-                        <span class="text-muted mb-3 lh-1 d-block text-truncate"><i
-                                class="fas fa-arrow-circle-right "></i> CBU</span>
+                        <span class="text-muted mb-3 lh-1 d-block text-truncate"> CBU</span>
                         <h4 class="mb-3">
 
-                            <select class="form-select">
-                                <option>AQUA</option>
-                                <option>Large select</option>
-                                <option>Small select</option>
-                            </select>
-
+                        <select class="form-select" aria-label="Default select example" name="idcbu"
+                                        id="idcbu">
+                                        <option value="{{ Session::get('runidcbu') }}" selected>{{ Session::get('runnamacbu') }}</option>
+                                        <option value="" >select</option>
+                                        @foreach ($cbu as $itemcbu)
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        @endforeach
+                                    </select>
                         </h4>
                     </div>
                 </div>
@@ -35,12 +36,10 @@
                     <div class="col-12">
                         <span class="text-muted mb-3 lh-1 d-block text-truncate">REGION</span>
                         <h4 class="mb-3">
-
-                            <select class="form-select">
-                                <option>AQUA R2</option>
-                                <option>Large select</option>
-                                <option>Small select</option>
-                            </select>
+                        <select class="form-select" aria-label="Default select example" name="idregion"
+                                        id="idregion">
+                                        <option value="{{ Session::get('runidregion') }}" selected>{{ Session::get('runnamaregion') }}</option>
+                                    </select>
 
                         </h4>
                     </div>
@@ -61,13 +60,14 @@
 
                         <h4 class="mb-3">
 
-                            <select class="form-select">
-                                <option>Sarihusada Prambanan & Jogja Factory</option>
-                                <option>Large select</option>
-                                <option>Small select</option>
-                            </select>
+                        <select class="form-select" aria-label="Default select example" name="idsitename"
+                                        id="idsitename">
+                                        <option value="{{ Session::get('runidsitename') }}" selected>{{ Session::get('runnamasitename') }}</option>
 
+                                    </select>
                         </h4>
+        
+                        
                     </div>
 
                 </div>
@@ -76,3 +76,72 @@
         </div><!-- end card -->
     </div><!-- end col -->
 </div><!-- end row-->
+<script>
+    jQuery('#idcbu').change(function() {
+    jQuery('#idregion').html('');
+    var id = $(this).val();
+    var string = "{{ asset('/lokasi/getregion/') }}/" + id;
+    $.ajax({
+        type: 'GET',
+        url: string,
+        data: {
+            id: id
+        },
+        dataType: 'json',
+        success: function(data) {
+            datax = JSON.stringify(data);
+            datax = JSON.parse(datax);
+            var i;
+            var html = '';
+            var html = '<option>Select</option>';
+            for (i = 0; i < datax.length; i++) {
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                    "</option>";
+            }
+            $('#idregion').html(html);
+        }
+    });
+    });
+    jQuery('#idregion').change(function() {
+    jQuery('#idsitename').html('');
+    var id = $(this).val();
+    var string = "{{ asset('/lokasi/getsitename/') }}/" + id;
+    $.ajax({
+        type: 'GET',
+        url: string,
+        data: {
+            id: id
+        },
+        dataType: 'json',
+        success: function(data) {
+            datax = JSON.stringify(data);
+            datax = JSON.parse(datax);
+            var i;
+            var html = '';
+            var html = '<option>Select</option>';
+            for (i = 0; i < datax.length; i++) {
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
+                    "</option>";
+            }
+            $('#idsitename').html(html);
+        }
+    });
+    });
+    jQuery('#idsitename').change(function() {
+    var id = $(this).val();
+    var string = "{{ asset('/lokasi/setsitename/') }}/" + id;
+    $.ajax({
+        type: 'GET',
+        url: string,
+        data: {
+            id: id
+        },
+        dataType: 'json',
+        success: function(data) {
+            $('#sitename').html('sukses');
+          
+            
+        }
+    });
+    });
+</script>

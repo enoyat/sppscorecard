@@ -132,19 +132,19 @@
                         <div class="row g-0">
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="build/images/brands/github.png" alt="Github">
+                                    <img src="{{ asset('build/images/brands/github.png') }}" alt="Github">
                                     <span>GitHub</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="build/images/brands/bitbucket.png" alt="bitbucket">
+                                    <img src="{{ asset('build/images/brands/bitbucket.png') }}" alt="bitbucket">
                                     <span>Bitbucket</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="build/images/brands/dribbble.png" alt="dribbble">
+                                    <img src="{{ asset('build/images/brands/dribbble.png') }}" alt="dribbble">
                                     <span>Dribbble</span>
                                 </a>
                             </div>
@@ -153,19 +153,19 @@
                         <div class="row g-0">
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="build/images/brands/dropbox.png" alt="dropbox">
+                                    <img src="{{ asset('build/images/brands/dropbox.png') }}" alt="dropbox">
                                     <span>Dropbox</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="build/images/brands/mail_chimp.png" alt="mail_chimp">
+                                    <img src="{{ asset('build/images/brands/mail_chimp.png') }}" alt="mail_chimp">
                                     <span>Mail Chimp</span>
                                 </a>
                             </div>
                             <div class="col">
                                 <a class="dropdown-icon-item" href="#">
-                                    <img src="build/images/brands/slack.png" alt="slack">
+                                    <img src="{{ asset('build/images/brands/slack.png') }}" alt="slack">
                                     <span>Slack</span>
                                 </a>
                             </div>
@@ -197,7 +197,7 @@
                         <a href="#!" class="text-reset notification-item">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
-                                    <img src="build/images/users/avatar-3.jpg" class="rounded-circle avatar-sm"
+                                    <img src="{{ asset('build/images/users/avatar-3.jpg') }}" class="rounded-circle avatar-sm"
                                         alt="user-pic">
                                 </div>
                                 <div class="flex-grow-1">
@@ -248,7 +248,7 @@
                         <a href="#!" class="text-reset notification-item">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
-                                    <img src="build/images/users/avatar-6.jpg" class="rounded-circle avatar-sm"
+                                    <img src="{{ asset('build/images/users/avatar-6.jpg') }}" class="rounded-circle avatar-sm"
                                         alt="user-pic">
                                 </div>
                                 <div class="flex-grow-1">
