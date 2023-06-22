@@ -55,23 +55,32 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="layouts-horizontal">
+                    <a href="{{ route('trouble.index') }}">
                     <i class="fas fa-car-crash"></i>
                         <span data-key="t-horizontal">List of Trouble</span>
                     </a>
                 </li>
                 <li>
-                    <a href="layouts-horizontal">
-                        <i class="fas fa-external-link-alt"></i>
-                        <span data-key="t-horizontal">Pallete Renewal</span>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Pallete</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('pallete.index') }}">
+                                <span data-key="t-calendar">Withdrawal/Delivery</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="apps-chat">
+                                <span data-key="t-chat">Pallete Renewal</span>
+                            </a>
+                        </li>
+                        
+                        
+                    </ul>
                 </li>
-                <li>
-                    <a href="layouts-horizontal">
-                        <i class="fas fa-heart-broken"></i>
-                        <span data-key="t-horizontal">Broken Pallete</span>
-                    </a>
-                </li>
+               
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="grid"></i>

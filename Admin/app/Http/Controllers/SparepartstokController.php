@@ -28,7 +28,7 @@ class SparepartstokController extends Controller
     public function index()
     {
         $cbu=MCbu::get();
-        $sparepartstok = MSparepartstok::get();
+        $sparepartstok = MSparepartstok::where('idsitename',Session::get('runidsitename'))->get();
         return view('sparepartstok.index', compact('sparepartstok','cbu'));
     }
     public function create()
@@ -53,21 +53,22 @@ class SparepartstokController extends Controller
             'tanggal'=>'required',
             'qty'=>'required',
             'qtyuom'=>'required',
-            'stokprosentase'=>'required',
+            'stockprosentase'=>'required',
             'confirmationplan'=>'required',
             'average'=>'required',
         ]);
 
       
         
-        $sparepart = new MSparepart;
+        $sparepart = new MSparepartstok;
         $sparepart->idcbu = $request->idcbu;
         $sparepart->idregion = $request->idregion;
         $sparepart->idsitename = $request->idsitename;
         $sparepart->tanggal = $request->tanggal;
+        $sparepart->idsparepart = $request->idsparepart;
         $sparepart->qty = $request->qty;
         $sparepart->qtyuom = $request->qtyuom;
-        $sparepart->stokprosentase = $request->stokprosentase;
+        $sparepart->stockprosentase = $request->stockprosentase;
         $sparepart->confirmationplan = $request->confirmationplan;
         $sparepart->average = $request->average;
         $simpan = $sparepart->save();
@@ -94,7 +95,7 @@ class SparepartstokController extends Controller
             'tanggal'=>'required',
             'qty'=>'required',
             'qtyuom'=>'required',
-            'stokprosentase'=>'required',
+            'stockprosentase'=>'required',
             'confirmationplan'=>'required',
             'average'=>'required',
           
@@ -102,14 +103,15 @@ class SparepartstokController extends Controller
 
       
         
-        $sparepart = MSparepart::find($id);
+        $sparepart = MSparepartstok::find($id);
         $sparepart->idcbu = $request->idcbu;
         $sparepart->idregion = $request->idregion;
         $sparepart->idsitename = $request->idsitename;
         $sparepart->tanggal = $request->tanggal;
+        $sparepart->idsparepart = $request->idsparepart;
         $sparepart->qty = $request->qty;
         $sparepart->qtyuom = $request->qtyuom;
-        $sparepart->stokprosentase = $request->stokprosentase;
+        $sparepart->stockprosentase = $request->stockprosentase;
         $sparepart->confirmationplan = $request->confirmationplan;
         $sparepart->average = $request->average;
         $simpan = $sparepart->save();
@@ -131,7 +133,7 @@ class SparepartstokController extends Controller
     {
         try {
             $id = $request->id;
-            MSparepart::where('id', '=', $id)->delete();
+            MSparepartstok::where('id', '=', $id)->delete();
 
             return redirect()->route('sparepartstok.index');
         } catch (QueryException $ex) {

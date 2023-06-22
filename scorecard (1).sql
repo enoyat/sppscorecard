@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Jun 2023 pada 12.11
+-- Waktu pembuatan: 22 Jun 2023 pada 20.59
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.1.17
 
@@ -20,29 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `scorecard`
 --
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `brokenpallet`
---
-
-DROP TABLE IF EXISTS `brokenpallet`;
-CREATE TABLE IF NOT EXISTS `brokenpallet` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idcbu` int(11) DEFAULT NULL,
-  `idregion` int(11) DEFAULT NULL,
-  `idsitename` int(11) DEFAULT NULL,
-  `jenisrequest` enum('withdraw','delivery') DEFAULT NULL,
-  `qty` int(11) DEFAULT NULL,
-  `daterequest` date DEFAULT NULL,
-  `targetdate` date DEFAULT NULL,
-  `actualdate` date DEFAULT NULL,
-  `lapsetime` int(11) DEFAULT NULL,
-  `gap` int(11) DEFAULT NULL,
-  `remark` text DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -189,14 +166,22 @@ CREATE TABLE IF NOT EXISTS `listoftrouble` (
   `kdunit` varchar(10) DEFAULT NULL,
   `tanggal` date DEFAULT NULL,
   `issue` text DEFAULT NULL,
-  `documentation` int(11) DEFAULT NULL,
+  `documentation` varchar(50) DEFAULT NULL,
   `targetcompletedate` date DEFAULT NULL,
   `actionplanspp` text DEFAULT NULL,
   `actualcompletedate` date DEFAULT NULL,
-  `status` varchar(10) DEFAULT NULL,
   `lapsetime` int(11) DEFAULT NULL,
-  `confirmationplan` text DEFAULT NULL
+  `confirmationplan` text DEFAULT NULL,
+  `statusspp` varchar(10) DEFAULT NULL,
+  `statuscustomer` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `listoftrouble`
+--
+
+INSERT INTO `listoftrouble` (`id`, `idcbu`, `idregion`, `idsitename`, `kdunit`, `tanggal`, `issue`, `documentation`, `targetcompletedate`, `actionplanspp`, `actualcompletedate`, `lapsetime`, `confirmationplan`, `statusspp`, `statuscustomer`) VALUES
+(0, 1, 1, 1, 'E 7506', '2023-06-22', 'Bearing Mast Crown unit 18-141 pecah', 's', '2023-06-22', 'sd', '2023-06-22', 0, 'ccing', 'OPEN', 'OPEN');
 
 -- --------------------------------------------------------
 
@@ -227,11 +212,43 @@ INSERT INTO `maintenance` (`id`, `idcbu`, `idregion`, `idsitename`, `kdunit`, `t
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `palletrenew`
+-- Struktur dari tabel `pallete`
 --
 
-DROP TABLE IF EXISTS `palletrenew`;
-CREATE TABLE IF NOT EXISTS `palletrenew` (
+DROP TABLE IF EXISTS `pallete`;
+CREATE TABLE IF NOT EXISTS `pallete` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idcbu` int(11) DEFAULT NULL,
+  `idregion` int(11) DEFAULT NULL,
+  `idsitename` int(11) DEFAULT NULL,
+  `jenisrequest` enum('withdrawal','delivery') DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL,
+  `daterequest` date DEFAULT NULL,
+  `targetdate` date DEFAULT NULL,
+  `actualdate` date DEFAULT NULL,
+  `lapsetime` int(11) DEFAULT NULL,
+  `gap` int(11) DEFAULT NULL,
+  `remark` text DEFAULT NULL,
+  `statusspp` varchar(10) DEFAULT NULL,
+  `statuscustomer` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `pallete`
+--
+
+INSERT INTO `pallete` (`id`, `idcbu`, `idregion`, `idsitename`, `jenisrequest`, `qty`, `daterequest`, `targetdate`, `actualdate`, `lapsetime`, `gap`, `remark`, `statusspp`, `statuscustomer`) VALUES
+(2, 1, 1, 1, 'withdrawal', 4, '2023-06-23', '2023-06-23', '2023-06-23', 0, 4, '-', 'CLOSE', 'OPEN');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `palleterenew`
+--
+
+DROP TABLE IF EXISTS `palleterenew`;
+CREATE TABLE IF NOT EXISTS `palleterenew` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idcbu` int(11) DEFAULT NULL,
   `idregion` int(11) DEFAULT NULL,
@@ -432,7 +449,7 @@ CREATE TABLE IF NOT EXISTS `sparepart` (
   `namasparepart` varchar(100) NOT NULL,
   `uom` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `sparepart`
@@ -440,8 +457,8 @@ CREATE TABLE IF NOT EXISTS `sparepart` (
 
 INSERT INTO `sparepart` (`id`, `namasparepart`, `uom`) VALUES
 (1, 'Ban Depan & Velg', 'pcs'),
-(2, 'Ban Belakang & Velg', 'pcs'),
-(3, 'Grease', 'kg');
+(3, 'Grease', 'kg'),
+(5, 'Ban Belakang & Velg', 'pcs');
 
 -- --------------------------------------------------------
 
@@ -463,7 +480,14 @@ CREATE TABLE IF NOT EXISTS `sparepartstok` (
   `confirmationplan` text DEFAULT NULL,
   `average` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `sparepartstok`
+--
+
+INSERT INTO `sparepartstok` (`id`, `idcbu`, `idregion`, `idsitename`, `idsparepart`, `tanggal`, `qty`, `qtyuom`, `stockprosentase`, `confirmationplan`, `average`) VALUES
+(3, 1, 1, 1, 5, '2023-06-23', 4, 12, 100, 'ccing', 122);
 
 -- --------------------------------------------------------
 

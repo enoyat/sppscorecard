@@ -122,4 +122,17 @@ class SparepartController extends Controller
             return redirect()->back();
         }
     }
+    public function getsparepart(Request $request){
+        $sparepart = MSparepart::where('namasparepart', 'LIKE', '%'.$request->search.'%')->orderBy('namasparepart', 'ASC')->get();
+
+        $response = array();
+        foreach ($sparepart as $value) {
+            $response[] = array(
+                "id" => $value->id,
+                "text" => $value->namasparepart
+            );
+        }
+
+        return response()->json($response);
+    }
 }

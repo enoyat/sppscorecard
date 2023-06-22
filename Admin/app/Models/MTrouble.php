@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MSparepartstok extends Model
+class MTrouble extends Model
 {
 
     use HasFactory;
-    protected $table = 'sparepartstok';
+    protected $table = 'listoftrouble';
 
     #kalau kolom primary keynya bernama id, maka baris dibawah ini boleh diisi, dan boleh juga tidak buat
     protected $primaryKey = 'id';
     public $incrementing = false;
     public $timestamps = false;
-    public function getsparepart()
-    {
-        return $this->belongsTo(MSparepart::class, 'idsparepart', 'id');
-    }
+    // In Laravel 6.0+ make sure to also set $keyType
+    //protected $keyType = 'string';
+
+    protected $guarded = [];
     public function getcbu(){
         return $this->belongsTo(MCbu::class,'idcbu','id');
     }
@@ -28,7 +28,5 @@ class MSparepartstok extends Model
     public function getsitename(){
         return $this->belongsTo(MSitename::class,'idsitename','id');
     }
-    // In Laravel 6.0+ make sure to also set $keyType
-    //protected $keyType = 'string';
-
+    
 }

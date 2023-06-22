@@ -40,10 +40,9 @@
                         @csrf
                         <div class="col-lg-6">
                             <div>
-                            <div class="mb-3">
+                                <div class="mb-3">
                                     <label for="example-text-input" class="form-label">CBU</label>
-                                    <select class="form-select" aria-label="Default select example" name="idcbu"
-                                        id="idcbu">
+                                    <select class="form-select" aria-label="Default select example" name="idcbu" id="idcbu">
                                         <option value="" selected>select</option>
                                         @foreach ($cbu as $itemcbu)
                                         <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
@@ -53,23 +52,20 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Region</label>
-                                    <select class="form-select" aria-label="Default select example" name="idregion"
-                                        id="idregion">
-
-                                    </select>
+                                    <select class="form-select" aria-label="Default select example" name="idregion" id="idregion"></select>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Site Name</label>
-                                    <select class="form-select" aria-label="Default select example" name="idsitename"
-                                        id="idsitename">
+                                    <select class="form-select" aria-label="Default select example" name="idsitename" id="idsitename">
 
                                     </select>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Nama Spare Part</label>
-                                    <input class="form-control" type="text" value="" name="namasparepart" id="namasparepart">
+                                    <select  name="idsparepart" id="idsparepart" required></select>
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-date-input" class="form-label">Qty</label>
@@ -79,35 +75,34 @@
                                     <label for="example-date-input" class="form-label">Uom</label>
                                     <input class="form-control" type="text" value="" name="uom" id="uom">
                                 </div>
-                                
+
 
 
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="mt-3 mt-lg-0">
-                            <div class="mb-3">
+                                <div class="mb-3">
                                     <label for="example-month-input" class="form-label">Tanggal</label>
                                     <input class="form-control" type="date" value="" name="tanggal" id="tanggal">
                                 </div>
-                            <div class="mb-3">
+                                <div class="mb-3">
                                     <label for="example-month-input" class="form-label">Qty (Uom)</label>
                                     <input class="form-control" type="text" value="" name="qtyuom" id="qtyuom">
                                 </div>
-                            <div class="mb-3">
+                                <div class="mb-3">
                                     <label for="example-week-input" class="form-label">Stock (%)</label>
-                                    <input class="form-control" type="text" value="" name="stokprosentase" id="stokprosentase">
+                                    <input class="form-control" type="text" value="" name="stockprosentase" id="stockprosentase">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-color-input" class="form-label">Confirmation by Plant</label>
-                                    <input class="form-control" type="text" value="" name="confirmationplan"
-                                        id="confirmationplan">
+                                    <input class="form-control" type="text" value="" name="confirmationplan" id="confirmationplan">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-color-input" class="form-label">Average</label>
                                     <input class="form-control" type="text" value="" name="average" id="average">
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
@@ -116,7 +111,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </form>
             </div>
@@ -126,55 +121,78 @@
 </div>
 <!-- end row -->
 <script>
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     jQuery('#idcbu').change(function() {
-    jQuery('#idregion').html('');
-    var id = $(this).val();
-    var string = "{{ asset('/lokasi/getregion/') }}/" + id;
-    $.ajax({
-        type: 'GET',
-        url: string,
-        data: {
-            id: id
-        },
-        dataType: 'json',
-        success: function(data) {
-            datax = JSON.stringify(data);
-            datax = JSON.parse(datax);
-            var i;
-            var html = '';
-            var html = '<option>Select</option>';
-            for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
-                    "</option>";
+        jQuery('#idregion').html('');
+        var id = $(this).val();
+        var string = "{{ asset('/lokasi/getregion/') }}/" + id;
+        $.ajax({
+            type: 'GET',
+            url: string,
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(data) {
+                datax = JSON.stringify(data);
+                datax = JSON.parse(datax);
+                var i;
+                var html = '';
+                var html = '<option>Select</option>';
+                for (i = 0; i < datax.length; i++) {
+                    html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                        "</option>";
+                }
+                $('#idregion').html(html);
             }
-            $('#idregion').html(html);
-        }
-    });
+        });
     });
     jQuery('#idregion').change(function() {
-    jQuery('#idsitename').html('');
-    var id = $(this).val();
-    var string = "{{ asset('/lokasi/getsitename/') }}/" + id;
-    $.ajax({
-        type: 'GET',
-        url: string,
-        data: {
-            id: id
-        },
-        dataType: 'json',
-        success: function(data) {
-            datax = JSON.stringify(data);
-            datax = JSON.parse(datax);
-            var i;
-            var html = '';
-            var html = '<option>Select</option>';
-            for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
-                    "</option>";
+        jQuery('#idsitename').html('');
+        var id = $(this).val();
+        var string = "{{ asset('/lokasi/getsitename/') }}/" + id;
+        $.ajax({
+            type: 'GET',
+            url: string,
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(data) {
+                datax = JSON.stringify(data);
+                datax = JSON.parse(datax);
+                var i;
+                var html = '';
+                var html = '<option>Select</option>';
+                for (i = 0; i < datax.length; i++) {
+                    html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
+                        "</option>";
+                }
+                $('#idsitename').html(html);
             }
-            $('#idsitename').html(html);
-        }
+        });
     });
+
+    $("#idsparepart").select2({
+        placeholder: 'Pilih Sparepart',
+        ajax: {
+            url: "{{ route('sparepart.getsparepart') }}",
+            type: "GET",
+            dataType: 'JSON',
+            delay: 250,
+            data: function(params) {
+                return {
+                    _token: CSRF_TOKEN,
+                    search: params.term,
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
     });
 </script>
 

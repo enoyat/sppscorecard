@@ -5,20 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MSparepartstok extends Model
+class MPallete extends Model
 {
 
     use HasFactory;
-    protected $table = 'sparepartstok';
+    protected $table = 'pallete';
 
     #kalau kolom primary keynya bernama id, maka baris dibawah ini boleh diisi, dan boleh juga tidak buat
     protected $primaryKey = 'id';
     public $incrementing = false;
     public $timestamps = false;
-    public function getsparepart()
-    {
-        return $this->belongsTo(MSparepart::class, 'idsparepart', 'id');
-    }
+
     public function getcbu(){
         return $this->belongsTo(MCbu::class,'idcbu','id');
     }

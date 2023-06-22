@@ -1,4 +1,4 @@
-    <table class="table table-striped dt-responsive nowrap w-100"
+<table class="table table-striped dt-responsive nowrap w-100"
         style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;" id="datatable-buttons" >
         <thead>
             <tr>
@@ -12,19 +12,22 @@
                 <th scope="col">Region</th>
                 <th scope="col">Site Name</th>
                 <th scope="col">Tanggal</th>
-                <th scope="col">Spare Part</th>
-                <th scope="col">Qty</th>
-                <th scope="col">Uom</th>
-                <th scope="col">Qty (Uom)</th>
-                <th scope="col">Stok (%)</th>
-                <th scope="col">Confirmation Plan</th>
-                <th scope="col">Average</th>
+                <th scope="col">Kode Unit</th>
+                <th scope="col">issue</th>
+                <th scope="col">documentation</th>
+                <th scope="col">target complete date</th>
+                <th scope="col">Action Plan SPP</th>
+                <th scope="col">Actual complete date</th>
+                <th scope="col">Lapse Time</th>
+                <th scope="col">Confirmation by Plant</th>
+                <th scope="col">Status SPP</th>
+                <th scope="col">Status Customer</th>
                 <th style="width: 80px; min-width: 80px;">Action</th>
             </tr>
         </thead>
         <tbody>
             @php $i=1; @endphp
-            @foreach ($sparepartstok as $key)
+            @foreach ($trouble as $key)
             <tr>
                 <th scope="row">
                     <div class="form-check font-size-16">
@@ -35,14 +38,26 @@
                 <th scope="col">{{ $key->getcbu->namacbu }}</th>
                 <th scope="col">{{ $key->getregion->namaregion }}</th>
                 <th scope="col">{{ $key->getsitename->namasitename }}</th>
-                <th scope="col">{{ $key->tanggal }}</th>   
-                <th scope="col">{{ $key->getsparepart->namasparepart }}</th>
-                <th scope="col">{{ $key->qty }}</th>  
-                <th scope="col">{{ $key->getsparepart->uom }}</th>   
-                <th scope="col">{{ $key->qtyuom }}</th>   
-                <th scope="col">{{ $key->stockprosentase }}</th>   
-                <th scope="col">{{ $key->confirmationplan }}</th>   
-                <th scope="col">{{ $key->average }}</th>   
+                <th scope="col">{{ $key->tanggal }}</th>
+                <th scope="col">{{ $key->kdunit }}</th>
+                <th scope="col">{{ $key->issue }}</th>
+                <th scope="col">{{ $key->documentation }}</th> 
+                <th scope="col">{{ $key->targetcompletedate }}</th>
+                <th scope="col">{{ $key->actionplanspp }}</th>
+                <th scope="col">{{ $key->actualcompletedate }}</th>
+                <th scope="col">{{ $key->lapsetime }}</th>
+                <th scope="col">{{ $key->confirmationplan }}</th>
+                <th scope="col">@if ($key->statusspp=="CLOSE") 
+                    <span class="badge badge-pill badge-soft-success font-size-12">CLOSE</span>
+                    @else
+                    <span class="badge badge-pill badge-soft-danger font-size-12">OPEN</span>
+                    @endif</th>
+                <th scope="col">@if ($key->statuscustomer=="CLOSE") 
+                    <span class="badge badge-pill badge-soft-success font-size-12">CLOSE</span>
+                    @else
+                    <span class="badge badge-pill badge-soft-danger font-size-12">OPEN</span>
+                    @endif
+                </th>
                 <th style="width: 80px; min-width: 80px;">
                 <div class="dropdown">
                             <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
@@ -50,8 +65,8 @@
                                 <i class="bx bx-dots-horizontal-rounded"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ route('sparepartstok.edit',$key->id) }}">Edit</a></li>
-                                <li><form action="{{ route('sparepartstok.destroy',$key->id) }}" method="POST">
+                                <li><a class="dropdown-item" href="{{ route('trouble.edit',$key->id) }}">Edit</a></li>
+                                <li><form action="{{ route('trouble.destroy',$key->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"  class="dropdown-item"

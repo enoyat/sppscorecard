@@ -70,6 +70,7 @@ Route::group(['prefix' => 'sparepart'], function () {
     Route::get('/edit/{id}', [App\Http\Controllers\SparepartController::class, 'edit'])->name('sparepart.edit');
     Route::put('/update/{id}', [App\Http\Controllers\SparepartController::class, 'update'])->name('sparepart.update');
     Route::get('/show/{id}', [App\Http\Controllers\SparepartController::class, 'show'])->name('sparepart.show');
+    Route::get('/getsparepart', [App\Http\Controllers\SparepartController::class, 'getsparepart'])->name('sparepart.getsparepart');
     
 });
 Route::group(['prefix' => 'sparepartstok'], function () {
@@ -80,6 +81,26 @@ Route::group(['prefix' => 'sparepartstok'], function () {
     Route::get('/edit/{id}', [App\Http\Controllers\SparepartstokController::class, 'edit'])->name('sparepartstok.edit');
     Route::put('/update/{id}', [App\Http\Controllers\SparepartstokController::class, 'update'])->name('sparepartstok.update');
     Route::get('/show/{id}', [App\Http\Controllers\SparepartstokController::class, 'show'])->name('sparepartstok.show');
+    
+});
+Route::group(['prefix' => 'trouble'], function () {
+    Route::get('/', [App\Http\Controllers\TroubleController::class, 'index'])->name('trouble.index');
+    Route::get('/create', [App\Http\Controllers\TroubleController::class, 'create'])->name('trouble.create');
+    Route::post('/store', [App\Http\Controllers\TroubleController::class, 'store'])->name('trouble.store');
+    Route::delete('/delete/{id}', [App\Http\Controllers\TroubleController::class, 'destroy'])->name('trouble.destroy');
+    Route::get('/edit/{id}', [App\Http\Controllers\TroubleController::class, 'edit'])->name('trouble.edit');
+    Route::put('/update/{id}', [App\Http\Controllers\TroubleController::class, 'update'])->name('trouble.update');
+    Route::get('/show/{id}', [App\Http\Controllers\TroubleController::class, 'show'])->name('trouble.show');
+    
+});
+Route::group(['prefix' => 'pallete'], function () {
+    Route::get('/', [App\Http\Controllers\PalleteController::class, 'index'])->name('pallete.index');
+    Route::get('/create', [App\Http\Controllers\PalleteController::class, 'create'])->name('pallete.create');
+    Route::post('/store', [App\Http\Controllers\PalleteController::class, 'store'])->name('pallete.store');
+    Route::delete('/delete/{id}', [App\Http\Controllers\PalleteController::class, 'destroy'])->name('pallete.destroy');
+    Route::get('/edit/{id}', [App\Http\Controllers\PalleteController::class, 'edit'])->name('pallete.edit');
+    Route::put('/update/{id}', [App\Http\Controllers\PalleteController::class, 'update'])->name('pallete.update');
+    Route::get('/show/{id}', [App\Http\Controllers\PalleteController::class, 'show'])->name('pallete.show');
     
 });
 Route::group(['prefix' => 'lokasi'], function () {
