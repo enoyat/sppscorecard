@@ -94,12 +94,12 @@
                         </li>
 
                         <li>
-                            <a href="apps-chat">
+                            <a href="{{ route('region.index') }}">
                                 <span data-key="t-chat">Region</span>
                             </a>
                         </li>
                         <li>
-                            <a href="apps-chat">
+                            <a href="{{ route('sitename.index') }}">
                                 <span data-key="t-chat">Site Name</span>
                             </a>
                         </li>

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') cbu @endsection
+@section('title') sitename @endsection
 
 @section('css')
 
@@ -10,11 +10,10 @@
 @endsection
 
 @section('content')
-
 <!-- start page title -->
 @component('components.breadcrumb')
-@slot('li_1') cbu @endslot
-@slot('title') cbu @endslot
+@slot('li_1') sitename @endslot
+@slot('title') sitename @endslot
 @endcomponent
 
 <div class="row align-items-center">
@@ -27,14 +26,14 @@
             <div>
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('cbu.index') }}" data-bs-toggle="tooltip"
+                        <a class="nav-link active" href="{{ route('sitename.index') }}" data-bs-toggle="tooltip"
                             data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
                     </li>
 
                 </ul>
             </div>
             <div>
-                <a href="{{ route('cbu.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
+                <a href="{{ route('sitename.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
             </div>
 
             <!-- <div class="dropdown">
@@ -55,7 +54,7 @@
 <!-- end row -->
 
 <div class="table-responsive mb-4" id="tablecontent">
-    @include('cbu.content')
+    @include('sitename.content')
     
     <!-- end table -->
 </div>

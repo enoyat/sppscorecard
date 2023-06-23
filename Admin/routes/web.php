@@ -123,6 +123,26 @@ Route::group(['prefix' => 'cbu'], function () {
     Route::get('/show/{id}', [App\Http\Controllers\CbuController::class, 'show'])->name('cbu.show');
     
 });
+Route::group(['prefix' => 'region'], function () {
+    Route::get('/', [App\Http\Controllers\RegionController::class, 'index'])->name('region.index');
+    Route::get('/create', [App\Http\Controllers\RegionController::class, 'create'])->name('region.create');
+    Route::post('/store', [App\Http\Controllers\RegionController::class, 'store'])->name('region.store');
+    Route::delete('/delete/{id}', [App\Http\Controllers\RegionController::class, 'destroy'])->name('region.destroy');
+    Route::get('/edit/{id}', [App\Http\Controllers\RegionController::class, 'edit'])->name('region.edit');
+    Route::put('/update/{id}', [App\Http\Controllers\RegionController::class, 'update'])->name('region.update');
+    Route::get('/show/{id}', [App\Http\Controllers\RegionController::class, 'show'])->name('region.show');
+    
+});
+Route::group(['prefix' => 'sitename'], function () {
+    Route::get('/', [App\Http\Controllers\SitenameController::class, 'index'])->name('sitename.index');
+    Route::get('/create', [App\Http\Controllers\SitenameController::class, 'create'])->name('sitename.create');
+    Route::post('/store', [App\Http\Controllers\SitenameController::class, 'store'])->name('sitename.store');
+    Route::delete('/delete/{id}', [App\Http\Controllers\SitenameController::class, 'destroy'])->name('sitename.destroy');
+    Route::get('/edit/{id}', [App\Http\Controllers\SitenameController::class, 'edit'])->name('sitename.edit');
+    Route::put('/update/{id}', [App\Http\Controllers\SitenameController::class, 'update'])->name('sitename.update');
+    Route::get('/show/{id}', [App\Http\Controllers\SitenameController::class, 'show'])->name('sitename.show');
+    
+});
 Route::group(['prefix' => 'lokasi'], function () {
     Route::get('/getcbu/{id}', [App\Http\Controllers\ApiLokasi::class, 'getcbu'])->name('lokasi.getcbu');
     Route::get('/getregion/{id}', [App\Http\Controllers\ApiLokasi::class, 'getregion'])->name('lokasi.getregion');
