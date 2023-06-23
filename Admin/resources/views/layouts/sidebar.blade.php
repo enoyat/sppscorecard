@@ -72,7 +72,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="apps-chat">
+                            <a href="{{ route('palleterenew.index') }}">
                                 <span data-key="t-chat">Pallete Renewal</span>
                             </a>
                         </li>
@@ -88,7 +88,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="apps-cbu">
+                            <a href="{{ route('cbu.index') }}">
                                 <span data-key="t-calendar">CBU</span>
                             </a>
                         </li>
@@ -101,11 +101,6 @@
                         <li>
                             <a href="apps-chat">
                                 <span data-key="t-chat">Site Name</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="apps-chat">
-                                <span data-key="t-chat">Spare Parts</span>
                             </a>
                         </li>
                         

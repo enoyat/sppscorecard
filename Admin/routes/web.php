@@ -103,6 +103,26 @@ Route::group(['prefix' => 'pallete'], function () {
     Route::get('/show/{id}', [App\Http\Controllers\PalleteController::class, 'show'])->name('pallete.show');
     
 });
+Route::group(['prefix' => 'palleterenew'], function () {
+    Route::get('/', [App\Http\Controllers\PalleterenewController::class, 'index'])->name('palleterenew.index');
+    Route::get('/create', [App\Http\Controllers\PalleterenewController::class, 'create'])->name('palleterenew.create');
+    Route::post('/store', [App\Http\Controllers\PalleterenewController::class, 'store'])->name('palleterenew.store');
+    Route::delete('/delete/{id}', [App\Http\Controllers\PalleterenewController::class, 'destroy'])->name('palleterenew.destroy');
+    Route::get('/edit/{id}', [App\Http\Controllers\PalleterenewController::class, 'edit'])->name('palleterenew.edit');
+    Route::put('/update/{id}', [App\Http\Controllers\PalleterenewController::class, 'update'])->name('palleterenew.update');
+    Route::get('/show/{id}', [App\Http\Controllers\PalleterenewController::class, 'show'])->name('palleterenew.show');
+    
+});
+Route::group(['prefix' => 'cbu'], function () {
+    Route::get('/', [App\Http\Controllers\CbuController::class, 'index'])->name('cbu.index');
+    Route::get('/create', [App\Http\Controllers\CbuController::class, 'create'])->name('cbu.create');
+    Route::post('/store', [App\Http\Controllers\CbuController::class, 'store'])->name('cbu.store');
+    Route::delete('/delete/{id}', [App\Http\Controllers\CbuController::class, 'destroy'])->name('cbu.destroy');
+    Route::get('/edit/{id}', [App\Http\Controllers\CbuController::class, 'edit'])->name('cbu.edit');
+    Route::put('/update/{id}', [App\Http\Controllers\CbuController::class, 'update'])->name('cbu.update');
+    Route::get('/show/{id}', [App\Http\Controllers\CbuController::class, 'show'])->name('cbu.show');
+    
+});
 Route::group(['prefix' => 'lokasi'], function () {
     Route::get('/getcbu/{id}', [App\Http\Controllers\ApiLokasi::class, 'getcbu'])->name('lokasi.getcbu');
     Route::get('/getregion/{id}', [App\Http\Controllers\ApiLokasi::class, 'getregion'])->name('lokasi.getregion');

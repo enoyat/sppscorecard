@@ -6,7 +6,7 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Forms @endslot
-@slot('title') Update sparepart @endslot
+@slot('title') Update cbu @endslot
 @endcomponent
 
 
@@ -14,11 +14,11 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Form sparepart</h4>
+                <h4 class="card-title">Form cbu</h4>
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('sparepart.update',$sparepart->id) }}" method="POST">
+                <form action="{{ route('cbu.update',$cbu->id) }}" method="POST">
                     @method('PUT')
                     <div class="row">
                         @if ($message = Session::get('success'))
@@ -43,11 +43,7 @@
                             <div>
                             <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Nama Spare Part</label>
-                                    <input class="form-control" type="text" value="{{ $sparepart->namasparepart }}" name="namasparepart" id="namasparepart">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-date-input" class="form-label">Uom</label>
-                                    <input class="form-control" type="text" value="{{ $sparepart->uom }}" name="uom" id="uom">
+                                    <input class="form-control" type="text" value="{{ $cbu->namacbu }}" name="namacbu" id="namacbu">
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
