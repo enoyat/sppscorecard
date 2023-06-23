@@ -1,0 +1,385 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+
+import "package:carousel_indicator/carousel_indicator.dart";
+import "package:carousel_slider/carousel_slider.dart";
+import "package:flutter/material.dart";
+import "package:google_map/pages/chat_screen.dart";
+import "package:intl/intl.dart";
+import "package:shared_preferences/shared_preferences.dart";
+
+import "package:google_map/models/addsmodel.dart";
+import "package:google_map/pages/account_page.dart";
+import "package:google_map/pages/penjemputan_page.dart";
+import "package:google_map/services/adds_dio.dart";
+import "package:google_map/services/network_manager.dart";
+
+import "../models/deposit.dart";
+import "../models/newsmodel.dart";
+import "../services/news_dio.dart";
+import "customer/transaction_page.dart";
+import "dropoff/dropoff_page.dart";
+
+class DashboardPage extends StatefulWidget {
+  const DashboardPage({
+    Key? key,
+    required this.userid,
+  }) : super(key: key);
+  final int userid;
+
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  late SharedPreferences prefs;
+  Future<void> loadPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+  }
+
+  var f = NumberFormat("#,###", "id_ID");
+  int selectedindex = 0;
+  int pageIndex = 0;
+  int pageIndexadds = 0;
+  String? username = "";
+  int? userid;
+  bool isAds = false;
+  bool isNews = false;
+
+  bool isLoading = false;
+  int addsCount = 1;
+  int newsCount = 1;
+
+  void refreshData() async {
+    setState(() {
+      isLoading = true;
+    });
+  }
+
+  setter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = prefs.getString('username');
+      userid = prefs.getInt('userid');
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setter().then((value) {
+      loadPrefs().then((value) {
+        refreshData();
+      });
+    });
+  }
+
+  final CarouselController carouselController = CarouselController();
+  void _ontap(int index) {
+    if (index == 0) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return DashboardPage(userid: widget.userid);
+      }));
+    } else if (index == 1) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return ChatPage(userid: widget.userid);
+      }));
+    } else if (index == 2) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return const TransactionCustomerPage();
+      }));
+    } else if (index == 3) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return const AccountPage();
+      }));
+    }
+    setState(() {
+      selectedindex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/background.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 20),
+                            height: 120,
+                            width: 220,
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 10),
+                                CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  radius: 30,
+                                  child: Image.asset('assets/images/logo.png',
+                                      width: 100, height: 100),
+                                ),
+                                const SizedBox(height: 10),
+                                Text('${widget.userid} - $username',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                                const SizedBox(height: 10),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 5),
+                            height: 80,
+                            width: 250,
+                            child: Card(
+                              margin: const EdgeInsets.only(top: 5, bottom: 5),
+                              color: Color.fromARGB(255, 181, 247, 2),
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 10),
+                                  Text('CBU $username',
+                                      textAlign: TextAlign.left,
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                  const SizedBox(height: 5),
+                                  Text('Region $username',
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                  const SizedBox(height: 5),
+                                  Text('Site Name $username',
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      GridView.count(
+                          crossAxisCount: 3,
+                          shrinkWrap: true,
+                          children: [
+                            Card(
+                              color: const Color.fromARGB(255, 245, 244, 206),
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const TransactionCustomerPage();
+                                  }));
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/trouble.png',
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Trouble',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Card(
+                              color: const Color.fromARGB(255, 204, 211, 245),
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const TransactionCustomerPage();
+                                  }));
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/maintenance.png',
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Maintenance',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Card(
+                              color: Color.fromARGB(255, 25, 253, 253),
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const TransactionCustomerPage();
+                                  }));
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/suratjalan.png',
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Surat Jalan',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Card(
+                              color: Color.fromARGB(255, 223, 130, 247),
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const TransactionCustomerPage();
+                                  }));
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/beritacara.png',
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Berita Acara',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Card(
+                              color: const Color.fromARGB(255, 229, 179, 198),
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return const TransactionCustomerPage();
+                                  }));
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/spareparts.png',
+                                      width: 50,
+                                      height: 50,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const Text(
+                                      'Spareparts',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ])
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  )
+                ],
+              ),
+            ),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: const Color.fromARGB(255, 4, 163, 226),
+            iconSize: 20,
+            currentIndex: selectedindex,
+            onTap: _ontap,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.logout_outlined),
+                label: 'Logout',
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
