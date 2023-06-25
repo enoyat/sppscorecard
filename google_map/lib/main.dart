@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_map/pages/dashboard_page.dart';
 import 'package:google_map/pages/splashscreen.dart';
-import 'package:google_map/pages/worker/dashboard_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(const MyApp());
@@ -22,11 +21,6 @@ class MyApp extends StatelessWidget {
             if (xrolesid == 3) {
               return MaterialApp(
                   home: DashboardPage(
-                userid: xuserid,
-              ));
-            } else if (xrolesid == 2) {
-              return MaterialApp(
-                  home: DashboardPageWorker(
                 userid: xuserid,
               ));
             } else {

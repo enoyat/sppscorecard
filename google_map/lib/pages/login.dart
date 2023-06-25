@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_map/pages/dashboard_page.dart';
-import 'package:google_map/pages/register_page.dart';
-import 'package:google_map/pages/worker/dashboard_page.dart';
 import 'package:google_map/services/network_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -148,16 +146,6 @@ class _LoginPageState extends State<LoginPage> {
                                                       },
                                                     ))
                                                   }
-                                                else if (rolesid == 2)
-                                                  {
-                                                    Navigator.push(context,
-                                                        MaterialPageRoute(
-                                                      builder: (context) {
-                                                        return DashboardPageWorker(
-                                                            userid: userid);
-                                                      },
-                                                    ))
-                                                  }
                                               }
                                             else
                                               {
@@ -200,12 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                                       : 'I already have an account'),
                                 ),
                                 TextButton(
-                                  onPressed: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return const RegisterPage();
-                                    }));
-                                  },
+                                  onPressed: () {},
                                   child: Text(
                                       _isLogin
                                           ? 'Create new account'

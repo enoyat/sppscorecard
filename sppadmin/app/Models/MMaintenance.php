@@ -28,4 +28,11 @@ class MMaintenance extends Model
     public function getsitename(){
         return $this->belongsTo(MSitename::class,'idsitename','id');
     }
-}
+    public function getmaintenanceaction() //getmaintenanceaction itu nama fungsi yang akan dipanggil di view
+    {
+        return $this->hasMany(MMaintenanceaction::class, 'idmaintenance', 'id');
+    }
+    public function getunit() //getunit itu nama fungsi yang akan dipanggil di view
+    {
+        return $this->belongsTo(MUnit::class, 'idunit', 'id');
+    }    

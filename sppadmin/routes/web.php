@@ -95,6 +95,10 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/edit/{id}', [App\Http\Controllers\TroubleController::class, 'edit'])->name('trouble.edit');
             Route::put('/update/{id}', [App\Http\Controllers\TroubleController::class, 'update'])->name('trouble.update');
             Route::get('/show/{id}', [App\Http\Controllers\TroubleController::class, 'show'])->name('trouble.show');
+            Route::get('/listdokumen/{id}', [App\Http\Controllers\TroubleController::class, 'listdokumen'])->name('trouble.listdokumen');
+            Route::delete('/dokumendestroy/{id}', [App\Http\Controllers\TroubleController::class, 'dokumendestroy'])->name('trouble.dokumendestroy');
+            Route::get('/listaction/{id}', [App\Http\Controllers\TroubleController::class, 'listaction'])->name('trouble.listaction');
+            Route::delete('/actiondestroy/{id}', [App\Http\Controllers\TroubleController::class, 'actiondestroy'])->name('trouble.actiondestroy');
         });
         Route::group(['prefix' => 'pallete'], function () {
             Route::get('/', [App\Http\Controllers\PalleteController::class, 'index'])->name('pallete.index');

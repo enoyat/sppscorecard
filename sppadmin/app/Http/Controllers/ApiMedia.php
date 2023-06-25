@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\MDokumen;
+use App\Models\MDokumentrouble;
 use App\Models\Transaction;
 
 use Illuminate\Http\Request;
@@ -20,6 +22,14 @@ class ApiMedia extends Controller
         $extension = $file->getClientOriginalExtension();
         $filename = time() . '.' . $extension;
         $file->move($pathUpload, $filename);
-        return  $filename;
+        if ($request->transaksi=="trouble") {
+            MDokumentrouble::create([
+                'idtrouble' => $request->idtrouble,
+                'filename' => $filename,
+                'keterangan' => $request->keterangan,
+
+            ]);
+        }
+        return $filename;
     }
 }

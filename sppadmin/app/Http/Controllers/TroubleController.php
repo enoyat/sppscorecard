@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\MCbu;
-
+use App\Models\MDokumentrouble;
 use App\Models\MForklifttype;
-use App\Models\Mtrouble;
+use App\Models\MTrouble;
+use App\Models\MTroubleaction;
 use App\Models\User;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +60,7 @@ class TroubleController extends Controller
 
       
         
-        $trouble = new Mtrouble;
+        $trouble = new MTrouble;
         $trouble->idcbu = $request->idcbu;
         $trouble->idregion = $request->idregion;
         $trouble->idsitename = $request->idsitename;
@@ -153,6 +154,41 @@ class TroubleController extends Controller
             Session::save();
             return redirect()->back()->with('locale', $locale);
         } else {
+            return redirect()->back();
+        }
+    }
+    public function listdokumen($id)
+    {
+        $dokumentrouble=MDokumentrouble::where('idtrouble',$id)->get();
+        return view('trouble.listdokumen', compact('dokumentrouble','id'));
+    }
+
+    public function dokumendestroy(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $data=MDokumentrouble::where('id', '=', $id)->first();
+            $file=$data->filename;
+            $path = public_path().'/assets/inventory/'.$file;
+            unlink($path);
+            MDokumentrouble::where('id', '=', $id)->delete();
+            return redirect()->back();
+        } catch (QueryException $ex) {
+            return redirect()->back();
+        }
+    }
+    public function listaction($id)
+    {
+        $listactions=MTroubleaction::where('idtrouble',$id)->get();
+        return view('trouble.listaction', compact('listactions','id'));
+    }
+    public function actiondestroy(Request $request)
+    {
+        try {
+            $id = $request->id;
+            MTroubleaction::where('id', '=', $id)->delete();
+            return redirect()->back();
+        } catch (QueryException $ex) {
             return redirect()->back();
         }
     }

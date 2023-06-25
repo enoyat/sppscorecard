@@ -1,23 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import "package:carousel_indicator/carousel_indicator.dart";
 import "package:carousel_slider/carousel_slider.dart";
 import "package:flutter/material.dart";
-import "package:google_map/pages/chat_screen.dart";
+import "package:google_map/pages/mekanik/listoftrouble_page.dart";
 import "package:intl/intl.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
-import "package:google_map/models/addsmodel.dart";
-import "package:google_map/pages/account_page.dart";
-import "package:google_map/pages/penjemputan_page.dart";
-import "package:google_map/services/adds_dio.dart";
-import "package:google_map/services/network_manager.dart";
-
-import "../models/deposit.dart";
-import "../models/newsmodel.dart";
-import "../services/news_dio.dart";
-import "customer/transaction_page.dart";
-import "dropoff/dropoff_page.dart";
+import "login.dart";
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({
@@ -73,6 +62,15 @@ class _DashboardPageState extends State<DashboardPage> {
     });
   }
 
+  void _logout() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.clear();
+    if (!mounted) return;
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      return const LoginPage();
+    }));
+  }
+
   final CarouselController carouselController = CarouselController();
   void _ontap(int index) {
     if (index == 0) {
@@ -80,17 +78,7 @@ class _DashboardPageState extends State<DashboardPage> {
         return DashboardPage(userid: widget.userid);
       }));
     } else if (index == 1) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return ChatPage(userid: widget.userid);
-      }));
-    } else if (index == 2) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return const TransactionCustomerPage();
-      }));
-    } else if (index == 3) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return const AccountPage();
-      }));
+      _logout();
     }
     setState(() {
       selectedindex = index;
@@ -150,7 +138,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             width: 250,
                             child: Card(
                               margin: const EdgeInsets.only(top: 5, bottom: 5),
-                              color: Color.fromARGB(255, 181, 247, 2),
+                              color: Color.fromARGB(255, 245, 224, 250),
                               elevation: 5,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -196,7 +184,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 onTap: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                    return const TransactionCustomerPage();
+                                    return const ListOfTroublePage();
                                   }));
                                 },
                                 child: Column(
@@ -226,12 +214,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return const TransactionCustomerPage();
-                                  }));
-                                },
+                                onTap: () {},
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -259,12 +242,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return const TransactionCustomerPage();
-                                  }));
-                                },
+                                onTap: () {},
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -292,12 +270,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return const TransactionCustomerPage();
-                                  }));
-                                },
+                                onTap: () {},
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -325,12 +298,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: InkWell(
-                                onTap: () {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return const TransactionCustomerPage();
-                                  }));
-                                },
+                                onTap: () {},
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

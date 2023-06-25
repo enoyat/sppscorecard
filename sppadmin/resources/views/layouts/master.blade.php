@@ -3,10 +3,9 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> @yield('title') | Satria Piranti Perkasa - Admin & Dashboard Template</title>
+    <title> @yield('title') | Satria Piranti Perkasa - Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
+    <meta content="Satria Piranti Perkasa" name="description" />
     <!-- App favicon -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>

@@ -22,6 +22,7 @@
                 <th scope="col">Confirmation by Plant</th>
                 <th scope="col">Status SPP</th>
                 <th scope="col">Status Customer</th>
+                <th scope="col">Status Mekanik</th>
                 <th style="width: 80px; min-width: 80px;">Action</th>
             </tr>
         </thead>
@@ -41,7 +42,9 @@
                 <th scope="col">{{ $key->tanggal }}</th>
                 <th scope="col">{{ $key->kdunit }}</th>
                 <th scope="col">{{ $key->issue }}</th>
-                <th scope="col">{{ $key->documentation }}</th> 
+                <th scope="col"><a href="{{ route('trouble.listdokumen',$key->id) }}" class="btn btn-sm btn-info">{{ $key->documentation }}</a> 
+                <a href="{{ route('trouble.listaction',$key->id) }}" class="btn btn-sm btn-info">Action Mekanic</a>
+            </th> 
                 <th scope="col">{{ $key->targetcompletedate }}</th>
                 <th scope="col">{{ $key->actionplanspp }}</th>
                 <th scope="col">{{ $key->actualcompletedate }}</th>
@@ -56,6 +59,12 @@
                     <span class="badge badge-pill badge-soft-success font-size-12">CLOSE</span>
                     @else
                     <span class="badge badge-pill badge-soft-danger font-size-12">OPEN</span>
+                    @endif
+                </th>
+                <th scope="col">@if ($key->statusmekanik=="CLOSE") 
+                    <span class="badge badge-pill badge-soft-success font-size-12">{{ $key->statusmekanik }}</span>
+                    @else
+                    <span class="badge badge-pill badge-soft-danger font-size-12">{{ $key->statusmekanik }}</span>
                     @endif
                 </th>
                 <th style="width: 80px; min-width: 80px;">
