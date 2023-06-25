@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_map/widgets/tanggal_widget.dart';
 import 'package:intl/intl.dart';
 
 import 'package:google_map/models/dokumentrouble.dart';
@@ -25,7 +26,8 @@ class FormTroublePage extends StatefulWidget {
 
 class _FormTroublePageState extends State<FormTroublePage> {
   final formkey = GlobalKey<FormState>();
-  late DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
+  late DateTime selectedtanggalpengerjaan = DateTime.now();
+  late DateTime selectedwaktupengerjaan = DateTime.now();
   late TimeOfDay selectedTime = TimeOfDay.now();
   String filename = '';
   int? userid = 0;
@@ -40,6 +42,38 @@ class _FormTroublePageState extends State<FormTroublePage> {
 
   void _pickedImage(File image) {
     _userImageFile = image;
+  }
+
+  _pilihtanggalpengerjaan() async {
+    final DateTime? date = await showDatePicker(
+      context: context,
+      initialDate: selectedtanggalpengerjaan,
+      firstDate: DateTime(2021),
+      lastDate: DateTime(2040),
+    );
+    if (date != null && date != selectedtanggalpengerjaan) {
+      setState(() {
+        selectedtanggalpengerjaan = date;
+        _tanggalpengerjaan.text =
+            '${selectedtanggalpengerjaan.day}-${selectedtanggalpengerjaan.month}-${selectedtanggalpengerjaan.year}';
+      });
+    }
+  }
+
+  _pilihwaktupengerjaan() async {
+    final DateTime? date = await showDatePicker(
+      context: context,
+      initialDate: selectedwaktupengerjaan,
+      firstDate: DateTime(2021),
+      lastDate: DateTime(2040),
+    );
+    if (date != null && date != selectedwaktupengerjaan) {
+      setState(() {
+        selectedwaktupengerjaan = date;
+        _waktuselesaipengerjaan.text =
+            '${selectedwaktupengerjaan.day}-${selectedwaktupengerjaan.month}-${selectedwaktupengerjaan.year}';
+      });
+    }
   }
 
   final _tanggalpengerjaan = TextEditingController();
@@ -100,10 +134,6 @@ class _FormTroublePageState extends State<FormTroublePage> {
     super.initState();
     setter();
     refreshData();
-    _tanggalpengerjaan.text =
-        '${selectedDate.day}-${selectedDate.month}-${selectedDate.year}';
-    _waktuselesaipengerjaan.text =
-        '${selectedDate.day}-${selectedDate.month}-${selectedDate.year}';
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -183,7 +213,9 @@ class _FormTroublePageState extends State<FormTroublePage> {
                           border: OutlineInputBorder(),
                           suffixIcon: Icon(Icons.calendar_today),
                           labelText: 'Tanggal Pengerjaan'),
-                      onTap: () {},
+                      onTap: () {
+                        _pilihtanggalpengerjaan();
+                      },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Tanggal Pengerjaan tidak boleh kosong';
@@ -237,7 +269,7 @@ class _FormTroublePageState extends State<FormTroublePage> {
                       onTap: () {},
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Tanggal Pengerjaan tidak boleh kosong';
+                          return 'Pemakaian  tidak boleh kosong';
                         }
                         return null;
                       },
@@ -249,9 +281,11 @@ class _FormTroublePageState extends State<FormTroublePage> {
                       decoration: const InputDecoration(
                           hintText: 'Waktu Selesai Pengerjaan',
                           border: OutlineInputBorder(),
-                          suffixIcon: Icon(Icons.abc),
+                          suffixIcon: Icon(Icons.calendar_today),
                           labelText: 'Waktu Selesai Pengerjaan'),
-                      onTap: () {},
+                      onTap: () {
+                        _pilihwaktupengerjaan();
+                      },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Waktu Selesai Pengerjaan tidak boleh kosong';
@@ -372,8 +406,7 @@ class _FormTroublePageState extends State<FormTroublePage> {
                         children: [
                           TextButton.icon(
                               onPressed: () {
-                                if (_tanggalpengerjaan.text.isEmpty ||
-                                    _shift.isEmpty ||
+                                if (_shift.isEmpty ||
                                     _waktuselesaipengerjaan.text.isEmpty ||
                                     _sparepart.text.isEmpty ||
                                     _deskripsi.text.isEmpty ||

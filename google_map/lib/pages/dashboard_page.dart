@@ -111,31 +111,30 @@ class _DashboardPageState extends State<DashboardPage> {
                         children: [
                           Container(
                             margin: const EdgeInsets.only(top: 20),
-                            height: 120,
+                            height: 140,
                             width: 220,
                             child: Column(
                               children: [
                                 const SizedBox(height: 10),
                                 CircleAvatar(
                                   backgroundColor: Colors.white,
-                                  radius: 30,
+                                  radius: 50,
                                   child: Image.asset('assets/images/logo.png',
                                       width: 100, height: 100),
                                 ),
-                                const SizedBox(height: 10),
+                                const SizedBox(height: 15),
                                 Text('${widget.userid} - $username',
                                     style: const TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 13,
                                       fontWeight: FontWeight.bold,
                                     )),
-                                const SizedBox(height: 10),
                               ],
                             ),
                           ),
                           Container(
                             margin: const EdgeInsets.only(top: 5),
                             height: 80,
-                            width: 250,
+                            width: 280,
                             child: Card(
                               margin: const EdgeInsets.only(top: 5, bottom: 5),
                               color: Color.fromARGB(255, 245, 224, 250),
@@ -144,26 +143,36 @@ class _DashboardPageState extends State<DashboardPage> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const SizedBox(height: 10),
-                                  Text('CBU $username',
-                                      textAlign: TextAlign.left,
-                                      style: const TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                      )),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Text('CBU : $username',
+                                        textAlign: TextAlign.left,
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
                                   const SizedBox(height: 5),
-                                  Text('Region $username',
-                                      style: const TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                      )),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Text('Region : $username',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ),
                                   const SizedBox(height: 5),
-                                  Text('Site Name $username',
-                                      style: const TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                      ))
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Text('Site Name : $username',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  )
                                 ],
                               ),
                             ),
@@ -192,14 +201,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                   children: [
                                     Image.asset(
                                       'assets/images/trouble.png',
-                                      width: 50,
-                                      height: 50,
+                                      width: 70,
+                                      height: 70,
                                     ),
                                     const SizedBox(height: 10),
                                     const Text(
                                       'Trouble',
                                       style: TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -220,14 +229,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                   children: [
                                     Image.asset(
                                       'assets/images/maintenance.png',
-                                      width: 50,
-                                      height: 50,
+                                      width: 70,
+                                      height: 70,
                                     ),
                                     const SizedBox(height: 10),
                                     const Text(
                                       'Maintenance',
                                       style: TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -248,14 +257,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                   children: [
                                     Image.asset(
                                       'assets/images/suratjalan.png',
-                                      width: 50,
-                                      height: 50,
+                                      width: 70,
+                                      height: 70,
                                     ),
                                     const SizedBox(height: 10),
                                     const Text(
                                       'Surat Jalan',
                                       style: TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -276,14 +285,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                   children: [
                                     Image.asset(
                                       'assets/images/beritacara.png',
-                                      width: 50,
-                                      height: 50,
+                                      width: 70,
+                                      height: 70,
                                     ),
                                     const SizedBox(height: 10),
                                     const Text(
                                       'Berita Acara',
                                       style: TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -304,14 +313,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                   children: [
                                     Image.asset(
                                       'assets/images/spareparts.png',
-                                      width: 50,
-                                      height: 50,
+                                      width: 70,
+                                      height: 70,
                                     ),
                                     const SizedBox(height: 10),
                                     const Text(
                                       'Spareparts',
                                       style: TextStyle(
-                                        fontSize: 10,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
