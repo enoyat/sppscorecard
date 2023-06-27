@@ -12,6 +12,8 @@
                 <th scope="col">Region</th>
                 <th scope="col">Site Name</th>
                 <th scope="col">Kode Unit</th>
+                <th scope="col">HM</th>
+                <th scope="col">status</th>
                 <th scope="col">Tanggal</th>
                 <th scope="col">Status SPP</th>
                 <th scope="col">Status Customer</th>
@@ -32,6 +34,17 @@
                 <th scope="col">{{ $key->getregion->namaregion }}</th>
                 <th scope="col">{{ $key->getsitename->namasitename }}</th>
                 <th scope="col">{{ $key->kdunit }}</th>
+                <th scope="col">{{ $key->hm }}</th>
+                <th scope="col">
+                    <?php 
+                        if(intdiv($key->hm,5000) % 2==1){
+                            echo "OverHaul besar";
+                        }
+                        else {
+                            echo "OverHaul kecil";
+                        }
+                    ?>
+                </th>
                 <th scope="col">{{ $key->tanggal }}</th> 
                 <th scope="col">@if ($key->statusspp=="CLOSE") 
                     <span class="badge badge-pill badge-soft-success font-size-12">CLOSE</span>
@@ -51,8 +64,8 @@
                                 <i class="bx bx-dots-horizontal-rounded"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ route('maintenance.edit',$key->id) }}">Edit</a></li>
-                                <li><form action="{{ route('maintenance.destroy',$key->id) }}" method="POST">
+                                <li><a class="dropdown-item" href="{{ route('maintenance.edit',$key->kdunit) }}">Edit</a></li>
+                                <li><form action="{{ route('maintenance.destroy',$key->kdunit) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"  class="dropdown-item"

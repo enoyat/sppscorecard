@@ -180,7 +180,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         ],
                       ),
                       GridView.count(
-                          crossAxisCount: 3,
+                          crossAxisCount: 2,
                           shrinkWrap: true,
                           children: [
                             Card(
@@ -235,90 +235,6 @@ class _DashboardPageState extends State<DashboardPage> {
                                     const SizedBox(height: 10),
                                     const Text(
                                       'Maintenance',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Card(
-                              color: Color.fromARGB(255, 25, 253, 253),
-                              elevation: 5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: InkWell(
-                                onTap: () {},
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/suratjalan.png',
-                                      width: 70,
-                                      height: 70,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    const Text(
-                                      'Surat Jalan',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Card(
-                              color: Color.fromARGB(255, 223, 130, 247),
-                              elevation: 5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: InkWell(
-                                onTap: () {},
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/beritacara.png',
-                                      width: 70,
-                                      height: 70,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    const Text(
-                                      'Berita Acara',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Card(
-                              color: const Color.fromARGB(255, 229, 179, 198),
-                              elevation: 5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: InkWell(
-                                onTap: () {},
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/spareparts.png',
-                                      width: 70,
-                                      height: 70,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    const Text(
-                                      'Spareparts',
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,

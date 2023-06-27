@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MCbu;
 use App\Models\MMaintenance;
 use App\Models\MForklifttype;
+use App\Models\MUnit;
 use App\Models\User;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,7 @@ class MaintenanceController extends Controller
     public function index()
     {
         $cbu=MCbu::get();
-        $maintenance = MMaintenance::where('idsitename',Session::get('runidsitename'))->get();
+        $maintenance = MUnit::where('idsitename',Session::get('runidsitename'))->get();
         $forklifttype = MForklifttype::get();
         return view('maintenance.index', compact('maintenance','forklifttype','cbu'));
     }
