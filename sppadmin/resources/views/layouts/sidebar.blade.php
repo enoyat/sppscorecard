@@ -17,7 +17,7 @@
                 </li>
                 <li>
                     <a href="{{ route('delivery.index') }}">
-                    <i class="fas fa-car-side"></i> 
+                        <i class="fas fa-car-side"></i>
                         <span data-key="t-horizontal">Delivery Schedule</span>
                     </a>
                 </li>
@@ -26,7 +26,7 @@
                         <i class=" fas fa-cogs"></i>
                         <span data-key="t-horizontal">Maintenance</span>
                     </a>
-                </li>               
+                </li>
                 <li>
                     <a href="{{ route('physical.index') }}">
                         <i class=" fas fa-coins"></i>
@@ -50,13 +50,13 @@
                                 <span data-key="t-chat">Spare Part Stok</span>
                             </a>
                         </li>
-                        
-                        
+
+
                     </ul>
                 </li>
                 <li>
                     <a href="{{ route('trouble.index') }}">
-                    <i class="fas fa-car-crash"></i>
+                        <i class="fas fa-car-crash"></i>
                         <span data-key="t-horizontal">List of Trouble</span>
                     </a>
                 </li>
@@ -76,11 +76,24 @@
                                 <span data-key="t-chat">Pallete Renewal</span>
                             </a>
                         </li>
-                        
-                        
+
+
                     </ul>
                 </li>
-               
+                <li>
+                    <a href="{{ route('beritaacara.index') }}">
+                        <i class=" fas fa-file-invoice"></i>
+                        <span data-key="t-horizontal">Berita Acara</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('suratjalan.index') }}">
+                        <i class=" fas fa-file-export"></i>
+                        <span data-key="t-horizontal">Surat Jalan</span>
+                    </a>
+                </li>
+                @if(Session::get('roles_id')==1)
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="grid"></i>
@@ -103,23 +116,28 @@
                                 <span data-key="t-chat">Site Name</span>
                             </a>
                         </li>
-                        
+
                     </ul>
                 </li>
+                @endif
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="users"></i>
                         <span data-key="t-authentication">@lang('translation.Authentication')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                    <li><a href="{{ route('utility.userpassword') }}" data-key="t-register">User List</a></li>
-                        <li><a href="{{ route('utility.register') }}" data-key="t-register">@lang('translation.Register')</a></li>
-                        <li><a href="{{ route('gantipassword') }}" data-key="t-recover-password">@lang('translation.Recover_Password')</a></li>
-                        </li>
-                    </ul>
+                        @if(Session::get('roles_id')==1)
+                        <li><a href="{{ route('utility.userpassword') }}" data-key="t-register">User List</a></li>
+                        <li><a href="{{ route('utility.register') }}"
+                                data-key="t-register">@lang('translation.Register')</a></li>
+                        @endif
+                        <li><a href="{{ route('gantipassword') }}"
+                                data-key="t-recover-password">@lang('translation.Recover_Password')</a></li>
                 </li>
+            </ul>
+            </li>
 
-               
+
 
             </ul>
 

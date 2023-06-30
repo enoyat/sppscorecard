@@ -31,4 +31,7 @@ class MPhysical extends Model
     public function getforklifttype(){
         return $this->belongsTo(MForklifttype::class,'idforklifttype','id');
     }
+    public function getunit(){
+        return $this->belongsTo(MUnit::class,'kdunit','kdunit');
+    }
 }

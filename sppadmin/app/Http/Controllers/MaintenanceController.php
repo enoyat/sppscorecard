@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\MCbu;
+use App\Models\MDokumenmaintenance;
 use App\Models\MMaintenance;
 use App\Models\MForklifttype;
+use App\Models\MMaintenanceaction;
 use App\Models\MUnit;
 use App\Models\User;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
@@ -32,94 +34,8 @@ class MaintenanceController extends Controller
         $forklifttype = MForklifttype::get();
         return view('maintenance.index', compact('maintenance','forklifttype','cbu'));
     }
-    public function create()
-    {
-        $cbu=MCbu::get();
-        $forklifttype = MForklifttype::get();
-        return view('maintenance.create',compact('cbu','forklifttype'));
-    }
-    public function edit($id)
-    {
-        $cbu=MCbu::get();
-        $forklifttype = MForklifttype::get();
-        $maintenance = MMaintenance::find($id);
-        return view('maintenance.edit',compact('cbu','forklifttype','maintenance'));
-    }
-    public function store(Request $request)
-    {
-        $request->validate([
-            'idcbu'=>'required',
-            'idregion'=>'required',
-            'idsitename'=>'required',
-            'kdunit'=>'required',
-            'tanggal'=>'required',
-            'statusspp'=>'required',
-            'statuscustomer'=>'required',
-        ]);
 
-      
-        
-        $maintenance = new Mmaintenance;
-        $maintenance->idcbu = $request->idcbu;
-        $maintenance->idregion = $request->idregion;
-        $maintenance->idsitename = $request->idsitename;
-        $maintenance->kdunit = $request->kdunit;
-        $maintenance->tanggal = $request->tanggal;        
-        $maintenance->statusspp = $request->statusspp;        
-        $maintenance->statuscustomer = $request->statuscustomer;   
-        $simpan = $maintenance->save();
-
-        if ($simpan) {                      
-            Session::flash('message', 'Data berhasil disimpan!');
-            return redirect()->route('maintenance.index');
-
-        } else {
-            Session::flash('message', 'Something went wrong!');
-            Session::flash('alert-class', 'alert-danger');
-            return response()->json([
-                'isSuccess' => true,
-                'Message' => "Something went wrong!"
-            ], 200); // Status code here
-        }
-    }
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'idcbu'=>'required',
-            'idregion'=>'required',
-            'idsitename'=>'required',
-            'kdunit'=>'required',
-            'tanggal'=>'required',
-            'statusspp'=>'required',
-            'statuscustomer'=>'required',
-          
-        ]);
-
-      
-        
-        $maintenance = MMaintenance::find($id);
-        $maintenance->idcbu = $request->idcbu;
-        $maintenance->idregion = $request->idregion;
-        $maintenance->idsitename = $request->idsitename;
-        $maintenance->kdunit = $request->kdunit;
-        $maintenance->tanggal = $request->tanggal;     
-        $maintenance->statusspp = $request->statusspp;
-        $maintenance->statuscustomer = $request->statuscustomer;       
-        $simpan = $maintenance->save();
-
-        if ($simpan) {                      
-            Session::flash('message', 'Data berhasil disimpan!');
-            return redirect()->route('maintenance.index');
-
-        } else {
-            Session::flash('message', 'Something went wrong!');
-            Session::flash('alert-class', 'alert-danger');
-            return response()->json([
-                'isSuccess' => true,
-                'Message' => "Something went wrong!"
-            ], 200); // Status code here
-        }
-    }
+   
     public function destroy(Request $request)
     {
         try {
@@ -142,4 +58,73 @@ class MaintenanceController extends Controller
             return redirect()->back();
         }
     }
+    public function listdokumen($id)
+    {
+        $dokumenmaintenance=MDokumenmaintenance::where('idaction',$id)->get();
+        return view('maintenance.listdokumen', compact('dokumenmaintenance','id'));
+    }
+
+    public function dokumendestroy(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $data=MDokumenmaintenance::where('id', '=', $id)->first();
+            $file=$data->filename;
+            $path = public_path().'/assets/inventory/'.$file;
+            unlink($path);
+            MDokumenmaintenance::where('id', '=', $id)->delete();
+            return redirect()->back();
+        } catch (QueryException $ex) {
+            return redirect()->back();
+        }
+    }
+    public function listaction($id)
+    {
+        $listactions=MMaintenanceaction::where('kdunit',$id)->get();
+        return view('maintenance.listaction', compact('listactions','id'));
+    }
+    public function actiondestroy(Request $request)
+    {
+        try {
+            $id = $request->id;
+            MMaintenanceaction::where('id', '=', $id)->delete();
+            return redirect()->back();
+        } catch (QueryException $ex) {
+            return redirect()->back();
+        }
+    }
+    public function formstatus(Request $request)
+    {
+        $kdunit = $request->kdunit;
+        $aid = $request->aid;
+        $maintenance = MUnit::find($kdunit);
+        return view('maintenance.formstatus', compact('maintenance','aid'));
+    }
+    public function updatestatus(Request $request)
+    {
+       
+        $kdunit = $request->kdunit;
+        $aid = $request->aid;
+        if($request->aid == 'spp'){
+            $request->validate([
+                'statusspp'=>'required',
+            ]);
+            $statusspp = $request->statusspp;
+            $maintenance = MUnit::find($kdunit);
+            $maintenance->statusspp = $statusspp;
+            $maintenance->save();
+        }
+        else {
+            $request->validate([
+                'statuscustomer'=>'required',
+            ]);
+            $statuscustomer = $request->statuscustomer;
+            $maintenance = MUnit::find($kdunit);
+            $maintenance->statuscustomer = $statuscustomer;
+            $maintenance->save();
+        }
+       
+        return redirect()->route('maintenance.index');
+    }
+
 }

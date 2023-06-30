@@ -28,7 +28,7 @@ class PhysicalController extends Controller
     public function index()
     {
         $cbu=MCbu::get();
-        $physical = MPhysical::where('idsitename',Session::get('runidsitename'))->get();
+        $physical = MPhysical::with('getunit')->where('idsitename',Session::get('runidsitename'))->get();
         $forklifttype = MForklifttype::get();
         return view('physical.index', compact('physical','forklifttype','cbu'));
     }
@@ -53,17 +53,8 @@ class PhysicalController extends Controller
             'idsitename'=>'required',
             'tanggal'=>'required',
             'kdunit'=>'required',
-            'serialnumber'=>'required',
             'harikerja'=>'required',
-            'planunitkerja'=>'required',
-            'totalbreakdown'=>'required',
-            'totaljamkerja'=>'required',
-            'paforklift'=>'required',
-            'remarkunit'=>'required',
-            'confirmationplan'=>'required',
-            'remarks'=>'required',            
             'statusspp'=>'required',
-            'statuscustomer'=>'required',
         ]);
 
       
@@ -72,19 +63,14 @@ class PhysicalController extends Controller
         $physical->idcbu = $request->idcbu;
         $physical->idregion = $request->idregion;
         $physical->idsitename = $request->idsitename;
-        $physical->tanggal = $request->tanggal;
+        $physical->tanggal = date('Y-m',strtotime($request->tanggal));
         $physical->kdunit = $request->kdunit;
-        $physical->serialnumber = $request->serialnumber;
         $physical->harikerja = $request->harikerja;
-        $physical->planunitkerja = $request->planunitkerja;
-        $physical->totalbreakdown = $request->totalbreakdown;
-        $physical->totaljamkerja = $request->totaljamkerja;
-        $physical->paforklift = $request->paforklift;
         $physical->remarkunit = $request->remarkunit;
         $physical->confirmationplan = $request->confirmationplan;
         $physical->remarks = $request->remarks;
         $physical->statusspp  = $request->statusspp;
-        $physical->statuscustomer   = $request->statuscustomer;        
+        $physical->statuscustomer   = "OPEN";        
         $simpan = $physical->save();
 
         if ($simpan) {                      
@@ -108,17 +94,9 @@ class PhysicalController extends Controller
             'idsitename'=>'required',
             'tanggal'=>'required',
             'kdunit'=>'required',
-            'serialnumber'=>'required',
             'harikerja'=>'required',
-            'planunitkerja'=>'required',
-            'totalbreakdown'=>'required',
-            'totaljamkerja'=>'required',
-            'paforklift'=>'required',
-            'remarkunit'=>'required',
-            'confirmationplan'=>'required',
-            'remarks'=>'required',            
+            'planunitkerja'=>'required',           
             'statusspp'=>'required',
-            'statuscustomer'=>'required',
         ]);
 
       
@@ -129,7 +107,6 @@ class PhysicalController extends Controller
         $physical->idsitename = $request->idsitename;
         $physical->tanggal = $request->tanggal;
         $physical->kdunit = $request->kdunit;
-        $physical->serialnumber = $request->serialnumber;
         $physical->harikerja = $request->harikerja;
         $physical->planunitkerja = $request->planunitkerja;
         $physical->totalbreakdown = $request->totalbreakdown;
@@ -139,7 +116,6 @@ class PhysicalController extends Controller
         $physical->confirmationplan = $request->confirmationplan;
         $physical->remarks = $request->remarks;
         $physical->statusspp  = $request->statusspp;
-        $physical->statuscustomer   = $request->statuscustomer;          
         $simpan = $physical->save();
 
         if ($simpan) {                      
@@ -177,4 +153,39 @@ class PhysicalController extends Controller
             return redirect()->back();
         }
     }
+    public function formstatus(Request $request)
+    {
+        $id = $request->id;
+        $aid = $request->aid;
+        $physical = MPhysical::find($id);
+        return view('physical.formstatus', compact('physical','aid'));
+    }
+    public function updatestatus(Request $request)
+    {
+       
+        $id = $request->id;
+        $aid = $request->aid;
+        if($request->aid == 'spp'){
+            $request->validate([
+                'statusspp'=>'required',
+            ]);
+            $statusspp = $request->statusspp;
+            $physical = MPhysical::find($id);
+            $physical->statusspp = $statusspp;
+            $physical->save();
+        }
+        else {
+            $request->validate([
+                'statuscustomer'=>'required',
+            ]);
+            $statuscustomer = $request->statuscustomer;
+            $physical = MPhysical::find($id);
+            $physical->statuscustomer = $statuscustomer;
+            $physical->save();
+        }
+       
+        return redirect()->route('physical.index');
+    }
+
+
 }

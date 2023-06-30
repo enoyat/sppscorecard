@@ -14,7 +14,7 @@
 <!-- start page title -->
 @component('components.breadcrumb')
 @slot('li_1') Contacts @endslot
-@slot('title') Maintenance @endslot
+@slot('title') Register @endslot
 @endcomponent
 @include('sweetalert::alert')
 <div class="row align-items-center">
@@ -93,13 +93,23 @@
                             <div class="form-group">
                                 <label for=""><strong>Level User</strong></label>
                                 <select class="form-control" name="role" id="role">
-                                    <option value="">-- Level User --</option>
-                                    <option value="1">Administrator</option>
-                                    <option value="2">Manajer</option>
-                                    <option value="3">Operator</option>
+                                <option value="" selected>select</option>
+                                        @foreach ($role as $itemrole)
+                                        <option value="{{ $itemrole->id }}">{{ $itemrole->role_name }}</option>
+                                        @endforeach
                                 </select>
                             </div>
+                            <div class="mb-3">
+                                    <label for="example-text-input" class="form-label">Site Name</label>
+                                    <select class="form-select" aria-label="Default select example" name="idsitename"
+                                        id="idsitename">
+                                        <option value="" selected>select</option>
+                                        @foreach ($sitename as $itemsitename)
+                                        <option value="{{ $itemsitename->id }}">{{ $itemsitename->namasitename }}</option>
+                                        @endforeach
+                                    </select>
 
+                                </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary btn-block">Register</button>

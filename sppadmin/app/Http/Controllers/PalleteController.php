@@ -40,7 +40,7 @@ class PalleteController extends Controller
     {
         $cbu=MCbu::get();
         $forklifttype = MForklifttype::get();
-        $pallete = Mpallete::find($id);
+        $pallete = MPallete::find($id);
         return view('pallete.edit',compact('cbu','forklifttype','pallete'));
     }
     public function store(Request $request)
@@ -53,18 +53,13 @@ class PalleteController extends Controller
             'qty'=>'required',
             'daterequest'=>'required',
             'targetdate'=>'required',
-            'actualdate'=>'required',
-            'lapsetime'=>'required',
-            'gap'=>'required',
-            'remark'=>'required',
             'statusspp'=>'required',
-            'statuscustomer'=>'required',            
 
         ]);
 
       
         
-        $pallete = new Mpallete;
+        $pallete = new MPallete;
         $pallete->idcbu = $request->idcbu;
         $pallete->idregion = $request->idregion;
         $pallete->idsitename = $request->idsitename;
@@ -77,7 +72,7 @@ class PalleteController extends Controller
         $pallete->gap = $request->gap;
         $pallete->remark = $request->remark;
         $pallete->statusspp = $request->statusspp;
-        $pallete->statuscustomer = $request->statuscustomer;
+        $pallete->statuscustomer = "OPEN";
         $simpan = $pallete->save();
 
         if ($simpan) {                      
@@ -103,12 +98,7 @@ class PalleteController extends Controller
             'qty'=>'required',
             'daterequest'=>'required',
             'targetdate'=>'required',
-            'actualdate'=>'required',
-            'lapsetime'=>'required',
-            'gap'=>'required',
-            'remark'=>'required',
             'statusspp'=>'required',
-            'statuscustomer'=>'required',       
           
         ]);
 
@@ -127,7 +117,6 @@ class PalleteController extends Controller
         $pallete->gap = $request->gap;
         $pallete->remark = $request->remark;
         $pallete->statusspp = $request->statusspp;
-        $pallete->statuscustomer = $request->statuscustomer;
         $simpan = $pallete->save();
 
         if ($simpan) {                      
@@ -165,4 +154,39 @@ class PalleteController extends Controller
             return redirect()->back();
         }
     }
+
+    public function formstatus(Request $request)
+    {
+        $id = $request->id;
+        $aid = $request->aid;
+        $pallete = MPallete::find($id);
+        return view('pallete.formstatus', compact('pallete','aid'));
+    }
+    public function updatestatus(Request $request)
+    {
+       
+        $id = $request->id;
+        $aid = $request->aid;
+        if($request->aid == 'spp'){
+            $request->validate([
+                'statusspp'=>'required',
+            ]);
+            $statusspp = $request->statusspp;
+            $pallete = MPallete::find($id);
+            $pallete->statusspp = $statusspp;
+            $pallete->save();
+        }
+        else {
+            $request->validate([
+                'statuscustomer'=>'required',
+            ]);
+            $statuscustomer = $request->statuscustomer;
+            $pallete = MPallete::find($id);
+            $pallete->statuscustomer = $statuscustomer;
+            $pallete->save();
+        }
+       
+        return redirect()->route('pallete.index');
+    }
+
 }

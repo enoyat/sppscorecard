@@ -55,7 +55,6 @@ class TroubleController extends Controller
             'kdunit'=>'required',
             'tanggal'=>'required',
             'statusspp'=>'required',
-            'statuscustomer'=>'required',
         ]);
 
       
@@ -67,14 +66,10 @@ class TroubleController extends Controller
         $trouble->kdunit = $request->kdunit;
         $trouble->tanggal = $request->tanggal;
         $trouble->issue = $request->issue;
-        $trouble->documentation = $request->documentation;
         $trouble->targetcompletedate= $request->targetcompletedate;
         $trouble->actionplanspp= $request->actionplanspp;
-        $trouble->actualcompletedate = $request->actualcompletedate;
-        $trouble->lapsetime = $request->lapsetime;
-        $trouble->confirmationplan= $request->confirmationplan;
         $trouble->statusspp = $request->statusspp;
-        $trouble->statuscustomer = $request->statuscustomer;
+        $trouble->statuscustomer = "OPEN";
    
         $simpan = $trouble->save();
 
@@ -100,7 +95,6 @@ class TroubleController extends Controller
             'tanggal'=>'required',
             'kdunit'=>'required',        
             'statusspp'=>'required',
-            'statuscustomer'=>'required',
         ]);
 
       
@@ -112,14 +106,11 @@ class TroubleController extends Controller
         $trouble->kdunit = $request->kdunit;
         $trouble->tanggal = $request->tanggal;
         $trouble->issue = $request->issue;
-        $trouble->documentation = $request->documentation;
         $trouble->targetcompletedate= $request->targetcompletedate;
         $trouble->actionplanspp= $request->actionplanspp;
         $trouble->actualcompletedate = $request->actualcompletedate;
-        $trouble->lapsetime = $request->lapsetime;
         $trouble->confirmationplan= $request->confirmationplan;
         $trouble->statusspp = $request->statusspp;
-        $trouble->statuscustomer = $request->statuscustomer;       
         $simpan = $trouble->save();
 
         if ($simpan) {                      
@@ -191,5 +182,39 @@ class TroubleController extends Controller
         } catch (QueryException $ex) {
             return redirect()->back();
         }
+    }
+
+    public function formstatus(Request $request)
+    {
+        $id = $request->id;
+        $aid = $request->aid;
+        $trouble = MTrouble::find($id);
+        return view('trouble.formstatus', compact('trouble','aid'));
+    }
+    public function updatestatus(Request $request)
+    {
+       
+        $id = $request->id;
+        $aid = $request->aid;
+        if($request->aid == 'spp'){
+            $request->validate([
+                'statusspp'=>'required',
+            ]);
+            $statusspp = $request->statusspp;
+            $trouble = MTrouble::find($id);
+            $trouble->statusspp = $statusspp;
+            $trouble->save();
+        }
+        else {
+            $request->validate([
+                'statuscustomer'=>'required',
+            ]);
+            $statuscustomer = $request->statuscustomer;
+            $trouble = MTrouble::find($id);
+            $trouble->statuscustomer = $statuscustomer;
+            $trouble->save();
+        }
+       
+        return redirect()->route('trouble.index');
     }
 }

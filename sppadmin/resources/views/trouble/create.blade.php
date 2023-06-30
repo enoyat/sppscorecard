@@ -8,7 +8,8 @@
 @slot('li_1') Forms @endslot
 @slot('title') Create trouble @endslot
 @endcomponent
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <div class="row">
     <div class="col-12">
@@ -74,20 +75,14 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Kode Unit</label>
-                                    <input class="form-control" type="text" value="" name="kdunit"
-                                        id="kdunit">
+                                    
+                                        <select  name="kdunit" id="kdunit" required class="form-control"></select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Issue</label>
                                     <input class="form-control" type="text" value="" name="issue"
                                         id="issue">
                                 </div>
-
-                                <div class="mb-3">
-                                    <label for="example-tel-input" class="form-label">Documentation</label>
-                                    <input class="form-control" type="text" value="" name="documentation" id="documentation">
-                                </div>
-
 
 
 
@@ -104,21 +99,8 @@
                                     <label for="example-password-input" class="form-label">ACTION PLAN FROM SPP</label>
                                     <input class="form-control" type="text" value="" name="actionplanspp" id="actionplanspp">
                                 </div>
-                            <div class="mb-3">
-                                    <label for="example-month-input" class="form-label">ACTUAL COMPLETION DATE</label>
-                                    <input class="form-control" type="date" value="" name="actualcompletedate" id="actualcompletedate">
-                                </div>
-                            <div class="mb-3">
-                                    <label for="example-week-input" class="form-label">LAPSE TIME (days)</label>
-                                    <input class="form-control" type="text" value="" name="lapsetime"
-                                        id="lapsetime">
-                                </div>
 
-                                <div class="mb-3">
-                                    <label for="example-color-input" class="form-label">Confirmation by Plant</label>
-                                    <input class="form-control" type="text" value="" name="confirmationplan"
-                                        id="confirmationplan">
-                                </div>
+
                                 <div class="mb-3">
                                     <label class="form-label">Status SPP</label>
                                     <select class="form-select" name="statusspp" id="statusspp">
@@ -127,14 +109,7 @@
                                         <option value="CLOSE">CLOSE</option>
                                     </select>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status Customer</label>
-                                    <select class="form-select" name="statuscustomer" id="statuscustomer">
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
-                                </div>
+
 
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
@@ -153,6 +128,7 @@
 </div>
 <!-- end row -->
 <script>
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     jQuery('#idcbu').change(function() {
     jQuery('#idregion').html('');
     var id = $(this).val();
@@ -202,6 +178,27 @@
             $('#idsitename').html(html);
         }
     });
+    });
+    $("#kdunit").select2({
+        placeholder: 'Pilih Unit',
+        ajax: {
+            url: "{{ route('unit.getunit') }}",
+            type: "GET",
+            dataType: 'JSON',
+            delay: 250,
+            data: function(params) {
+                return {
+                    _token: CSRF_TOKEN,
+                    search: params.term,
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
     });
 </script>
 

@@ -10,7 +10,9 @@
 @endsection
 
 @section('content')
-@include('header_select')
+@if(Session::get('roles_id')==1)
+    @include('header_select')
+@endif
 <!-- start page title -->
 @component('components.breadcrumb')
 @slot('li_1') Sparepart @endslot
@@ -86,4 +88,5 @@
 
 <!-- Datatable init js -->
 <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+
 @endsection

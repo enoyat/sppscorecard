@@ -12,7 +12,9 @@ pallete
 @endsection
 
 @section('content')
-@include('header_select')
+@if(Session::get('roles_id')==1)
+    @include('header_select')
+@endif
 <!-- start page title -->
 @component('components.breadcrumb')
 @slot('li_1') pallete @endslot

@@ -10,7 +10,9 @@
 @endsection
 
 @section('content')
-@include('header_select')
+@if(Session::get('roles_id')==1)
+    @include('header_select')
+@endif
 <!-- start page title -->
 @component('components.breadcrumb')
 @slot('li_1') Contacts @endslot
@@ -33,9 +35,7 @@
 
                 </ul>
             </div>
-            <div>
-                <a href="{{ route('maintenance.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
-            </div>
+
 
             <!-- <div class="dropdown">
                 <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"

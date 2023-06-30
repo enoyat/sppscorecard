@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MSitename;
 use App\Models\User;
+use App\Models\MMekanik;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +23,9 @@ class UtilityController extends Controller
     }
 
     public function register(){
-        return view ('utility.register');
+        $role=Role::orderby('id')->get();
+        $sitename=MSitename::orderby('namasitename')->get();
+        return view ('utility.register',compact('sitename','role'));
     }
     public function postregister(Request $request)
     {
@@ -52,9 +57,19 @@ class UtilityController extends Controller
         $user->name = ucwords(strtolower($request->name));
         $user->email = strtolower($request->email);
         $user->roles_id = $request->role;
+        $user->idsitename = $request->idsitename;
         $user->password = Hash::make($request->password);
 
         $simpan = $user->save();
+        if ($request->role=='3') {
+            $mekanik= new MMekanik;
+            $mekanik->userid=$user->id;
+            $mekanik->namamekanik=$user->name;
+            $mekanik->idsitename=$request->idsitename;
+            $mekanik->save();
+        }
+
+
         if ($simpan) {
             Alert::success('Berhasil', 'User berhasil ditambahkan');
             return redirect()->route('utility.userpassword');

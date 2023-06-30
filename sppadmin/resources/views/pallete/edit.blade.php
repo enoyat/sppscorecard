@@ -6,7 +6,7 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Forms @endslot
-@slot('title') Update trouble @endslot
+@slot('title') Update pallete @endslot
 @endcomponent
 
 
@@ -14,11 +14,11 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Form trouble</h4>
+                <h4 class="card-title">Form pallete</h4>
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('trouble.update',$trouble->id) }}" method="POST">
+                <form action="{{ route('pallete.update',$pallete->id) }}" method="POST">
                     @method('PUT')
                     <div class="row">
                         @if ($message = Session::get('success'))
@@ -41,13 +41,12 @@
                         @csrf
                         <div class="col-lg-6">
                             <div>
-                                <div class="mb-3">
+                            <div class="mb-3">
                                     <label for="example-text-input" class="form-label">CBU</label>
                                     <select class="form-select" aria-label="Default select example" name="idcbu"
                                         id="idcbu">
-                                        <option value="{{ $trouble->idcbu }}" selected>{{ $trouble->getcbu->namacbu }}
-                                        </option>
-                                        <option value="">select</option>
+                                        <option value="{{ $pallete->idcbu }}" selected>{{ $pallete->getcbu->namacbu }}</option>
+                                        <option value="" >select</option>
                                         @foreach ($cbu as $itemcbu)
                                         <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
                                         @endforeach
@@ -56,11 +55,10 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Region</label>
-
+                                    
                                     <select class="form-select" aria-label="Default select example" name="idregion"
                                         id="idregion">
-                                        <option value="{{ $trouble->idregion }}">{{ $trouble->getregion->namaregion }}
-                                        </option>
+                                        <option value="{{ $pallete->idregion }}">{{ $pallete->getregion->namaregion }}</option>
                                     </select>
 
                                 </div>
@@ -68,29 +66,37 @@
                                     <label for="example-text-input" class="form-label">Site Name</label>
                                     <select class="form-select" aria-label="Default select example" name="idsitename"
                                         id="idsitename">
-                                        <option value="{{ $trouble->idsitename }}">
-                                            {{ $trouble->getsitename->namasitename }}</option>
+                                        <option value="{{ $pallete->idsitename }}">{{ $pallete->getsitename->namasitename }}</option>
                                     </select>
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Tanggal</label>
-                                    <input class="form-control" type="date" value="{{ $trouble->tanggal }}" name="tanggal" id="tanggal">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Kode Unit</label>
-                                    <input class="form-control" type="text" value="{{ $trouble->kdunit }}" name="kdunit" id="kdunit">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Issue</label>
-                                    <input class="form-control" type="text" value="{{ $trouble->issue }}" name="issue" id="issue">
+                                    <label class="form-label">Jenis Transaksi</label>
+                                    <select class="form-select" name="jenisrequest" id="jenisrequest">
+                                    <option value="{{ $pallete->jenisrequest }}" selected>{{ $pallete->jenisrequest }}</option>
+                                        <option value="">Select</option>
+                                        <option value="Withdrawal">Withdrawal</option>
+                                        <option value="Delivery">Delivery</option>
+                                    </select>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="example-tel-input" class="form-label">Documentation</label>
-                                    <input class="form-control" type="text" value="{{ $trouble->documentation }}" name="documentation"
-                                        id="documentation">
+                                    <label for="example-password-input" class="form-label">Qty</label>
+                                    <input class="form-control" type="number" value="{{ $pallete->qty }}" name="qty" 
+                                        id="qty">
                                 </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Date Request</label>
+                                    <input class="form-control" type="date" value="{{ $pallete->daterequest }}" name="daterequest"
+                                        id="daterequest">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="example-tel-input" class="form-label">Target Date</label>
+                                    <input class="form-control" type="date" value="{{ $pallete->targetdate }}" name="targetdate" id="targetdate">
+                                </div>
+
+
 
 
                             </div>
@@ -98,50 +104,26 @@
 
                         <div class="col-lg-6">
                             <div class="mt-3 mt-lg-0">
-                                <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Target Completion
-                                        date</label>
-                                    <input class="form-control" type="date" value="{{ $trouble->targetcompletedate }}" name="targetcompletedate"
-                                        id="targetcompletedate">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">ACTION PLAN FROM SPP</label>
-                                    <input class="form-control" type="text" value="{{ $trouble->actionplanspp }}" name="actionplanspp"
-                                        id="actionplanspp">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-month-input" class="form-label">ACTUAL COMPLETION DATE</label>
-                                    <input class="form-control" type="date" value="{{ $trouble->actualcompletedate }}" name="actualcompletedate"
-                                        id="actualcompletedate">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-week-input" class="form-label">LAPSE TIME (days)</label>
-                                    <input class="form-control" type="text" value="{{ $trouble->lapsetime }}" name="lapsetime" id="lapsetime">
+                            <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Actual Date</label>
+                                    <input class="form-control" type="date" value="{{ $pallete->actualdate }}" name="actualdate" id="actualdate">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="example-color-input" class="form-label">Confirmation by Plant</label>
-                                    <input class="form-control" type="text" value="{{ $trouble->confirmationplan }}" name="confirmationplan"
-                                        id="confirmationplan">
+                                    <label for="example-color-input" class="form-label">Remark</label>
+                                    <input class="form-control" type="text" value="{{ $pallete->remark }}" name="remark"
+                                        id="remark">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Status SPP</label>
                                     <select class="form-select" name="statusspp" id="statusspp">
-                                    <option value="{{ $trouble->statusspp }}">{{ $trouble->statusspp }}</option>
+                                    <option value="{{ $pallete->statusspp }}" selected>{{ $pallete->statusspp }}</option>
                                         <option value="">Select</option>
                                         <option value="OPEN">OPEN</option>
                                         <option value="CLOSE">CLOSE</option>
                                     </select>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status Customer</label>
-                                    <select class="form-select" name="statuscustomer" id="statuscustomer">
-                                    <option value="{{ $trouble->statuscustomer }}">{{ $trouble->statuscustomer }}</option>
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
-                                </div>
+
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 

@@ -23,7 +23,7 @@ class CheckRole
         {
             return $next($request);
         }
-        return redirect('restricted-page');
+        return redirect()->route('restrictpage');
     }
 
     private function CekRoute($route)

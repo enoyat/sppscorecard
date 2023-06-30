@@ -55,12 +55,8 @@ class DeliveryController extends Controller
             'capacity'=>'required',
             'masheight'=>'required',
             'dateestimated'=>'required',
-            'reason'=>'required',
-            'mitigationplan'=>'required',
-            'dateactual'=>'required',
-            'confirmationplan'=>'required',
             'statusspp'=>'required',
-            'statuscustomer'=>'required',
+
         ]);
 
       
@@ -79,7 +75,7 @@ class DeliveryController extends Controller
         $delivery->dateactual  = $request->dateactual;
         $delivery->confirmationplan  = $request->confirmationplan;
         $delivery->statusspp  = $request->statusspp;
-        $delivery->statuscustomer   = $request->statuscustomer;        
+        $delivery->statuscustomer   = "OPEN";        
         $simpan = $delivery->save();
 
         if ($simpan) {                      
@@ -106,12 +102,7 @@ class DeliveryController extends Controller
             'capacity'=>'required',
             'masheight'=>'required',
             'dateestimated'=>'required',
-            'reason'=>'required',
-            'mitigationplan'=>'required',
-            'dateactual'=>'required',
-            'confirmationplan'=>'required',
             'statusspp'=>'required',
-            'statuscustomer'=>'required',
         ]);
 
       
@@ -130,7 +121,6 @@ class DeliveryController extends Controller
         $delivery->dateactual  = $request->dateactual;
         $delivery->confirmationplan  = $request->confirmationplan;
         $delivery->statusspp  = $request->statusspp;
-        $delivery->statuscustomer   = $request->statuscustomer;        
         $simpan = $delivery->save();
 
         if ($simpan) {                      
@@ -168,4 +158,39 @@ class DeliveryController extends Controller
             return redirect()->back();
         }
     }
+
+    public function formstatus(Request $request)
+    {
+        $id = $request->id;
+        $aid = $request->aid;
+        $delivery = MDelivery::find($id);
+        return view('delivery.formstatus', compact('delivery','aid'));
+    }
+    public function updatestatus(Request $request)
+    {
+       
+        $id = $request->id;
+        $aid = $request->aid;
+        if($request->aid == 'spp'){
+            $request->validate([
+                'statusspp'=>'required',
+            ]);
+            $statusspp = $request->statusspp;
+            $delivery = MDelivery::find($id);
+            $delivery->statusspp = $statusspp;
+            $delivery->save();
+        }
+        else {
+            $request->validate([
+                'statuscustomer'=>'required',
+            ]);
+            $statuscustomer = $request->statuscustomer;
+            $delivery = MDelivery::find($id);
+            $delivery->statuscustomer = $statuscustomer;
+            $delivery->save();
+        }
+       
+        return redirect()->route('delivery.index');
+    }
+
 }

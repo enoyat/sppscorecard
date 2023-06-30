@@ -129,4 +129,7 @@ class HomeController extends Controller
     public function registrasi(){
         return view('auth-register');
     }
+    public function restrictpage(){
+        return view('restrict-page');
+    }
 }

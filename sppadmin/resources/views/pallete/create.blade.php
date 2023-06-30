@@ -104,15 +104,8 @@
                                     <label for="example-password-input" class="form-label">Actual Date</label>
                                     <input class="form-control" type="date" value="" name="actualdate" id="actualdate">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="example-week-input" class="form-label">LAPSE TIME (hours)</label>
-                                    <input class="form-control" type="text" value="" name="lapsetime"
-                                        id="lapsetime">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Gap Qty</label>
-                                    <input class="form-control" type="text" value="" name="gap" id="gap">
-                                </div>
+
+
                                 <div class="mb-3">
                                     <label for="example-color-input" class="form-label">Remark</label>
                                     <input class="form-control" type="text" value="" name="remark"
@@ -126,14 +119,7 @@
                                         <option value="CLOSE">CLOSE</option>
                                     </select>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status Customer</label>
-                                    <select class="form-select" name="statuscustomer" id="statuscustomer">
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
-                                </div>
+
 
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>

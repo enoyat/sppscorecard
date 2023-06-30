@@ -79,19 +79,12 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Kode Unit</label>
-                                    <input class="form-control" type="text" value="{{ $trouble->kdunit }}" name="kdunit" id="kdunit">
+                                    <input class="form-control" type="text" value="{{ $trouble->kdunit }}" name="kdunit" id="kdunit" readonly>
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Issue</label>
                                     <input class="form-control" type="text" value="{{ $trouble->issue }}" name="issue" id="issue">
                                 </div>
-
-                                <div class="mb-3">
-                                    <label for="example-tel-input" class="form-label">Documentation</label>
-                                    <input class="form-control" type="text" value="{{ $trouble->documentation }}" name="documentation"
-                                        id="documentation">
-                                </div>
-
 
                             </div>
                         </div>
@@ -114,10 +107,6 @@
                                     <input class="form-control" type="date" value="{{ $trouble->actualcompletedate }}" name="actualcompletedate"
                                         id="actualcompletedate">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="example-week-input" class="form-label">LAPSE TIME (days)</label>
-                                    <input class="form-control" type="text" value="{{ $trouble->lapsetime }}" name="lapsetime" id="lapsetime">
-                                </div>
 
                                 <div class="mb-3">
                                     <label for="example-color-input" class="form-label">Confirmation by Plant</label>
@@ -133,15 +122,7 @@
                                         <option value="CLOSE">CLOSE</option>
                                     </select>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status Customer</label>
-                                    <select class="form-select" name="statuscustomer" id="statuscustomer">
-                                    <option value="{{ $trouble->statuscustomer }}">{{ $trouble->statuscustomer }}</option>
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
-                                </div>
+
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 

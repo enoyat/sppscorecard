@@ -67,7 +67,7 @@ class palleterenewController extends Controller
         $palleterenew->qty = $request->qty;
         $palleterenew->tanggal = $request->tanggal;        
         $palleterenew->statusspp = $request->statusspp;        
-        $palleterenew->statuscustomer = $request->statuscustomer;   
+        $palleterenew->statuscustomer = "OPEN";   
         $simpan = $palleterenew->save();
 
         if ($simpan) {                      
@@ -93,7 +93,6 @@ class palleterenewController extends Controller
             'totalrent'=>'required',
             'qty'=>'required',
             'statusspp'=>'required',
-            'statuscustomer'=>'required',
           
         ]);
 
@@ -107,7 +106,6 @@ class palleterenewController extends Controller
         $palleterenew->qty = $request->qty;
         $palleterenew->tanggal = $request->tanggal;        
         $palleterenew->statusspp = $request->statusspp;        
-        $palleterenew->statuscustomer = $request->statuscustomer;   
         $simpan = $palleterenew->save();
 
         if ($simpan) {                      
@@ -144,5 +142,38 @@ class palleterenewController extends Controller
         } else {
             return redirect()->back();
         }
+    }
+    public function formstatus(Request $request)
+    {
+        $id = $request->id;
+        $aid = $request->aid;
+        $palleterenew = MPalleterenew::find($id);
+        return view('palleterenew.formstatus', compact('palleterenew','aid'));
+    }
+    public function updatestatus(Request $request)
+    {
+       
+        $id = $request->id;
+        $aid = $request->aid;
+        if($request->aid == 'spp'){
+            $request->validate([
+                'statusspp'=>'required',
+            ]);
+            $statusspp = $request->statusspp;
+            $palleterenew = MPalleterenew::find($id);
+            $palleterenew->statusspp = $statusspp;
+            $palleterenew->save();
+        }
+        else {
+            $request->validate([
+                'statuscustomer'=>'required',
+            ]);
+            $statuscustomer = $request->statuscustomer;
+            $palleterenew = MPalleterenew::find($id);
+            $palleterenew->statuscustomer = $statuscustomer;
+            $palleterenew->save();
+        }
+       
+        return redirect()->route('palleterenew.index');
     }
 }

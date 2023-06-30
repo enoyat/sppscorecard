@@ -93,15 +93,7 @@
                                         <option value="CLOSE">CLOSE</option>
                                     </select>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status Customer</label>
-                                    <select class="form-select" name="statuscustomer" id="statuscustomer">
-                                    <option value="{{ $palleterenew->statuscustomer }}">{{ $palleterenew->statuscustomer }}</option>
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
-                                </div>
+
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 

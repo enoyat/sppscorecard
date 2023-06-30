@@ -72,19 +72,15 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Tanggal</label>
-                                    <input class="form-control" type="date" value="{{ $physical->tanggal }}" name="tanggal"
-                                        id="tanggal">
+                                    <input class="form-control" type="text" value="{{ $physical->tanggal }}" name="tanggal"
+                                        id="tanggal" readonly>
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Kode Unit</label>
                                     <input class="form-control" type="text" value="{{ $physical->kdunit }}" name="kdunit"
-                                        id="kdunit">
+                                        id="kdunit" readonly>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Serial Number</label>
-                                    <input class="form-control" type="text" value="{{ $physical->kdunit }}" name="serialnumber"
-                                        id="serialnumber">
-                                </div>
+                                
 
                                 <div class="mb-3">
                                     <label for="example-tel-input" class="form-label">Hari Kerja</label>
@@ -96,7 +92,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Total Break Down (Minutes)</label>
-                                    <input class="form-control" type="text" value="{{ $physical->totalbreakdown }}" name="totalbreakdown" id="totalbreakdown">
+                                    <input class="form-control" type="text" value="{{ $physical->totalbreakdown }}" name="totalbreakdown" id="totalbreakdown" readonly>
                                 </div>
 
 
@@ -108,12 +104,12 @@
                             <div class="mt-3 mt-lg-0">
                             <div class="mb-3">
                                     <label for="example-month-input" class="form-label">Total Jam Kerja Unit</label>
-                                    <input class="form-control" type="text" value="{{ $physical->totaljamkerja }}" name="totaljamkerja" id="totaljamkerja">
+                                    <input class="form-control" type="text" value="{{ $physical->totaljamkerja }}" name="totaljamkerja" id="totaljamkerja" readonly>
                                 </div>
                             <div class="mb-3">
                                     <label for="example-week-input" class="form-label">PA Forklift</label>
                                     <input class="form-control" type="text" value="{{ $physical->paforklift }}" name="paforklift"
-                                        id="paforklift">
+                                        id="paforklift" readonly>
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-time-input" class="form-label">Remark Unit</label>
@@ -139,15 +135,7 @@
                                         <option value="CLOSE">CLOSE</option>
                                     </select>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status Customer</label>
-                                    <select class="form-select" name="statuscustomer" id="statuscustomer">
-                                    <option value="{{ $physical->statuscustomer }}">{{ $physical->statuscustomer }}</option>
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
-                                </div>
+
 
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
