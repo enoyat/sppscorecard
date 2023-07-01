@@ -6,35 +6,22 @@ use App\Models\Cart;
 use App\Models\MDokumenmaintenance;
 use App\Models\MMaintenance;
 use App\Models\MMaintenanceaction;
+use App\Models\MUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 
 class ApiMaintenance extends Controller
 {
-    public function listof($idsitename)
+    public function listofunit($idsitename)
     {
-        $maintenance = MMaintenance::where('idsitename',$idsitename)
-        ->join('sitename','sitename.id','=','listofmaintenance.idsitename')
-        ->join('region','region.id','=','sitename.idregion')    
-        ->join('cbu','cbu.id','=','region.idcbu')
-        ->where('statusspp','!=','CLOSE')
-        ->select('listofmaintenance.*','sitename.namasitename','region.namaregion','cbu.namacbu')
-        ->orderby('id','desc')        
-        ->get();
-        return Response::json($maintenance);
+        $unit = MUnit::where('idsitename',$idsitename)->get();
+        return Response::json($unit);
     }
-    public function getmaintenance($id)
+    public function getunit($id)
     {
-        $maintenance = MMaintenance::where('listofmaintenance.id',$id)
-        ->join('sitename','sitename.id','=','listofmaintenance.idsitename')
-        ->join('region','region.id','=','sitename.idregion')    
-        ->join('cbu','cbu.id','=','region.idcbu')
-        ->where('statuscustomer','!=','close')
-        ->select('listofmaintenance.*','sitename.namasitename','region.namaregion','cbu.namacbu')
-        ->orderby('id','desc')        
-        ->get();
-        return Response::json($maintenance);
+        $unit = MUnit::where('kdunit',$id)->get();
+        return Response::json($unit);
     }
     public function uploadgallery(Request $request)
     {
@@ -49,30 +36,33 @@ class ApiMaintenance extends Controller
     public function store(Request $request)
     {
         $MMaintenanceaction = New MMaintenanceaction();
-        $MMaintenanceaction->idmaintenance = $request->idmaintenance;
+        $MMaintenanceaction->kdunit = $request->kdunit;
         $MMaintenanceaction->iduser = $request->iduser;
         $MMaintenanceaction->tanggalmulai = date("y-m-d", strtotime($request->tanggalmulai));
-        $MMaintenanceaction->tanggalakhir = date("y-m-d", strtotime($request->waktuselesaipengerjaan));
+        $MMaintenanceaction->tanggalakhir = date("y-m-d", strtotime($request->tanggalakhir));
         $MMaintenanceaction->shift = $request->shift;
-        $MMaintenanceaction->actionplan = $request->deskripsi;
+        $MMaintenanceaction->actionplan = $request->actionplan;
         $MMaintenanceaction->sparepart = $request->sparepart;
+        $MMaintenanceaction->statusmekanik = $request->statusmekanik;
         $MMaintenanceaction->hm = $request->hm;
-
         $MMaintenanceaction->save();
-        
-        $MMaintenance = MMaintenance::where('id',$request->idmaintenance)->first();
+        $idaction = $MMaintenanceaction->id;
+
+        $MMaintenance = Munit::where('kdunit',$request->kdunit)->first();
         $MMaintenance->statusmekanik = $request->statusmekanik;
         $MMaintenance->tanggal = date("y-m-d", strtotime($request->waktuselesaipengerjaan));
         $MMaintenance->hm = $request->hm;
         $MMaintenance->save();
-        $id = $MMaintenance->id;
+        
+        return $data = [
+            'idaction' => $idaction,
+        ];
 
-
-        return  Response::json($MMaintenance);
+       
     }
     public function listdokumen($id)
     {
-        $maintenance = MDokumenmaintenance::where('idmaintenance',$id)
+        $maintenance = MDokumenmaintenance::where('idaction',$id)
         ->get();
         return Response::json($maintenance);
     }

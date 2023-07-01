@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\MDokumen;
+use App\Models\MDokumenmaintenance;
 use App\Models\MDokumentrouble;
 use App\Models\Transaction;
 
@@ -25,6 +26,14 @@ class ApiMedia extends Controller
         if ($request->transaksi=="trouble") {
             MDokumentrouble::create([
                 'idtrouble' => $request->idtrouble,
+                'filename' => $filename,
+                'keterangan' => $request->keterangan,
+
+            ]);
+        }
+        if ($request->transaksi=="maintenance") {
+            MDokumenmaintenance::create([
+                'idaction' => $request->idaction,
                 'filename' => $filename,
                 'keterangan' => $request->keterangan,
 

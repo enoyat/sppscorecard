@@ -40,22 +40,25 @@ class SparepartstokController extends Controller
     public function edit($id)
     {
         $cbu=MCbu::get();
-        $forklifttype = MForklifttype::get();
-        $sparepart = MSparepart::find($id);
-        return view('sparepartstok.edit',compact('cbu','forklifttype','sparepart'));
+        $sparepart = MSparepartstok::find($id);
+        
+        return view('sparepartstok.edit',compact('cbu','sparepart'));
     }
     public function store(Request $request)
     {
+        $cek=MSparepartstok::where('idsitename',$request->idsitename)->where('idsparepart',$request->idsparepart)->count();
+        if ($cek>0) {
+            Session::flash('success', 'Data sudah ada!');
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->back();
+        }
+
         $request->validate([
             'idcbu'=>'required',
             'idregion'=>'required', 
             'idsitename'=>'required',
-            'tanggal'=>'required',
+            'idsparepart'=>'required',
             'qty'=>'required',
-            'qtyuom'=>'required',
-            'stockprosentase'=>'required',
-            'confirmationplan'=>'required',
-            'average'=>'required',
         ]);
 
       
@@ -64,13 +67,8 @@ class SparepartstokController extends Controller
         $sparepart->idcbu = $request->idcbu;
         $sparepart->idregion = $request->idregion;
         $sparepart->idsitename = $request->idsitename;
-        $sparepart->tanggal = $request->tanggal;
         $sparepart->idsparepart = $request->idsparepart;
         $sparepart->qty = $request->qty;
-        $sparepart->qtyuom = $request->qtyuom;
-        $sparepart->stockprosentase = $request->stockprosentase;
-        $sparepart->confirmationplan = $request->confirmationplan;
-        $sparepart->average = $request->average;
         $simpan = $sparepart->save();
 
         if ($simpan) {                      
@@ -92,12 +90,8 @@ class SparepartstokController extends Controller
             'idcbu'=>'required',
             'idregion'=>'required', 
             'idsitename'=>'required',
-            'tanggal'=>'required',
+            'idsparepart'=>'required',
             'qty'=>'required',
-            'qtyuom'=>'required',
-            'stockprosentase'=>'required',
-            'confirmationplan'=>'required',
-            'average'=>'required',
           
         ]);
 
@@ -107,13 +101,9 @@ class SparepartstokController extends Controller
         $sparepart->idcbu = $request->idcbu;
         $sparepart->idregion = $request->idregion;
         $sparepart->idsitename = $request->idsitename;
-        $sparepart->tanggal = $request->tanggal;
         $sparepart->idsparepart = $request->idsparepart;
         $sparepart->qty = $request->qty;
-        $sparepart->qtyuom = $request->qtyuom;
-        $sparepart->stockprosentase = $request->stockprosentase;
-        $sparepart->confirmationplan = $request->confirmationplan;
-        $sparepart->average = $request->average;
+
         $simpan = $sparepart->save();
 
         if ($simpan) {                      

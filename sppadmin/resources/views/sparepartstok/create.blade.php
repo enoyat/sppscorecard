@@ -66,43 +66,12 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Nama Spare Part</label>
-                                    <select  name="idsparepart" id="idsparepart" required></select>
+                                    <select  name="idsparepart" id="idsparepart" required class="form-control"></select>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-date-input" class="form-label">Qty</label>
                                     <input class="form-control" type="text" value="" name="qty" id="qty">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-date-input" class="form-label">Uom</label>
-                                    <input class="form-control" type="text" value="" name="uom" id="uom">
-                                </div>
-
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mt-3 mt-lg-0">
-                                <div class="mb-3">
-                                    <label for="example-month-input" class="form-label">Tanggal</label>
-                                    <input class="form-control" type="date" value="" name="tanggal" id="tanggal">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-month-input" class="form-label">Qty (Uom)</label>
-                                    <input class="form-control" type="text" value="" name="qtyuom" id="qtyuom">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-week-input" class="form-label">Stock (%)</label>
-                                    <input class="form-control" type="text" value="" name="stockprosentase" id="stockprosentase">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-color-input" class="form-label">Confirmation by Plant</label>
-                                    <input class="form-control" type="text" value="" name="confirmationplan" id="confirmationplan">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-color-input" class="form-label">Average</label>
-                                    <input class="form-control" type="text" value="" name="average" id="average">
                                 </div>
 
                                 <div class="mb-3">
@@ -112,6 +81,7 @@
 
                             </div>
                         </div>
+                       
 
 
                     </div>

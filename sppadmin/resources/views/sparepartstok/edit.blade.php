@@ -9,7 +9,8 @@
 @slot('title') Update sparepart @endslot
 @endcomponent
 
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -18,7 +19,7 @@
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('sparepart.update',$sparepart->id) }}" method="POST">
+                <form action="{{ route('sparepartstok.update',$sparepart->id) }}" method="POST">
                     @method('PUT')
                     <div class="row">
                         @if ($message = Session::get('success'))
@@ -40,16 +41,13 @@
 
                         @csrf
                         <div class="col-lg-6">
-                            <div>
-                                <div class="mb-3">
+                            <div class="mb-3">
                                     <label for="example-text-input" class="form-label">CBU</label>
                                     <select class="form-select" aria-label="Default select example" name="idcbu"
                                         id="idcbu">
                                         <option value="{{ $sparepart->idcbu }}" selected>{{ $sparepart->getcbu->namacbu }}</option>
-                                        <option value="" >select</option>
-                                        @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
-                                        @endforeach
+               
+    
                                     </select>
 
                                 </div>
@@ -57,7 +55,7 @@
                                     <label for="example-text-input" class="form-label">Region</label>
                                     
                                     <select class="form-select" aria-label="Default select example" name="idregion"
-                                        id="idregion">
+                                        id="idregion" >
                                         <option value="{{ $sparepart->idregion }}">{{ $sparepart->getregion->namaregion }}</option>
                                     </select>
 
@@ -71,40 +69,24 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Kode Unit</label>
-                                    <input class="form-control" type="text" value="{{ $sparepart->kdunit }}" name="kdunit"
-                                        id="kdunit">
+                                    <label for="example-password-input" class="form-label">Spare Part</label>
+                                    <input class="form-control" type="hidden" value="{{ $sparepart->idsparepart }}"
+                                        name="idsparepart" id="idsparepart">{{ $sparepart->getsparepart->namasparepart }}
+
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-time-input" class="form-label">Tanggal</label>
-                                    <input class="form-control" type="date" value="{{ $sparepart->tanggal }}" name="tanggal"
-                                        id="tanggal">
+                                    <label for="example-date-input" class="form-label">Qty</label>
+                                    <input class="form-control" type="text" value="{{ $sparepart->qty }}" name="qty" id="qty">
                                 </div>
-                               
-                             <div class="mb-3">
-                                    <label class="form-label">Status SPP</label>
-                                    <select class="form-select" name="statusspp" id="statusspp">
-                                    <option value="{{ $sparepart->statusspp }}">{{ $sparepart->statusspp }}</option>
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status Customer</label>
-                                    <select class="form-select" name="statuscustomer" id="statuscustomer">
-                                    <option value="{{ $sparepart->statuscustomer }}">{{ $sparepart->statuscustomer }}</option>
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
-                                </div>
+
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
                                 </div>
+
                             </div>
                         </div>
+                       
 
                     </div>
                 </form>
@@ -114,58 +96,7 @@
     </div> <!-- end col -->
 </div>
 <!-- end row -->
-<script>
-    jQuery('#idcbu').change(function() {
-    jQuery('#idregion').html('');
-    var id = $(this).val();
-    var string = "{{ asset('/lokasi/getregion/') }}/" + id;
-    $.ajax({
-        type: 'GET',
-        url: string,
-        data: {
-            id: id
-        },
-        dataType: 'json',
-        success: function(data) {
-            datax = JSON.stringify(data);
-            datax = JSON.parse(datax);
-            var i;
-            var html = '';
-            var html = '<option>Select</option>';
-            for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
-                    "</option>";
-            }
-            $('#idregion').html(html);
-        }
-    });
-    });
-    jQuery('#idregion').change(function() {
-    jQuery('#idsitename').html('');
-    var id = $(this).val();
-    var string = "{{ asset('/lokasi/getsitename/') }}/" + id;
-    $.ajax({
-        type: 'GET',
-        url: string,
-        data: {
-            id: id
-        },
-        dataType: 'json',
-        success: function(data) {
-            datax = JSON.stringify(data);
-            datax = JSON.parse(datax);
-            var i;
-            var html = '';
-            var html = '<option>Select</option>';
-            for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
-                    "</option>";
-            }
-            $('#idsitename').html(html);
-        }
-    });
-    });
-</script>
+
 
 
 

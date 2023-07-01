@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -72,12 +73,7 @@ class User extends Authenticatable
     {
         return (strtolower($role)==strtolower($this->have_role->role_name)) ? true : false;
     }
-    public function get_customer()
-    {
-        return $this->hasOne(UserCustomer::class, 'userid', 'id');
-    }
-    public function get_worker()
-    {
-        return $this->hasOne(UserWorker::class, 'userid', 'id');
+    public function getsitename(){
+        return $this->belongsTo(MSitename::class,'idsitename','id');
     }
 }

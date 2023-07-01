@@ -33,6 +33,7 @@ class ApiAuthController extends Controller
             else if ($cek->roles_id == '3')  
             {
                 $datauser=User::find($cek->id);
+                
 
                 return $data = [
                     'status' => true,
@@ -40,6 +41,13 @@ class ApiAuthController extends Controller
                     'username' => $cek->name,
                     'email'=>$cek->email,
                     'roles_id'=>$cek->roles_id,
+                    'idsitename' => $cek->idsitename,
+                    'namasitename'=>$datauser->getsitename->namasitename,
+                    'idregion' => $datauser->getsitename->idregion,
+                    'namaregion'=>$datauser->getsitename->getregion->namaregion,
+                    'idcbu' => $datauser->getsitename->getregion->idcbu,
+                    'namacbu'=>$datauser->getsitename->getregion->getcbu->namacbu,
+
                 ];
             }
             

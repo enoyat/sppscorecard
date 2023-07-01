@@ -213,6 +213,17 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::put('/update/{id}', [App\Http\Controllers\SparepartstokController::class, 'update'])->name('sparepartstok.update');
             Route::get('/show/{id}', [App\Http\Controllers\SparepartstokController::class, 'show'])->name('sparepartstok.show');
         });
+        Route::group(['prefix' => 'sparepartstoktrans'], function () {
+            Route::get('/', [App\Http\Controllers\SparepartstoktransController::class, 'index'])->name('sparepartstoktrans.index');
+            Route::get('/create', [App\Http\Controllers\SparepartstoktransController::class, 'create'])->name('sparepartstoktrans.create');
+            Route::post('/store', [App\Http\Controllers\SparepartstoktransController::class, 'store'])->name('sparepartstoktrans.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\SparepartstoktransController::class, 'destroy'])->name('sparepartstoktrans.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\SparepartstoktransController::class, 'edit'])->name('sparepartstoktrans.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\SparepartstoktransController::class, 'update'])->name('sparepartstoktrans.update');
+            Route::get('/show/{id}', [App\Http\Controllers\SparepartstoktransController::class, 'show'])->name('sparepartstoktrans.show');
+            Route::get('/getsparepart', [App\Http\Controllers\SparepartstoktransController::class, 'getsparepart'])->name('sparepartstoktrans.getsparepart');
+            Route::get('/getstok', [App\Http\Controllers\SparepartstoktransController::class, 'getstok'])->name('sparepartstoktrans.getstok');
+        });     
         Route::group(['prefix' => 'pallete'], function () {
             Route::get('/', [App\Http\Controllers\PalleteController::class, 'index'])->name('pallete.index');
             Route::get('/formstatus', [App\Http\Controllers\PalleteController::class, 'formstatus'])->name('pallete.formstatus');

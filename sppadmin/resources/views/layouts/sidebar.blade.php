@@ -47,10 +47,14 @@
 
                         <li>
                             <a href="{{ route('sparepartstok.index') }}">
-                                <span data-key="t-chat">Spare Part Stok</span>
+                                <span data-key="t-chat">Spare Part Stock</span>
                             </a>
                         </li>
-
+                        <li>
+                            <a href="{{ route('sparepartstoktrans.index') }}">
+                                <span data-key="t-chat">Stock Transaction</span>
+                            </a>
+                        </li>
 
                     </ul>
                 </li>
