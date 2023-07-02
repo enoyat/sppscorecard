@@ -34,7 +34,11 @@ class SparepartstoktransController extends Controller
     }
     public function create()
     {
-        $cbu=MCbu::get();
+        if(Session::get('roles_id')==2) {
+            $cbu=MCbu::where('id',Session::get('runidcbu'))->get();
+        } else {
+            $cbu=MCbu::get();
+        }
         return view('sparepartstoktrans.create',compact('cbu'));
     }
     public function edit($id)

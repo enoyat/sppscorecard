@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import "package:carousel_slider/carousel_slider.dart";
 import "package:flutter/material.dart";
 import "package:google_map/pages/mekanik/listofmaintenanace_page.dart";
 import "package:google_map/widgets/profil_widget.dart";
@@ -9,7 +8,6 @@ import "package:shared_preferences/shared_preferences.dart";
 
 import "package:google_map/pages/mekanik/listoftrouble_page.dart";
 
-import "../models/profil.dart";
 import "login.dart";
 
 class DashboardPage extends StatefulWidget {
@@ -84,7 +82,6 @@ class _DashboardPageState extends State<DashboardPage> {
     }));
   }
 
-  final CarouselController carouselController = CarouselController();
   void _ontap(int index) {
     if (index == 0) {
       Navigator.push(context, MaterialPageRoute(builder: (context) {

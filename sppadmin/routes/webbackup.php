@@ -57,7 +57,82 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::put('/update/{id}', [App\Http\Controllers\SitenameController::class, 'update'])->name('sitename.update');
             Route::get('/show/{id}', [App\Http\Controllers\SitenameController::class, 'show'])->name('sitename.show');
         });
-
+        Route::group(['prefix' => 'delivery'], function () {
+            Route::get('/', [App\Http\Controllers\DeliveryController::class, 'index'])->name('delivery.index');
+            Route::get('/create', [App\Http\Controllers\DeliveryController::class, 'create'])->name('delivery.create');
+            Route::post('/store', [App\Http\Controllers\DeliveryController::class, 'store'])->name('delivery.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\DeliveryController::class, 'destroy'])->name('delivery.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\DeliveryController::class, 'edit'])->name('delivery.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\DeliveryController::class, 'update'])->name('delivery.update');
+            Route::get('/show/{id}', [App\Http\Controllers\DeliveryController::class, 'show'])->name('delivery.show');
+        });
+        Route::group(['prefix' => 'maintenance'], function () {
+            Route::get('/', [App\Http\Controllers\MaintenanceController::class, 'index'])->name('maintenance.index');
+            Route::post('/store', [App\Http\Controllers\MaintenanceController::class, 'store'])->name('maintenance.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\MaintenanceController::class, 'destroy'])->name('maintenance.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\MaintenanceController::class, 'edit'])->name('maintenance.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\MaintenanceController::class, 'update'])->name('maintenance.update');
+            Route::get('/show/{id}', [App\Http\Controllers\MaintenanceController::class, 'show'])->name('maintenance.show');
+            Route::get('/listdokumen/{id}', [App\Http\Controllers\MaintenanceController::class, 'listdokumen'])->name('maintenance.listdokumen');
+            Route::delete('/dokumendestroy/{id}', [App\Http\Controllers\MaintenanceController::class, 'dokumendestroy'])->name('maintenance.dokumendestroy');
+            Route::get('/listaction/{id}', [App\Http\Controllers\MaintenanceController::class, 'listaction'])->name('maintenance.listaction');
+            Route::delete('/actiondestroy/{id}', [App\Http\Controllers\MaintenanceController::class, 'actiondestroy'])->name('maintenance.actiondestroy');
+        });
+        Route::group(['prefix' => 'physical'], function () {
+            Route::get('/', [App\Http\Controllers\PhysicalController::class, 'index'])->name('physical.index');
+            Route::get('/create', [App\Http\Controllers\PhysicalController::class, 'create'])->name('physical.create');
+            Route::post('/store', [App\Http\Controllers\PhysicalController::class, 'store'])->name('physical.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\PhysicalController::class, 'destroy'])->name('physical.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\PhysicalController::class, 'edit'])->name('physical.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\PhysicalController::class, 'update'])->name('physical.update');
+            Route::get('/show/{id}', [App\Http\Controllers\PhysicalController::class, 'show'])->name('physical.show');
+        });
+        Route::group(['prefix' => 'trouble'], function () {
+            Route::get('/', [App\Http\Controllers\TroubleController::class, 'index'])->name('trouble.index');
+            Route::get('/create', [App\Http\Controllers\TroubleController::class, 'create'])->name('trouble.create');
+            Route::post('/store', [App\Http\Controllers\TroubleController::class, 'store'])->name('trouble.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\TroubleController::class, 'destroy'])->name('trouble.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\TroubleController::class, 'edit'])->name('trouble.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\TroubleController::class, 'update'])->name('trouble.update');
+            Route::get('/show/{id}', [App\Http\Controllers\TroubleController::class, 'show'])->name('trouble.show');
+            Route::get('/listdokumen/{id}', [App\Http\Controllers\TroubleController::class, 'listdokumen'])->name('trouble.listdokumen');
+            Route::delete('/dokumendestroy/{id}', [App\Http\Controllers\TroubleController::class, 'dokumendestroy'])->name('trouble.dokumendestroy');
+            Route::get('/listaction/{id}', [App\Http\Controllers\TroubleController::class, 'listaction'])->name('trouble.listaction');
+            Route::delete('/actiondestroy/{id}', [App\Http\Controllers\TroubleController::class, 'actiondestroy'])->name('trouble.actiondestroy');
+        });
+        
+        Route::group(['prefix' => 'pallete'], function () {
+            Route::get('/', [App\Http\Controllers\PalleteController::class, 'index'])->name('pallete.index');
+            Route::get('/create', [App\Http\Controllers\PalleteController::class, 'create'])->name('pallete.create');
+            Route::post('/store', [App\Http\Controllers\PalleteController::class, 'store'])->name('pallete.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\PalleteController::class, 'destroy'])->name('pallete.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\PalleteController::class, 'edit'])->name('pallete.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\PalleteController::class, 'update'])->name('pallete.update');
+            Route::get('/show/{id}', [App\Http\Controllers\PalleteController::class, 'show'])->name('pallete.show');
+            Route::get('/formstatus', [App\Http\Controllers\PalleteController::class, 'formstatus'])->name('pallete.formstatus');
+            Route::post('/updatestatus', [App\Http\Controllers\PalleteController::class, 'updatestatus'])->name('pallete.updatestatus');
+        });
+        Route::group(['prefix' => 'palleterenew'], function () {
+            Route::get('/', [App\Http\Controllers\PalleterenewController::class, 'index'])->name('palleterenew.index');
+            Route::get('/create', [App\Http\Controllers\PalleterenewController::class, 'create'])->name('palleterenew.create');
+            Route::post('/store', [App\Http\Controllers\PalleterenewController::class, 'store'])->name('palleterenew.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\PalleterenewController::class, 'destroy'])->name('palleterenew.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\PalleterenewController::class, 'edit'])->name('palleterenew.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\PalleterenewController::class, 'update'])->name('palleterenew.update');
+            Route::get('/show/{id}', [App\Http\Controllers\PalleterenewController::class, 'show'])->name('palleterenew.show');
+            Route::get('/formstatus', [App\Http\Controllers\PalleterenewController::class, 'formstatus'])->name('palleterenew.formstatus');
+            Route::post('/updatestatus', [App\Http\Controllers\PalleterenewController::class, 'updatestatus'])->name('palleterenew.updatestatus');
+        });
+        Route::group(['prefix' => 'sparepart'], function () {
+            Route::get('/', [App\Http\Controllers\SparepartController::class, 'index'])->name('sparepart.index');
+            Route::get('/create', [App\Http\Controllers\SparepartController::class, 'create'])->name('sparepart.create');
+            Route::post('/store', [App\Http\Controllers\SparepartController::class, 'store'])->name('sparepart.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\SparepartController::class, 'destroy'])->name('sparepart.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\SparepartController::class, 'edit'])->name('sparepart.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\SparepartController::class, 'update'])->name('sparepart.update');
+            Route::get('/show/{id}', [App\Http\Controllers\SparepartController::class, 'show'])->name('sparepart.show');
+            Route::get('/getsparepart', [App\Http\Controllers\SparepartController::class, 'getsparepart'])->name('sparepart.getsparepart');
+        });
     });
 
     Route::group(['roles' => ['administrator', 'manajersite']], function () {
@@ -72,36 +147,18 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
         //Language Translation
         Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
         // Route::get('delivery', [DeliveryController::class, 'index'])->name('delivery.index');
-        
-        Route::group(['prefix' => 'delivery'], function () {
-            Route::get('/', [App\Http\Controllers\DeliveryController::class, 'index'])->name('delivery.index');
-            Route::get('/create', [App\Http\Controllers\DeliveryController::class, 'create'])->name('delivery.create');
-            Route::post('/store', [App\Http\Controllers\DeliveryController::class, 'store'])->name('delivery.store');
-            Route::delete('/delete/{id}', [App\Http\Controllers\DeliveryController::class, 'destroy'])->name('delivery.destroy');
-            Route::get('/edit/{id}', [App\Http\Controllers\DeliveryController::class, 'edit'])->name('delivery.edit');
-            Route::put('/update/{id}', [App\Http\Controllers\DeliveryController::class, 'update'])->name('delivery.update');
-            Route::get('/show/{id}', [App\Http\Controllers\DeliveryController::class, 'show'])->name('delivery.show');
-        });
+
 
         Route::group(['prefix' => 'delivery'], function () {
             Route::get('/', [App\Http\Controllers\DeliveryController::class, 'index'])->name('delivery.index');
             Route::get('/formstatus', [App\Http\Controllers\DeliveryController::class, 'formstatus'])->name('delivery.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\DeliveryController::class, 'updatestatus'])->name('delivery.updatestatus');
         });
-
         Route::group(['prefix' => 'trouble'], function () {
             Route::get('/', [App\Http\Controllers\TroubleController::class, 'index'])->name('trouble.index');
-            Route::get('/create', [App\Http\Controllers\TroubleController::class, 'create'])->name('trouble.create');
-            Route::post('/store', [App\Http\Controllers\TroubleController::class, 'store'])->name('trouble.store');
-            Route::delete('/delete/{id}', [App\Http\Controllers\TroubleController::class, 'destroy'])->name('trouble.destroy');
-            Route::get('/edit/{id}', [App\Http\Controllers\TroubleController::class, 'edit'])->name('trouble.edit');
-            Route::put('/update/{id}', [App\Http\Controllers\TroubleController::class, 'update'])->name('trouble.update');
-            Route::get('/show/{id}', [App\Http\Controllers\TroubleController::class, 'show'])->name('trouble.show');
             Route::get('/listdokumen/{id}', [App\Http\Controllers\TroubleController::class, 'listdokumen'])->name('trouble.listdokumen');
-            Route::delete('/dokumendestroy/{id}', [App\Http\Controllers\TroubleController::class, 'dokumendestroy'])->name('trouble.dokumendestroy');
             Route::get('/listaction/{id}', [App\Http\Controllers\TroubleController::class, 'listaction'])->name('trouble.listaction');
-            Route::delete('/actiondestroy/{id}', [App\Http\Controllers\TroubleController::class, 'actiondestroy'])->name('trouble.actiondestroy');
-        });        
+        });
         
         Route::group(['prefix' => 'beritaacara'], function () {
             Route::get('/', [App\Http\Controllers\BeritaacaraController::class, 'index'])->name('beritaacara.index');
@@ -125,46 +182,22 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
         });      
         Route::group(['prefix' => 'maintenance'], function () {
             Route::get('/', [App\Http\Controllers\MaintenanceController::class, 'index'])->name('maintenance.index');
-            Route::post('/store', [App\Http\Controllers\MaintenanceController::class, 'store'])->name('maintenance.store');
-            Route::delete('/delete/{id}', [App\Http\Controllers\MaintenanceController::class, 'destroy'])->name('maintenance.destroy');
-            Route::get('/edit/{id}', [App\Http\Controllers\MaintenanceController::class, 'edit'])->name('maintenance.edit');
-            Route::put('/update/{id}', [App\Http\Controllers\MaintenanceController::class, 'update'])->name('maintenance.update');
-            Route::get('/show/{id}', [App\Http\Controllers\MaintenanceController::class, 'show'])->name('maintenance.show');
             Route::get('/listdokumen/{id}', [App\Http\Controllers\MaintenanceController::class, 'listdokumen'])->name('maintenance.listdokumen');
             Route::delete('/dokumendestroy/{id}', [App\Http\Controllers\MaintenanceController::class, 'dokumendestroy'])->name('maintenance.dokumendestroy');
             Route::get('/listaction/{id}', [App\Http\Controllers\MaintenanceController::class, 'listaction'])->name('maintenance.listaction');
             Route::delete('/actiondestroy/{id}', [App\Http\Controllers\MaintenanceController::class, 'actiondestroy'])->name('maintenance.actiondestroy');
-        });        
-        Route::group(['prefix' => 'maintenance'], function () {
             Route::get('/formstatus', [App\Http\Controllers\MaintenanceController::class, 'formstatus'])->name('maintenance.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\MaintenanceController::class, 'updatestatus'])->name('maintenance.updatestatus');
         });
-
         Route::group(['prefix' => 'physical'], function () {
             Route::get('/', [App\Http\Controllers\PhysicalController::class, 'index'])->name('physical.index');
-            Route::get('/create', [App\Http\Controllers\PhysicalController::class, 'create'])->name('physical.create');
-            Route::post('/store', [App\Http\Controllers\PhysicalController::class, 'store'])->name('physical.store');
-            Route::delete('/delete/{id}', [App\Http\Controllers\PhysicalController::class, 'destroy'])->name('physical.destroy');
-            Route::get('/edit/{id}', [App\Http\Controllers\PhysicalController::class, 'edit'])->name('physical.edit');
-            Route::put('/update/{id}', [App\Http\Controllers\PhysicalController::class, 'update'])->name('physical.update');
-            Route::get('/show/{id}', [App\Http\Controllers\PhysicalController::class, 'show'])->name('physical.show');
-        });
-        Route::group(['prefix' => 'physical'], function () {
             Route::get('/formstatus', [App\Http\Controllers\PhysicalController::class, 'formstatus'])->name('physical.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\PhysicalController::class, 'updatestatus'])->name('physical.updatestatus');
         });
-
         Route::group(['prefix' => 'sparepart'], function () {
             Route::get('/', [App\Http\Controllers\SparepartController::class, 'index'])->name('sparepart.index');
-            Route::get('/create', [App\Http\Controllers\SparepartController::class, 'create'])->name('sparepart.create');
-            Route::post('/store', [App\Http\Controllers\SparepartController::class, 'store'])->name('sparepart.store');
-            Route::delete('/delete/{id}', [App\Http\Controllers\SparepartController::class, 'destroy'])->name('sparepart.destroy');
-            Route::get('/edit/{id}', [App\Http\Controllers\SparepartController::class, 'edit'])->name('sparepart.edit');
-            Route::put('/update/{id}', [App\Http\Controllers\SparepartController::class, 'update'])->name('sparepart.update');
-            Route::get('/show/{id}', [App\Http\Controllers\SparepartController::class, 'show'])->name('sparepart.show');
             Route::get('/getsparepart', [App\Http\Controllers\SparepartController::class, 'getsparepart'])->name('sparepart.getsparepart');
         });
-
         Route::group(['prefix' => 'sparepartstok'], function () {
             Route::get('/', [App\Http\Controllers\SparepartstokController::class, 'index'])->name('sparepartstok.index');
             Route::get('/create', [App\Http\Controllers\SparepartstokController::class, 'create'])->name('sparepartstok.create');
@@ -185,32 +218,16 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/getsparepart', [App\Http\Controllers\SparepartstoktransController::class, 'getsparepart'])->name('sparepartstoktrans.getsparepart');
             Route::get('/getstok', [App\Http\Controllers\SparepartstoktransController::class, 'getstok'])->name('sparepartstoktrans.getstok');
         });     
-
         Route::group(['prefix' => 'pallete'], function () {
             Route::get('/', [App\Http\Controllers\PalleteController::class, 'index'])->name('pallete.index');
-            Route::get('/create', [App\Http\Controllers\PalleteController::class, 'create'])->name('pallete.create');
-            Route::post('/store', [App\Http\Controllers\PalleteController::class, 'store'])->name('pallete.store');
-            Route::delete('/delete/{id}', [App\Http\Controllers\PalleteController::class, 'destroy'])->name('pallete.destroy');
-            Route::get('/edit/{id}', [App\Http\Controllers\PalleteController::class, 'edit'])->name('pallete.edit');
-            Route::put('/update/{id}', [App\Http\Controllers\PalleteController::class, 'update'])->name('pallete.update');
-            Route::get('/show/{id}', [App\Http\Controllers\PalleteController::class, 'show'])->name('pallete.show');
             Route::get('/formstatus', [App\Http\Controllers\PalleteController::class, 'formstatus'])->name('pallete.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\PalleteController::class, 'updatestatus'])->name('pallete.updatestatus');
-        });        
-       
-        
+        });
         Route::group(['prefix' => 'palleterenew'], function () {
             Route::get('/', [App\Http\Controllers\PalleterenewController::class, 'index'])->name('palleterenew.index');
-            Route::get('/create', [App\Http\Controllers\PalleterenewController::class, 'create'])->name('palleterenew.create');
-            Route::post('/store', [App\Http\Controllers\PalleterenewController::class, 'store'])->name('palleterenew.store');
-            Route::delete('/delete/{id}', [App\Http\Controllers\PalleterenewController::class, 'destroy'])->name('palleterenew.destroy');
-            Route::get('/edit/{id}', [App\Http\Controllers\PalleterenewController::class, 'edit'])->name('palleterenew.edit');
-            Route::put('/update/{id}', [App\Http\Controllers\PalleterenewController::class, 'update'])->name('palleterenew.update');
-            Route::get('/show/{id}', [App\Http\Controllers\PalleterenewController::class, 'show'])->name('palleterenew.show');
             Route::get('/formstatus', [App\Http\Controllers\PalleterenewController::class, 'formstatus'])->name('palleterenew.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\PalleterenewController::class, 'updatestatus'])->name('palleterenew.updatestatus');
         });
-
         Route::group(['prefix' => 'unit'], function () {
             Route::get('/', [App\Http\Controllers\UnitController::class, 'index'])->name('unit.index');
             Route::get('/create', [App\Http\Controllers\UnitController::class, 'create'])->name('unit.create');

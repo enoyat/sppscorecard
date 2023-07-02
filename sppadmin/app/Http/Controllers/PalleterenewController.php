@@ -33,7 +33,11 @@ class palleterenewController extends Controller
     }
     public function create()
     {
-        $cbu=MCbu::get();
+        if(Session::get('roles_id')==2) {
+            $cbu=MCbu::where('id',Session::get('runidcbu'))->get();
+        } else {
+            $cbu=MCbu::get();
+        }
         $forklifttype = MForklifttype::get();
         return view('palleterenew.create',compact('cbu','forklifttype'));
     }

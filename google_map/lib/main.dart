@@ -21,9 +21,10 @@ class MyApp extends StatelessWidget {
 
             if (xrolesid == 3) {
               return MaterialApp(
+                  debugShowCheckedModeBanner: false,
                   home: DashboardPage(
-                userid: xuserid,
-              ));
+                    userid: xuserid,
+                  ));
             } else {
               return const MaterialApp(home: SplashScreenPage());
             }
