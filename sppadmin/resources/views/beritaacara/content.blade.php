@@ -8,12 +8,13 @@
                 </div>
             </th>
             <th scope="col">ID Berita</th>
-            <th scope="col">Status Pengirim</th>
-            <th scope="col">Status Penerima</th>
+            <th scope="col">Status</th>
             <th scope="col">Pengirim</th>
             <th scope="col">Penerima</th>
             <th scope="col">Tanggal Upload</th>
             <th scope="col">Tanggal Terima</th>
+            <th scope="col">Nama Penerima</th>
+            <th scope="col">Tanggal Kembali</th>
             <th scope="col">File Dokumen</th>
             <th style="width: 80px; min-width: 80px;">Action</th>
         </tr>
@@ -35,28 +36,22 @@
                 <span class="badge badge-pill badge-soft-danger font-size-12">{{ $key->statuspengirim }}</span>
                 @endif
             </th>
-            <th scope="col">@if ($key->statuspenerima=="CLOSE")
-
-                <span class="badge badge-pill badge-soft-success font-size-12">{{ $key->statuspenerima }}</span>
-                @else
-                <span class="badge badge-pill badge-soft-danger font-size-12">{{ $key->statuspenerima }}</span>
-
-                <a class="btn btn-sm btn-info  btn-action" data-url="{{ URL('beritaacara/formterima?id='.$key->id) }}" id="btnAction1">Terima</a>
-                @endif
-
-            </th>
+           
             <th scope="col">{{ $key->getpengirim->namasitename }}</th>
             <th scope="col">{{ $key->getpenerima->namasitename }}</th>
             <th scope="col">{{ $key->tanggal }}</th>
             <th scope="col">{{ $key->tanggalterima}}</th>
+            <th scope="col">{{ $key->namapenerima}}</th>
+            <th scope="col">{{ $key->tanggalkembali}}</th>
+
             <th scope="col"><a href="{{ asset('assets/inventory/'.$key->filename) }}" target="_blank"><img src="{{ asset('assets/inventory/'.$key->filename) }}" width="100"></a></th>
 
             <th style="width: 80px; min-width: 80px;">
-
+            <a class="btn btn-sm btn-warning" href="{{ route('beritaacara.edit',$key->id) }}">Edit</a>
                 <form action="{{ route('beritaacara.destroy',$key->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="dropdown-item" onclick="return confirm('Hapus Data ini?');">Hapus</button>
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Hapus Data ini?');">Hapus</button>
                 </form>
 
 

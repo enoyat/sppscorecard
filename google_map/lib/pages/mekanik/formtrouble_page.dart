@@ -1,22 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-
-import 'package:google_map/models/dokumentrouble.dart';
-import 'package:google_map/pages/mekanik/listoftrouble_page.dart';
-import 'package:google_map/widgets/user_imagepicker.dart';
+import 'package:google_map/pages/mekanik/formupload_gambar.dart';
+import 'package:google_map/pages/mekanik/formuploadtrouble.dart';
+import 'package:google_map/services/maintenance_dio.dart';
+import 'package:google_map/services/trouble_dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../models/trouble.dart';
-import '../../services/trouble_dio.dart';
+import '../../models/unit.dart';
 
 class FormTroublePage extends StatefulWidget {
   const FormTroublePage({
     Key? key,
-    this.idtrouble,
+    required this.kdunit,
   }) : super(key: key);
-  final int? idtrouble;
+  final String kdunit;
 
   @override
   State<FormTroublePage> createState() => _FormTroublePageState();
@@ -24,9 +22,11 @@ class FormTroublePage extends StatefulWidget {
 
 class _FormTroublePageState extends State<FormTroublePage> {
   final formkey = GlobalKey<FormState>();
+  late int idaction = 0;
   late DateTime selectedtanggalpengerjaan = DateTime.now();
   late DateTime selectedwaktupengerjaan = DateTime.now();
   late TimeOfDay selectedTime = TimeOfDay.now();
+  late TimeOfDay selectedTimeakhir = TimeOfDay.now();
   String filename = '';
   int? userid = 0;
   setter() async {
@@ -36,10 +36,31 @@ class _FormTroublePageState extends State<FormTroublePage> {
     });
   }
 
-  File? _userImageFile;
+  pilihjampengerjaan() async {
+    final TimeOfDay? time = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+    );
+    if (time != null && time != selectedTime) {
+      setState(() {
+        selectedTime = time;
+        _jampengerjaan.text = '${selectedTime.hour}:${selectedTime.minute}';
+      });
+    }
+  }
 
-  void _pickedImage(File image) {
-    _userImageFile = image;
+  pilihjamselesai() async {
+    final TimeOfDay? time = await showTimePicker(
+      context: context,
+      initialTime: selectedTimeakhir,
+    );
+    if (time != null && time != selectedTimeakhir) {
+      setState(() {
+        selectedTimeakhir = time;
+        _jamselesai.text =
+            '${selectedTimeakhir.hour}:${selectedTimeakhir.minute}';
+      });
+    }
   }
 
   _pilihtanggalpengerjaan() async {
@@ -76,16 +97,20 @@ class _FormTroublePageState extends State<FormTroublePage> {
 
   final _tanggalpengerjaan = TextEditingController();
   final _waktuselesaipengerjaan = TextEditingController();
+  final _jampengerjaan = TextEditingController();
+  final _jamselesai = TextEditingController();
+
   final _deskripsi = TextEditingController();
   final _sparepart = TextEditingController();
+  final _hm = TextEditingController();
+  final _idaction = TextEditingController();
+
   List<String> dokumen = [];
+  List<Unit> _unit = [];
 
-  List<Trouble> _trouble = [];
-
-  List<Dokumentrouble> _listdokumen = [];
   String status = "";
   String _shift = 'shift 1';
-  String _dokumen = 'Before Unit';
+  String kdunit = '';
   final shiftlist = <String>[
     'shift 1',
     'shift 2',
@@ -100,30 +125,17 @@ class _FormTroublePageState extends State<FormTroublePage> {
     'Dokumen Lainnya'
   ];
   bool isLoading = false;
+
   void refreshData() {
     setState(() {
       isLoading = true;
+      kdunit = widget.kdunit;
     });
-    TroubleDio().gettrouble(widget.idtrouble!).then((value) {
+    MaintenanceDio().getunit(kdunit).then((value) {
       setState(() {
-        _trouble = value;
+        _unit = value;
         isLoading = false;
       });
-    });
-    TroubleDio().listdokumen(widget.idtrouble!).then((value) {
-      setState(() {
-        _listdokumen = value;
-        isLoading = false;
-      });
-    });
-  }
-
-  uploadgambar() {
-    TroubleDio()
-        .uploadfoto(_userImageFile!, widget.idtrouble!, _dokumen)
-        .then((value) => filename = value);
-    setState(() {
-      refreshData();
     });
   }
 
@@ -156,43 +168,33 @@ class _FormTroublePageState extends State<FormTroublePage> {
           children: [
             Container(
               margin: const EdgeInsets.all(10),
-              height: 80,
+              height: 60,
               width: 250,
               child: Card(
                 margin: const EdgeInsets.only(top: 5, bottom: 5),
-                color: const Color.fromARGB(255, 245, 224, 250),
+                color: const Color.fromARGB(255, 247, 14, 14),
                 elevation: 5,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: _trouble.isEmpty
+                child: _unit.isEmpty
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
                         children: [
                           const SizedBox(height: 10),
-                          Text('Id Trouble : ${_trouble[0].id}',
+                          Text('Kd Unit : ${_unit[0].kdunit}',
                               textAlign: TextAlign.left,
                               style: const TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               )),
-                          Text('Issue : ${_trouble[0].issue}',
+                          Text('Serial Number : ${_unit[0].serialnumber}',
                               textAlign: TextAlign.left,
                               style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          Text('Kode Unit: ${_trouble[0].kdunit}',
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          Text(
-                              'Target Complette date ${_trouble[0].targetcompletedate}',
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                              ))
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
                         ],
                       ),
               ),
@@ -217,6 +219,25 @@ class _FormTroublePageState extends State<FormTroublePage> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Tanggal Pengerjaan tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      enabled: true,
+                      controller: _jampengerjaan,
+                      decoration: const InputDecoration(
+                          hintText: 'Jam Mulai Pengerjaan',
+                          border: OutlineInputBorder(),
+                          suffixIcon: Icon(Icons.timer),
+                          labelText: 'Jam Mulai Pengerjaan'),
+                      onTap: () {
+                        pilihjampengerjaan();
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Jam mulai Pengerjaan tidak boleh kosong';
                         }
                         return null;
                       },
@@ -292,11 +313,30 @@ class _FormTroublePageState extends State<FormTroublePage> {
                       },
                     ),
                     const SizedBox(height: 10),
+                    TextFormField(
+                      enabled: true,
+                      controller: _jamselesai,
+                      decoration: const InputDecoration(
+                          hintText: 'Jam Selesai Pengerjaan',
+                          border: OutlineInputBorder(),
+                          suffixIcon: Icon(Icons.timer),
+                          labelText: 'Jam Selesai Pengerjaan'),
+                      onTap: () {
+                        pilihjamselesai();
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Jam Selesai Pengerjaan tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
                     const Text('Status: '),
                     Container(
-                      margin: const EdgeInsets.only(left: 20, right: 20),
+                      margin: const EdgeInsets.only(left: 60, right: 60),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Radio(
                               value: "OPEN",
@@ -317,82 +357,10 @@ class _FormTroublePageState extends State<FormTroublePage> {
                                 });
                               }),
                           const Text('CLOSE'),
-                          const SizedBox(height: 10),
-                          Radio(
-                              value: "CONTINUE",
-                              groupValue: status,
-                              onChanged: (value) {
-                                setState(() {
-                                  status = value.toString();
-                                });
-                              }),
-                          const Text('CONTINUE'),
                         ],
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Container(
-                      margin: const EdgeInsets.all(15),
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: const Color.fromARGB(255, 227, 230, 227)),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text('Foto Gambar'),
-                          DropdownButton(
-                            value: _dokumen,
-                            items: dokumentlist
-                                .map((e) => DropdownMenuItem(
-                                      value: e,
-                                      child: Text(e),
-                                    ))
-                                .toList(),
-                            onChanged: (String? val) {
-                              setState(() {
-                                if (val != null) {
-                                  _dokumen = val;
-                                }
-                              });
-                            },
-                          ),
-                          const SizedBox(height: 5),
-                          UserImagePicker(imagePickFn: _pickedImage),
-                          ElevatedButton(
-                              onPressed: () async {
-                                uploadgambar();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Upload  Success')));
-                                refreshData();
-                              },
-                              child: const Text('Upload')),
-                          ElevatedButton(
-                              onPressed: () {
-                                refreshData();
-                              },
-                              child: const Text('Refresh')),
-                          _listdokumen.isEmpty
-                              ? const Text('Gambar belum diupload')
-                              : SizedBox(
-                                  height: 100,
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: _listdokumen.length,
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                          margin: const EdgeInsets.all(5),
-                                          child: Card(
-                                              child: Image.network(
-                                            'https://satriapirantiperkasa.com/assets/inventory/${_listdokumen[index].filename}',
-                                          )),
-                                        );
-                                      }),
-                                ),
-                        ],
-                      ),
-                    ),
                     Container(
                       padding: const EdgeInsets.all(5),
                       width: double.infinity,
@@ -405,6 +373,9 @@ class _FormTroublePageState extends State<FormTroublePage> {
                           TextButton.icon(
                               onPressed: () {
                                 if (_shift.isEmpty ||
+                                    _tanggalpengerjaan.text.isEmpty ||
+                                    _jampengerjaan.text.isEmpty ||
+                                    _jamselesai.text.isEmpty ||
                                     _waktuselesaipengerjaan.text.isEmpty ||
                                     _sparepart.text.isEmpty ||
                                     _deskripsi.text.isEmpty ||
@@ -419,32 +390,30 @@ class _FormTroublePageState extends State<FormTroublePage> {
                                 }
 
                                 final Map<String, dynamic> itemdetail = {
-                                  'idtrouble': widget.idtrouble!,
+                                  'kdunit': widget.kdunit,
+                                  'periode': '2023-07',
                                   'iduser': userid!,
                                   'tanggalmulai': _tanggalpengerjaan.text,
+                                  'jammulai': _jampengerjaan.text,
+                                  'jamselesai': _jamselesai.text,
+                                  'tanggalakhir': _waktuselesaipengerjaan.text,
                                   'shift': _shift,
-                                  'statusmekanik': status,
-                                  'documentation': 'sudah upload',
-                                  'deskripsi': _deskripsi.text,
+                                  'actionplan': _deskripsi.text,
                                   'sparepart': _sparepart.text,
-                                  'waktuselesaipengerjaan':
-                                      _waktuselesaipengerjaan.text,
+                                  'statusmekanik': status,
                                 };
                                 setState(() => isLoading = true);
                                 TroubleDio().postData(itemdetail).then((value) {
                                   setState(() {
-                                    isLoading = false;
+                                    idaction = value['idaction'];
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                FormUploadTrouble(
+                                                  idaction: idaction,
+                                                )));
                                   });
-                                });
-                                Future.delayed(const Duration(seconds: 3), () {
-                                  setState(() => isLoading = false);
-                                  Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            const ListOfTroublePage()),
-                                    (route) => false,
-                                  );
                                 });
                               },
                               icon: const Icon(

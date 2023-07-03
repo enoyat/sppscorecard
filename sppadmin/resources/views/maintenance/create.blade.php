@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Basic_Elements') @endsection
+@section('title') PT. Satria Piranti Perkasa @endsection
 
 @section('content')
 
@@ -14,7 +14,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Form maintenance</h4>
+                <h4 class="card-title">Form Unit </h4>
             </div>
             <div class="card-body p-4">
 
@@ -71,29 +71,19 @@
                                     <label for="example-password-input" class="form-label">Kode Unit</label>
                                     <input class="form-control" type="text" value="" name="kdunit"
                                         id="kdunit">
+                                        <small class="text-danger">Kode Unit tidak boleh sama dan tidak boleh ada spasi</small>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-date-input" class="form-label">Tanggal</label>
-                                    <input class="form-control" type="date" value="" name="tanggal"
-                                        id="tanggal">
+                                    <label for="example-password-input" class="form-label">Serial Number</label>
+                                    <input class="form-control" type="text" value="" name="serialnumber"
+                                        id="serialnumber">
+                                       
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Status SPP</label>
-                                    <select class="form-select" name="statusspp" id="statusspp">
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
+                                    <label for="example-date-input" class="form-label">HM</label>
+                                    <input class="form-control" type="number" value="" name="hm"
+                                        id="hm" required>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status Customer</label>
-                                    <select class="form-select" name="statuscustomer" id="statuscustomer">
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
-                                </div>
-
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 

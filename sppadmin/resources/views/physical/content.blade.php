@@ -8,10 +8,8 @@
                     <label class="form-check-label" for="checkAll"></label>
                 </div>
             </th>
-            <th scope="col">Status SPP</th>
-            <th scope="col">Status Customer</th>
 
-            <th scope="col">Tanggal</th>
+            <th scope="col">Periode</th>
             <th scope="col">Kode Unit</th>
             <th scope="col">Serial Number</th>
             <th scope="col">Hari Kerja</th>
@@ -19,13 +17,10 @@
             <th scope="col">Total BreakDown Unit (Minutes)</th>
             <th scope="col">Total Jam Kerja Unit</th>
             <th scope="col">PA Forklift (%)</th>
-            <th scope="col">Remarks Unit</th>
-            <th scope="col">Confirmation by Plant</th>
-            <th scope="col">Remarks</th>
             <th scope="col">CBU</th>
             <th scope="col">Region</th>
             <th scope="col">Site Name</th>
-            <th style="width: 80px; min-width: 80px;">Action</th>
+            <th >Action</th>
         </tr>
     </thead>
     <tbody>
@@ -38,64 +33,32 @@
                     <label class="form-check-label" for="contacusercheck1"></label>
                 </div>
             </th>
-            <th>
-            @if ($key->statusspp=="CLOSE")
-            <span class="badge badge-pill badge-soft-success font-size-12">{{ $key->statusspp }}</span>
-            @else
-            <span class="badge badge-pill badge-soft-danger font-size-12">{{ $key->statusspp }}</span>
-            @if(Session::get('globalidsitename')=='999')
-            <a class="btn btn-sm btn-info  btn-action" data-url="{{ URL('physical/formstatus?aid=spp&id='.$key->id) }}"
-                id="btnAction1"><i class=" fas fa-key"></i></a>
-            @endif
-            @endif</th>
-            <th scope="col">@if ($key->statuscustomer=="CLOSE")
-                <span class="badge badge-pill badge-soft-success font-size-12">{{ $key->statuscustomer }}</span>
-                @else
 
-                <span class="badge badge-pill badge-soft-danger font-size-12">{{ $key->statuscustomer }}</span>
-                @if(Session::get('globalidsitename')==Session::get('runidsitename'))
-                <a class="btn btn-sm btn-info  btn-action"
-                    data-url="{{ URL('physical/formstatus?aid=customer&id='.$key->id) }}" id="btnAction1"><i
-                        class=" fas fa-key"></i></a>
-                @endif
 
-                @endif
-            </th>
-
-            <th scope="col">{{ $key->tanggal }}</th>
+            <th scope="col">{{ $key->periode }}</th>
             <th scope="col">{{ $key->kdunit }}</th>
             <th scope="col">{{ $key->getunit->serialnumber }}</th>
             <th scope="col">{{ $key->harikerja }}</th>
             <th scope="col">{{ $key->planunitkerja }}</th>
-            <th scope="col">{{ $key->totalbreakdown }}</th>
+            <th scope="col"><a href="{{ route('trouble.listaction',$key->kdunit) }}">{{ $key->totalbreakdown }}</a></th>
             <th scope="col">{{ $key->totaljamkerja }}</th>
-            <th scope="col">{{ $key->paforklift }}</th>
-            <th scope="col">{{ $key->remarkunit }}</th>
-            <th scope="col">{{ $key->confirmationplan }}</th>
-            <th scope="col">{{ $key->remarks }}</th>
+            <th scope="col">{{ number_format($key->paforklift,2) }}</th>
+
             <th scope="col">{{ $key->getcbu->namacbu }}</th>
             <th scope="col">{{ $key->getregion->namaregion }}</th>
             <th scope="col">{{ $key->getsitename->namasitename }}</th>
 
 
-            <th style="width: 80px; min-width: 80px;">
-                <div class="dropdown">
-                    <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle" type="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bx bx-dots-horizontal-rounded"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="{{ route('physical.edit',$key->id) }}">Edit</a></li>
-                        <li>
-                            <form action="{{ route('physical.destroy',$key->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="dropdown-item"
-                                    onclick="return confirm('Hapus Data ini?');">Hapus</button>
-                            </form>
-                        </li>
-                    </ul>
+            <th style="width: 200px; min-width: 80px;">
+                <div style="float:right; width:60px"><a class="btn btn-sm btn-warning" href="{{ route('physical.edit',$key->id) }}">Edit</a></div>
+                <div style="float:right; width:60px"><form action="{{ route('physical.destroy',$key->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger"
+                        onclick="return confirm('Hapus Data ini?');">Hapus</button>
+                </form>
                 </div>
+
 
 
             </th>

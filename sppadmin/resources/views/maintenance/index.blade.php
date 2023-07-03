@@ -35,6 +35,9 @@
 
                 </ul>
             </div>
+            <div>
+                <a href="{{ route('maintenance.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
+            </div>
 
 
             <!-- <div class="dropdown">

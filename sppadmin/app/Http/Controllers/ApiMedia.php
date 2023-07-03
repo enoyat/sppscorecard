@@ -25,7 +25,7 @@ class ApiMedia extends Controller
         $file->move($pathUpload, $filename);
         if ($request->transaksi=="trouble") {
             MDokumentrouble::create([
-                'idtrouble' => $request->idtrouble,
+                'idaction' => $request->idaction,
                 'filename' => $filename,
                 'keterangan' => $request->keterangan,
 

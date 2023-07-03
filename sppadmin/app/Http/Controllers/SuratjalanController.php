@@ -27,8 +27,9 @@ class SuratjalanController extends Controller
      */
     public function index()
     {
+        $cbu = MCbu::get();
         $suratjalan = MSuratjalan::where('pengirim', Session::get('runidsitename'))->get();
-        return view('suratjalan.index', compact('suratjalan'));
+        return view('suratjalan.index', compact('suratjalan', 'cbu'));
     }
     public function create()
     {
@@ -66,8 +67,7 @@ class SuratjalanController extends Controller
         $suratjalan->penerima = $request->idsitename;
         $suratjalan->tanggal = date('Y-m-d');
         $suratjalan->filename = $filename;
-        $suratjalan->statuspengirim  = "CLOSE";
-        $suratjalan->statuspenerima   = "OPEN";
+        $suratjalan->statuspengirim  = "OPEN";
         $simpan = $suratjalan->save();
 
         if ($simpan) {
@@ -86,8 +86,12 @@ class SuratjalanController extends Controller
     {
 
         $suratjalan = MSuratjalan::find($id);
-        $suratjalan->tanggalterima = date('Y-m-d');
-        $suratjalan->statuspenerima = "CLOSE";
+        $suratjalan->tanggalterima = $request->tanggalterima;
+        $suratjalan->namapenerima = $request->namapenerima;
+        $suratjalan->tanggalkembali = $request->tanggalkembali;
+        $suratjalan->statuspengirim = $request->statuspengirim;
+
+
         $simpan = $suratjalan->save();
 
         if ($simpan) {

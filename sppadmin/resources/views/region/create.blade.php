@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Basic_Elements') @endsection
+@section('title') PT. Satria Piranti Perkasa @endsection
 
 @section('content')
 

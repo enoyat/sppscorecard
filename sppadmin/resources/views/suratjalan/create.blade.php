@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Basic_Elements') @endsection
+@section('title') PT. Satria Piranti Perkasa @endsection
 
 @section('content')
 
 @component('components.breadcrumb')
 @slot('li_1') Forms @endslot
-@slot('title') Create Surat Jalan @endslot
+@slot('title') Create surat jalan @endslot
 @endcomponent
 
 
@@ -14,7 +14,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Form Surat Jalan</h4>
+                <h4 class="card-title">Form surat jalan</h4>
             </div>
             <div class="card-body p-4">
 
@@ -76,7 +76,7 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Foto Berita Acara</label>
+                                    <label for="example-password-input" class="form-label">Foto surat jalan</label>
                                     <input class="form-control" type="file" value="" name="filefoto"
                                         id="filefoto">
                                 </div>

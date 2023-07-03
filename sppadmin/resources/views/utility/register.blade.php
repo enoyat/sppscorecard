@@ -26,16 +26,12 @@
         <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
             <div>
                 <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('maintenance.index') }}" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
-                    </li>
+
 
                 </ul>
             </div>
             <div>
-                <a href="{{ route('maintenance.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add
-                    New</a>
+
             </div>
 
             <!-- <div class="dropdown">

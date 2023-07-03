@@ -29,9 +29,9 @@ class TroubleController extends Controller
     public function index()
     {
         $cbu=MCbu::get();
-        $trouble = MTrouble::where('idsitename',Session::get('runidsitename'))->get();
-        $forklifttype = MForklifttype::get();
-        return view('trouble.index', compact('trouble','forklifttype','cbu'));
+
+        $listactions=MTroubleaction::join('unit','troubleaction.kdunit','=','unit.kdunit')->where('idsitename',Session::get('runidsitename'))->get();
+        return view('trouble.index', compact('listactions','cbu'));
     }
     public function create()
     {
@@ -154,7 +154,7 @@ class TroubleController extends Controller
     }
     public function listdokumen($id)
     {
-        $dokumentrouble=MDokumentrouble::where('idtrouble',$id)->get();
+        $dokumentrouble=MDokumentrouble::where('idaction',$id)->get();
         return view('trouble.listdokumen', compact('dokumentrouble','id'));
     }
 
@@ -174,7 +174,7 @@ class TroubleController extends Controller
     }
     public function listaction($id)
     {
-        $listactions=MTroubleaction::where('idtrouble',$id)->get();
+        $listactions=MTroubleaction::where('kdunit',$id)->get();
         return view('trouble.listaction', compact('listactions','id'));
     }
     public function actiondestroy(Request $request)

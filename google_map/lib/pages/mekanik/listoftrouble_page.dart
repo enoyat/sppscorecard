@@ -1,39 +1,36 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import "package:flutter/material.dart";
-import "package:shared_preferences/shared_preferences.dart";
+import "package:google_map/services/maintenance_dio.dart";
 
-import "package:google_map/models/trouble.dart";
-import "package:google_map/pages/dashboard_page.dart";
-import "package:google_map/services/trouble_dio.dart";
-import "package:google_map/widgets/itemtrouble_widget.dart";
+import "../../models/unit.dart";
+import "../../widgets/itemtrouble_widget.dart";
+import "../../widgets/itemunit_widget.dart";
 
 class ListOfTroublePage extends StatefulWidget {
   const ListOfTroublePage({
     Key? key,
-    this.profil,
+    required this.profil,
   }) : super(key: key);
-  final Map<String, dynamic>? profil;
+  final Map<String, dynamic> profil;
 
   @override
   State<ListOfTroublePage> createState() => _ListOfTroublePage();
 }
 
 class _ListOfTroublePage extends State<ListOfTroublePage> {
-  int selectedindex = 0;
   String? nama = "";
   int? userid;
   bool isLoading = false;
-  List<Trouble> _trouble = [];
-  int? idsitename;
+  List<Unit> _unit = [];
+  int? idsitename = 0;
   void refreshData() async {
     setState(() {
       isLoading = true;
-      idsitename = widget.profil!['idsitename'];
     });
 
-    await TroubleDio().listoftrouble(idsitename!).then((value) {
+    await MaintenanceDio().listofunit(idsitename!).then((value) {
       setState(() {
-        _trouble = value;
+        _unit = value;
         isLoading = false;
       });
     });
@@ -42,17 +39,8 @@ class _ListOfTroublePage extends State<ListOfTroublePage> {
   @override
   void initState() {
     super.initState();
-    setter();
+    idsitename = widget.profil['idsitename'];
     refreshData();
-
-//
-  }
-
-  setter() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      userid = prefs.getInt('userid');
-    });
   }
 
   @override
@@ -75,15 +63,12 @@ class _ListOfTroublePage extends State<ListOfTroublePage> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return DashboardPage(userid: userid!);
-                      }));
+                      Navigator.pop(context);
                     },
                     icon: const Icon(Icons.arrow_back),
                   ),
                   const Text(
-                    "List Of Trouble",
+                    "List Of Unit",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
@@ -111,15 +96,15 @@ class _ListOfTroublePage extends State<ListOfTroublePage> {
                     child: CircularProgressIndicator(),
                   )
                 : Expanded(
-                    child: _trouble.isEmpty
+                    child: _unit.isEmpty
                         ? const Center(
-                            child: Text('Tidak ada Transaksi'),
+                            child: Text('Tidak ada Unit'),
                           )
                         : ListView.builder(
-                            itemCount: _trouble.length,
+                            itemCount: _unit.length,
                             itemBuilder: (context, index) {
                               return ItemTroubleWidget(
-                                trouble: _trouble[index],
+                                unit: _unit[index],
                                 handleRefresh: refreshData,
                               );
                             }),

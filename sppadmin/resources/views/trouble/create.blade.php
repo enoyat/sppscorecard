@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Basic_Elements') @endsection
+@section('title') PT. Satria Piranti Perkasa @endsection
 
 @section('content')
 
@@ -71,7 +71,7 @@
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Tanggal</label>
                                     <input class="form-control" type="date" value="" name="tanggal"
-                                        id="tanggal">
+                                        id="tanggal" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Kode Unit</label>
@@ -93,7 +93,7 @@
                             <div class="mt-3 mt-lg-0">
                             <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Target Completion date</label>
-                                    <input class="form-control" type="date" value="" name="targetcompletedate" id="targetcompletedate">
+                                    <input class="form-control" type="date" value="" name="targetcompletedate" id="targetcompletedate" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">ACTION PLAN FROM SPP</label>
@@ -103,7 +103,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Status SPP</label>
-                                    <select class="form-select" name="statusspp" id="statusspp">
+                                    <select class="form-select" name="statusspp" id="statusspp" required>
                                         <option value="">Select</option>
                                         <option value="OPEN">OPEN</option>
                                         <option value="CLOSE">CLOSE</option>

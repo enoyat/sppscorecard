@@ -33,7 +33,7 @@ rel="stylesheet" type="text/css" />
 
             </div>
             <div class="card-body">
-                Selamat Datang di Sistem Informasi Scorecard PT. Surya Piranti Perkasa
+                Selamat Datang di Sistem Informasi Scorecard PT. Satria Piranti Perkasa
             </div>
         </div>
         <!-- end cardaa -->

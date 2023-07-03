@@ -27,8 +27,9 @@ class BeritaacaraController extends Controller
      */
     public function index()
     {
+        $cbu = MCbu::get();
         $beritaacara = MBeritaacara::where('pengirim', Session::get('runidsitename'))->get();
-        return view('beritaacara.index', compact('beritaacara'));
+        return view('beritaacara.index', compact('beritaacara', 'cbu'));
     }
     public function create()
     {
@@ -66,8 +67,7 @@ class BeritaacaraController extends Controller
         $Beritaacara->penerima = $request->idsitename;
         $Beritaacara->tanggal = date('Y-m-d');
         $Beritaacara->filename = $filename;
-        $Beritaacara->statuspengirim  = "CLOSE";
-        $Beritaacara->statuspenerima   = "OPEN";
+        $Beritaacara->statuspengirim  = "OPEN";
         $simpan = $Beritaacara->save();
 
         if ($simpan) {
@@ -86,8 +86,12 @@ class BeritaacaraController extends Controller
     {
 
         $Beritaacara = MBeritaacara::find($id);
-        $Beritaacara->tanggalterima = date('Y-m-d');
-        $Beritaacara->statuspenerima = "CLOSE";
+        $Beritaacara->tanggalterima = $request->tanggalterima;
+        $Beritaacara->namapenerima = $request->namapenerima;
+        $Beritaacara->tanggalkembali = $request->tanggalkembali;
+        $Beritaacara->statuspengirim = $request->statuspengirim;
+
+
         $simpan = $Beritaacara->save();
 
         if ($simpan) {

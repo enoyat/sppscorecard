@@ -12,6 +12,9 @@ Delivery
 @endsection
 
 @section('content')
+@if(Session::get('roles_id')==1)
+    @include('header_select')
+@endif
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" >
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -29,8 +32,8 @@ Delivery
 
 <!-- start page title -->
 @component('components.breadcrumb')
-@slot('li_1') Surat Jalan @endslot
-@slot('title') Surat Jalan @endslot
+@slot('li_1') Contacts @endslot
+@slot('title') surat jalan @endslot
 @endcomponent
 
 <div class="row align-items-center">

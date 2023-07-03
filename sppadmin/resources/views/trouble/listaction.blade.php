@@ -68,12 +68,16 @@ trouble
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
+                <th scope="col">Status Mekanik</th>
                 <th scope="col">id User/Mekanik</th>
+                <th scope="col">KD Unit</th>
                 <th scope="col">tanggal mulai</th>
                 <th scope="col">tanggal selesai</th>
+                <th scope="col">Lapse Time</th>
                 <th scope="col">shift</th>
                 <th scope="col">Action Plan</th>
                 <th scope="col">Spareparts</th>
+                <th scope="col">Dokumentasi</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -87,12 +91,24 @@ trouble
                         <label class="form-check-label" for="contacusercheck1"></label>
                     </div>
                 </th>
+                <th scope="col">
+                    
+                @if ($key->statusmekanik=="CLOSE") 
+                    <span class="badge badge-pill badge-soft-success font-size-12">{{ $key->statusmekanik }}</span>
+                    @else
+                    <span class="badge badge-pill badge-soft-danger font-size-12">{{ $key->statusmekanik }}</span>
+
+                    @endif</th>
                 <th scope="col">{{ $key->iduser }}</th>
+                <th scope="col">{{ $key->kdunit }} </th>
                 <th scope="col">{{ $key->tanggalmulai }}</th>
                 <th scope="col">{{ $key->tanggalakhir }}</th>
+                <th scope="col">{{ $key->lapsetime }}</th>
+
                 <th scope="col">{{ $key->shift }}</th>
-                <th scope="col">{{ $key->actionplan }}</th>
+                <th scope="col">{{ $key->actionplan }} </th>
                 <th scope="col">{{ $key->sparepart }}</th>
+                <th scope="col"><a href="{{ route('trouble.listdokumen',$key->id) }}" class="btn btn-sm btn-warning">List Foto</a></th>
                 <th scope="col">
                                 <form action="{{ route('trouble.actiondestroy',$key->id) }}" method="POST">
                                     @csrf

@@ -58,21 +58,6 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/show/{id}', [App\Http\Controllers\SitenameController::class, 'show'])->name('sitename.show');
         });
 
-    });
-
-    Route::group(['roles' => ['administrator', 'manajersite']], function () {
-        Route::get('/gantipassword', [App\Http\Controllers\HomeController::class, 'gantipassword'])->name('gantipassword');
-        Route::post('utility/userpasswordupdate', [UtilityController::class, 'userpasswordupdate'])->name('utility.userpasswordupdate');
-        //Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
-        Route::get('utility/userpassword', [UtilityController::class, 'userpassword'])->name('utility.userpassword');
-        Route::get('utility/register', [UtilityController::class, 'register'])->name('utility.register');
-        Route::post('utility/postregister', [UtilityController::class, 'postregister'])->name('utility.postregister');
-        Route::delete('utility/userdelete/{id}', [UtilityController::class, 'userdelete'])->name('userdelete');
-
-        //Language Translation
-        Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
-        // Route::get('delivery', [DeliveryController::class, 'index'])->name('delivery.index');
-        
         Route::group(['prefix' => 'delivery'], function () {
             Route::get('/', [App\Http\Controllers\DeliveryController::class, 'index'])->name('delivery.index');
             Route::get('/create', [App\Http\Controllers\DeliveryController::class, 'create'])->name('delivery.create');
@@ -125,6 +110,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
         });      
         Route::group(['prefix' => 'maintenance'], function () {
             Route::get('/', [App\Http\Controllers\MaintenanceController::class, 'index'])->name('maintenance.index');
+            Route::get('/create', [App\Http\Controllers\MaintenanceController::class, 'create'])->name('maintenance.create');
             Route::post('/store', [App\Http\Controllers\MaintenanceController::class, 'store'])->name('maintenance.store');
             Route::delete('/delete/{id}', [App\Http\Controllers\MaintenanceController::class, 'destroy'])->name('maintenance.destroy');
             Route::get('/edit/{id}', [App\Http\Controllers\MaintenanceController::class, 'edit'])->name('maintenance.edit');
@@ -227,5 +213,105 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/getsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'getsitename'])->name('lokasi.getsitename');
             Route::get('/setsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
         });
+
+
+
+
+
     });
+
+    Route::group(['roles' => ['administrator', 'manajersite']], function () {
+        Route::get('/gantipassword', [App\Http\Controllers\HomeController::class, 'gantipassword'])->name('gantipassword');
+        Route::post('utility/userpasswordupdate', [UtilityController::class, 'userpasswordupdate'])->name('utility.userpasswordupdate');
+        //Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+        Route::get('utility/userpassword', [UtilityController::class, 'userpassword'])->name('utility.userpassword');
+        Route::get('utility/register', [UtilityController::class, 'register'])->name('utility.register');
+        Route::post('utility/postregister', [UtilityController::class, 'postregister'])->name('utility.postregister');
+        Route::delete('utility/userdelete/{id}', [UtilityController::class, 'userdelete'])->name('userdelete');
+
+        //Language Translation
+        Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
+        // Route::get('delivery', [DeliveryController::class, 'index'])->name('delivery.index');
+        
+        Route::group(['prefix' => 'delivery'], function () {
+            Route::get('/', [App\Http\Controllers\DeliveryController::class, 'index'])->name('delivery.index');
+        });
+
+        Route::group(['prefix' => 'delivery'], function () {
+            Route::get('/', [App\Http\Controllers\DeliveryController::class, 'index'])->name('delivery.index');
+            Route::get('/formstatus', [App\Http\Controllers\DeliveryController::class, 'formstatus'])->name('delivery.formstatus');
+            Route::post('/updatestatus', [App\Http\Controllers\DeliveryController::class, 'updatestatus'])->name('delivery.updatestatus');
+        });
+
+        Route::group(['prefix' => 'trouble'], function () {
+            Route::get('/', [App\Http\Controllers\TroubleController::class, 'index'])->name('trouble.index');
+            Route::get('/listdokumen/{id}', [App\Http\Controllers\TroubleController::class, 'listdokumen'])->name('trouble.listdokumen');
+            Route::get('/listaction/{id}', [App\Http\Controllers\TroubleController::class, 'listaction'])->name('trouble.listaction');
+        });        
+        
+        Route::group(['prefix' => 'beritaacara'], function () {
+            Route::get('/', [App\Http\Controllers\BeritaacaraController::class, 'index'])->name('beritaacara.index');
+        });  
+        Route::group(['prefix' => 'suratjalan'], function () {
+            Route::get('/', [App\Http\Controllers\SuratjalanController::class, 'index'])->name('suratjalan.index');
+        });      
+        Route::group(['prefix' => 'maintenance'], function () {
+            Route::get('/', [App\Http\Controllers\MaintenanceController::class, 'index'])->name('maintenance.index');
+            Route::get('/listdokumen/{id}', [App\Http\Controllers\MaintenanceController::class, 'listdokumen'])->name('maintenance.listdokumen');
+            Route::get('/listaction/{id}', [App\Http\Controllers\MaintenanceController::class, 'listaction'])->name('maintenance.listaction');
+        });        
+        Route::group(['prefix' => 'maintenance'], function () {
+            Route::get('/formstatus', [App\Http\Controllers\MaintenanceController::class, 'formstatus'])->name('maintenance.formstatus');
+            Route::post('/updatestatus', [App\Http\Controllers\MaintenanceController::class, 'updatestatus'])->name('maintenance.updatestatus');
+        });
+
+        Route::group(['prefix' => 'physical'], function () {
+            Route::get('/', [App\Http\Controllers\PhysicalController::class, 'index'])->name('physical.index');
+        });
+        Route::group(['prefix' => 'physical'], function () {
+            Route::get('/formstatus', [App\Http\Controllers\PhysicalController::class, 'formstatus'])->name('physical.formstatus');
+            Route::post('/updatestatus', [App\Http\Controllers\PhysicalController::class, 'updatestatus'])->name('physical.updatestatus');
+        });
+
+        Route::group(['prefix' => 'sparepart'], function () {
+            Route::get('/', [App\Http\Controllers\SparepartController::class, 'index'])->name('sparepart.index');
+            Route::get('/getsparepart', [App\Http\Controllers\SparepartController::class, 'getsparepart'])->name('sparepart.getsparepart');
+        });
+
+        Route::group(['prefix' => 'sparepartstok'], function () {
+            Route::get('/', [App\Http\Controllers\SparepartstokController::class, 'index'])->name('sparepartstok.index');
+            Route::get('/show/{id}', [App\Http\Controllers\SparepartstokController::class, 'show'])->name('sparepartstok.show');
+        });
+        Route::group(['prefix' => 'sparepartstoktrans'], function () {
+            Route::get('/', [App\Http\Controllers\SparepartstoktransController::class, 'index'])->name('sparepartstoktrans.index');
+            Route::get('/getsparepart', [App\Http\Controllers\SparepartstoktransController::class, 'getsparepart'])->name('sparepartstoktrans.getsparepart');
+            Route::get('/getstok', [App\Http\Controllers\SparepartstoktransController::class, 'getstok'])->name('sparepartstoktrans.getstok');
+        });     
+
+        Route::group(['prefix' => 'pallete'], function () {
+            Route::get('/', [App\Http\Controllers\PalleteController::class, 'index'])->name('pallete.index');
+            Route::get('/formstatus', [App\Http\Controllers\PalleteController::class, 'formstatus'])->name('pallete.formstatus');
+            Route::post('/updatestatus', [App\Http\Controllers\PalleteController::class, 'updatestatus'])->name('pallete.updatestatus');
+        });        
+       
+        
+        Route::group(['prefix' => 'palleterenew'], function () {
+            Route::get('/', [App\Http\Controllers\PalleterenewController::class, 'index'])->name('palleterenew.index');
+            Route::get('/formstatus', [App\Http\Controllers\PalleterenewController::class, 'formstatus'])->name('palleterenew.formstatus');
+            Route::post('/updatestatus', [App\Http\Controllers\PalleterenewController::class, 'updatestatus'])->name('palleterenew.updatestatus');
+        });
+
+        Route::group(['prefix' => 'unit'], function () {
+            Route::get('/', [App\Http\Controllers\UnitController::class, 'index'])->name('unit.index');
+            Route::get('/getunit', [App\Http\Controllers\UnitController::class, 'getunit'])->name('unit.getunit');
+        });
+        Route::group(['prefix' => 'lokasi'], function () {
+            Route::get('/getcbu/{id}', [App\Http\Controllers\ApiLokasi::class, 'getcbu'])->name('lokasi.getcbu');
+            Route::get('/getregion/{id}', [App\Http\Controllers\ApiLokasi::class, 'getregion'])->name('lokasi.getregion');
+            Route::get('/getsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'getsitename'])->name('lokasi.getsitename');
+            Route::get('/setsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
+        });
+    });
+    
+
 });

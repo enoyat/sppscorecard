@@ -3,12 +3,12 @@ import 'dart:convert';
 
 class Dokumentrouble {
   final int? id;
-  final int idtrouble;
+  final int idaction;
   final String keterangan;
   final String filename;
   Dokumentrouble({
     this.id,
-    required this.idtrouble,
+    required this.idaction,
     required this.keterangan,
     required this.filename,
   });
@@ -16,7 +16,7 @@ class Dokumentrouble {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'idtrouble': idtrouble,
+      'idaction': idaction,
       'keterangan': keterangan,
       'filename': filename,
     };
@@ -25,7 +25,7 @@ class Dokumentrouble {
   factory Dokumentrouble.fromMap(Map<String, dynamic> map) {
     return Dokumentrouble(
       id: map['id'] != null ? map['id'] as int : null,
-      idtrouble: map['idtrouble'] as int,
+      idaction: map['idaction'] as int,
       keterangan: map['keterangan'] as String,
       filename: map['filename'] as String,
     );

@@ -33,15 +33,16 @@ class TroubleDio {
     }
   }
 
-  Future<void> postData(Map<String, dynamic> item) async {
+  Future postData(Map<String, dynamic> item) async {
     try {
-      await dio.post("$baseUrl/trouble/store", data: item);
+      final result = await dio.post("$baseUrl/trouble/store", data: item);
+      return result.data;
     } catch (e) {
       throw Exception(e);
     }
   }
 
-  Future uploadfoto(File file, int idtrouble, String keterangan) async {
+  Future uploadfoto(File file, int idaction, String keterangan) async {
     String fileName = file.path.split('/').last;
     String namafile = "";
     FormData formData = FormData.fromMap({
@@ -49,7 +50,7 @@ class TroubleDio {
         file.path,
         filename: fileName,
       ),
-      "idtrouble": idtrouble,
+      "idaction": idaction,
       "keterangan": keterangan,
       "transaksi": "trouble"
     });
@@ -67,9 +68,9 @@ class TroubleDio {
     }
   }
 
-  Future<List<Dokumentrouble>> listdokumen(int idtrouble) async {
+  Future<List<Dokumentrouble>> listdokumen(int idaction) async {
     try {
-      final result = await dio.get('$baseUrl/trouble/listdokumen/$idtrouble');
+      final result = await dio.get('$baseUrl/trouble/listdokumen/$idaction');
       return (result.data as List)
           .map((e) => Dokumentrouble.fromMap(e as Map<String, dynamic>))
           .toList();

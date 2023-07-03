@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MCbu;
-use App\Models\Munit;
+use App\Models\MUnit;
 use App\Models\MForklifttype;
 use App\Models\User;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
@@ -27,7 +27,7 @@ class UnitController extends Controller
     public function index()
     {
         $cbu=MCbu::get();
-        $unit = Munit::get();
+        $unit = MUnit::get();
         return view('unit.index', compact('unit','cbu'));
     }
     public function create()
@@ -40,7 +40,7 @@ class UnitController extends Controller
     {
         $cbu=MCbu::get();
         $forklifttype = MForklifttype::get();
-        $unit = Munit::find($id);
+        $unit = MUnit::find($id);
         return view('unit.edit',compact('cbu','forklifttype','unit'));
     }
     public function store(Request $request)
@@ -53,7 +53,7 @@ class UnitController extends Controller
 
       
         
-        $unit = new Munit;
+        $unit = new MUnit;
         $unit->namaunit = $request->namaunit;
         $unit->uom = $request->uom;
         
@@ -82,7 +82,7 @@ class UnitController extends Controller
 
       
         
-        $unit = Munit::find($id);
+        $unit = MUnit::find($id);
         $unit->namaunit = $request->namaunit;
         $unit->uom = $request->uom; 
         $simpan = $unit->save();
@@ -104,7 +104,7 @@ class UnitController extends Controller
     {
         try {
             $id = $request->id;
-            Munit::where('id', '=', $id)->delete();
+            MUnit::where('id', '=', $id)->delete();
 
             return redirect()->route('unit.index');
         } catch (QueryException $ex) {

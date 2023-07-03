@@ -6,36 +6,14 @@ use App\Models\Cart;
 use App\Models\MDokumentrouble;
 use App\Models\MTrouble;
 use App\Models\MTroubleaction;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 
 class ApiTrouble extends Controller
 {
-    public function listoftrouble($idsitename)
-    {
-        $trouble = MTrouble::where('idsitename',$idsitename)
-        ->join('sitename','sitename.id','=','listoftrouble.idsitename')
-        ->join('region','region.id','=','sitename.idregion')    
-        ->join('cbu','cbu.id','=','region.idcbu')
-        ->where('statusspp','!=','CLOSE')
-        ->select('listoftrouble.*','sitename.namasitename','region.namaregion','cbu.namacbu')
-        ->orderby('id','desc')        
-        ->get();
-        return Response::json($trouble);
-    }
-    public function gettrouble($id)
-    {
-        $trouble = MTrouble::where('listoftrouble.id',$id)
-        ->join('sitename','sitename.id','=','listoftrouble.idsitename')
-        ->join('region','region.id','=','sitename.idregion')    
-        ->join('cbu','cbu.id','=','region.idcbu')
-        ->where('statuscustomer','!=','close')
-        ->select('listoftrouble.*','sitename.namasitename','region.namaregion','cbu.namacbu')
-        ->orderby('id','desc')        
-        ->get();
-        return Response::json($trouble);
-    }
+   
     public function uploadgallery(Request $request)
     {
         $file = $request->filefoto;
@@ -48,30 +26,44 @@ class ApiTrouble extends Controller
     }
     public function store(Request $request)
     {
-        $Mtroubleaction = New MTroubleaction();
-        $Mtroubleaction->idtrouble = $request->idtrouble;
-        $Mtroubleaction->iduser = $request->iduser;
-         $Mtroubleaction->tanggalmulai = date("y-m-d", strtotime($request->tanggalmulai));
-        $Mtroubleaction->tanggalakhir = date("y-m-d", strtotime($request->waktuselesaipengerjaan));
-        $Mtroubleaction->shift = $request->shift;
-        $Mtroubleaction->actionplan = $request->deskripsi;
-        $Mtroubleaction->sparepart = $request->sparepart;
-        $Mtroubleaction->save();
+        $tahun=date('Y');
+        $bulan=date('m');
+        $periode=$tahun.'-'.$bulan;
+        $trouble = New MTroubleaction();
+        $trouble->kdunit = $request->kdunit;
+        $trouble->periode = $periode;
+        $trouble->iduser = $request->iduser;
         
-        $MTrouble = MTrouble::where('id',$request->idtrouble)->first();
-        $MTrouble->statusmekanik = $request->statusmekanik;
-        $MTrouble->actionplanspp = $request->deskripsi;
-        $MTrouble->documentation = $request->documentation;
-        $MTrouble->actualcompletedate = date("y-m-d", strtotime($request->waktuselesaipengerjaan));
-        $MTrouble->save();
-        $id = $MTrouble->id;
+        $tglmulai=new DateTime($request->tanggalmulai.' '.$request->jammulai);
+        $tglselesai=new DateTime($request->tanggalakhir.' '.$request->jamselesai);
+        $lapsetime = $tglmulai->diff($tglselesai);
+        $hari=$lapsetime->format('%d');
+        $jam=$lapsetime->format('%H');
+        $menit=$lapsetime->format('%I');
+        $interval=(($hari*24+$jam)*60)+$menit;
 
+      
+        $trouble->tanggalmulai = $tglmulai;
+        $trouble->tanggalakhir = $tglselesai;
+        $trouble->lapsetime = $interval;
 
-        return  Response::json($MTrouble);
+        $trouble->shift = $request->shift;
+        $trouble->actionplan = $request->actionplan;
+        $trouble->sparepart = $request->sparepart;
+        $trouble->statusmekanik = $request->statusmekanik;
+        $trouble->save();
+        $idaction = $trouble->id;
+
+        return $data = [
+            'idaction' => $idaction,
+        ];
+
+       
     }
+    
     public function listdokumen($id)
     {
-        $trouble = MDokumentrouble::where('idtrouble',$id)
+        $trouble = MDokumentrouble::where('idaction',$id)
         ->get();
         return Response::json($trouble);
     }

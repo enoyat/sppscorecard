@@ -9,7 +9,6 @@
                     </div>
                 </th>
                 <th scope="col">Status SPP</th>
-                <th scope="col">Status Customer</th>
                 <th scope="col">Status Mekanik</th>
 
 
@@ -43,17 +42,6 @@
                     <a class="btn btn-sm btn-info  btn-action" data-url="{{ URL('maintenance/formstatus?aid=spp&kdunit='.$key->kdunit) }}" id="btnAction1"><i class=" fas fa-key"></i></a>
                     @endif
                     @endif</th>
-                <th scope="col">@if ($key->statuscustomer=="CLOSE") 
-                    <span class="badge badge-pill badge-soft-success font-size-12">{{ $key->statuscustomer }}</span>
-                    @else
-                    
-                    <span class="badge badge-pill badge-soft-danger font-size-12">{{ $key->statuscustomer }}</span>
-                    @if(Session::get('globalidsitename')==Session::get('runidsitename'))
-                    <a class="btn btn-sm btn-info  btn-action" data-url="{{ URL('maintenance/formstatus?aid=customer&kdunit='.$key->kdunit) }}" id="btnAction1"><i class=" fas fa-key"></i></a>
-                    @endif
-                    
-                    @endif
-                </th>
                 <th scope="col">@if ($key->statusmekanik=="CLOSE") 
                     <span class="badge badge-pill badge-soft-success font-size-12">{{ $key->statusmekanik }}</span>
                     @else

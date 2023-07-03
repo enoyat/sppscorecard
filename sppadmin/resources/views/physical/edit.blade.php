@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Basic_Elements') @endsection
+@section('title') PT. Satria Piranti Perkasa @endsection
 
 @section('content')
 
@@ -71,9 +71,9 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Tanggal</label>
-                                    <input class="form-control" type="text" value="{{ $physical->tanggal }}" name="tanggal"
-                                        id="tanggal" readonly>
+                                    <label for="example-password-input" class="form-label">Periode</label>
+                                    <input class="form-control" type="text" value="{{ $physical->periode }}" name="periode"
+                                        id="periode" readonly>
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Kode Unit</label>
@@ -111,30 +111,7 @@
                                     <input class="form-control" type="text" value="{{ $physical->paforklift }}" name="paforklift"
                                         id="paforklift" readonly>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="example-time-input" class="form-label">Remark Unit</label>
-                                    <input class="form-control" type="text" value="{{ $physical->remarkunit }}" name="remarkunit"
-                                        id="remarkunit">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-color-input" class="form-label">Confirmation by Plant</label>
-                                    <input class="form-control" type="text" value="{{ $physical->confirmationplan }}" name="confirmationplan"
-                                        id="confirmationplan">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-color-input" class="form-label">Remarks</label>
-                                    <input class="form-control" type="text" value="{{ $physical->remarks }}" name="remarks"
-                                        id="remarks">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status SPP</label>
-                                    <select class="form-select" name="statusspp" id="statusspp">
-                                    <option value="{{ $physical->statusspp }}">{{ $physical->statusspp }}</option>
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
-                                </div>
+                                
 
 
                                 <div class="mb-3">

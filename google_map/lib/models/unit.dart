@@ -8,9 +8,7 @@ class Unit {
   final int idsitename;
   final int hm;
   final String statusspp;
-  final String statuscustomer;
   final String statusmekanik;
-
   Unit({
     required this.kdunit,
     required this.serialnumber,
@@ -18,7 +16,6 @@ class Unit {
     required this.idsitename,
     required this.hm,
     required this.statusspp,
-    required this.statuscustomer,
     required this.statusmekanik,
   });
 
@@ -30,7 +27,6 @@ class Unit {
       'idsitename': idsitename,
       'hm': hm,
       'statusspp': statusspp,
-      'statuscustomer': statuscustomer,
       'statusmekanik': statusmekanik,
     };
   }
@@ -43,13 +39,11 @@ class Unit {
       idsitename: map['idsitename'] as int,
       hm: map['hm'] as int,
       statusspp: map['statusspp'] as String,
-      statuscustomer: map['statuscustomer'] as String,
       statusmekanik: map['statusmekanik'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Unit.fromJson(String source) =>
-      Unit.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Unit.fromJson(String source) => Unit.fromMap(json.decode(source) as Map<String, dynamic>);
 }

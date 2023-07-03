@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Basic_Elements') @endsection
+@section('title') PT. Satria Piranti Perkasa @endsection
 
 @section('content')
 
@@ -69,14 +69,35 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Bulan Tahun</label>
-                                    <input class="form-control" type="date" value="" name="tanggal"
-                                        id="tanggal">
+                                    <label for="example-password-input" class="form-label">Periode</label>
+                                    <input class="form-control" type="text" value="" name="periode" id="periode" maxlength="7" placeholder="yyyy-mm">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Kode Unit</label>
-                                    
-                                        <select  name="kdunit" id="kdunit" required class="form-control"></select>
+                                <div>
+                                <h5 class="font-size-14 mb-3">Pilih Unit</h5>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="pilihunit" 
+                                        
+                                        id="formRadios1" checked value="allunit">
+                                    <label class="form-check-label" for="formRadios1">
+                                        All Unit
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="pilihunit" 
+                                        id="formRadios2" value="itemunit">
+                                    <label class="form-check-label" for="formRadios2">
+                                        Unit Tertentu
+                                    </label>
+                                </div>
+                            </div>
+      
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Pilih Unit</label>
+
+                                    <select name="kdunit" id="kdunit"  class="form-control"></select>
                                 </div>
 
 
@@ -85,62 +106,35 @@
                                     <input class="form-control" type="tel" value="" name="harikerja" id="harikerja">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Plan Hari Kerja (Minutes)</label>
-                                    <input class="form-control" type="text" value="" name="planunitkerja" id="planunitkerja">
+                                    <label for="example-password-input" class="form-label">Plan Hari Kerja
+                                        (Minutes)</label>
+                                    <input class="form-control" type="text" value="" name="planunitkerja"
+                                        id="planunitkerja">
                                 </div>
-                              
-
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="mt-3 mt-lg-0">
-                                <div class="mb-3">
-                                    <label for="example-time-input" class="form-label">Remark Unit</label>
-                                    <input class="form-control" type="text" value="" name="remarkunit"
-                                        id="remarkunit">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-color-input" class="form-label">Confirmation by Plant</label>
-                                    <input class="form-control" type="text" value="" name="confirmationplan"
-                                        id="confirmationplan">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-color-input" class="form-label">Remarks</label>
-                                    <input class="form-control" type="text" value="" name="remarks"
-                                        id="remarks">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status SPP</label>
-                                    <select class="form-select" name="statusspp" id="statusspp">
-                                        <option value="">Select</option>
-                                        <option value="OPEN">OPEN</option>
-                                        <option value="CLOSE">CLOSE</option>
-                                    </select>
-                                </div>
-
-
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
                                 </div>
 
+
+
                             </div>
                         </div>
 
-                    </div>
-                </form>
-            </div>
 
+                    </div>
+
+            </div>
+            </form>
         </div>
-    </div> <!-- end col -->
+
+    </div>
+</div> <!-- end col -->
 </div>
 <!-- end row -->
 <script>
-    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    jQuery('#idcbu').change(function() {
+var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+jQuery('#idcbu').change(function() {
     jQuery('#idregion').html('');
     var id = $(this).val();
     var string = "{{ asset('/lokasi/getregion/') }}/" + id;
@@ -164,8 +158,8 @@
             $('#idregion').html(html);
         }
     });
-    });
-    jQuery('#idregion').change(function() {
+});
+jQuery('#idregion').change(function() {
     jQuery('#idsitename').html('');
     var id = $(this).val();
     var string = "{{ asset('/lokasi/getsitename/') }}/" + id;
@@ -189,29 +183,29 @@
             $('#idsitename').html(html);
         }
     });
-    });
+});
 
-    $("#kdunit").select2({
-        placeholder: 'Pilih Unit',
-        ajax: {
-            url: "{{ route('unit.getunit') }}",
-            type: "GET",
-            dataType: 'JSON',
-            delay: 250,
-            data: function(params) {
-                return {
-                    _token: CSRF_TOKEN,
-                    search: params.term,
-                };
-            },
-            processResults: function(response) {
-                return {
-                    results: response
-                };
-            },
-            cache: true
-        }
-    });
+$("#kdunit").select2({
+    placeholder: 'Pilih Unit',
+    ajax: {
+        url: "{{ route('unit.getunit') }}",
+        type: "GET",
+        dataType: 'JSON',
+        delay: 250,
+        data: function(params) {
+            return {
+                _token: CSRF_TOKEN,
+                search: params.term,
+            };
+        },
+        processResults: function(response) {
+            return {
+                results: response
+            };
+        },
+        cache: true
+    }
+});
 </script>
 
 

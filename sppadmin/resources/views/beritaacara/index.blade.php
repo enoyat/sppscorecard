@@ -12,6 +12,9 @@ Delivery
 @endsection
 
 @section('content')
+@if(Session::get('roles_id')==1)
+    @include('header_select')
+@endif
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" >
                     <div class="modal-dialog">
                         <div class="modal-content">

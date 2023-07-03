@@ -31,10 +31,49 @@ class MaintenanceController extends Controller
     {
         $cbu=MCbu::get();
         $maintenance = MUnit::where('idsitename',Session::get('runidsitename'))->get();
-        $forklifttype = MForklifttype::get();
-        return view('maintenance.index', compact('maintenance','forklifttype','cbu'));
+        return view('maintenance.index', compact('maintenance','cbu'));
     }
+    public function create(){
+        $cbu=MCbu::get();
+        return view('maintenance.create', compact('cbu'));
+    }
+    public function store(Request $request){
+        $request->validate([
+            'idcbu'=>'required',
+            'idregion'=>'required', 
+            'idsitename'=>'required',
+            'kdunit'=>'required|unique:unit,kdunit',
+            'hm'=>'required',
+        ]);
 
+      
+        
+        $maintenance = new MUnit;
+        $maintenance->idcbu = $request->idcbu;
+        $maintenance->idregion = $request->idregion;
+        $maintenance->idsitename = $request->idsitename;
+        $maintenance->kdunit = $request->kdunit;
+        $maintenance->serialnumber = $request->serialnumber;
+        $maintenance->namaunit = $request->kdunit;
+        $maintenance->hm = $request->hm;
+        $maintenance->statusspp = "CLOSE";
+        $maintenance->statusmekanik = "CLOSE";
+        $simpan = $maintenance->save();
+
+        if ($simpan) {                      
+            Session::flash('message', 'Data berhasil disimpan!');
+            return redirect()->route('maintenance.index');
+
+        } else {
+            Session::flash('message', 'Something went wrong!');
+            Session::flash('alert-class', 'alert-danger');
+            return response()->json([
+                'isSuccess' => true,
+                'Message' => "Something went wrong!"
+            ], 200); // Status code here
+        }
+
+    }
    
     public function destroy(Request $request)
     {

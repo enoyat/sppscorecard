@@ -1,16 +1,16 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_ItemTroubleconstructors_first
 import 'package:flutter/material.dart';
 
-import 'package:google_map/models/trouble.dart';
-import 'package:google_map/pages/mekanik/formtrouble_page.dart';
+import '../models/unit.dart';
+import '../pages/mekanik/formtrouble_page.dart';
 
 class ItemTroubleWidget extends StatefulWidget {
   const ItemTroubleWidget({
     Key? key,
-    required this.trouble,
+    required this.unit,
     required this.handleRefresh,
   }) : super(key: key);
-  final Trouble trouble;
+  final Unit unit;
   final Function handleRefresh;
 
   @override
@@ -23,71 +23,29 @@ class _ItemTroubleWidgetState extends State<ItemTroubleWidget> {
     super.initState();
   }
 
+  String getstatus() {
+    var hm = widget.unit.hm;
+    var sts = (hm / 5000) % 2;
+    if (sts == 0) {
+      return "Overhaul Kecil";
+    } else {
+      return "Overhaul Besar";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ListTile(
-                  leading: const Icon(Icons.departure_board, size: 30),
-                  title: Text(
-                    "${widget.trouble.issue} ",
-                  ),
-                  trailing: Column(
-                    children: [
-                      Text(
-                        widget.trouble.kdunit,
-                        style: TextStyle(
-                            color: widget.trouble.statusspp == 'OPEN'
-                                ? Colors.red
-                                : Colors.green),
-                      ),
-                      Text(
-                        widget.trouble.statusspp!,
-                        style: TextStyle(
-                            color: widget.trouble.statusspp == 'OPEN'
-                                ? Colors.red
-                                : Colors.green),
-                      ),
-                    ],
-                  ),
-                  subtitle: Text(
-                      'Target Completion Date: ${widget.trouble.targetcompletedate!}'),
-                ),
-                const Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    widget.trouble.statusmekanik == 'OPEN'
-                        ? Text(
-                            'Mekanik Status: ${widget.trouble.statusmekanik!}',
-                            style: const TextStyle(color: Colors.red))
-                        : Text(
-                            'Mekanik Status: ${widget.trouble.statusmekanik!}',
-                            style: const TextStyle(color: Colors.green)),
-                    TextButton.icon(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return FormTroublePage(idtrouble: widget.trouble.id);
-                        }));
-                      },
-                      icon: const Icon(Icons.adjust),
-                      label: const Text("Action"),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+        child: ListTile(
+      title: Text("${widget.unit.kdunit} / sn: ${widget.unit.serialnumber}"),
+      trailing: IconButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return FormTroublePage(kdunit: widget.unit.kdunit);
+          }));
+        },
+        icon: const Icon(Icons.arrow_forward_ios),
       ),
-    );
+    ));
   }
 }
