@@ -31,6 +31,8 @@ Route::get('restrictpage', [App\Http\Controllers\HomeController::class, 'restric
 Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
     Route::group(['roles' => ['administrator']], function () {
         Route::get('utility/userlog', [UtilityController::class, 'userlog'])->name('utility.userlog');
+        Route::get('utility/edituser/{id}', [UtilityController::class, 'edituser'])->name('utility.edituser');
+        Route::post('utility/updateuser/{id}', [UtilityController::class, 'updateuser'])->name('utility.updateuser');
         Route::group(['prefix' => 'cbu'], function () {
             Route::get('/', [App\Http\Controllers\CbuController::class, 'index'])->name('cbu.index');
             Route::get('/create', [App\Http\Controllers\CbuController::class, 'create'])->name('cbu.create');

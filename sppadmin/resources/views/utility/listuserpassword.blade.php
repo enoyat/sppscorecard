@@ -52,6 +52,7 @@
                                     @endif
                                 </td>
                                 <td>
+                                    <a href="{{ route('utility.edituser',$row->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                     <form action="{{ route('userdelete',$row->id) }}" method="post">
                                         @csrf
                                         <button type="submit" class="btn btn-danger btn-sm"

@@ -22,6 +22,13 @@ class UtilityController extends Controller
         return view ('utility.listuserpassword')->with('users',$users);
 
     }
+    public function edituser($id){
+        $role=Role::orderby('id')->get();
+        $sitename=MSitename::orderby('namasitename')->get();
+        $users=User::where('id',$id)->first();
+        return view ('utility.edituser',compact('users','role','sitename'));
+
+    }
     public function userlog(){
         $logs=MLoglogin::orderby('created_at')->get();
         return view ('utility.loghistory')->with('logs',$logs);
@@ -117,5 +124,22 @@ class UtilityController extends Controller
         $user->save();
         Alert::success('Berhasil', 'Password berhasil diubah');
         return redirect()->back();
+    }
+    public function updateuser(Request $request)
+    {
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|email|unique:users,email,'.$request->id,
+            'role'=>'required',
+            'idsitename'=>'required',
+        ]);
+        $user = User::find($request->id);
+        $user->name = ucwords(strtolower($request->name));
+        $user->email = strtolower($request->email);
+        $user->roles_id = $request->role;
+        $user->idsitename = $request->idsitename;
+        $user->save();
+       
+        return redirect()->route('utility.userpassword')->with('success','User berhasil diupdate');
     }
 }
