@@ -33,8 +33,7 @@ class UnitController extends Controller
     public function create()
     {
         $cbu=MCbu::get();
-        $forklifttype = MForklifttype::get();
-        return view('unit.create',compact('cbu','forklifttype'));
+        return view('unit.create',compact('cbu'));
     }
     public function edit($id)
     {
@@ -43,20 +42,27 @@ class UnitController extends Controller
         $unit = MUnit::find($id);
         return view('unit.edit',compact('cbu','forklifttype','unit'));
     }
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $request->validate([
-            'namaunit'=>'required',
-            'uom'=>'required',
-            
+            'idcbu'=>'required',
+            'idregion'=>'required', 
+            'idsitename'=>'required',
+            'kdunit'=>'required|unique:unit,kdunit',
+            'hm'=>'required',
         ]);
 
       
         
         $unit = new MUnit;
-        $unit->namaunit = $request->namaunit;
-        $unit->uom = $request->uom;
-        
+        $unit->idcbu = $request->idcbu;
+        $unit->idregion = $request->idregion;
+        $unit->idsitename = $request->idsitename;
+        $unit->kdunit = $request->kdunit;
+        $unit->serialnumber = $request->serialnumber;
+        $unit->namaunit = $request->kdunit;
+        $unit->hm = $request->hm;
+        $unit->statusspp = "CLOSE";
+        $unit->statusmekanik = "CLOSE";
         $simpan = $unit->save();
 
         if ($simpan) {                      
@@ -71,7 +77,9 @@ class UnitController extends Controller
                 'Message' => "Something went wrong!"
             ], 200); // Status code here
         }
+
     }
+   
     public function update(Request $request, $id)
     {
         $request->validate([

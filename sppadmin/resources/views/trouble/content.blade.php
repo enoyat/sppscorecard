@@ -99,7 +99,7 @@ trouble
                     <span class="badge badge-pill badge-soft-danger font-size-12">{{ $key->statusmekanik }}</span>
 
                     @endif</th>
-                <th scope="col">{{ $key->iduser }}</th>
+                <th scope="col">{{ $key->getuser->name }}</th>
                 <th scope="col">{{ $key->kdunit }} </th>
                 <th scope="col">{{ $key->tanggalmulai }}</th>
                 <th scope="col">{{ $key->tanggalakhir }}</th>

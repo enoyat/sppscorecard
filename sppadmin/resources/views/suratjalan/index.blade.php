@@ -12,7 +12,7 @@ Delivery
 @endsection
 
 @section('content')
-@if(Session::get('roles_id')==1)
+@if(Session::get('roles_id')==1 || Session::get('roles_id')==5)
     @include('header_select')
 @endif
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" >

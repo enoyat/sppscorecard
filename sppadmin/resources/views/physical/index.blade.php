@@ -12,7 +12,7 @@ physical
 @endsection
 
 @section('content')
-@if(Session::get('roles_id')==1)
+@if(Session::get('roles_id')==1 || Session::get('roles_id')==5)
     @include('header_select')
 @endif
 <!-- start page title -->

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MLoglogin;
 use App\Models\MSitename;
 use App\Models\User;
 use App\Models\MMekanik;
@@ -21,7 +22,11 @@ class UtilityController extends Controller
         return view ('utility.listuserpassword')->with('users',$users);
 
     }
+    public function userlog(){
+        $logs=MLoglogin::orderby('created_at')->get();
+        return view ('utility.loghistory')->with('logs',$logs);
 
+    }
     public function register(){
         $role=Role::orderby('id')->get();
         $sitename=MSitename::orderby('namasitename')->get();

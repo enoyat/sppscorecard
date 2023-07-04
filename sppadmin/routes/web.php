@@ -30,6 +30,7 @@ Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class
 Route::get('restrictpage', [App\Http\Controllers\HomeController::class, 'restrictpage'])->name('restrictpage');
 Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
     Route::group(['roles' => ['administrator']], function () {
+        Route::get('utility/userlog', [UtilityController::class, 'userlog'])->name('utility.userlog');
         Route::group(['prefix' => 'cbu'], function () {
             Route::get('/', [App\Http\Controllers\CbuController::class, 'index'])->name('cbu.index');
             Route::get('/create', [App\Http\Controllers\CbuController::class, 'create'])->name('cbu.create');
@@ -220,7 +221,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
 
     });
 
-    Route::group(['roles' => ['administrator', 'manajersite']], function () {
+    Route::group(['roles' => ['administrator', 'manajersite', 'manajerallsite']], function () {
         Route::get('/gantipassword', [App\Http\Controllers\HomeController::class, 'gantipassword'])->name('gantipassword');
         Route::post('utility/userpasswordupdate', [UtilityController::class, 'userpasswordupdate'])->name('utility.userpasswordupdate');
         //Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');

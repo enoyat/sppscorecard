@@ -14,7 +14,7 @@ class MaintenanceDio {
   }
   Future<List<Unit>> listofunit(int idsitename) async {
     try {
-      final result = await dio.get('$baseUrl/listofunit/1');
+      final result = await dio.get('$baseUrl/listofunit/$idsitename');
       return (result.data as List)
           .map((e) => Unit.fromMap(e as Map<String, dynamic>))
           .toList();

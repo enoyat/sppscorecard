@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') Maintenance @endsection
+@section('title') User List @endsection
 
 @section('css')
 
@@ -10,57 +10,51 @@
 @endsection
 
 @section('content')
-@if(Session::get('roles_id')==1 || Session::get('roles_id')==5)
-    @include('header_select')
-@endif
+
 <!-- start page title -->
 @component('components.breadcrumb')
 @slot('li_1') Contacts @endslot
-@slot('title') Maintenance @endslot
+@slot('title') User Log History @endslot
 @endcomponent
-
+@include('sweetalert::alert')
 <div class="row align-items-center">
-    <div class="col-md-6">
+<div class="content-wrapper">
 
-    </div>
 
-    <div class="col-md-6">
-        <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
-            <div>
-                <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('maintenance.index') }}" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
-                    </li>
 
-                </ul>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-bordered table-hover" id="tabelku" style="font-size: 11px;">
+                        <thead>
+                            <tr class="active">
+                                <th width="1%">No</th>
+                                <th>Email</th>
+                                <th>last Login</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $no = 1;?>
+                            @foreach ($logs as $row)
+                            <tr>
+                                <td>{{ $no++ }}</td>
+                                <td>Email: {{ $row->email }}</td>
+                                <td>{{ $row->created_at}}</td>                               
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
-
-
-
-            <!-- <div class="dropdown">
-                <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bx bx-dots-horizontal-rounded"></i>
-                </a>
-
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                    <li><a class="dropdown-item" href="#">Hapus</a></li>
-                </ul>
-            </div> -->
-        </div>
-
-    </div>
+    </section>
 </div>
-<!-- end row -->
-
-<div class="table-responsive mb-4" id="tablecontent">
-    @include('maintenance.content')
-    
-    <!-- end table -->
-</div>
-<!-- end table responsive -->
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#tabelku').DataTable();
+});
+</script>
 @endsection
 
 @section('script')

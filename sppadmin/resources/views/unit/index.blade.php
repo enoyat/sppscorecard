@@ -1,8 +1,6 @@
 @extends('layouts.master')
 
-@section('title') 
-Delivery 
-@endsection
+@section('title') Maintenance @endsection
 
 @section('css')
 
@@ -15,25 +13,10 @@ Delivery
 @if(Session::get('roles_id')==1 || Session::get('roles_id')==5)
     @include('header_select')
 @endif
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog" >
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">RETUR</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            </div>
-                            <div class="modal-body">
-                            </div>
-                            <div class="modal-footer">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
 <!-- start page title -->
 @component('components.breadcrumb')
-@slot('li_1') Contacts @endslot
-@slot('title') Berita Acara @endslot
+@slot('li_1') Unit @endslot
+@slot('title') Unit @endslot
 @endcomponent
 
 <div class="row align-items-center">
@@ -46,15 +29,16 @@ Delivery
             <div>
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('delivery.index') }}" data-bs-toggle="tooltip"
+                        <a class="nav-link active" href="{{ route('maintenance.index') }}" data-bs-toggle="tooltip"
                             data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
                     </li>
 
                 </ul>
             </div>
             <div>
-                <a href="{{ route('beritaacara.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
+                <a href="{{ route('unit.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
             </div>
+
 
             <!-- <div class="dropdown">
                 <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
@@ -74,7 +58,7 @@ Delivery
 <!-- end row -->
 
 <div class="table-responsive mb-4" id="tablecontent">
-    @include('beritaacara.content')
+    @include('unit.content')
     
     <!-- end table -->
 </div>

@@ -33,6 +33,7 @@
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Role</th>
+                                <th>Sitename</th>
                                 <th>Aksi</th>
 
                             </tr>
@@ -46,6 +47,10 @@
                                 <td>{{ $row->name }}</td>
                                 <td>Email: {{ $row->email }}</td>
                                 <td>{{ $row->role->role_name }}</td>
+                                <td>@if ($row->idsitename!="") 
+                                    {{ $row->getsitename->namasitename }}
+                                    @endif
+                                </td>
                                 <td>
                                     <form action="{{ route('userdelete',$row->id) }}" method="post">
                                         @csrf

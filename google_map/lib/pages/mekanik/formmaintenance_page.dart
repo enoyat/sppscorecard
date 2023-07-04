@@ -308,16 +308,6 @@ class _FormMaintenancePageState extends State<FormMaintenancePage> {
                                 });
                               }),
                           const Text('CLOSE'),
-                          const SizedBox(height: 10),
-                          Radio(
-                              value: "CONTINUE",
-                              groupValue: status,
-                              onChanged: (value) {
-                                setState(() {
-                                  status = value.toString();
-                                });
-                              }),
-                          const Text('CONTINUE'),
                         ],
                       ),
                     ),

@@ -15,8 +15,8 @@ trouble
 
 <!-- start page title -->
 @component('components.breadcrumb')
-@slot('li_1') Trouble @endslot
-@slot('title') trouble Dokumen @endslot
+@slot('li_1') Maintenance @endslot
+@slot('title') Maintenance Action @endslot
 @endcomponent
 
 <div class="row align-items-center">
@@ -35,10 +35,7 @@ trouble
 
                 </ul>
             </div>
-            <div>
-                <a href="{{ route('trouble.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add
-                    New</a>
-            </div>
+
 
             <!-- <div class="dropdown">
                 <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
@@ -91,7 +88,7 @@ trouble
                         <label class="form-check-label" for="contacusercheck1"></label>
                     </div>
                 </th>
-                <th scope="col">{{ $key->iduser }}</th>
+                <th scope="col">{{ $key->getuser->name }}</th>
                 <th scope="col">{{ $key->kdunit }}</th>
                 <th scope="col"><a href="{{ route('maintenance.listdokumen',$key->id) }}" class="btn btn-warning btn-sm">List Foto</a></th>
 

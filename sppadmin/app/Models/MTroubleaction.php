@@ -22,5 +22,9 @@ class MTroubleaction extends Model
     {
         return $this->belongsTo(MTrouble::class, 'trouble_id', 'id');
     }
+    public function getuser()
+    {
+        return $this->belongsTo(User::class, 'iduser', 'id');
+    }
 
 }

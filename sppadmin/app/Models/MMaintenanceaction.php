@@ -18,9 +18,9 @@ class MMaintenanceaction extends Model
     //protected $keyType = 'string';
 
     protected $guarded = [];
-    public function getmaintenance() //getmaintenance itu nama fungsi yang akan dipanggil di view
-    {
-        return $this->belongsTo(MMaintenance::class, 'idmaintenance', 'id');
+
+    public function getuser() {
+        return $this->belongsTo(User::class, 'iduser', 'id');
     }
    
 
