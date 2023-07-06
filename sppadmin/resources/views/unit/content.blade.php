@@ -9,12 +9,11 @@
                     </div>
                 </th>
                 <th scope="col">Kode Unit</th>
-                <th scope="col">HM</th>
-                <th scope="col">status</th>
-                <th scope="col">Tanggal</th>
+                <th scope="col">Serial Number</th>
                 <th scope="col">CBU</th>
                 <th scope="col">Region</th>
                 <th scope="col">Site Name</th>
+                <th scope="col">Action</th>
   
             </tr>
         </thead>
@@ -31,22 +30,18 @@
               
                 
                 <th scope="col"><a href="{{ route('maintenance.listaction',$key->kdunit) }}">{{ $key->kdunit }}</a></th>
-                <th scope="col">{{ $key->hm }}</th>
-                <th scope="col">
-                    <?php 
-                        if(intdiv($key->hm,5000) % 2==1){
-                            echo "OverHaul besar";
-                        }
-                        else {
-                            echo "OverHaul kecil";
-                        }
-                    ?>
-                </th>
-                <th scope="col">{{ $key->tanggal }}</th> 
+                <th scope="col">{{ $key->getcbu->serialnumber }}</th>
                 <th scope="col">{{ $key->getcbu->namacbu }}</th>
                 <th scope="col">{{ $key->getregion->namaregion }}</th>
                 <th scope="col">{{ $key->getsitename->namasitename }}</th>
-                
+                <th scope="col">
+                                <form action="{{ route('unit.destroy',$key->kdunit) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="dropdown-item"
+                                        onclick="return confirm('Hapus Data ini?');">Hapus</button>
+                                </form>
+                </th>
             </tr>
             @endforeach
         </tbody>

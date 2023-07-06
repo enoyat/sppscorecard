@@ -112,10 +112,11 @@ class UnitController extends Controller
     {
         try {
             $id = $request->id;
-            MUnit::where('id', '=', $id)->delete();
-
+            MUnit::where('kdunit', '=', $id)->delete();
+            Alert::success('sukses dihapus');
             return redirect()->route('unit.index');
         } catch (QueryException $ex) {
+            Alert::error('Gagal hapus, ada relasi data dengan yang lain');
             return redirect()->route('unit.index');
         }
     }

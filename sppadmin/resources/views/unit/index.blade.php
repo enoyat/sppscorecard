@@ -18,7 +18,7 @@
 @slot('li_1') Unit @endslot
 @slot('title') Unit @endslot
 @endcomponent
-
+@include('sweetalert::alert')
 <div class="row align-items-center">
     <div class="col-md-6">
 
