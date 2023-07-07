@@ -27,7 +27,7 @@ class UnitController extends Controller
     public function index()
     {
         $cbu=MCbu::get();
-        $unit = MUnit::get();
+        $unit = MUnit::where('idsitename',Session::get('runidsitename'))->get();
         return view('unit.index', compact('unit','cbu'));
     }
     public function create()
@@ -38,9 +38,8 @@ class UnitController extends Controller
     public function edit($id)
     {
         $cbu=MCbu::get();
-        $forklifttype = MForklifttype::get();
         $unit = MUnit::find($id);
-        return view('unit.edit',compact('cbu','forklifttype','unit'));
+        return view('unit.edit',compact('cbu','unit'));
     }
     public function store(Request $request){
         $request->validate([
@@ -58,7 +57,14 @@ class UnitController extends Controller
         $unit->idregion = $request->idregion;
         $unit->idsitename = $request->idsitename;
         $unit->kdunit = $request->kdunit;
+        $unit->equipment = $request->equipment;
+        $unit->merk = $request->merk;
+        $unit->type = $request->type;
+        $unit->model = $request->model;
+        $unit->capcity = $request->capcity;
         $unit->serialnumber = $request->serialnumber;
+        $unit->specification = $request->specification;
+        $unit->qty = $request->qty;
         $unit->namaunit = $request->kdunit;
         $unit->hm = $request->hm;
         $unit->statusspp = "CLOSE";
@@ -83,18 +89,30 @@ class UnitController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'namaunit'=>'required',
-            'uom'=>'required',
-          
+            'idcbu'=>'required',
+            'idregion'=>'required', 
+            'idsitename'=>'required',
         ]);
 
       
         
         $unit = MUnit::find($id);
-        $unit->namaunit = $request->namaunit;
-        $unit->uom = $request->uom; 
+        $unit->idcbu = $request->idcbu;
+        $unit->idregion = $request->idregion;
+        $unit->idsitename = $request->idsitename;
+        $unit->kdunit = $request->kdunit;
+        $unit->equipment = $request->equipment;
+        $unit->merk = $request->merk;
+        $unit->type = $request->type;
+        $unit->model = $request->model;
+        $unit->capcity = $request->capcity;
+        $unit->serialnumber = $request->serialnumber;
+        $unit->specification = $request->specification;
+        $unit->qty = $request->qty;
+        $unit->namaunit = $request->kdunit;
+        $unit->statusspp = "CLOSE";
+        $unit->statusmekanik = "CLOSE";
         $simpan = $unit->save();
-
         if ($simpan) {                      
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('unit.index');
@@ -132,7 +150,8 @@ class UnitController extends Controller
         }
     }
     public function getunit(Request $request){
-        $unit = MUnit::where('kdunit', 'LIKE', '%'.$request->search.'%')->orderBy('kdunit', 'ASC')->get();
+        $unit = MUnit::where('idsitename',$request->idsitename)->
+        where('kdunit', 'LIKE', '%'.$request->search.'%')->orderBy('kdunit', 'ASC')->get();
 
         $response = array();
         foreach ($unit as $value) {

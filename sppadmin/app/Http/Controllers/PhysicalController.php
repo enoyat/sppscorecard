@@ -52,7 +52,6 @@ class PhysicalController extends Controller
     }
     public function store(Request $request)
     {
-
         $request->validate([
             'idcbu' => 'required',
             'idregion' => 'required',
@@ -63,35 +62,39 @@ class PhysicalController extends Controller
             'planunitkerja' => 'required',
         ]);
 
-        if ($request->pilihunit == "allunit") {
-           $unit=MUnit::where('idsitename',$request->idsitename)->get();
-          // dd($unit);
-           foreach($unit as $item){
-            $physical = new MPhysical;
-            $physical->idcbu = $request->idcbu;
-            $physical->idregion = $request->idregion;
-            $physical->idsitename = $request->idsitename;
-            $physical->periode = $request->periode;
-            $physical->kdunit = $item->kdunit;
-            $physical->harikerja = $request->harikerja;
-            $physical->planunitkerja = $request->planunitkerja;
-            $physical->totaljamkerja = $request->planunitkerja;
-            $physical->paforklift = 100;
 
-            $simpan = $physical->save();
-           }
-            if ($simpan) {
-                Session::flash('message', 'Data berhasil disimpan!');
-                return redirect()->route('physical.index');
-            } else {
-                Session::flash('message', 'Something went wrong!');
-                Session::flash('alert-class', 'alert-danger');
-                return response()->json([
-                    'isSuccess' => true,
-                    'Message' => "Something went wrong!"
-                ], 200); // Status code here
+        if ($request->pilihunit == "allunit") {
+            
+            $unit = MUnit::where('idsitename', $request->idsitename)->get();
+           
+            foreach ($unit as $item) {
+                $cek = MPhysical::where('kdunit', $item->kdunit)->where('periode', $request->periode)->count();
+                if ($cek < 1) {
+
+                    $physical = new MPhysical;
+                    $physical->idcbu = $request->idcbu;
+                    $physical->idregion = $request->idregion;
+                    $physical->idsitename = $request->idsitename;
+                    $physical->periode = $request->periode;
+                    $physical->kdunit = $item->kdunit;
+                    $physical->harikerja = $request->harikerja;
+                    $physical->planunitkerja = $request->planunitkerja;
+                    $physical->totaljamkerja = $request->planunitkerja;
+                    $physical->paforklift = 100;
+
+                    $simpan = $physical->save();
+                }
             }
+            Alert::success('Success', 'Data berhasil disimpan!');
+            return redirect()->route('physical.index');
         } else {
+
+            $cek = MPhysical::where('kdunit', $request->kdunit)->where('periode', $request->periode)->count();
+            if ($cek > 0) {
+                Alert::error('Error', 'Data sudah ada!');
+                Session::flash('message', 'Data sudah ada!');
+                return redirect()->back();
+            }
             $physical = new MPhysical;
             $physical->idcbu = $request->idcbu;
             $physical->idregion = $request->idregion;
@@ -106,15 +109,14 @@ class PhysicalController extends Controller
             $simpan = $physical->save();
 
             if ($simpan) {
+                Alert::success('Success', 'Data berhasil disimpan!');
                 Session::flash('message', 'Data berhasil disimpan!');
                 return redirect()->route('physical.index');
             } else {
+                Alert::error('Error', 'Something went wrong!');
                 Session::flash('message', 'Something went wrong!');
                 Session::flash('alert-class', 'alert-danger');
-                return response()->json([
-                    'isSuccess' => true,
-                    'Message' => "Something went wrong!"
-                ], 200); // Status code here
+                return redirect()->back();
             }
         }
     }

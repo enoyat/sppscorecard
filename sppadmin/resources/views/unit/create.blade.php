@@ -74,10 +74,41 @@
                                         <small class="text-danger">Kode Unit tidak boleh sama dan tidak boleh ada spasi</small>
                                 </div>
                                 <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Equipment</label>
+                                    <input class="form-control" type="text" value="" name="equipment" id="equipment">                                       
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Merk</label>
+                                    <input class="form-control" type="text" value="" name="merk" id="merk">                                       
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Type</label>
+                                    <input class="form-control" type="text" value="" name="type" id="type">                                       
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Model</label>
+                                    <input class="form-control" type="text" value="" name="model" id="model">                                       
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Capcity</label>
+                                    <input class="form-control" type="text" value="" name="capcity" id="capcity">                                       
+                                </div>
+
+
+                                <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Serial Number</label>
                                     <input class="form-control" type="text" value="" name="serialnumber"
                                         id="serialnumber">
                                        
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Specification</label>
+                                    <input class="form-control" type="text" value="" name="specification" id="specification">                                       
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-date-input" class="form-label">Qty</label>
+                                    <input class="form-control" type="number" value="" name="qty"
+                                        id="qty" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-date-input" class="form-label">HM</label>

@@ -29,7 +29,7 @@
             <div>
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('maintenance.index') }}" data-bs-toggle="tooltip"
+                        <a class="nav-link active" href="{{ route('unit.index') }}" data-bs-toggle="tooltip"
                             data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
                     </li>
 

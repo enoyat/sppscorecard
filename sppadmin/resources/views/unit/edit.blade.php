@@ -6,21 +6,20 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Forms @endslot
-@slot('title') Create physical @endslot
+@slot('title') Edit Unit @endslot
 @endcomponent
-@include('sweetalert::alert')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
 <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Form physical</h4>
+                <h4 class="card-title">Form Unit </h4>
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('physical.store') }}" method="POST">
+                <form action="{{ route('unit.update', $unit->kdunit) }}" method="POST">
+                    @method('PUT')
                     <div class="row">
                         @if ($message = Session::get('success'))
                         <div class="alert alert-success">
@@ -42,11 +41,13 @@
                         @csrf
                         <div class="col-lg-6">
                             <div>
-                                <div class="mb-3">
+                            <div class="mb-3">
                                     <label for="example-text-input" class="form-label">CBU</label>
                                     <select class="form-select" aria-label="Default select example" name="idcbu"
                                         id="idcbu">
-                                        <option value="" selected>select</option>
+                                        <option value="{{ $unit->idcbu }}" selected>{{ $unit->getcbu->namacbu }}
+                                        </option>
+                                        <option value="">select</option>
                                         @foreach ($cbu as $itemcbu)
                                         <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
                                         @endforeach
@@ -55,9 +56,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Region</label>
+
                                     <select class="form-select" aria-label="Default select example" name="idregion"
                                         id="idregion">
-
+                                        <option value="{{ $unit->idregion }}">{{ $unit->getregion->namaregion }}
+                                        </option>
                                     </select>
 
                                 </div>
@@ -65,77 +68,73 @@
                                     <label for="example-text-input" class="form-label">Site Name</label>
                                     <select class="form-select" aria-label="Default select example" name="idsitename"
                                         id="idsitename">
-
+                                        <option value="{{ $unit->idsitename }}">
+                                            {{ $unit->getsitename->namasitename }}</option>
                                     </select>
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Periode</label>
-                                    <input class="form-control" type="text" value="" name="periode" id="periode" maxlength="7" placeholder="yyyy-mm">
+                                    <label for="example-password-input" class="form-label">Kode Unit</label>
+                                    <input class="form-control" type="text" value="{{ $unit->kdunit }}" name="kdunit"
+                                        id="kdunit">
+                                        <small class="text-danger">Kode Unit tidak boleh sama dan tidak boleh ada spasi</small>
                                 </div>
                                 <div class="mb-3">
-                                <div>
-                                <h5 class="font-size-14 mb-3">Pilih Unit</h5>
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="pilihunit" 
-                                        
-                                        id="formRadios1" checked value="allunit">
-                                    <label class="form-check-label" for="formRadios1">
-                                        All Unit
-                                    </label>
+                                    <label for="example-password-input" class="form-label">Equipment</label>
+                                    <input class="form-control" type="text" value="{{ $unit->equipment }}" name="equipment" id="equipment">                                       
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="pilihunit" 
-                                        id="formRadios2" value="itemunit">
-                                    <label class="form-check-label" for="formRadios2">
-                                        Unit Tertentu
-                                    </label>
-                                </div>
-                            </div>
-      
-                                </div>
-
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Pilih Unit</label>
-
-                                    <select name="kdunit" id="kdunit"  class="form-control"></select>
+                                    <label for="example-password-input" class="form-label">Merk</label>
+                                    <input class="form-control" type="text" value="{{ $unit->merk }}" name="merk" id="merk">                                       
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Type</label>
+                                    <input class="form-control" type="text" value="{{ $unit->type }}" name="type" id="type">                                       
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Model</label>
+                                    <input class="form-control" type="text" value="{{ $unit->model }}" name="model" id="model">                                       
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Capcity</label>
+                                    <input class="form-control" type="text" value="{{ $unit->capcity }}" name="capcity" id="capcity">                                       
                                 </div>
 
 
                                 <div class="mb-3">
-                                    <label for="example-tel-input" class="form-label">Hari Kerja</label>
-                                    <input class="form-control" type="tel" value="" name="harikerja" id="harikerja">
+                                    <label for="example-password-input" class="form-label">Serial Number</label>
+                                    <input class="form-control" type="text" value="{{ $unit->serialnumber }}" name="serialnumber"
+                                        id="serialnumber">
+                                       
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Plan Hari Kerja
-                                        (Minutes)</label>
-                                    <input class="form-control" type="text" value="" name="planunitkerja"
-                                        id="planunitkerja">
+                                    <label for="example-password-input" class="form-label">Specification</label>
+                                    <input class="form-control" type="text" value="{{ $unit->specification }}" name="specification" id="specification">                                       
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-date-input" class="form-label">Qty</label>
+                                    <input class="form-control" type="number" value="{{ $unit->qty }}" name="qty"
+                                        id="qty" required>
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
                                 </div>
 
-
-
                             </div>
                         </div>
 
-
+                        
                     </div>
-
+                </form>
             </div>
-            </form>
-        </div>
 
-    </div>
-</div> <!-- end col -->
+        </div>
+    </div> <!-- end col -->
 </div>
 <!-- end row -->
 <script>
-var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-jQuery('#idcbu').change(function() {
+    jQuery('#idcbu').change(function() {
     jQuery('#idregion').html('');
     var id = $(this).val();
     var string = "{{ asset('/lokasi/getregion/') }}/" + id;
@@ -159,8 +158,8 @@ jQuery('#idcbu').change(function() {
             $('#idregion').html(html);
         }
     });
-});
-jQuery('#idregion').change(function() {
+    });
+    jQuery('#idregion').change(function() {
     jQuery('#idsitename').html('');
     var id = $(this).val();
     var string = "{{ asset('/lokasi/getsitename/') }}/" + id;
@@ -184,30 +183,7 @@ jQuery('#idregion').change(function() {
             $('#idsitename').html(html);
         }
     });
-});
-
-$("#kdunit").select2({
-    placeholder: 'Pilih Unit',
-    ajax: {
-        url: "{{ route('unit.getunit') }}",
-        type: "GET",
-        dataType: 'JSON',
-        delay: 250,
-        data: function(params) {
-            return {
-                _token: CSRF_TOKEN,
-                search: params.term,
-                idsitename: $('#idsitename').val()
-            };
-        },
-        processResults: function(response) {
-            return {
-                results: response
-            };
-        },
-        cache: true
-    }
-});
+    });
 </script>
 
 

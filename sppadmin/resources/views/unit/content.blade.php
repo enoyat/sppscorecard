@@ -9,7 +9,14 @@
                     </div>
                 </th>
                 <th scope="col">Kode Unit</th>
+                <th scope="col">Equipment</th>
+                <th scope="col">Merk</th>
+                <th scope="col">Type</th>
+                <th scope="col">Model</th>
+                <th scope="col">Capcity</th>
                 <th scope="col">Serial Number</th>
+                <th scope="col">Specification</th>
+                <th scope="col">Qty</th>
                 <th scope="col">CBU</th>
                 <th scope="col">Region</th>
                 <th scope="col">Site Name</th>
@@ -30,15 +37,23 @@
               
                 
                 <th scope="col"><a href="{{ route('maintenance.listaction',$key->kdunit) }}">{{ $key->kdunit }}</a></th>
-                <th scope="col">{{ $key->getcbu->serialnumber }}</th>
+                <th scope="col">{{ $key->equipment }}</th>
+            <th scope="col">{{ $key->merk }}</th>
+            <th scope="col">{{ $key->type }}</th>
+            <th scope="col">{{ $key->model }}</th>
+            <th scope="col">{{ $key->capcity }}</th>
+            <th scope="col">{{ $key->serialnumber }}</th>
+            <th scope="col">{{ $key->specification }}</th>
+            <th scope="col">{{ $key->qty }}</th>
                 <th scope="col">{{ $key->getcbu->namacbu }}</th>
                 <th scope="col">{{ $key->getregion->namaregion }}</th>
                 <th scope="col">{{ $key->getsitename->namasitename }}</th>
                 <th scope="col">
+                    <a href="{{ route('unit.edit',$key->kdunit) }}" class="btn btn-sm btn-warning">Edit</a> 
                                 <form action="{{ route('unit.destroy',$key->kdunit) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="dropdown-item"
+                                    <button type="submit" 
                                         onclick="return confirm('Hapus Data ini?');">Hapus</button>
                                 </form>
                 </th>
