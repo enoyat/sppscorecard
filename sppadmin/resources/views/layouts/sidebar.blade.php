@@ -127,6 +127,11 @@
                                 <span data-key="t-chat">Site Name</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('forklifttype.index') }}">
+                                <span data-key="t-chat">Forklift Type</span>
+                            </a>
+                        </li>
 
                     </ul>
                 </li>

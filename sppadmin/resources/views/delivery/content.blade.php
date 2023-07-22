@@ -12,9 +12,9 @@
                 <th scope="col">Status Customer</th>
 
                 <th scope="col">Serial Number</th>
-                <th scope="col">Forklif Type</th>
-                <th scope="col">Capacity</th>
-                <th scope="col">Mas Height (m)</th>
+                <th scope="col">Forklift Type</th>
+                <th scope="col">Capacity (Ton)</th>
+                <th scope="col">Mas Height (Mtr)</th>
                 <th scope="col">Estimated Delivery</th>
                 <th scope="col">Reason of Lapse</th>
                 <th scope="col">Mitigation Plant</th>

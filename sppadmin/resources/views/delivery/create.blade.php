@@ -110,7 +110,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-week-input" class="form-label">Mitigation Plant</label>
-                                    <input class="form-control" type="date" value="" name="mitigationplan"
+                                    <input class="form-control" type="text" value="" name="mitigationplan"
                                         id="mitigationplan">
                                 </div>
                                 <div class="mb-3">

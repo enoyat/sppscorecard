@@ -4,8 +4,8 @@ import 'dart:convert';
 class ProfilModel {
   final int iduser;
   final String namauser;
-  final int idcbu;
-  final int idregion;
+  final String idcbu;
+  final String idregion;
   final int idsitename;
   final String namacbu;
   final String namaregion;
@@ -38,8 +38,8 @@ class ProfilModel {
     return ProfilModel(
       iduser: map['iduser'] as int,
       namauser: map['namauser'] as String,
-      idcbu: map['idcbu'] as int,
-      idregion: map['idregion'] as int,
+      idcbu: map['idcbu'] as String,
+      idregion: map['idregion'] as String,
       idsitename: map['idsitename'] as int,
       namacbu: map['namacbu'] as String,
       namaregion: map['namaregion'] as String,

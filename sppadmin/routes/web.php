@@ -216,7 +216,15 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/getsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'getsitename'])->name('lokasi.getsitename');
             Route::get('/setsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
         });
-
+        Route::group(['prefix' => 'forklifttype'], function () {
+            Route::get('/', [App\Http\Controllers\ForklifttypeController::class, 'index'])->name('forklifttype.index');
+            Route::get('/create', [App\Http\Controllers\ForklifttypeController::class, 'create'])->name('forklifttype.create');
+            Route::post('/store', [App\Http\Controllers\ForklifttypeController::class, 'store'])->name('forklifttype.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\ForklifttypeController::class, 'destroy'])->name('forklifttype.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\ForklifttypeController::class, 'edit'])->name('forklifttype.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\ForklifttypeController::class, 'update'])->name('forklifttype.update');
+            Route::get('/show/{id}', [App\Http\Controllers\ForklifttypeController::class, 'show'])->name('forklifttype.show');
+        });
 
 
 

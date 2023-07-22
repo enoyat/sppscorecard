@@ -50,8 +50,8 @@ class _DashboardPageState extends State<DashboardPage> {
         _profil = {
           'iduser': prefs.getInt('userid')!,
           'namauser': prefs.getString('username')!,
-          'idcbu': prefs.getInt('idcbu')!,
-          'idregion': prefs.getInt('idregion')!,
+          'idcbu': prefs.getString('idcbu')!,
+          'idregion': prefs.getString('idregion')!,
           'idsitename': prefs.getInt('idsitename')!,
           'namacbu': prefs.getString('namacbu')!,
           'namaregion': prefs.getString('namaregion')!,
