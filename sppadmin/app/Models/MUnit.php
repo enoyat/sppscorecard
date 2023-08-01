@@ -29,4 +29,7 @@ class MUnit extends Model
     public function getsitename(){
         return $this->belongsTo(MSitename::class,'idsitename','id');
     }
+    public function getforklifttype(){
+        return $this->belongsTo(MForklifttype::class,'idforklifttype','id');
+    }
 }

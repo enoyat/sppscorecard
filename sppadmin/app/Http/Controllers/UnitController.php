@@ -33,13 +33,15 @@ class UnitController extends Controller
     public function create()
     {
         $cbu=MCbu::get();
-        return view('unit.create',compact('cbu'));
+        $forklifttype = MForklifttype::get();
+        return view('unit.create',compact('cbu','forklifttype'));
     }
     public function edit($id)
     {
         $cbu=MCbu::get();
         $unit = MUnit::find($id);
-        return view('unit.edit',compact('cbu','unit'));
+        $forklifttype = MForklifttype::get();
+        return view('unit.edit',compact('cbu','unit','forklifttype'));
     }
     public function store(Request $request){
         $request->validate([
@@ -57,6 +59,8 @@ class UnitController extends Controller
         $unit->idregion = $request->idregion;
         $unit->idsitename = $request->idsitename;
         $unit->kdunit = $request->kdunit;
+        $unit->idforklifttype = $request->idforklifttype;
+
         $unit->equipment = $request->equipment;
         $unit->merk = $request->merk;
         $unit->type = $request->type;
@@ -101,6 +105,7 @@ class UnitController extends Controller
         $unit->idregion = $request->idregion;
         $unit->idsitename = $request->idsitename;
         $unit->kdunit = $request->kdunit;
+        $unit->idforklifttype = $request->idforklifttype;
         $unit->equipment = $request->equipment;
         $unit->merk = $request->merk;
         $unit->type = $request->type;

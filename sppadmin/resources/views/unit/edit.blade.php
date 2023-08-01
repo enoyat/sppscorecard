@@ -84,6 +84,17 @@
                                     <input class="form-control" type="text" value="{{ $unit->equipment }}" name="equipment" id="equipment">                                       
                                 </div>
                                 <div class="mb-3">
+                                    <label for="example-url-input" class="form-label">Forklif Type</label>
+                                    <select class="form-select" aria-label="Default select example" name="idforklifttype"
+                                        id="idforklifttype">
+                                        <option value="{{ $unit->idforklifttype }}" selected>
+                                            {{ $unit->getforklifttype->namaforklifttype }}</option>
+                                        @foreach ($forklifttype as $itemforklifttype)
+                                        <option value="{{ $itemforklifttype->id }}">{{ $itemforklifttype->namaforklifttype }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Merk</label>
                                     <input class="form-control" type="text" value="{{ $unit->merk }}" name="merk" id="merk">                                       
                                 </div>

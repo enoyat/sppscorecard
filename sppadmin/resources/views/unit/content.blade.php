@@ -10,6 +10,7 @@
                 </th>
                 <th scope="col">Kode Unit</th>
                 <th scope="col">Equipment</th>
+                <th scope="col">Forklift Type</th>
                 <th scope="col">Merk</th>
                 <th scope="col">Type</th>
                 <th scope="col">Model</th>
@@ -38,6 +39,7 @@
                 
                 <th scope="col"><a href="{{ route('maintenance.listaction',$key->kdunit) }}">{{ $key->kdunit }}</a></th>
                 <th scope="col">{{ $key->equipment }}</th>
+                <th scope="col">{{ $key->getforklifttype->namaforklifttype }}</th>
             <th scope="col">{{ $key->merk }}</th>
             <th scope="col">{{ $key->type }}</th>
             <th scope="col">{{ $key->model }}</th>

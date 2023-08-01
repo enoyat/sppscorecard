@@ -116,6 +116,16 @@
                                         id="hm" required>
                                 </div>
                                 <div class="mb-3">
+                                    <label for="example-url-input" class="form-label">Forklif Type</label>
+                                    <select class="form-select" aria-label="Default select example" name="idforklifttype"
+                                        id="idforklifttype">
+                                        <option value="" selected>select</option>
+                                        @foreach ($forklifttype as $itemforklifttype)
+                                        <option value="{{ $itemforklifttype->id }}">{{ $itemforklifttype->namaforklifttype }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
                                 </div>

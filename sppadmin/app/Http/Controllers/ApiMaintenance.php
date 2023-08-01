@@ -50,7 +50,7 @@ class ApiMaintenance extends Controller
 
         $MMaintenance = MUnit::where('kdunit',$request->kdunit)->first();
         $MMaintenance->statusmekanik = $request->statusmekanik;
-        $MMaintenance->tanggal = date("y-m-d", strtotime($request->waktuselesaipengerjaan));
+        $MMaintenance->tanggal = date("y-m-d",strtotime($request->tanggalakhir));
         $MMaintenance->hm = $request->hm;
         $MMaintenance->save();
         
