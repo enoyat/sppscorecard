@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -34,9 +35,26 @@ class HomeController extends Controller
         // }
         // return abort(404);
     }
-    public function root()
+    public function root(Request $request)
     {
-        return view('index');
+        if ($request->get('periode')) {
+            $mperiode=$request->get('periode');
+        }
+        else {
+            $tahun=date('Y');
+            $bulan=date('m');
+            $mperiode=$tahun.'-'.$bulan;
+        }
+        $kpi=DB::table('physicalavailable')->
+        join('unit','unit.kdunit','=','physicalavailable.kdunit')->
+        join('forklifttype','unit.idforklifttype','=','forklifttype.id')->
+        select(DB::raw('namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
+        ->where('periode',$mperiode)
+        ->where('unit.idsitename',Session::get('runidsitename'))
+        ->groupBy('namaforklifttype')
+        ->get();
+      
+        return view('index',compact('kpi'));
     }
 
     public function lang($locale)

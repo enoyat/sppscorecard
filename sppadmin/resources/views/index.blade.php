@@ -4,7 +4,8 @@
 
 @section('css')
 
-<link href="{{ URL::asset('build/libs/jquery-vectormap/jquery-vectormap.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('build/libs/jquery-vectormap/jquery-vectormap.min.css') }}" rel="stylesheet"
+    type="text/css" />
 <!-- glightbox css -->
 <link rel="stylesheet" href="{{ URL::asset('build/libs/glightbox/css/glightbox.min.css') }}">
 <!-- DataTables -->
@@ -13,7 +14,8 @@
 rel="stylesheet" type="text/css" />
 
 <!-- Responsive datatable examples -->
-<link href="{{ URL::asset('build/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" /> --}}
+<link href="{{ URL::asset('build/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
+    rel="stylesheet" type="text/css" /> --}}
 
 @endsection
 
@@ -27,17 +29,91 @@ rel="stylesheet" type="text/css" />
 @endcomponent
 <div class="row">
     <div class="col-12">
-        <div class="card">
+
+        <div class="card " >
             <div class="card-header">
-                <h4 class="card-title">Dashboard</h4>
+                <h4 class="card-title">KPI DASHBOARD</h4>
 
             </div>
             <div class="card-body">
-                Selamat Datang di Sistem Informasi Scorecard PT. Satria Piranti Perkasa
+                <div class="row">
+                    <div class="col-md-2">
+                        <form action="" method="GET" class="form-inline form-row">
+
+                            <div class="col">
+                                <div class="input-group mx-1">
+
+                                    <input name="periode" type="search" value="{{ request()->get('periode') }}"
+                                        class="form-control" placeholder="Periode (yyyy-mm)">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+
+                    <div class="col-md-8" style="background-color: #d8f7ad;" >
+
+                        @if($kpi)
+                        <table class="table table-striped dt-responsive nowrap w-100"
+                            style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;"
+                            id="datatable-buttons">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 50px;">
+                                        <div class="form-check font-size-16">
+                                            <input type="checkbox" class="form-check-input" id="checkAll">
+                                            <label class="form-check-label" for="checkAll"></label>
+                                        </div>
+                                    </th>
+                                    <th scope="col">Unit Type</th>
+                                    <th scope="col">Units</th>
+                                    <th scope="col">Total Hour Availability (minute)</th>
+                                    <th scope="col">Target Hour Availability (minute)</th>
+                                    <th scope="col">Achievement (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach($kpi as $item)
+                                <tr>
+                                    <td scope="row">
+                                        <div class="form-check font-size-16">
+                                            <input type="checkbox" class="form-check-input" id="contacusercheck1">
+                                            <label class="form-check-label" for="contacusercheck1"></label>
+                                        </div>
+                                    </td>
+                                    <td>{{ $item->namaforklifttype }}</td>
+                                    <td style="text-align: center;">{{ $item->jmlunit }}</td>
+                                    <td style="text-align: center;">{{ number_format($item->sumplanunitkerja) }}</td>
+                                    <td style="text-align: center;">{{ number_format($item->sumtotaljamkerja) }}</td>
+                                    <td style="text-align: center; color:blue">{{ number_format($item->avgpaforklift,2) }}</td>
+
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        @else
+                        Selamat Datang di Sistem Informasi Scorecard PT. Satria Piranti Perkasa
+                        @endif
+                    </div>
+                </div>
             </div>
+
+
+
+
         </div>
-        <!-- end cardaa -->
-    </div> <!-- end col -->
+    </div>
+    <!-- end cardaa -->
+</div> <!-- end col -->
 </div> <!-- end row -->
 
 
