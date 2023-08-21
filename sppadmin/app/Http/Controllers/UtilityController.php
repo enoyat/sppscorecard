@@ -14,32 +14,30 @@ use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\QueryException;
 
 class UtilityController extends Controller
 {
-    public function userpassword()
-    {
-        $users = User::with('role')->get();
-        return view('utility.listuserpassword')->with('users', $users);
+    public function userpassword(){
+        $users=User::with('role')->get();
+        return view ('utility.listuserpassword')->with('users',$users);
+
     }
-    public function edituser($id)
-    {
-        $role = Role::orderby('id')->get();
-        $sitename = MSitename::orderby('namasitename')->get();
-        $users = User::where('id', $id)->first();
-        return view('utility.edituser', compact('users', 'role', 'sitename'));
+    public function edituser($id){
+        $role=Role::orderby('id')->get();
+        $sitename=MSitename::orderby('namasitename')->get();
+        $users=User::where('id',$id)->first();
+        return view ('utility.edituser',compact('users','role','sitename'));
+
     }
-    public function userlog()
-    {
-        $logs = MLoglogin::orderby('created_at')->get();
-        return view('utility.loghistory')->with('logs', $logs);
+    public function userlog(){
+        $logs=MLoglogin::orderby('created_at')->get();
+        return view ('utility.loghistory')->with('logs',$logs);
+
     }
-    public function register()
-    {
-        $role = Role::orderby('id')->get();
-        $sitename = MSitename::orderby('namasitename')->get();
-        return view('utility.register', compact('sitename', 'role'));
+    public function register(){
+        $role=Role::orderby('id')->get();
+        $sitename=MSitename::orderby('namasitename')->get();
+        return view ('utility.register',compact('sitename','role'));
     }
     public function postregister(Request $request)
     {
@@ -75,11 +73,11 @@ class UtilityController extends Controller
         $user->password = Hash::make($request->password);
 
         $simpan = $user->save();
-        if ($request->role == '3') {
-            $mekanik = new MMekanik;
-            $mekanik->userid = $user->id;
-            $mekanik->namamekanik = $user->name;
-            $mekanik->idsitename = $request->idsitename;
+        if ($request->role=='3') {
+            $mekanik= new MMekanik;
+            $mekanik->userid=$user->id;
+            $mekanik->namamekanik=$user->name;
+            $mekanik->idsitename=$request->idsitename;
             $mekanik->save();
         }
 
@@ -92,28 +90,21 @@ class UtilityController extends Controller
             return redirect()->route('utility.userpassword');
         }
     }
-    public function userdelete($id)
-    {
-        try {
-            $user = User::find($id);
-            $level = $user->roles_id;
-            if ($level == '3') {
-                $mekanik = MMekanik::where('userid', $id)->first();
-                $mekanik->delete();
-            }
-            $user->delete();
-            Alert::success('Berhasil', 'User berhasil dihapus');
-        } catch (QueryException $ex) {
-            Alert::error('Gagal hapus, ada relasi data dengan yang lain');
-            return redirect()->back();
+    public function userdelete($id){
+        $user=User::find($id);
+        $level=$user->roles_id;
+        if ($level=='3') {
+            $mekanik=MMekanik::where('userid',$id)->first();
+            $mekanik->delete();
         }
+        $user->delete();
+        Alert::success('Berhasil', 'User berhasil dihapus');
+        return redirect()->back();
     }
-    public function gantipassword()
-    {
-        return view('utility.updatepassword');
+    public function gantipassword(){
+        return view ('utility.updatepassword');
     }
-    public function userpasswordupdate(Request $request)
-    {
+    public function userpasswordupdate(Request $request){
         $rules = [
             'email'                 => 'required|email',
             'password'              => 'required|confirmed'
@@ -133,8 +124,8 @@ class UtilityController extends Controller
             return redirect()->back()->withErrors($validator)->withInput($request->all);
         }
 
-        $user = User::where('email', $request->email)->first();
-        $user->password = bcrypt($request->password);
+        $user=User::where('email',$request->email)->first();
+        $user->password=bcrypt($request->password);
         $user->save();
         Alert::success('Berhasil', 'Password berhasil diubah');
         return redirect()->back();
@@ -142,10 +133,10 @@ class UtilityController extends Controller
     public function updateuser(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $request->id,
-            'role' => 'required',
-            'idsitename' => 'required',
+            'name'=>'required',
+            'email'=>'required|email|unique:users,email,'.$request->id,
+            'role'=>'required',
+            'idsitename'=>'required',
         ]);
         $user = User::find($request->id);
         $user->name = ucwords(strtolower($request->name));
@@ -153,7 +144,7 @@ class UtilityController extends Controller
         $user->roles_id = $request->role;
         $user->idsitename = $request->idsitename;
         $user->save();
-
-        return redirect()->route('utility.userpassword')->with('success', 'User berhasil diupdate');
+       
+        return redirect()->route('utility.userpassword')->with('success','User berhasil diupdate');
     }
 }

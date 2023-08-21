@@ -36,7 +36,7 @@
 
 
             <th scope="col">{{ $key->periode }}</th>
-            <th scope="col">{{ $key->kdunit }}</th>\
+            <th scope="col">{{ $key->kdunit }}</th>
             <th scope="col">{{ $key->getunit->serialnumber }}</th>
             <th scope="col">{{ $key->harikerja }}</th>
             <th scope="col">{{ $key->planunitkerja }}</th>

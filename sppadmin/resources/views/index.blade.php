@@ -22,7 +22,9 @@ rel="stylesheet" type="text/css" />
 
 @section('content')
 
-
+@if(Session::get('roles_id')==1 || Session::get('roles_id')==5)
+    @include('header_select')
+@endif
 @component('components.breadcrumb')
 @slot('li_1') Extended @endslot
 @slot('title') Dashboard @endslot
@@ -37,7 +39,7 @@ rel="stylesheet" type="text/css" />
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <form action="" method="GET" class="form-inline form-row">
 
                             <div class="col">
@@ -59,7 +61,7 @@ rel="stylesheet" type="text/css" />
                 <br>
                 <div class="row">
 
-                    <div class="col-md-8" style="background-color: #d8f7ad;" >
+                    <div class="col-md-10" style="background-color: #d8f7ad;" >
 
                         @if($kpi)
                         <table class="table table-striped dt-responsive nowrap w-100"

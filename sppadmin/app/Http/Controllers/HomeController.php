@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\MCbu;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -29,6 +31,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        
         return view('index');
         // if (view()->exists($request->path())) {
         //     return view($request->path());
@@ -53,8 +56,8 @@ class HomeController extends Controller
         ->where('unit.idsitename',Session::get('runidsitename'))
         ->groupBy('namaforklifttype')
         ->get();
-      
-        return view('index',compact('kpi'));
+        $cbu=MCbu::get();
+        return view('index',compact('kpi','cbu'));
     }
 
     public function lang($locale)
