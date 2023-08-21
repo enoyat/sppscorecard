@@ -61,7 +61,7 @@ rel="stylesheet" type="text/css" />
                 <br>
                 <div class="row">
 
-                    <div class="col-md-10" style="background-color: #d8f7ad;" >
+                    <div class="col-md-12" style="background-color: #d8f7ad;" >
 
                         @if($kpi)
                         <table class="table table-striped dt-responsive nowrap w-100"
