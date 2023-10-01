@@ -104,18 +104,31 @@
                         <div class="col-lg-6">
                             <div class="mt-3 mt-lg-0">
                                 <div class="mb-3">
+                                    <label for="example-time-input" class="form-label">Date Request</label>
+                                    <input class="form-control" type="date" value="{{ $delivery->daterequest }}" name="daterequest"
+                                        id="daterequest">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-month-input" class="form-label">PO Number</label>
+                                    <input class="form-control" type="text" value="{{ $delivery->ponumber }}" name="ponumber" id="ponumber">
+                                </div>
+                                <div class="mb-3">
                                     <label for="example-date-input" class="form-label">Estimated Delivery</label>
                                     <input class="form-control" type="date" value="{{ $delivery->dateestimated }}" name="dateestimated"
                                         id="dateestimated">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-month-input" class="form-label">Days of Lapse</label>
+                                    <input class="form-control" type="text" value="{{ $delivery->daysoflapse }}" name="daysoflapse" id="daysoflapse">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-month-input" class="form-label">Reason of Lapse</label>
                                     <input class="form-control" type="text" value="{{ $delivery->reason }}" name="reason" id="reason">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-week-input" class="form-label">Mitigation Plant</label>
-                                    <input class="form-control" type="text" value="{{ $delivery->mitigationplan }}" name="mitigationplan"
-                                        id="mitigationplan">
+                                    <label for="example-week-input" class="form-label">Remark Plant</label>
+                                    <input class="form-control" type="text" value="{{ $delivery->remarkplant }}" name="remarkplant"
+                                        id="remarkplant">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-time-input" class="form-label">Actual Delivery</label>

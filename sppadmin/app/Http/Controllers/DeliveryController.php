@@ -75,7 +75,10 @@ class DeliveryController extends Controller
         $delivery->masheight  = $request->masheight;
         $delivery->dateestimated = $request->dateestimated;
         $delivery->reason = $request->reason;
-        $delivery->mitigationplan  = $request->mitigationplan;
+        $delivery->daterequest = $request->daterequest;
+        $delivery->ponumber  = $request->ponumber;
+        $delivery->daysoflapse  = $request->daysoflapse;
+        $delivery->remarkplant  = $request->remarkplant;
         $delivery->dateactual  = $request->dateactual;
         $delivery->confirmationplan  = $request->confirmationplan;
         $delivery->statusspp  = $request->statusspp;
@@ -121,7 +124,10 @@ class DeliveryController extends Controller
         $delivery->masheight  = $request->masheight;
         $delivery->dateestimated = $request->dateestimated;
         $delivery->reason = $request->reason;
-        $delivery->mitigationplan  = $request->mitigationplan;
+        $delivery->daterequest = $request->daterequest;
+        $delivery->ponumber  = $request->ponumber;
+        $delivery->daysoflapse  = $request->daysoflapse;
+        $delivery->remarkplant  = $request->remarkplant;
         $delivery->dateactual  = $request->dateactual;
         $delivery->confirmationplan  = $request->confirmationplan;
         $delivery->statusspp  = $request->statusspp;
