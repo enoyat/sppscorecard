@@ -49,10 +49,11 @@
             <th scope="col"><a href="{{ asset('assets/inventory/'.$key->filename) }}" target="_blank"><img src="{{ asset('assets/inventory/'.$key->filename) }}" width="100"></a></th>
 
             <th style="width: 80px; min-width: 80px;">
-            <a class="btn btn-sm btn-warning" href="{{ route('beritaacara.edit',$key->id) }}">Edit</a>
+            
                 <form action="{{ route('beritaacara.destroy',$key->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
+                    <a class="btn btn-sm btn-warning" href="{{ route('beritaacara.edit',$key->id) }}">Edit</a>
                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Hapus Data ini?');">Hapus</button>
                 </form>
 

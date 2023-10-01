@@ -1,19 +1,15 @@
-    <table class="table table-striped dt-responsive nowrap w-100"
-        style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;" id="datatable-buttons" >
+@include('layouts.tabel')
+    <table id="example" class="display nowrap table table-striped table-bordered scroll-horizontal font-size-11" cellspacing="0"
+        style="border-collapse: collapse;  width: 100%;"  >
         <thead>
             <tr>
-                <th scope="col" style="width: 50px;">
-                    <div class="form-check font-size-16">
-                        <input type="checkbox" class="form-check-input" id="checkAll">
-                        <label class="form-check-label" for="checkAll"></label>
-                    </div>
-                </th>
+                
                 <TH SCOPE="COL">STATUS SPP</TH>
                 <TH SCOPE="COL">STATUS CUSTOMER</TH>
-                <TH SCOPE="COL">DATE REQUEST (YYYY/MM/DD)</TH>
+                <TH SCOPE="COL">DATE REQUEST <br>(YYYY/MM/DD)</TH>
                 <TH SCOPE="COL">PO NUMBER</TH>
                 <TH SCOPE="COL">SERIAL NUMBER</TH>
-                <TH SCOPE="COL">FORKLIFT TYPE</TH>
+                <TH SCOPE="COL" >FORKLIFT TYPE</TH>
                 <TH SCOPE="COL">CAPACITY (TON)</TH>
                 <TH SCOPE="COL">MAST HEIGHT (MTR)</TH>
                 <TH SCOPE="COL">ESTIMATED DELIVERY</TH>
@@ -35,12 +31,6 @@
             @php $i=1; @endphp
             @foreach ($delivery as $key)
             <tr>
-                <th scope="row">
-                    <div class="form-check font-size-16">
-                        <input type="checkbox" class="form-check-input" id="contacusercheck1">
-                        <label class="form-check-label" for="contacusercheck1"></label>
-                    </div>
-                </th>
                 <th scope="col">
                     
                 @if ($key->statusspp=="CLOSE") 

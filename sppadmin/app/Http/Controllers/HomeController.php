@@ -57,7 +57,22 @@ class HomeController extends Controller
         ->groupBy('namaforklifttype')
         ->get();
         $cbu=MCbu::get();
-        return view('index',compact('kpi','cbu'));
+        $achievement="[";
+        $max="[";
+        $base="[";
+        $kategori="";
+
+        foreach($kpi as $k){
+            $achievement=$achievement.$k->avgpaforklift.',';
+            $max=$max.'100,';
+            $base=$base.'98,';
+            $kategori=$kategori.",'".$k->namaforklifttype."'";
+        }
+        $achievement=$achievement."]";  
+        $max=$max."]";
+        $base=$base."]";
+        $kategori="[".substr($kategori,1)."]";      
+        return view('index',compact('kpi','cbu','achievement','max','base','kategori'));
     }
 
     public function lang($locale)

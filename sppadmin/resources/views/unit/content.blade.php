@@ -1,13 +1,8 @@
-<table class="table table-striped dt-responsive nowrap w-100"
-        style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;" id="datatable-buttons" >
+@include('layouts.tabel')
+    <table id="example" class="display nowrap table table-striped table-bordered scroll-horizontal font-size-11" cellspacing="0"
+        style="border-collapse: collapse;  width: 100%;"  >
         <thead>
             <tr>
-                <th scope="col" style="width: 50px;">
-                    <div class="form-check font-size-16">
-                        <input type="checkbox" class="form-check-input" id="checkAll">
-                        <label class="form-check-label" for="checkAll"></label>
-                    </div>
-                </th>
                 <TH SCOPE="COL">KODE UNIT</TH>
                 <TH SCOPE="COL">EQUIPMENT</TH>
                 <TH SCOPE="COL">FORKLIFT TYPE</TH>
@@ -31,12 +26,7 @@
             @php $i=1; @endphp
             @foreach ($unit as $key)
             <tr>
-                <th scope="row">
-                    <div class="form-check font-size-16">
-                        <input type="checkbox" class="form-check-input" id="contacusercheck1">
-                        <label class="form-check-label" for="contacusercheck1"></label>
-                    </div>
-                </th>
+
               
                 
                 <th scope="col"><a href="{{ route('maintenance.listaction',$key->kdunit) }}">{{ $key->kdunit }}</a></th>
@@ -53,12 +43,13 @@
                 <th scope="col">{{ $key->getregion->namaregion }}</th>
                 <th scope="col">{{ $key->getsitename->namasitename }}</th>
                 <th scope="col">
-                    <a href="{{ route('unit.edit',$key->kdunit) }}" class="btn btn-sm btn-warning">Edit</a> 
+                   
                                 <form action="{{ route('unit.destroy',$key->kdunit) }}" method="POST">
                                     @csrf
+                                    <a href="{{ route('unit.edit',$key->kdunit) }}" class="btn btn-sm btn-warning">Edit</a> 
                                     @method('DELETE')
                                     <button type="submit" 
-                                        onclick="return confirm('Hapus Data ini?');">Hapus</button>
+                                        onclick="return confirm('Hapus Data ini?');" class="btn btn-sm btn-danger">Hapus</button>
                                 </form>
                 </th>
             </tr>

@@ -1,13 +1,9 @@
-    <table class="table table-striped dt-responsive nowrap w-100"
-        style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;" id="datatable-buttons" >
+@include('layouts.tabel')
+    <table id="example" class="display nowrap table table-striped table-bordered scroll-horizontal font-size-11" cellspacing="0"
+        style="border-collapse: collapse;  width: 100%;"  >
         <thead>
             <tr>
-                <th scope="col" style="width: 50px;">
-                    <div class="form-check font-size-16">
-                        <input type="checkbox" class="form-check-input" id="checkAll">
-                        <label class="form-check-label" for="checkAll"></label>
-                    </div>
-                </th>
+
                 <TH SCOPE="COL">STATUS SPP</TH>
                 <TH SCOPE="COL">STATUS MEKANIK</TH>
 
@@ -27,12 +23,7 @@
             @php $i=1; @endphp
             @foreach ($maintenance as $key)
             <tr>
-                <th scope="row">
-                    <div class="form-check font-size-16">
-                        <input type="checkbox" class="form-check-input" id="contacusercheck1">
-                        <label class="form-check-label" for="contacusercheck1"></label>
-                    </div>
-                </th>
+
                 <th scope="col">
                     
                 @if ($key->statusspp=="CLOSE") 
