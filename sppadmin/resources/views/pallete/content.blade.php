@@ -8,21 +8,23 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">Status SPP</th>
-                <th scope="col">Status Customer</th>
+                <TH SCOPE="COL">STATUS SPP</TH>
+                <TH SCOPE="COL">STATUS CUSTOMER</TH>
 
-                <th scope="col">Request</th>
-                <th scope="col">qty</th>
-                <th scope="col">Date Request</th>
-                <th scope="col">Target date</th>
-                <th scope="col">Actual Date</th>
-                <th scope="col">Lapse Time</th>
-                <th scope="col">gap</th>
-                <th scope="col">remark</th>
-                <th scope="col">CBU</th>
-                <th scope="col">Region</th>
-                <th scope="col">Site Name</th>
-                <th style="width: 80px; min-width: 80px;">Action</th>
+                <TH SCOPE="COL">REQUEST</TH>
+                <TH SCOPE="COL">QTY</TH>
+                <TH SCOPE="COL">DATE REQUEST</TH>
+                <TH SCOPE="COL">TARGET DATE</TH>
+                <TH SCOPE="COL">ACTUAL DATE</TH>
+                <TH SCOPE="COL">LAPSE TIME</TH>
+                <TH SCOPE="COL">GAP</TH>
+                <TH SCOPE="COL">REMARK</TH>
+                <TH SCOPE="COL">CBU</TH>
+                <TH SCOPE="COL">REGION</TH>
+                <TH SCOPE="COL">SITE NAME</TH>
+                <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
+
+
             </tr>
         </thead>
         <tbody>

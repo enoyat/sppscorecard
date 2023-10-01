@@ -9,18 +9,20 @@
                 </div>
             </th>
 
-            <th scope="col">Periode</th>
-            <th scope="col">Kode Unit</th>
-            <th scope="col">Serial Number</th>
-            <th scope="col">Hari Kerja</th>
-            <th scope="col">Plan Kerja Unit (minutes)</th>
-            <th scope="col">Total BreakDown Unit (Minutes)</th>
-            <th scope="col">Total Jam Kerja Unit</th>
-            <th scope="col">PA Forklift (%)</th>
-            <th scope="col">CBU</th>
-            <th scope="col">Region</th>
-            <th scope="col">Site Name</th>
-            <th >Action</th>
+            <TH SCOPE="COL">PERIODE</TH>
+            <TH SCOPE="COL">KODE UNIT</TH>
+            <TH SCOPE="COL">SERIAL NUMBER</TH>
+            <TH SCOPE="COL">HARI KERJA</TH>
+            <TH SCOPE="COL">PLAN KERJA UNIT (MINUTES)</TH>
+            <TH SCOPE="COL">TOTAL BREAKDOWN UNIT (MINUTES)</TH>
+            <TH SCOPE="COL">TOTAL JAM KERJA UNIT</TH>
+            <TH SCOPE="COL">PA FORKLIFT (%)</TH>
+            <TH SCOPE="COL">CBU</TH>
+            <TH SCOPE="COL">REGION</TH>
+            <TH SCOPE="COL">SITE NAME</TH>
+            <TH >ACTION</TH>
+
+
         </tr>
     </thead>
     <tbody>
@@ -39,9 +41,9 @@
             <th scope="col">{{ $key->kdunit }}</th>
             <th scope="col">{{ $key->getunit->serialnumber }}</th>
             <th scope="col">{{ $key->harikerja }}</th>
-            <th scope="col">{{ $key->planunitkerja }}</th>
+            <th scope="col">{{ number_format($key->planunitkerja) }}</th>
             <th scope="col"><a href="{{ route('trouble.listaction',$key->kdunit) }}">{{ $key->totalbreakdown }}</a></th>
-            <th scope="col">{{ $key->totaljamkerja }}</th>
+            <th scope="col">{{ number_format($key->totaljamkerja) }}</th>
             <th scope="col">{{ number_format($key->paforklift,2) }}</th>
 
             <th scope="col">{{ $key->getcbu->namacbu }}</th>

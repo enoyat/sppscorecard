@@ -8,9 +8,11 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">Kode forklifttype</th>
-                <th scope="col">forklifttype</th>
-                <th style="width: 80px; min-width: 80px;">Action</th>
+                <TH SCOPE="COL">KODE FORKLIFTTYPE</TH>
+                <TH SCOPE="COL">FORKLIFTTYPE</TH>
+                <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
+
+
             </tr>
         </thead>
         <tbody>

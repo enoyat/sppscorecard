@@ -8,23 +8,27 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">Status SPP</th>
-                <th scope="col">Status Customer</th>
+                <TH SCOPE="COL">STATUS SPP</TH>
+                <TH SCOPE="COL">STATUS CUSTOMER</TH>
+                <TH SCOPE="COL">DATE REQUEST (YYYY/MM/DD)</TH>
+                <TH SCOPE="COL">PO NUMBER</TH>
+                <TH SCOPE="COL">SERIAL NUMBER</TH>
+                <TH SCOPE="COL">FORKLIFT TYPE</TH>
+                <TH SCOPE="COL">CAPACITY (TON)</TH>
+                <TH SCOPE="COL">MAST HEIGHT (MTR)</TH>
+                <TH SCOPE="COL">ESTIMATED DELIVERY</TH>
+                <TH SCOPE="COL">REASON OF LAPSE</TH>
+                <TH SCOPE="COL">DAYS OF LAPSE</TH>
+                <TH SCOPE="COL">REMARK PLANT</TH>
+                <TH SCOPE="COL">ACTUAL DELIVERY</TH>
+                <TH SCOPE="COL">CONFIRMATION BY PLANT</TH>
+                <TH SCOPE="COL">CBU</TH>
+                <TH SCOPE="COL">REGION</TH>
+                <TH SCOPE="COL">SITE NAME</TH>
 
-                <th scope="col">Serial Number</th>
-                <th scope="col">Forklift Type</th>
-                <th scope="col">Capacity (Ton)</th>
-                <th scope="col">Mas Height (Mtr)</th>
-                <th scope="col">Estimated Delivery</th>
-                <th scope="col">Reason of Lapse</th>
-                <th scope="col">Mitigation Plant</th>
-                <th scope="col">Actual Delivery</th>
-                <th scope="col">Confirmation by Plant</th>
-                <th scope="col">CBU</th>
-                <th scope="col">Region</th>
-                <th scope="col">Site Name</th>
+                <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
 
-                <th style="width: 80px; min-width: 80px;">Action</th>
+
             </tr>
         </thead>
         <tbody>
@@ -58,14 +62,17 @@
                     
                     @endif
                 </th>
-
+                <th scope="col">{{ $key->daterequest }}</th>
+                <th scope="col">{{ $key->ponumber }}</th>
                 <th scope="col">{{ $key->serialnumber }}</th>
                 <th scope="col">{{ $key->getforklifttype->namaforklifttype }}</th> 
                 <th scope="col">{{ $key->capacity }}</th>
                 <th scope="col">{{ $key->masheight }}</th>
                 <th scope="col">{{ $key->dateestimated }}</th>
                 <th scope="col">{{ $key->reason }}</th>
-                <th scope="col">{{ $key->mitigationplan }}</th>
+
+                <th scope="col">{{ $key->daysoflapse }}</th>
+                <th scope="col">{{ $key->remarkplant }}</th>
                 <th scope="col">{{ $key->dateactual }}</th>
                 <th scope="col">{{ $key->confirmationplan }}</th>
                 <th scope="col">{{ $key->getcbu->namacbu }}</th>

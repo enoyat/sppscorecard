@@ -8,10 +8,12 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">Kode Spare Part</th>
-                <th scope="col">Spare Part</th>
-                <th scope="col">Uom</th>
-                <th style="width: 80px; min-width: 80px;">Action</th>
+                <TH SCOPE="COL">KODE SPARE PART</TH>
+                <TH SCOPE="COL">SPARE PART</TH>
+                <TH SCOPE="COL">UOM</TH>
+                <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
+
+
             </tr>
         </thead>
         <tbody>

@@ -8,18 +8,20 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">CBU</th>
-                <th scope="col">Region</th>
-                <th scope="col">Site Name</th>
-                <th scope="col">Spare Part</th>
-                <th scope="col">Qty</th>
-                <th scope="col">Uom</th>
-                <th scope="col">Tanggal</th>
-                <th scope="col">Qty </th>
-                <th scope="col">Stock %</th>
-                <th scope="col">Confirmation By Plant</th>
-                <th scope="col">Average %</th>
-                <th style="width: 80px; min-width: 80px;">Action</th>
+                <TH SCOPE="COL">CBU</TH>
+                <TH SCOPE="COL">REGION</TH>
+                <TH SCOPE="COL">SITE NAME</TH>
+                <TH SCOPE="COL">SPARE PART</TH>
+                <TH SCOPE="COL">QTY</TH>
+                <TH SCOPE="COL">UOM</TH>
+                <TH SCOPE="COL">TANGGAL</TH>
+                <TH SCOPE="COL">QTY </TH>
+                <TH SCOPE="COL">STOCK %</TH>
+                <TH SCOPE="COL">CONFIRMATION BY PLANT</TH>
+                <TH SCOPE="COL">AVERAGE %</TH>
+                <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
+
+
             </tr>
         </thead>
         <tbody>

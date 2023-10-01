@@ -68,17 +68,19 @@ trouble
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">Status Mekanik</th>
-                <th scope="col">id User/Mekanik</th>
-                <th scope="col">KD Unit</th>
-                <th scope="col">tanggal mulai</th>
-                <th scope="col">tanggal selesai</th>
-                <th scope="col">Lapse Time (minute)</th>
-                <th scope="col">shift</th>
-                <th scope="col">Action Plan</th>
-                <th scope="col">Spareparts</th>
-                <th scope="col">Dokumentasi</th>
-                <th scope="col">Action</th>
+                <TH SCOPE="COL">STATUS MEKANIK</TH>
+                <TH SCOPE="COL">ID USER/MEKANIK</TH>
+                <TH SCOPE="COL">KODE UNIT</TH>
+                <TH SCOPE="COL">TANGGAL MULAI</TH>
+                <TH SCOPE="COL">TANGGAL SELESAI</TH>
+                <TH SCOPE="COL">LAPSE TIME (MINUTE)</TH>
+                <TH SCOPE="COL">SHIFT</TH>
+                <TH SCOPE="COL">ACTION PLAN</TH>
+                <TH SCOPE="COL">SPAREPARTS</TH>
+                <TH SCOPE="COL">DOKUMENTASI</TH>
+                <TH SCOPE="COL">ACTION</TH>
+
+
             </tr>
         </thead>
         <tbody>

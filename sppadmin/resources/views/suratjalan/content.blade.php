@@ -7,16 +7,18 @@
                     <label class="form-check-label" for="checkAll"></label>
                 </div>
             </th>
-            <th scope="col">ID Berita</th>
-            <th scope="col">Status</th>
-            <th scope="col">Pengirim</th>
-            <th scope="col">Penerima</th>
-            <th scope="col">Tanggal Upload</th>
-            <th scope="col">Tanggal Terima</th>
-            <th scope="col">Nama Penerima</th>
-            <th scope="col">Tanggal Kembali</th>
-            <th scope="col">File Dokumen</th>
-            <th style="width: 80px; min-width: 80px;">Action</th>
+            <TH SCOPE="COL">ID BERITA</TH>
+            <TH SCOPE="COL">STATUS</TH>
+            <TH SCOPE="COL">PENGIRIM</TH>
+            <TH SCOPE="COL">PENERIMA</TH>
+            <TH SCOPE="COL">TANGGAL UPLOAD</TH>
+            <TH SCOPE="COL">TANGGAL TERIMA</TH>
+            <TH SCOPE="COL">NAMA PENERIMA</TH>
+            <TH SCOPE="COL">TANGGAL KEMBALI</TH>
+            <TH SCOPE="COL">FILE DOKUMEN</TH>
+            <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
+
+
         </tr>
     </thead>
     <tbody>

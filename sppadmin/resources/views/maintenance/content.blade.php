@@ -8,17 +8,18 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">Status SPP</th>
-                <th scope="col">Status Mekanik</th>
+                <TH SCOPE="COL">STATUS SPP</TH>
+                <TH SCOPE="COL">STATUS MEKANIK</TH>
+
+                <TH SCOPE="COL">KODE UNIT</TH>
+                <TH SCOPE="COL">HM</TH>
+                <TH SCOPE="COL">STATUS</TH>
+                <TH SCOPE="COL">TANGGAL (YYYY/MM/DD)</TH>
+                <TH SCOPE="COL">CBU</TH>
+                <TH SCOPE="COL">REGION</TH>
+                <TH SCOPE="COL">SITE NAME</TH>
 
 
-                <th scope="col">Kode Unit</th>
-                <th scope="col">HM</th>
-                <th scope="col">status</th>
-                <th scope="col">Tanggal</th>
-                <th scope="col">CBU</th>
-                <th scope="col">Region</th>
-                <th scope="col">Site Name</th>
   
             </tr>
         </thead>
@@ -50,7 +51,7 @@
                 </th>                
                 
                 <th scope="col"><a href="{{ route('maintenance.listaction',$key->kdunit) }}">{{ $key->kdunit }}</a></th>
-                <th scope="col">{{ $key->hm }}</th>
+                <th scope="col">{{ number_format($key->hm) }}</th>
                 <th scope="col">
                     <?php 
                         if(intdiv($key->hm,5000) % 2==1){

@@ -8,7 +8,7 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">Kode CBU</th>
+                <th scope="col">KODE CBU</th>
                 <th scope="col">CBU</th>
                 <th style="width: 80px; min-width: 80px;">Action</th>
             </tr>

@@ -8,10 +8,12 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">Nama sitename</th>
-                <th scope="col">Region</th>
-                <th scope="col">CBU</th>
-                <th style="width: 80px; min-width: 80px;">Action</th>
+                <TH SCOPE="COL">NAMA SITENAME</TH>
+                <TH SCOPE="COL">REGION</TH>
+                <TH SCOPE="COL">CBU</TH>
+                <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
+
+
             </tr>
         </thead>
         <tbody>

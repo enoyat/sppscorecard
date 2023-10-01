@@ -8,21 +8,23 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">Kode Unit</th>
-                <th scope="col">Equipment</th>
-                <th scope="col">Forklift Type</th>
-                <th scope="col">Merk</th>
-                <th scope="col">Type</th>
-                <th scope="col">Model</th>
-                <th scope="col">Capcity</th>
-                <th scope="col">Serial Number</th>
-                <th scope="col">Specification</th>
-                <th scope="col">Qty</th>
-                <th scope="col">CBU</th>
-                <th scope="col">Region</th>
-                <th scope="col">Site Name</th>
-                <th scope="col">Action</th>
+                <TH SCOPE="COL">KODE UNIT</TH>
+                <TH SCOPE="COL">EQUIPMENT</TH>
+                <TH SCOPE="COL">FORKLIFT TYPE</TH>
+                <TH SCOPE="COL">MERK</TH>
+                <TH SCOPE="COL">TYPE</TH>
+                <TH SCOPE="COL">MODEL</TH>
+                <TH SCOPE="COL">CAPCITY (kg)</TH>
+                <TH SCOPE="COL">SERIAL NUMBER</TH>
+                <TH SCOPE="COL">SPECIFICATION</TH>
+                <TH SCOPE="COL">QTY</TH>
+                <TH SCOPE="COL">CBU</TH>
+                <TH SCOPE="COL">REGION</TH>
+                <TH SCOPE="COL">SITE NAME</TH>
+                <TH SCOPE="COL">ACTION</TH>
   
+
+
             </tr>
         </thead>
         <tbody>
