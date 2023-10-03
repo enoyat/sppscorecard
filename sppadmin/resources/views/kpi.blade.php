@@ -145,13 +145,7 @@ File: Apex Chart init js
         series: [{
             name: 'Achievement',
             data: {{ $achievement }}
-        }, {
-            name: 'Max. Availability',
-            data: {{ $max }}
-        }, {
-            name: 'Base Availability',
-            data: {{ $base }}
-        }],
+        },],
         colors: columnColors,
         xaxis: {
             categories: <?php echo $kategori ?>,
@@ -164,6 +158,7 @@ File: Apex Chart init js
 
         },
         yaxis: {
+            
             title: {
                 text: '% (percent)',
                 style: {
