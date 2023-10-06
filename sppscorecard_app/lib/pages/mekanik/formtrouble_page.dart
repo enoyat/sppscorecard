@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
-import 'package:sppscorecard_app/pages/mekanik/formupload_gambar.dart';
 import 'package:sppscorecard_app/pages/mekanik/formuploadtrouble.dart';
 import 'package:sppscorecard_app/services/maintenance_dio.dart';
 import 'package:sppscorecard_app/services/trouble_dio.dart';
@@ -102,8 +101,6 @@ class _FormTroublePageState extends State<FormTroublePage> {
 
   final _deskripsi = TextEditingController();
   final _sparepart = TextEditingController();
-  final _hm = TextEditingController();
-  final _idaction = TextEditingController();
 
   List<String> dokumen = [];
   List<Unit> _unit = [];
