@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\MCbu;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -11,6 +9,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\MCbu;
+use App\Models\MSitename;
+use App\Models\MCustomer;
 
 class HomeController extends Controller
 {
@@ -31,7 +33,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         return view('index');
         // if (view()->exists($request->path())) {
         //     return view($request->path());
@@ -56,7 +58,11 @@ class HomeController extends Controller
         ->where('unit.idsitename',Session::get('runidsitename'))
         ->groupBy('namaforklifttype')
         ->get();
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $customer=MCustomer::get();
+        // dd($sitename);
         $achievement="[";
         $max="[";
         $base="[";
@@ -68,11 +74,11 @@ class HomeController extends Controller
             $base=$base.'98,';
             $kategori=$kategori.",'".$k->namaforklifttype."'";
         }
-        $achievement=$achievement."]";  
+        $achievement=$achievement."]";
         $max=$max."]";
         $base=$base."]";
-        $kategori="[".substr($kategori,1)."]";      
-        return view('index',compact('kpi','cbu','achievement','max','base','kategori'));
+        $kategori="[".substr($kategori,1)."]";
+        return view('index',compact('kpi','cbu','achievement','max','base','kategori','sitename','customer'));
     }
 
     public function lang($locale)
@@ -140,7 +146,7 @@ class HomeController extends Controller
             return response()->json([
                 'isSuccess' => false,
                 'Message' => "Your Current password does not matches with the password you provided. Please try again."
-            ], 200); // Status code 
+            ], 200); // Status code
         } else {
             $user = User::find($id);
             $user->password = Hash::make($request->get('password'));

@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use MCustomer;
+
+use Session;
 
 class LoginController extends Controller
 {
@@ -37,4 +41,46 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    public function redirectTo()
+    {
+        $roles = Auth::user()->roles_id;
+        $kdcustomer=Auth::user()->kdcustomer;
+        $namacustomer=Auth::user()->getcustomer->namacustomer;
+        $category=Auth::user()->getcustomer->category;
+
+
+        switch ($roles) {
+            case 1:
+                $sitename=Auth::user()->idsitename;
+                Session::put('runidsitename', $sitename);
+                Session::put('roles_id', $roles);
+                Session::put('kdcustomer', $kdcustomer);
+                Session::put('namacustomer', $namacustomer);
+                Session::put('category', $category);
+                return route('root');
+                break;
+            case 2:
+                $sitename=Auth::user()->idsitename;
+                Session::put('runidsitename', $sitename);
+                Session::put('roles_id', $roles);
+                Session::put('kdcustomer', $kdcustomer);
+                Session::put('namacustomer', $namacustomer);
+                Session::put('category', $category);
+                return route('root');
+                break;
+            case 5:
+                $sitename=Auth::user()->idsitename;
+                Session::put('runidsitename', $sitename);
+                Session::put('roles_id', $roles);
+                Session::put('kdcustomer', $kdcustomer);
+                Session::put('namacustomer', $namacustomer);
+                Session::put('category', $category);
+                return route('root');
+                break;
+            default:
+                return redirect()->route('login');
+                break;
+        }
+    }
+
 }

@@ -23,4 +23,13 @@ class MSitename extends Model
     {
         return $this->belongsTo(MRegion::class,'idregion','id');
     }
+    public function scopeMember($query, $kdcustomer)
+    {
+        return $query->where('kdcustomer', $kdcustomer);
+    }
+    public function scopeKategori($query, $kategori)
+    {
+        return $query->where('kategori', $kategori);
+    }
+
 }

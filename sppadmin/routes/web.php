@@ -89,8 +89,8 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::delete('/dokumendestroy/{id}', [App\Http\Controllers\TroubleController::class, 'dokumendestroy'])->name('trouble.dokumendestroy');
             Route::get('/listaction/{id}', [App\Http\Controllers\TroubleController::class, 'listaction'])->name('trouble.listaction');
             Route::delete('/actiondestroy/{id}', [App\Http\Controllers\TroubleController::class, 'actiondestroy'])->name('trouble.actiondestroy');
-        });        
-        
+        });
+
         Route::group(['prefix' => 'beritaacara'], function () {
             Route::get('/', [App\Http\Controllers\BeritaacaraController::class, 'index'])->name('beritaacara.index');
             Route::get('/create', [App\Http\Controllers\BeritaacaraController::class, 'create'])->name('beritaacara.create');
@@ -100,7 +100,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::put('/update/{id}', [App\Http\Controllers\BeritaacaraController::class, 'update'])->name('beritaacara.update');
             Route::get('/show/{id}', [App\Http\Controllers\BeritaacaraController::class, 'show'])->name('beritaacara.show');
             Route::get('/formterima', [App\Http\Controllers\BeritaacaraController::class, 'formterima'])->name('beritaacara.formterima');
-        });  
+        });
         Route::group(['prefix' => 'suratjalan'], function () {
             Route::get('/', [App\Http\Controllers\SuratjalanController::class, 'index'])->name('suratjalan.index');
             Route::get('/create', [App\Http\Controllers\SuratjalanController::class, 'create'])->name('suratjalan.create');
@@ -110,7 +110,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::put('/update/{id}', [App\Http\Controllers\SuratjalanController::class, 'update'])->name('suratjalan.update');
             Route::get('/show/{id}', [App\Http\Controllers\SuratjalanController::class, 'show'])->name('suratjalan.show');
             Route::get('/formterima', [App\Http\Controllers\SuratjalanController::class, 'formterima'])->name('suratjalan.formterima');
-        });      
+        });
         Route::group(['prefix' => 'maintenance'], function () {
             Route::get('/', [App\Http\Controllers\MaintenanceController::class, 'index'])->name('maintenance.index');
             Route::get('/create', [App\Http\Controllers\MaintenanceController::class, 'create'])->name('maintenance.create');
@@ -123,7 +123,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::delete('/dokumendestroy/{id}', [App\Http\Controllers\MaintenanceController::class, 'dokumendestroy'])->name('maintenance.dokumendestroy');
             Route::get('/listaction/{id}', [App\Http\Controllers\MaintenanceController::class, 'listaction'])->name('maintenance.listaction');
             Route::delete('/actiondestroy/{id}', [App\Http\Controllers\MaintenanceController::class, 'actiondestroy'])->name('maintenance.actiondestroy');
-        });        
+        });
         Route::group(['prefix' => 'maintenance'], function () {
             Route::get('/formstatus', [App\Http\Controllers\MaintenanceController::class, 'formstatus'])->name('maintenance.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\MaintenanceController::class, 'updatestatus'])->name('maintenance.updatestatus');
@@ -173,7 +173,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/show/{id}', [App\Http\Controllers\SparepartstoktransController::class, 'show'])->name('sparepartstoktrans.show');
             Route::get('/getsparepart', [App\Http\Controllers\SparepartstoktransController::class, 'getsparepart'])->name('sparepartstoktrans.getsparepart');
             Route::get('/getstok', [App\Http\Controllers\SparepartstoktransController::class, 'getstok'])->name('sparepartstoktrans.getstok');
-        });     
+        });
 
         Route::group(['prefix' => 'pallete'], function () {
             Route::get('/', [App\Http\Controllers\PalleteController::class, 'index'])->name('pallete.index');
@@ -185,9 +185,9 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/show/{id}', [App\Http\Controllers\PalleteController::class, 'show'])->name('pallete.show');
             Route::get('/formstatus', [App\Http\Controllers\PalleteController::class, 'formstatus'])->name('pallete.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\PalleteController::class, 'updatestatus'])->name('pallete.updatestatus');
-        });        
-       
-        
+        });
+
+
         Route::group(['prefix' => 'palleterenew'], function () {
             Route::get('/', [App\Http\Controllers\PalleterenewController::class, 'index'])->name('palleterenew.index');
             Route::get('/create', [App\Http\Controllers\PalleterenewController::class, 'create'])->name('palleterenew.create');
@@ -215,6 +215,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/getregion/{id}', [App\Http\Controllers\ApiLokasi::class, 'getregion'])->name('lokasi.getregion');
             Route::get('/getsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'getsitename'])->name('lokasi.getsitename');
             Route::get('/setsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
+            Route::get('/setcustomer', [App\Http\Controllers\ApiLokasi::class, 'setcustomer'])->name('lokasi.setcustomer');
         });
         Route::group(['prefix' => 'forklifttype'], function () {
             Route::get('/', [App\Http\Controllers\ForklifttypeController::class, 'index'])->name('forklifttype.index');
@@ -243,7 +244,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
         //Language Translation
         Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
         // Route::get('delivery', [DeliveryController::class, 'index'])->name('delivery.index');
-        
+
         Route::group(['prefix' => 'delivery'], function () {
             Route::get('/', [App\Http\Controllers\DeliveryController::class, 'index'])->name('delivery.index');
         });
@@ -258,19 +259,19 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/', [App\Http\Controllers\TroubleController::class, 'index'])->name('trouble.index');
             Route::get('/listdokumen/{id}', [App\Http\Controllers\TroubleController::class, 'listdokumen'])->name('trouble.listdokumen');
             Route::get('/listaction/{id}', [App\Http\Controllers\TroubleController::class, 'listaction'])->name('trouble.listaction');
-        });        
-        
+        });
+
         Route::group(['prefix' => 'beritaacara'], function () {
             Route::get('/', [App\Http\Controllers\BeritaacaraController::class, 'index'])->name('beritaacara.index');
-        });  
+        });
         Route::group(['prefix' => 'suratjalan'], function () {
             Route::get('/', [App\Http\Controllers\SuratjalanController::class, 'index'])->name('suratjalan.index');
-        });      
+        });
         Route::group(['prefix' => 'maintenance'], function () {
             Route::get('/', [App\Http\Controllers\MaintenanceController::class, 'index'])->name('maintenance.index');
             Route::get('/listdokumen/{id}', [App\Http\Controllers\MaintenanceController::class, 'listdokumen'])->name('maintenance.listdokumen');
             Route::get('/listaction/{id}', [App\Http\Controllers\MaintenanceController::class, 'listaction'])->name('maintenance.listaction');
-        });        
+        });
         Route::group(['prefix' => 'maintenance'], function () {
             Route::get('/formstatus', [App\Http\Controllers\MaintenanceController::class, 'formstatus'])->name('maintenance.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\MaintenanceController::class, 'updatestatus'])->name('maintenance.updatestatus');
@@ -297,15 +298,15 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/', [App\Http\Controllers\SparepartstoktransController::class, 'index'])->name('sparepartstoktrans.index');
             Route::get('/getsparepart', [App\Http\Controllers\SparepartstoktransController::class, 'getsparepart'])->name('sparepartstoktrans.getsparepart');
             Route::get('/getstok', [App\Http\Controllers\SparepartstoktransController::class, 'getstok'])->name('sparepartstoktrans.getstok');
-        });     
+        });
 
         Route::group(['prefix' => 'pallete'], function () {
             Route::get('/', [App\Http\Controllers\PalleteController::class, 'index'])->name('pallete.index');
             Route::get('/formstatus', [App\Http\Controllers\PalleteController::class, 'formstatus'])->name('pallete.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\PalleteController::class, 'updatestatus'])->name('pallete.updatestatus');
-        });        
-       
-        
+        });
+
+
         Route::group(['prefix' => 'palleterenew'], function () {
             Route::get('/', [App\Http\Controllers\PalleterenewController::class, 'index'])->name('palleterenew.index');
             Route::get('/formstatus', [App\Http\Controllers\PalleterenewController::class, 'formstatus'])->name('palleterenew.formstatus');
@@ -323,6 +324,6 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/setsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
         });
     });
-    
+
 
 });

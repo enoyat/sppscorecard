@@ -11,22 +11,22 @@
     <div class="card" style="border: 1px solid black">
         <div class="card-body">
 
-            <table style="background: gray" width="100%">
+            <table width="100%">
                 <tr>
-                    <td><img src="{{ URL::asset('img/forklift.png') }}" alt="" height="100"
-                            class="logo logo-dark">
+                    <td style="background: white; padding:10px"><img src="{{ URL::asset('img/logo.png') }}" alt="" height="50"
+                            >
                     </td>
-                    <td>
-                        <div style="font-size: 20px;"><b>KPI DASHBOARD {{ Session::get('runnamaregion') }}</b></div>
+                    <td style="background:rgb(9, 136, 153); padding:10px">
+                        <div style="font-size: 16px; color: white;"><b>KPI DASHBOARD {{ Session::get('runnamaregion') }}</b></div>
                     </td>
-                    <td>Update: {{ date('Y/m/d') }}</td>
+                    <td style="background:rgb(9, 136, 153); color: white; padding:10px">Update: {{ date('Y/m/d') }}</td>
                 </tr>
             </table>
             <br>
             <div
                 style="border-top-left-radius: 20px; border: 1px solid grey; padding:10px; border-bottom-right-radius:20px">
                 <div
-                    style="margin-top:-25px; margin-left:10px; width:200px; height:30px; background: grey; border-radius:10px; padding:5px; color:white; text-align:center">
+                    style="margin-top:-25px; margin-left:10px; width:200px; height:30px; background: rgb(9, 136, 153); border-radius:10px; padding:5px; color:white; text-align:center">
                     MHE Availability</div>
                 <table>
                     <thead>
@@ -59,7 +59,7 @@
             <div class="table-responsive">
 
                 <div class="card">
-                
+
                     <div class="card-header">
                         <h4 class="card-title mb-0">MHE PERFORMANCE CHART</h4>
                     </div>
@@ -135,7 +135,7 @@ File: Apex Chart init js
                 fontSize: '8px',
                 colors: ['black']
             },
-           
+
         },
         stroke: {
             show: true,
@@ -145,13 +145,7 @@ File: Apex Chart init js
         series: [{
             name: 'Achievement',
             data: {{ $achievement }}
-        }, {
-            name: 'Max. Availability',
-            data: {{ $max }}
-        }, {
-            name: 'Base Availability',
-            data: {{ $base }}
-        }],
+        },],
         colors: columnColors,
         xaxis: {
             categories: <?php echo $kategori ?>,
@@ -164,6 +158,7 @@ File: Apex Chart init js
 
         },
         yaxis: {
+
             title: {
                 text: '% (percent)',
                 style: {

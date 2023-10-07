@@ -1,5 +1,7 @@
 
 <div class="row">
+
+    @if(Session::get('category') == '10' || Session::get('category') == '1')
     <div class="col-xl-3 col-md-6">
         <!-- card -->
         <div class="card card-h-100">
@@ -17,7 +19,7 @@
                                         <option value="{{ Session::get('runidcbu') }}" selected>{{ Session::get('runnamacbu') }}</option>
                                         <option value="" >select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
                         </h4>
@@ -48,7 +50,7 @@
             </div><!-- end card body -->
         </div><!-- end card -->
     </div><!-- end col-->
-
+    @endif
     <div class="col-xl-4 col-md-6">
         <!-- card -->
         <div class="card card-h-100">
@@ -62,12 +64,22 @@
 
                         <select class="form-select" aria-label="Default select example" name="idsitename"
                                         id="idsitename">
-                                        <option value="{{ Session::get('runidsitename') }}" selected>{{ Session::get('runnamasitename') }}</option>
+
+                                        <option value="{{ Session::get('runidsitename') }}">{{ Session::get('runnamasitename') }}</option>
+                                        @foreach ($sitename as $itemsitename )
+                                            <option value="{{ $itemsitename->idsitename }}"
+                                                @if (Session::get('runidsitename')== $itemsitename->id)
+                                                    selected
+                                                @endif
+
+                                                >{{ $itemsitename->namasitename }}</option>
+
+                                        @endforeach
 
                                     </select>
                         </h4>
-        
-                        
+
+
                     </div>
 
                 </div>
@@ -95,7 +107,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);
@@ -139,8 +151,8 @@
         dataType: 'json',
         success: function(data) {
             $('#sitename').html('sukses');
-          
-            
+
+
         }
     });
     });
