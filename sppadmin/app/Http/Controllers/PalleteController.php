@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MCbu;
+
 use App\Models\MForklifttype;
 use App\Models\MPallete;
 use App\Models\User;
+use App\Models\MSitename;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -26,23 +27,24 @@ class PalleteController extends Controller
      */
     public function index()
     {
-        $cbu=MCbu::get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $pallete = MPallete::where('idsitename',Session::get('runidsitename'))->get();
-        return view('pallete.index', compact('pallete','cbu'));
+        return view('pallete.index', compact('pallete','cbu','sitename'));
     }
     public function create()
     {
         if(Session::get('roles_id')==2) {
             $cbu=MCbu::where('id',Session::get('runidcbu'))->get();
         } else {
-            $cbu=MCbu::get();
+            $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         }
         $forklifttype = MForklifttype::get();
         return view('pallete.create',compact('cbu','forklifttype'));
     }
     public function edit($id)
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $forklifttype = MForklifttype::get();
         $pallete = MPallete::find($id);
         return view('pallete.edit',compact('cbu','forklifttype','pallete'));
@@ -51,7 +53,7 @@ class PalleteController extends Controller
     {
         $request->validate([
             'idcbu'=>'required',
-            'idregion'=>'required', 
+            'idregion'=>'required',
             'idsitename'=>'required',
             'jenisrequest'=>'required',
             'qty'=>'required',
@@ -61,8 +63,8 @@ class PalleteController extends Controller
 
         ]);
 
-      
-        
+
+
         $pallete = new MPallete;
         $pallete->idcbu = $request->idcbu;
         $pallete->idregion = $request->idregion;
@@ -79,7 +81,7 @@ class PalleteController extends Controller
         $pallete->statuscustomer = "OPEN";
         $simpan = $pallete->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('pallete.index');
 
@@ -96,18 +98,18 @@ class PalleteController extends Controller
     {
         $request->validate([
             'idcbu'=>'required',
-            'idregion'=>'required', 
+            'idregion'=>'required',
             'idsitename'=>'required',
             'jenisrequest'=>'required',
             'qty'=>'required',
             'daterequest'=>'required',
             'targetdate'=>'required',
             'statusspp'=>'required',
-          
+
         ]);
 
-      
-        
+
+
         $pallete = MPallete::find($id);
         $pallete->idcbu = $request->idcbu;
         $pallete->idregion = $request->idregion;
@@ -123,7 +125,7 @@ class PalleteController extends Controller
         $pallete->statusspp = $request->statusspp;
         $simpan = $pallete->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('pallete.index');
 
@@ -168,7 +170,7 @@ class PalleteController extends Controller
     }
     public function updatestatus(Request $request)
     {
-       
+
         $id = $request->id;
         $aid = $request->aid;
         if($request->aid == 'spp'){
@@ -189,7 +191,7 @@ class PalleteController extends Controller
             $pallete->statuscustomer = $statuscustomer;
             $pallete->save();
         }
-       
+
         return redirect()->route('pallete.index');
     }
 

@@ -1,8 +1,8 @@
-@if (Session::get('category') == '10' || Session::get('category') == '1')
+@if (Auth::user()->roles_id == '1')
 @csrf
     <select class="form-select" aria-label="Default select example" name="kdcustomer" id="kdcustomer">
         <option value="{{ Session::get('kdcustomer') }}" selected>{{ Session::get('namacustomer') }}</option>
-        <option value="">select</option>
+        <option value="">-- Select --</option>
         @foreach ($customer as $itemcustomer)
             <option value="{{ $itemcustomer->kdcustomer }}">{{ $itemcustomer->namacustomer }}</option>
         @endforeach

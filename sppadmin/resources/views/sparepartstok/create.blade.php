@@ -47,7 +47,7 @@
                                     <select class="form-select" aria-label="Default select example" name="idcbu" id="idcbu">
                                         <option value="" selected>select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
@@ -65,7 +65,7 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Nama Spare Part</label>
+                                    <label for="example-password-input" class="form-label">Name of Spare Part</label>
                                     <select  name="idsparepart" id="idsparepart" required class="form-control"></select>
 
                                 </div>
@@ -81,7 +81,7 @@
 
                             </div>
                         </div>
-                       
+
 
 
                     </div>
@@ -112,7 +112,7 @@
                 var html = '';
                 var html = '<option>Select</option>';
                 for (i = 0; i < datax.length; i++) {
-                    html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                    html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                         "</option>";
                 }
                 $('#idregion').html(html);

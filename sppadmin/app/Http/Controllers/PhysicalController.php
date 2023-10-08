@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MCbu;
+
 use App\Models\MUnit;
 
 use App\Models\MForklifttype;
 use App\Models\MPhysical;
 use App\Models\User;
+use App\Models\MSitename;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -28,17 +29,18 @@ class PhysicalController extends Controller
      */
     public function index()
     {
-        $cbu = MCbu::get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $physical = MPhysical::with('getunit')->where('idsitename', Session::get('runidsitename'))->get();
         $forklifttype = MForklifttype::get();
-        return view('physical.index', compact('physical', 'forklifttype', 'cbu'));
+        return view('physical.index', compact('physical', 'forklifttype', 'cbu','sitename'));
     }
     public function create()
     {
         if (Session::get('roles_id') == 2) {
-            $cbu = MCbu::where('id', Session::get('runidcbu'))->get();
+            $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         } else {
-            $cbu = MCbu::get();
+            $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         }
         $forklifttype = MForklifttype::get();
         return view('physical.create', compact('cbu', 'forklifttype'));
@@ -64,9 +66,9 @@ class PhysicalController extends Controller
 
 
         if ($request->pilihunit == "allunit") {
-            
+
             $unit = MUnit::where('idsitename', $request->idsitename)->get();
-           
+
             foreach ($unit as $item) {
                 $cek = MPhysical::where('kdunit', $item->kdunit)->where('periode', $request->periode)->count();
                 if ($cek < 1) {

@@ -4,10 +4,8 @@
         <thead>
             <tr>
 
-                <TH SCOPE="COL">STATUS SPP</TH>
-                <TH SCOPE="COL">STATUS MEKANIK</TH>
 
-                <TH SCOPE="COL">KODE UNIT</TH>
+                <TH SCOPE="COL">CODE UNIT</TH>
                 <TH SCOPE="COL">HM</TH>
                 <TH SCOPE="COL">STATUS</TH>
                 <TH SCOPE="COL">TANGGAL (YYYY/MM/DD)</TH>
@@ -16,7 +14,7 @@
                 <TH SCOPE="COL">SITE NAME</TH>
 
 
-  
+
             </tr>
         </thead>
         <tbody>
@@ -24,27 +22,11 @@
             @foreach ($maintenance as $key)
             <tr>
 
-                <th scope="col">
-                    
-                @if ($key->statusspp=="CLOSE") 
-                    <span class="badge badge-pill badge-soft-success font-size-12">{{ $key->statusspp }}</span>
-                    @else
-                    <span class="badge badge-pill badge-soft-danger font-size-12">{{ $key->statusspp }}</span>
-                    @if(Session::get('globalidsitename')=='999')
-                    <a class="btn btn-sm btn-info  btn-action" data-url="{{ URL('maintenance/formstatus?aid=spp&kdunit='.$key->kdunit) }}" id="btnAction1"><i class=" fas fa-key"></i></a>
-                    @endif
-                    @endif</th>
-                <th scope="col">@if ($key->statusmekanik=="CLOSE") 
-                    <span class="badge badge-pill badge-soft-success font-size-12">{{ $key->statusmekanik }}</span>
-                    @else
-                    <span class="badge badge-pill badge-soft-danger font-size-12">{{ $key->statusmekanik }}</span>
-                    @endif
-                </th>                
-                
+
                 <th scope="col"><a href="{{ route('maintenance.listaction',$key->kdunit) }}">{{ $key->kdunit }}</a></th>
                 <th scope="col">{{ number_format($key->hm) }}</th>
                 <th scope="col">
-                    <?php 
+                    <?php
                         if(intdiv($key->hm,5000) % 2==1){
                             echo "OverHaul besar";
                         }
@@ -53,11 +35,11 @@
                         }
                     ?>
                 </th>
-                <th scope="col">{{ $key->tanggal }}</th> 
-                <th scope="col">{{ $key->getcbu->namacbu }}</th>
-                <th scope="col">{{ $key->getregion->namaregion }}</th>
+                <th scope="col">{{ $key->tanggal }}</th>
+                <th scope="col">{{ $key->getcbu->namasitename }}</th>
+                <th scope="col">{{ $key->getregion->namasitename }}</th>
                 <th scope="col">{{ $key->getsitename->namasitename }}</th>
-                
+
             </tr>
             @endforeach
         </tbody>
@@ -75,7 +57,7 @@
                     </div>
                 </div>
     <script>
-        
+
     $('.btn-action').click(function() {
         var url = $(this).data("url");
 

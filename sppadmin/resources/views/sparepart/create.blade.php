@@ -40,16 +40,16 @@
                         @csrf
                         <div class="col-lg-6">
                             <div>
-                               
+
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Nama Spare Part</label>
+                                    <label for="example-password-input" class="form-label">Name of Spare Part</label>
                                     <input class="form-control" type="text" value="" name="namasparepart" id="namasparepart">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-date-input" class="form-label">Uom</label>
                                     <input class="form-control" type="text" value="" name="uom" id="uom">
                                 </div>
-                                
+
 
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
@@ -59,7 +59,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </form>
             </div>

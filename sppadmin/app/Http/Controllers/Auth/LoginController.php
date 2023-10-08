@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
-use MCustomer;
+use App\Models\MCustomer;
+use App\Models\MSitename;
 
 use Session;
 
@@ -47,12 +48,14 @@ class LoginController extends Controller
         $kdcustomer=Auth::user()->kdcustomer;
         $namacustomer=Auth::user()->getcustomer->namacustomer;
         $category=Auth::user()->getcustomer->category;
-
+        $sitename=Auth::user()->idsitename;
+        $namasitename=MSitename::where('id',$sitename)->first();
 
         switch ($roles) {
             case 1:
-                $sitename=Auth::user()->idsitename;
+
                 Session::put('runidsitename', $sitename);
+                Session::put('runnamasitename', $namasitename->namasitename);
                 Session::put('roles_id', $roles);
                 Session::put('kdcustomer', $kdcustomer);
                 Session::put('namacustomer', $namacustomer);
@@ -60,8 +63,9 @@ class LoginController extends Controller
                 return route('root');
                 break;
             case 2:
-                $sitename=Auth::user()->idsitename;
+
                 Session::put('runidsitename', $sitename);
+                Session::put('runnamasitename', $namasitename->namasitename);
                 Session::put('roles_id', $roles);
                 Session::put('kdcustomer', $kdcustomer);
                 Session::put('namacustomer', $namacustomer);
@@ -69,8 +73,9 @@ class LoginController extends Controller
                 return route('root');
                 break;
             case 5:
-                $sitename=Auth::user()->idsitename;
+
                 Session::put('runidsitename', $sitename);
+                Session::put('runnamasitename', $namasitename->namasitename);
                 Session::put('roles_id', $roles);
                 Session::put('kdcustomer', $kdcustomer);
                 Session::put('namacustomer', $namacustomer);

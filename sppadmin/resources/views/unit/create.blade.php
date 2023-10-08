@@ -46,7 +46,7 @@
                                         id="idcbu">
                                         <option value="" selected>select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
@@ -68,30 +68,30 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Kode Unit</label>
+                                    <label for="example-password-input" class="form-label">CODE Unit</label>
                                     <input class="form-control" type="text" value="" name="kdunit"
                                         id="kdunit">
-                                        <small class="text-danger">Kode Unit tidak boleh sama dan tidak boleh ada spasi</small>
+                                        <small class="text-danger">CODE Unit tidak boleh sama dan tidak boleh ada spasi</small>
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Equipment</label>
-                                    <input class="form-control" type="text" value="" name="equipment" id="equipment">                                       
+                                    <input class="form-control" type="text" value="" name="equipment" id="equipment">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Merk</label>
-                                    <input class="form-control" type="text" value="" name="merk" id="merk">                                       
+                                    <input class="form-control" type="text" value="" name="merk" id="merk">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Type</label>
-                                    <input class="form-control" type="text" value="" name="type" id="type">                                       
+                                    <input class="form-control" type="text" value="" name="type" id="type">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Model</label>
-                                    <input class="form-control" type="text" value="" name="model" id="model">                                       
+                                    <input class="form-control" type="text" value="" name="model" id="model">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Capcity</label>
-                                    <input class="form-control" type="text" value="" name="capcity" id="capcity">                                       
+                                    <input class="form-control" type="text" value="" name="capcity" id="capcity">
                                 </div>
 
 
@@ -99,11 +99,11 @@
                                     <label for="example-password-input" class="form-label">Serial Number</label>
                                     <input class="form-control" type="text" value="" name="serialnumber"
                                         id="serialnumber">
-                                       
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Specification</label>
-                                    <input class="form-control" type="text" value="" name="specification" id="specification">                                       
+                                    <input class="form-control" type="text" value="" name="specification" id="specification">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-date-input" class="form-label">Qty</label>
@@ -133,7 +133,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </form>
             </div>
@@ -161,7 +161,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

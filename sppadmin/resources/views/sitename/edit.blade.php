@@ -42,21 +42,31 @@
                         <div class="col-lg-6">
 
                         <div class="mb-3">
-                                    <label for="example-text-input" class="form-label">Site Name</label>
-                                    <input class="form-control" type="text" name="namasitename" id="namasitename" value="{{ $sitename->namasitename }}">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-text-input" class="form-label">Region</label>
-                                    <select class="form-select" aria-label="Default select example" name="idregion"
-                                        id="idregion">
-                                        <option value="{{ $sitename->idregion }}" selected>{{ $sitename->getregion->namaregion }}</option>   
-                                        <option value="" >select</option>
-                                        @foreach ($region as $itemregion)
-                                        <option value="{{ $itemregion->id }}">{{ $itemregion->namaregion }}</option>
-                                        @endforeach
-                                    </select>
+                            <div class="mb-3">
+                                <label for="example-text-input" class="form-label">Sitename Code</label>
+                                <input class="form-control" type="text" name="id" id="id" value="{{ $sitename->id }}"
+                                    placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="example-text-input" class="form-label">Sitename</label>
+                                <input class="form-control" type="text" name="namasitename"
+                                    value="{{ $sitename->namasitename }}" id="namasitename" placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="example-text-input" class="form-label">REGION</label>
+                                <select class="form-select" aria-label="Default select example" name="idregion"
+                                    id="idregion">
+                                    @if ($sitename->parent->namasitename!=null)
+                                    <option value="{{ $sitename->parentid }}" selected>{{ $sitename->parent->namasitename }}
+                                    </option>
+                                @endif
+                                    <option value="">== select ==</option>
+                                    @foreach ($region as $itemregion)
+                                        <option value="{{ $itemregion->id }}">{{ $itemregion->namasitename }}</option>
+                                    @endforeach
+                                </select>
 
-                                </div>
+                            </div>
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-primary w-md">Submit</button>
 
@@ -91,7 +101,7 @@ jQuery('#idcbu').change(function() {
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

@@ -8,7 +8,8 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">NAMA REGION</th>
+                <th scope="col">REGION CODE</th>
+                <th scope="col">REGION NAME</th>
                 <th scope="col">CBU</th>
                 <th style="width: 80px; min-width: 80px;">Action</th>
             </tr>
@@ -23,9 +24,13 @@
                         <label class="form-check-label" for="contacusercheck1"></label>
                     </div>
                 </th>
-                
-                <th scope="col">{{ $key->namaregion }}</th>
-                <th scope="col">{{ $key->getcbu->namacbu }}</th>
+                <th scope="col">{{ $key->id }}</th>
+                <th scope="col">{{ $key->namasitename }}</th>
+                <th scope="col">
+                    @if ($key->parent->namasitename!=null)
+                        {{ $key->parent->namasitename }}
+                   @endif
+                </th>
                 <th style="width: 80px; min-width: 80px;">
                 <div class="dropdown">
                             <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
@@ -42,8 +47,8 @@
                                     </form></li>
                             </ul>
                         </div>
-                                   
-            
+
+
             </th>
             </tr>
             @endforeach

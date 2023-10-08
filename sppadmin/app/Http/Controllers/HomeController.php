@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
-use App\Models\MCbu;
+
 use App\Models\MSitename;
 use App\Models\MCustomer;
 
@@ -56,11 +56,13 @@ class HomeController extends Controller
         select(DB::raw('namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
         ->where('periode',$mperiode)
         ->where('unit.idsitename',Session::get('runidsitename'))
+        ->where('forklifttype.f_dashboard',"Y")
         ->groupBy('namaforklifttype')
         ->get();
         $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
 
         $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+
         $customer=MCustomer::get();
         // dd($sitename);
         $achievement="[";
@@ -69,7 +71,7 @@ class HomeController extends Controller
         $kategori="";
 
         foreach($kpi as $k){
-            $achievement=$achievement.$k->avgpaforklift.',';
+            $achievement=$achievement.number_format($k->avgpaforklift,2).',';
             $max=$max.'100,';
             $base=$base.'98,';
             $kategori=$kategori.",'".$k->namaforklifttype."'";

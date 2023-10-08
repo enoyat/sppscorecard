@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MCbu;
+
 use App\Models\MSparepart;
 use App\Models\MForklifttype;
 use App\Models\MSparepartstok;
 use App\Models\User;
+use App\Models\MSitename;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -27,25 +28,26 @@ class SparepartstokController extends Controller
      */
     public function index()
     {
-        $cbu=MCbu::get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $sparepartstok = MSparepartstok::where('idsitename',Session::get('runidsitename'))->get();
-        return view('sparepartstok.index', compact('sparepartstok','cbu'));
+        return view('sparepartstok.index', compact('sparepartstok','cbu','sitename'));
     }
     public function create()
     {
         if(Session::get('roles_id')==2) {
             $cbu=MCbu::where('id',Session::get('runidcbu'))->get();
         } else {
-            $cbu=MCbu::get();
+            $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         }
         $forklifttype = MForklifttype::get();
         return view('sparepartstok.create',compact('cbu','forklifttype'));
     }
     public function edit($id)
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $sparepart = MSparepartstok::find($id);
-        
+
         return view('sparepartstok.edit',compact('cbu','sparepart'));
     }
     public function store(Request $request)
@@ -59,14 +61,14 @@ class SparepartstokController extends Controller
 
         $request->validate([
             'idcbu'=>'required',
-            'idregion'=>'required', 
+            'idregion'=>'required',
             'idsitename'=>'required',
             'idsparepart'=>'required',
             'qty'=>'required',
         ]);
 
-      
-        
+
+
         $sparepart = new MSparepartstok;
         $sparepart->idcbu = $request->idcbu;
         $sparepart->idregion = $request->idregion;
@@ -75,7 +77,7 @@ class SparepartstokController extends Controller
         $sparepart->qty = $request->qty;
         $simpan = $sparepart->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('sparepartstok.index');
 
@@ -92,15 +94,15 @@ class SparepartstokController extends Controller
     {
         $request->validate([
             'idcbu'=>'required',
-            'idregion'=>'required', 
+            'idregion'=>'required',
             'idsitename'=>'required',
             'idsparepart'=>'required',
             'qty'=>'required',
-          
+
         ]);
 
-      
-        
+
+
         $sparepart = MSparepartstok::find($id);
         $sparepart->idcbu = $request->idcbu;
         $sparepart->idregion = $request->idregion;
@@ -110,7 +112,7 @@ class SparepartstokController extends Controller
 
         $simpan = $sparepart->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('sparepartstok.index');
 

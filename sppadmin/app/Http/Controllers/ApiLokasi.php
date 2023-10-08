@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Adds;
-use App\Models\MCbu;
-use App\Models\MRegion;
+
+
 use App\Models\MSitename;
 use App\Models\MCustomer;
 use Illuminate\Support\Facades\Session;
@@ -30,11 +30,12 @@ class ApiLokasi extends Controller
         $sitename = MSitename::where('parentid',$id)->get();
         return Response::json($sitename);
     }
-    public function setsitename($id)
+    public function setsitename(Request $request)
     {
+        $id=$request->id;
         $sitename = MSitename::where('id',$id)->first();
 
-       // dd($sitename->getregion->getcbu->namacbu);
+       // dd($sitename->getregion->getcbu->namasitename);
         if($sitename->count()==0){
             Session::put('runidcbu','');
             Session::put('runnamacbu','');
@@ -58,6 +59,10 @@ class ApiLokasi extends Controller
 
         }
     }
+    public function customer(){
+        $customer = MCustomer::get();
+        return view('customer.index',compact('customer'));
+    }
 
     public function setcustomer(Request $request)
     {
@@ -71,11 +76,13 @@ class ApiLokasi extends Controller
             Session::put('runnamaregion','');
             Session::put('runidsitename','');
             Session::put('runnamasitename','');
+            Session::put('category',$customer->category);
             return Response::json($customer);
         }
         else {
             Session::put('kdcustomer','');
             Session::put('namacustomer','');
+            Session::put('category','');
 
             return Response::json($customer);
 

@@ -8,7 +8,7 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">KODE CBU</th>
+                <th scope="col">CODE CBU</th>
                 <th scope="col">CBU</th>
                 <th style="width: 80px; min-width: 80px;">Action</th>
             </tr>
@@ -24,7 +24,7 @@
                     </div>
                 </th>
                 <th scope="col">{{ $key->id }}</th>
-                <th scope="col">{{ $key->namacbu }}</th>
+                <th scope="col">{{ $key->namasitename }}</th>
                 <th style="width: 80px; min-width: 80px;">
                 <div class="dropdown">
                             <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
@@ -37,12 +37,12 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"  class="dropdown-item"
-                                            onclick="return confirm('Hapus Data ini?');">Hapus</button>
+                                            onclick="return confirm('Hapus Data ini?');">Del</button>
                                     </form></li>
                             </ul>
                         </div>
-                                   
-            
+
+
             </th>
             </tr>
             @endforeach

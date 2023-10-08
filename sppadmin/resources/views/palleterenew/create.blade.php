@@ -46,7 +46,7 @@
                                         id="idcbu">
                                         <option value="" selected>select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
@@ -106,7 +106,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </form>
             </div>
@@ -134,7 +134,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

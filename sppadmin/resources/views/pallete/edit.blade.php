@@ -45,20 +45,20 @@
                                     <label for="example-text-input" class="form-label">CBU</label>
                                     <select class="form-select" aria-label="Default select example" name="idcbu"
                                         id="idcbu">
-                                        <option value="{{ $pallete->idcbu }}" selected>{{ $pallete->getcbu->namacbu }}</option>
+                                        <option value="{{ $pallete->idcbu }}" selected>{{ $pallete->getcbu->namasitename }}</option>
                                         <option value="" >select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Region</label>
-                                    
+
                                     <select class="form-select" aria-label="Default select example" name="idregion"
                                         id="idregion">
-                                        <option value="{{ $pallete->idregion }}">{{ $pallete->getregion->namaregion }}</option>
+                                        <option value="{{ $pallete->idregion }}">{{ $pallete->getregion->namasitename }}</option>
                                     </select>
 
                                 </div>
@@ -82,7 +82,7 @@
 
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Qty</label>
-                                    <input class="form-control" type="number" value="{{ $pallete->qty }}" name="qty" 
+                                    <input class="form-control" type="number" value="{{ $pallete->qty }}" name="qty"
                                         id="qty">
                                 </div>
                                 <div class="mb-3">
@@ -159,7 +159,7 @@ jQuery('#idcbu').change(function() {
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

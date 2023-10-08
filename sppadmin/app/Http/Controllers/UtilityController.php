@@ -36,7 +36,7 @@ class UtilityController extends Controller
     }
     public function register(){
         $role=Role::orderby('id')->get();
-        $sitename=MSitename::orderby('namasitename')->get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         return view ('utility.register',compact('sitename','role'));
     }
     public function postregister(Request $request)
@@ -70,6 +70,7 @@ class UtilityController extends Controller
         $user->email = strtolower($request->email);
         $user->roles_id = $request->role;
         $user->idsitename = $request->idsitename;
+        $user->kdcustomer = Session::get('kdcustomer');
         $user->password = Hash::make($request->password);
 
         $simpan = $user->save();
@@ -144,7 +145,7 @@ class UtilityController extends Controller
         $user->roles_id = $request->role;
         $user->idsitename = $request->idsitename;
         $user->save();
-       
+
         return redirect()->route('utility.userpassword')->with('success','User berhasil diupdate');
     }
 }

@@ -53,12 +53,12 @@
                                         id="idcbu">
                                         <option value="" selected>select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
                                 </div>
-                               
+
                                 <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Region</label>
                                     <select class="form-select" aria-label="Default select example" name="idregion"
@@ -80,7 +80,7 @@
                                     <input class="form-control" type="file" value="" name="filefoto"
                                         id="filefoto">
                                 </div>
-                               
+
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
@@ -89,7 +89,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </form>
             </div>
@@ -117,7 +117,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

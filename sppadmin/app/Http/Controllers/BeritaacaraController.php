@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MBeritaacara;
-use App\Models\MCbu;
+
 use App\Models\MOffice;
 use App\Models\MSitename;
 use App\Models\User;
@@ -27,9 +27,10 @@ class BeritaacaraController extends Controller
      */
     public function index()
     {
-        $cbu = MCbu::get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $beritaacara = MBeritaacara::where('pengirim', Session::get('runidsitename'))->get();
-        return view('beritaacara.index', compact('beritaacara', 'cbu'));
+        return view('beritaacara.index', compact('beritaacara', 'cbu', 'sitename'));
     }
     public function create()
     {

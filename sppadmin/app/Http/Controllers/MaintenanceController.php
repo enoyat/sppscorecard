@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MCbu;
+
 use App\Models\MDokumenmaintenance;
 use App\Models\MMaintenance;
 use App\Models\MForklifttype;
 use App\Models\MMaintenanceaction;
 use App\Models\MUnit;
 use App\Models\User;
+use App\Models\MSitename;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -29,15 +30,16 @@ class MaintenanceController extends Controller
      */
     public function index()
     {
-        $cbu=MCbu::get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $maintenance = MUnit::where('idsitename',Session::get('runidsitename'))->get();
-        return view('maintenance.index', compact('maintenance','cbu'));
+        return view('maintenance.index', compact('maintenance','cbu','sitename'));
     }
     public function create(){
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         return view('maintenance.create', compact('cbu'));
     }
-    
+
     public function destroy(Request $request)
     {
         try {
@@ -82,8 +84,17 @@ class MaintenanceController extends Controller
     }
     public function listaction($id)
     {
+
         $listactions=MMaintenanceaction::where('kdunit',$id)->get();
-        return view('maintenance.listaction', compact('listactions','id'));
+        return view('maintenance.listaction', compact('listactions'));
+    }
+    public function listactionall()
+    {
+        $listactions = MMaintenanceaction::join('unit','unit.kdunit','=','maintenanceaction.kdunit')
+        ->where('unit.idsitename',Session::get('runidsitename'))
+        ->get();
+
+        return view('maintenance.listaction', compact('listactions'));
     }
     public function actiondestroy(Request $request)
     {
@@ -97,22 +108,29 @@ class MaintenanceController extends Controller
     }
     public function formstatus(Request $request)
     {
-        $kdunit = $request->kdunit;
+        $id = $request->id;
         $aid = $request->aid;
-        $maintenance = MUnit::find($kdunit);
-        return view('maintenance.formstatus', compact('maintenance','aid'));
+        if($request->aid == 'spp'){
+            $maintenance = MMaintenanceaction::find($id);
+            return view('maintenance.formstatus', compact('maintenance','aid'));
+        }
+        else {
+            $maintenance = MMaintenanceaction::find($id);
+            return view('maintenance.formstatuscustomer', compact('maintenance','aid'));
+        }
+
     }
     public function updatestatus(Request $request)
     {
-       
-        $kdunit = $request->kdunit;
+
+        $id = $request->id;
         $aid = $request->aid;
         if($request->aid == 'spp'){
             $request->validate([
                 'statusspp'=>'required',
             ]);
             $statusspp = $request->statusspp;
-            $maintenance = MUnit::find($kdunit);
+            $maintenance = MMaintenanceaction::find($id);
             $maintenance->statusspp = $statusspp;
             $maintenance->save();
         }
@@ -121,12 +139,12 @@ class MaintenanceController extends Controller
                 'statuscustomer'=>'required',
             ]);
             $statuscustomer = $request->statuscustomer;
-            $maintenance = MUnit::find($kdunit);
+            $maintenance = MMaintenanceaction::find($id);
             $maintenance->statuscustomer = $statuscustomer;
             $maintenance->save();
         }
-       
-        return redirect()->route('maintenance.index');
+
+        return redirect()->back();
     }
 
 }

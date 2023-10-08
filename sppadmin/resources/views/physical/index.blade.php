@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
-@section('title') 
-physical 
+@section('title')
+PHYSICAL
 @endsection
 
 @section('css')
@@ -18,7 +18,7 @@ physical
 <!-- start page title -->
 @component('components.breadcrumb')
 @slot('li_1') Contacts @endslot
-@slot('title') physical @endslot
+@slot('title') PHYSICAL @endslot
 @endcomponent
 
 <div class="row align-items-center">
@@ -60,7 +60,7 @@ physical
 
 <div class="table-responsive mb-4" id="tablecontent">
     @include('physical.content')
-    
+
     <!-- end table -->
 </div>
 <!-- end table responsive -->

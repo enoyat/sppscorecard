@@ -23,20 +23,11 @@
         <div class="col-lg-6">
 
             <div class="mb-3">
-                
+
                 @if ($aid=="customer")
                 <label class="form-label">Status Customer</label>
                 <select class="form-select" name="statuscustomer" id="statuscustomer">
                     <option value="{{ $physical->statuscustomer }}">{{ $physical->statuscustomer }}</option>
-                    <option value="">Select</option>
-                    <option value="OPEN">OPEN</option>
-                    <option value="CLOSE">CLOSE</option>
-                </select>
-                @else
-
-                <label class="form-label">Status SPP</label>
-                <select class="form-select" name="statusspp" id="statusspp">
-                    <option value="{{ $physical->statusspp }}">{{ $physical->statusspp }}</option>
                     <option value="">Select</option>
                     <option value="OPEN">OPEN</option>
                     <option value="CLOSE">CLOSE</option>

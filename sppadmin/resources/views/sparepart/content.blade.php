@@ -8,7 +8,7 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <TH SCOPE="COL">KODE SPARE PART</TH>
+                <TH SCOPE="COL">CODE SPARE PART</TH>
                 <TH SCOPE="COL">SPARE PART</TH>
                 <TH SCOPE="COL">UOM</TH>
                 <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
@@ -45,8 +45,8 @@
                                     </form></li>
                             </ul>
                         </div>
-                                   
-            
+
+
             </th>
             </tr>
             @endforeach

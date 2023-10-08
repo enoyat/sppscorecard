@@ -45,11 +45,11 @@
                                     <label for="example-text-input" class="form-label">CBU</label>
                                     <select class="form-select" aria-label="Default select example" name="idcbu"
                                         id="idcbu">
-                                        <option value="{{ $unit->idcbu }}" selected>{{ $unit->getcbu->namacbu }}
+                                        <option value="{{ $unit->idcbu }}" selected>{{ $unit->getcbu->namasitename }}
                                         </option>
                                         <option value="">select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
@@ -59,7 +59,7 @@
 
                                     <select class="form-select" aria-label="Default select example" name="idregion"
                                         id="idregion">
-                                        <option value="{{ $unit->idregion }}">{{ $unit->getregion->namaregion }}
+                                        <option value="{{ $unit->idregion }}">{{ $unit->getregion->namasitename }}
                                         </option>
                                     </select>
 
@@ -74,14 +74,14 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Kode Unit</label>
+                                    <label for="example-password-input" class="form-label">CODE Unit</label>
                                     <input class="form-control" type="text" value="{{ $unit->kdunit }}" name="kdunit"
                                         id="kdunit">
-                                        <small class="text-danger">Kode Unit tidak boleh sama dan tidak boleh ada spasi</small>
+                                        <small class="text-danger">CODE Unit tidak boleh sama dan tidak boleh ada spasi</small>
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Equipment</label>
-                                    <input class="form-control" type="text" value="{{ $unit->equipment }}" name="equipment" id="equipment">                                       
+                                    <input class="form-control" type="text" value="{{ $unit->equipment }}" name="equipment" id="equipment">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-url-input" class="form-label">Forklif Type</label>
@@ -96,19 +96,19 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Merk</label>
-                                    <input class="form-control" type="text" value="{{ $unit->merk }}" name="merk" id="merk">                                       
+                                    <input class="form-control" type="text" value="{{ $unit->merk }}" name="merk" id="merk">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Type</label>
-                                    <input class="form-control" type="text" value="{{ $unit->type }}" name="type" id="type">                                       
+                                    <input class="form-control" type="text" value="{{ $unit->type }}" name="type" id="type">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Model</label>
-                                    <input class="form-control" type="text" value="{{ $unit->model }}" name="model" id="model">                                       
+                                    <input class="form-control" type="text" value="{{ $unit->model }}" name="model" id="model">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Capcity</label>
-                                    <input class="form-control" type="text" value="{{ $unit->capcity }}" name="capcity" id="capcity">                                       
+                                    <input class="form-control" type="text" value="{{ $unit->capcity }}" name="capcity" id="capcity">
                                 </div>
 
 
@@ -116,11 +116,11 @@
                                     <label for="example-password-input" class="form-label">Serial Number</label>
                                     <input class="form-control" type="text" value="{{ $unit->serialnumber }}" name="serialnumber"
                                         id="serialnumber">
-                                       
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Specification</label>
-                                    <input class="form-control" type="text" value="{{ $unit->specification }}" name="specification" id="specification">                                       
+                                    <input class="form-control" type="text" value="{{ $unit->specification }}" name="specification" id="specification">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-date-input" class="form-label">Qty</label>
@@ -135,7 +135,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </form>
             </div>
@@ -163,7 +163,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

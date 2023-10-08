@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MCbu;
+
 use App\Models\MSparepart;
 use App\Models\MForklifttype;
 use App\Models\User;
+use App\Models\MSitename;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -26,19 +27,20 @@ class SparepartController extends Controller
      */
     public function index()
     {
-        $cbu=MCbu::get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $sparepart = MSparepart::get();
-        return view('sparepart.index', compact('sparepart','cbu'));
+        return view('sparepart.index', compact('sparepart','cbu','sitename'));
     }
     public function create()
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $forklifttype = MForklifttype::get();
         return view('sparepart.create',compact('cbu','forklifttype'));
     }
     public function edit($id)
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $forklifttype = MForklifttype::get();
         $sparepart = MSparepart::find($id);
         return view('sparepart.edit',compact('cbu','forklifttype','sparepart'));
@@ -48,18 +50,18 @@ class SparepartController extends Controller
         $request->validate([
             'namasparepart'=>'required',
             'uom'=>'required',
-            
+
         ]);
 
-      
-        
+
+
         $sparepart = new MSparepart;
         $sparepart->namasparepart = $request->namasparepart;
         $sparepart->uom = $request->uom;
-        
+
         $simpan = $sparepart->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('sparepart.index');
 
@@ -77,17 +79,17 @@ class SparepartController extends Controller
         $request->validate([
             'namasparepart'=>'required',
             'uom'=>'required',
-          
+
         ]);
 
-      
-        
+
+
         $sparepart = MSparepart::find($id);
         $sparepart->namasparepart = $request->namasparepart;
-        $sparepart->uom = $request->uom; 
+        $sparepart->uom = $request->uom;
         $simpan = $sparepart->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('sparepart.index');
 

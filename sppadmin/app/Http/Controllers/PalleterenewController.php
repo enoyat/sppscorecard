@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MCbu;
+
 use App\Models\MPalleterenew;
 use App\Models\MForklifttype;
 use App\Models\User;
+use App\Models\MSitename;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -26,24 +27,25 @@ class palleterenewController extends Controller
      */
     public function index()
     {
-        $cbu=MCbu::get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $palleterenew = MPalleterenew::where('idsitename',Session::get('runidsitename'))->get();
         $forklifttype = MForklifttype::get();
-        return view('palleterenew.index', compact('palleterenew','forklifttype','cbu'));
+        return view('palleterenew.index', compact('palleterenew','forklifttype','cbu','sitename'));
     }
     public function create()
     {
         if(Session::get('roles_id')==2) {
             $cbu=MCbu::where('id',Session::get('runidcbu'))->get();
         } else {
-            $cbu=MCbu::get();
+            $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         }
         $forklifttype = MForklifttype::get();
         return view('palleterenew.create',compact('cbu','forklifttype'));
     }
     public function edit($id)
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $forklifttype = MForklifttype::get();
         $palleterenew = MPalleterenew::find($id);
         return view('palleterenew.edit',compact('cbu','forklifttype','palleterenew'));
@@ -61,20 +63,20 @@ class palleterenewController extends Controller
             'statuscustomer'=>'required',
         ]);
 
-      
-        
+
+
         $palleterenew = new MPalleterenew;
         $palleterenew->idcbu = $request->idcbu;
         $palleterenew->idregion = $request->idregion;
         $palleterenew->idsitename = $request->idsitename;
         $palleterenew->totalrent = $request->totalrent;
         $palleterenew->qty = $request->qty;
-        $palleterenew->tanggal = $request->tanggal;        
-        $palleterenew->statusspp = $request->statusspp;        
-        $palleterenew->statuscustomer = "OPEN";   
+        $palleterenew->tanggal = $request->tanggal;
+        $palleterenew->statusspp = $request->statusspp;
+        $palleterenew->statuscustomer = "OPEN";
         $simpan = $palleterenew->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('palleterenew.index');
 
@@ -97,22 +99,22 @@ class palleterenewController extends Controller
             'totalrent'=>'required',
             'qty'=>'required',
             'statusspp'=>'required',
-          
+
         ]);
 
-      
-        
+
+
         $palleterenew = MPalleterenew::find($id);
         $palleterenew->idcbu = $request->idcbu;
         $palleterenew->idregion = $request->idregion;
         $palleterenew->idsitename = $request->idsitename;
         $palleterenew->totalrent = $request->totalrent;
         $palleterenew->qty = $request->qty;
-        $palleterenew->tanggal = $request->tanggal;        
-        $palleterenew->statusspp = $request->statusspp;        
+        $palleterenew->tanggal = $request->tanggal;
+        $palleterenew->statusspp = $request->statusspp;
         $simpan = $palleterenew->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('palleterenew.index');
 
@@ -156,7 +158,7 @@ class palleterenewController extends Controller
     }
     public function updatestatus(Request $request)
     {
-       
+
         $id = $request->id;
         $aid = $request->aid;
         if($request->aid == 'spp'){
@@ -177,7 +179,7 @@ class palleterenewController extends Controller
             $palleterenew->statuscustomer = $statuscustomer;
             $palleterenew->save();
         }
-       
+
         return redirect()->route('palleterenew.index');
     }
 }

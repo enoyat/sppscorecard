@@ -6,6 +6,7 @@ return [
     "Apps" => "Apps",
     "Master" => "Master",
     "Calendar" => "Calendar",
+    "Customer" => "Customer",
     "Chat" => "Chat",
     "Email" => "Email",
     "Inbox" => "Inbox",

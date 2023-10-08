@@ -13,11 +13,12 @@
 
             <table width="100%">
                 <tr>
-                    <td style="background: white; padding:10px"><img src="{{ URL::asset('img/logo.png') }}" alt="" height="50"
-                            >
+                    <td style="background: white; padding:10px"><img src="{{ URL::asset('img/logo.png') }}" alt=""
+                            height="50">
                     </td>
                     <td style="background:rgb(9, 136, 153); padding:10px">
-                        <div style="font-size: 16px; color: white;"><b>KPI DASHBOARD {{ Session::get('runnamaregion') }}</b></div>
+                        <div style="font-size: 16px; color: white;"><b>KPI DASHBOARD
+                                {{ Session::get('runnamaregion') }}</b></div>
                     </td>
                     <td style="background:rgb(9, 136, 153); color: white; padding:10px">Update: {{ date('Y/m/d') }}</td>
                 </tr>
@@ -64,7 +65,7 @@
                         <h4 class="card-title mb-0">MHE PERFORMANCE CHART</h4>
                     </div>
                     <div class="card-body">
-                        <div id="column_chart" data-colors='["#2ab57d", "#5156be", "#fd625e"]'' class="apex-charts"
+                        <div id="column_chart" data-colors='["#077a75", "#5156be", "#fd625e"]'' class="apex-charts"
                             dir="ltr">
 
                         </div>
@@ -79,13 +80,12 @@
 </div>
 <style>
     .apexcharts-tooltip span {
-    color: #ffffff;
-}
+        color: #ffffff;
+    }
 </style>
 <div style="text-align: center;"><button type="button" class="btn btn-primary" id="cetak"
         onclick="printDiv('area-print')">Print KPI</button></div>
 <script>
-
     /*
 Template Name: Minia - Admin & Dashboard Template
 Author: Themesbrand
@@ -132,8 +132,8 @@ File: Apex Chart init js
         dataLabels: {
             enabled: true,
             style: {
-                fontSize: '8px',
-                colors: ['black']
+                fontSize: '10px',
+                colors: ['#141413']
             },
 
         },
@@ -145,27 +145,52 @@ File: Apex Chart init js
         series: [{
             name: 'Achievement',
             data: {{ $achievement }}
-        },],
+        }],
+
         colors: columnColors,
         xaxis: {
-            categories: <?php echo $kategori ?>,
+            type: 'text',
+            categories: <?php echo $kategori; ?>,
             labels: {
-            style: {
-                fontSize: '7px',
-                colors: ['#0b0b0d']
+                style: {
+                    fontSize: '7px',
+                    colors: ['#141413']
+                }
             }
-       }
 
         },
         yaxis: {
+            max: 100,
+            min: 0,
+            tickAmount: 10,
 
-            title: {
-                text: '% (percent)',
-                style: {
-                    fontWeight: '500',
+            labels: {
+                formatter: function(value) {
+                    var val = Math.abs(value)
+                    if (val > 100) {
+                        val = (val / 100).toFixed(0) + ' K'
+                    }
+                    return val
                 },
-            }
+
+            },
+
         },
+        annotations: {
+            yaxis: [{
+                y: 100,
+                borderColor: '#f01405',
+                label: {
+                    show: true,
+                    text: 'Target',
+                    style: {
+                        color: "#e9f01f",
+                        background: '#f01405'
+                    }
+                }
+            }]
+        },
+
         grid: {
             borderColor: '#f1f1f1',
         },

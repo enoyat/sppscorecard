@@ -42,7 +42,7 @@
                         <div class="col-lg-6">
                             <div>
                             <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Nama Spare Part</label>
+                                    <label for="example-password-input" class="form-label">Name of Spare Part</label>
                                     <input class="form-control" type="text" value="{{ $sparepart->namasparepart }}" name="namasparepart" id="namasparepart">
                                 </div>
                                 <div class="mb-3">
@@ -83,7 +83,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

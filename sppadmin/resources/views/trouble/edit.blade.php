@@ -45,11 +45,11 @@
                                     <label for="example-text-input" class="form-label">CBU</label>
                                     <select class="form-select" aria-label="Default select example" name="idcbu"
                                         id="idcbu">
-                                        <option value="{{ $trouble->idcbu }}" selected>{{ $trouble->getcbu->namacbu }}
+                                        <option value="{{ $trouble->idcbu }}" selected>{{ $trouble->getcbu->namasitename }}
                                         </option>
                                         <option value="">select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
@@ -59,7 +59,7 @@
 
                                     <select class="form-select" aria-label="Default select example" name="idregion"
                                         id="idregion">
-                                        <option value="{{ $trouble->idregion }}">{{ $trouble->getregion->namaregion }}
+                                        <option value="{{ $trouble->idregion }}">{{ $trouble->getregion->namasitename }}
                                         </option>
                                     </select>
 
@@ -78,7 +78,7 @@
                                     <input class="form-control" type="date" value="{{ $trouble->tanggal }}" name="tanggal" id="tanggal">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Kode Unit</label>
+                                    <label for="example-password-input" class="form-label">CODE Unit</label>
                                     <input class="form-control" type="text" value="{{ $trouble->kdunit }}" name="kdunit" id="kdunit" readonly>
                                 </div>
                                 <div class="mb-3">
@@ -158,7 +158,7 @@ jQuery('#idcbu').change(function() {
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

@@ -29,12 +29,12 @@
                         <label class="form-check-label" for="contacusercheck1"></label>
                     </div>
                 </th>
-                <th scope="col">{{ $key->getcbu->namacbu }}</th>
-                <th scope="col">{{ $key->getregion->namaregion }}</th>
+                <th scope="col">{{ $key->getcbu->namasitename }}</th>
+                <th scope="col">{{ $key->getregion->namasitename }}</th>
                 <th scope="col">{{ $key->getsitename->namasitename }}</th>
                 <th scope="col">{{ $key->getsparepart->namasparepart }}</th>
-                <th scope="col">{{ $key->qty }}</th>  
-                <th scope="col">{{ $key->getsparepart->uom }}</th>   
+                <th scope="col">{{ $key->qty }}</th>
+                <th scope="col">{{ $key->getsparepart->uom }}</th>
                 <th style="width: 80px; min-width: 80px;">
                 <div class="dropdown">
                             <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
@@ -51,8 +51,8 @@
                                     </form></li>
                             </ul>
                         </div>
-                                   
-            
+
+
             </th>
             </tr>
             @endforeach

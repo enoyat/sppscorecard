@@ -214,8 +214,17 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/getcbu/{id}', [App\Http\Controllers\ApiLokasi::class, 'getcbu'])->name('lokasi.getcbu');
             Route::get('/getregion/{id}', [App\Http\Controllers\ApiLokasi::class, 'getregion'])->name('lokasi.getregion');
             Route::get('/getsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'getsitename'])->name('lokasi.getsitename');
-            Route::get('/setsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
+            Route::get('/setsitename', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
+            Route::get('/customer', [App\Http\Controllers\ApiLokasi::class, 'customer'])->name('lokasi.customer');
             Route::get('/setcustomer', [App\Http\Controllers\ApiLokasi::class, 'setcustomer'])->name('lokasi.setcustomer');
+        });
+        Route::group(['prefix' => 'customer'], function () {
+            Route::get('/listcustomer', [App\Http\Controllers\CustomerController::class, 'listcustomer'])->name('customer.listcustomer');
+            Route::get('/edit/{id}', [App\Http\Controllers\CustomerController::class, 'edit'])->name('customer.edit');
+            Route::delete('/delete/{id}', [App\Http\Controllers\CustomerController::class, 'destroy'])->name('customer.destroy');
+            Route::get('/create', [App\Http\Controllers\CustomerController::class, 'create'])->name('customer.create');
+            Route::put('/update/{id}', [App\Http\Controllers\CustomerController::class, 'update'])->name('customer.update');
+            Route::post('/store', [App\Http\Controllers\CustomerController::class, 'store'])->name('customer.store');
         });
         Route::group(['prefix' => 'forklifttype'], function () {
             Route::get('/', [App\Http\Controllers\ForklifttypeController::class, 'index'])->name('forklifttype.index');
@@ -232,7 +241,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
 
     });
 
-    Route::group(['roles' => ['administrator', 'manajersite', 'manajerallsite']], function () {
+    Route::group(['roles' => ['administrator', 'manajersite', 'customerallsite']], function () {
         Route::get('/gantipassword', [App\Http\Controllers\HomeController::class, 'gantipassword'])->name('gantipassword');
         Route::post('utility/userpasswordupdate', [UtilityController::class, 'userpasswordupdate'])->name('utility.userpasswordupdate');
         //Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
@@ -259,6 +268,9 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/', [App\Http\Controllers\TroubleController::class, 'index'])->name('trouble.index');
             Route::get('/listdokumen/{id}', [App\Http\Controllers\TroubleController::class, 'listdokumen'])->name('trouble.listdokumen');
             Route::get('/listaction/{id}', [App\Http\Controllers\TroubleController::class, 'listaction'])->name('trouble.listaction');
+            Route::get('/formstatus', [App\Http\Controllers\TroubleController::class, 'formstatus'])->name('trouble.formstatus');
+            Route::post('/updatestatus', [App\Http\Controllers\TroubleController::class, 'updatestatus'])->name('trouble.updatestatus');
+
         });
 
         Route::group(['prefix' => 'beritaacara'], function () {
@@ -271,6 +283,8 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/', [App\Http\Controllers\MaintenanceController::class, 'index'])->name('maintenance.index');
             Route::get('/listdokumen/{id}', [App\Http\Controllers\MaintenanceController::class, 'listdokumen'])->name('maintenance.listdokumen');
             Route::get('/listaction/{id}', [App\Http\Controllers\MaintenanceController::class, 'listaction'])->name('maintenance.listaction');
+            Route::get('/listactionall', [App\Http\Controllers\MaintenanceController::class, 'listactionall'])->name('maintenance.listactionall');
+
         });
         Route::group(['prefix' => 'maintenance'], function () {
             Route::get('/formstatus', [App\Http\Controllers\MaintenanceController::class, 'formstatus'])->name('maintenance.formstatus');
@@ -321,7 +335,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/getcbu/{id}', [App\Http\Controllers\ApiLokasi::class, 'getcbu'])->name('lokasi.getcbu');
             Route::get('/getregion/{id}', [App\Http\Controllers\ApiLokasi::class, 'getregion'])->name('lokasi.getregion');
             Route::get('/getsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'getsitename'])->name('lokasi.getsitename');
-            Route::get('/setsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
+            Route::get('/setsitename', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
         });
     });
 

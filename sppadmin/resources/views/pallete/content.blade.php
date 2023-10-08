@@ -38,8 +38,8 @@
                     </div>
                 </th>
                 <th scope="col">
-                    
-                    @if ($key->statusspp=="CLOSE") 
+
+                    @if ($key->statusspp=="CLOSE")
                         <span class="badge badge-pill badge-soft-success font-size-12">{{ $key->statusspp }}</span>
                         @else
                         <span class="badge badge-pill badge-soft-danger font-size-12">{{ $key->statusspp }}</span>
@@ -47,28 +47,28 @@
                         <a class="btn btn-sm btn-info  btn-action" data-url="{{ URL('pallete/formstatus?aid=spp&id='.$key->id) }}" id="btnAction1"><i class=" fas fa-key"></i></a>
                         @endif
                         @endif</th>
-                    <th scope="col">@if ($key->statuscustomer=="CLOSE") 
+                    <th scope="col">@if ($key->statuscustomer=="CLOSE")
                         <span class="badge badge-pill badge-soft-success font-size-12">{{ $key->statuscustomer }}</span>
                         @else
-                        
+
                         <span class="badge badge-pill badge-soft-danger font-size-12">{{ $key->statuscustomer }}</span>
                         @if(Session::get('globalidsitename')==Session::get('runidsitename'))
                         <a class="btn btn-sm btn-info  btn-action" data-url="{{ URL('pallete/formstatus?aid=customer&id='.$key->id) }}" id="btnAction1"><i class=" fas fa-key"></i></a>
                         @endif
-                        
+
                         @endif
                     </th>
 
                 <th scope="col">{{ $key->jenisrequest }}</th>
                 <th scope="col">{{ $key->qty }}</th>
                 <th scope="col">{{ $key->daterequest }}</th>
-                <th scope="col">{{ $key->targetdate }}</th> 
+                <th scope="col">{{ $key->targetdate }}</th>
                 <th scope="col">{{ $key->actualdate }}</th>
                 <th scope="col">{{ $key->lapsetime }}</th>
                 <th scope="col">{{ $key->gap }}</th>
                 <th scope="col">{{ $key->remark }}</th>
-                <th scope="col">{{ $key->getcbu->namacbu }}</th>
-                <th scope="col">{{ $key->getregion->namaregion }}</th>
+                <th scope="col">{{ $key->getcbu->namasitename }}</th>
+                <th scope="col">{{ $key->getregion->namasitename }}</th>
                 <th scope="col">{{ $key->getsitename->namasitename }}</th>
 
                 <th style="width: 80px; min-width: 80px;">
@@ -87,8 +87,8 @@
                                     </form></li>
                             </ul>
                         </div>
-                                   
-            
+
+
             </th>
             </tr>
             @endforeach
@@ -108,7 +108,7 @@
                     </div>
                 </div>
     <script>
-        
+
     $('.btn-action').click(function() {
         var url = $(this).data("url");
 

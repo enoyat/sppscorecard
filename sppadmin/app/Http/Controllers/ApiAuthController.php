@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\M_sesionuser;
 use App\Models\User;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Validator;
@@ -29,11 +30,11 @@ class ApiAuthController extends Controller
                     'status' => 'success',
                     'data' => [$cek],
                 ];
-            }  
-            else if ($cek->roles_id == '3')  
+            }
+            else if ($cek->roles_id == '3')
             {
                 $datauser=User::find($cek->id);
-                
+
 
                 return $data = [
                     'status' => true,
@@ -43,15 +44,15 @@ class ApiAuthController extends Controller
                     'roles_id'=>$cek->roles_id,
                     'idsitename' => $cek->idsitename,
                     'namasitename'=>$datauser->getsitename->namasitename,
-                    'idregion' => $datauser->getsitename->idregion,
-                    'namaregion'=>$datauser->getsitename->getregion->namaregion,
-                    'idcbu' => $datauser->getsitename->getregion->idcbu,
-                    'namacbu'=>$datauser->getsitename->getregion->getcbu->namacbu,
+                    'idregion' => $datauser->getsitename->id,
+                    'namaregion'=>$datauser->getsitename->getregion->namasitename,
+                    'idcbu' => $datauser->getsitename->getregion->id,
+                    'namacbu'=>$datauser->getsitename->getregion->getcbu->namasitename,
 
                 ];
             }
-            
-            
+
+
         } else { // false
             return $data = [
                 'status' =>false,
@@ -59,7 +60,7 @@ class ApiAuthController extends Controller
             ];
         }
     }
-    
+
 
     public function gantipassword(Request $request)
     {

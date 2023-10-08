@@ -20,11 +20,11 @@ class MSparepartstoktrans extends Model
         return $this->belongsTo(MSparepart::class, 'idsparepart', 'id');
     }
     public function getcbu(){
-        return $this->belongsTo(MCbu::class,'idcbu','id');
+        return $this->belongsTo(MSitename::class,'idcbu','id');
     }
     public function getregion(){
-        return $this->belongsTo(MRegion::class,'idregion','id');
-    }   
+        return $this->belongsTo(MSitename::class,'idregion','id');
+    }
     public function getsitename(){
         return $this->belongsTo(MSitename::class,'idsitename','id');
     }

@@ -25,11 +25,11 @@
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
-            <div class="navbar-brand-box" style="margin-top:20px">
+            <div  style="margin-top:20px">
                 <span class="logo-txt header-item">{{ Session::get('namacustomer') }}</span>
             </div>
-            <div class="navbar-brand-box" style="margin-top:20px">
-                @include("header_customer")
+            <div  style="margin-top:20px">
+
             </div>
         </div>
 

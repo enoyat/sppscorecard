@@ -45,20 +45,20 @@
                                     <label for="example-text-input" class="form-label">CBU</label>
                                     <select class="form-select" aria-label="Default select example" name="idcbu"
                                         id="idcbu">
-                                        <option value="{{ $physical->idcbu }}" selected>{{ $physical->getcbu->namacbu }}</option>
+                                        <option value="{{ $physical->idcbu }}" selected>{{ $physical->getcbu->namasitename }}</option>
                                         <option value="" >select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Region</label>
-                                    
+
                                     <select class="form-select" aria-label="Default select example" name="idregion"
                                         id="idregion">
-                                        <option value="{{ $physical->idregion }}">{{ $physical->getregion->namaregion }}</option>
+                                        <option value="{{ $physical->idregion }}">{{ $physical->getregion->namasitename }}</option>
                                     </select>
 
                                 </div>
@@ -76,18 +76,18 @@
                                         id="periode" readonly>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Kode Unit</label>
+                                    <label for="example-password-input" class="form-label">CODE Unit</label>
                                     <input class="form-control" type="text" value="{{ $physical->kdunit }}" name="kdunit"
                                         id="kdunit" readonly>
                                 </div>
-                                
+
 
                                 <div class="mb-3">
-                                    <label for="example-tel-input" class="form-label">Hari Kerja</label>
+                                    <label for="example-tel-input" class="form-label">WORK DAYS</label>
                                     <input class="form-control" type="tel" value="{{ $physical->harikerja }}" name="harikerja" id="harikerja">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Plan Hari Kerja (Minutes)</label>
+                                    <label for="example-password-input" class="form-label">Plan WORK DAYS (Minutes)</label>
                                     <input class="form-control" type="text" value="{{ $physical->planunitkerja }}" name="planunitkerja" id="planunitkerja">
                                 </div>
                                 <div class="mb-3">
@@ -103,7 +103,7 @@
                         <div class="col-lg-6">
                             <div class="mt-3 mt-lg-0">
                             <div class="mb-3">
-                                    <label for="example-month-input" class="form-label">Total Jam Kerja Unit</label>
+                                    <label for="example-month-input" class="form-label">TOTAL WORKING UNIT (MINUTES)</label>
                                     <input class="form-control" type="text" value="{{ $physical->totaljamkerja }}" name="totaljamkerja" id="totaljamkerja" readonly>
                                 </div>
                             <div class="mb-3">
@@ -111,7 +111,7 @@
                                     <input class="form-control" type="text" value="{{ $physical->paforklift }}" name="paforklift"
                                         id="paforklift" readonly>
                                 </div>
-                                
+
 
 
                                 <div class="mb-3">
@@ -149,7 +149,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

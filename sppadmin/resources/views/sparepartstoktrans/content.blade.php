@@ -34,17 +34,17 @@
                         <label class="form-check-label" for="contacusercheck1"></label>
                     </div>
                 </th>
-                <th scope="col">{{ $key->getcbu->namacbu }}</th>
-                <th scope="col">{{ $key->getregion->namaregion }}</th>
+                <th scope="col">{{ $key->getcbu->namasitename }}</th>
+                <th scope="col">{{ $key->getregion->namasitename }}</th>
                 <th scope="col">{{ $key->getsitename->namasitename }}</th>
                 <th scope="col">{{ $key->getsparepart->namasparepart }}</th>
-                <th scope="col">{{ $key->qty }}</th>  
-                <th scope="col">{{ $key->getsparepart->uom }}</th>  
-                <th scope="col">{{ $key->tanggal }}</th>  
-                <th scope="col">{{ $key->qtytrans }}</th>  
-                <th scope="col">{{ $key->stockpros }}</th>  
-                <th scope="col">{{ $key->confirmation }}</th>  
-                <th scope="col">{{ $key->avgpros }}</th>  
+                <th scope="col">{{ $key->qty }}</th>
+                <th scope="col">{{ $key->getsparepart->uom }}</th>
+                <th scope="col">{{ $key->tanggal }}</th>
+                <th scope="col">{{ $key->qtytrans }}</th>
+                <th scope="col">{{ $key->stockpros }}</th>
+                <th scope="col">{{ $key->confirmation }}</th>
+                <th scope="col">{{ $key->avgpros }}</th>
 
                 <th style="width: 80px; min-width: 80px;">
                 <div class="dropdown">
@@ -62,8 +62,8 @@
                                     </form></li>
                             </ul>
                         </div>
-                                   
-            
+
+
             </th>
             </tr>
             @endforeach

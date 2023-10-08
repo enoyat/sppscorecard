@@ -18,6 +18,7 @@ class forklifttypeController extends Controller
      */
     public function index()
     {
+
         $forklifttype = MForklifttype::get();
         return view('forklifttype.index', compact('forklifttype'));
     }
@@ -34,16 +35,18 @@ class forklifttypeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'namaforklifttype'=>'required',            
+            'namaforklifttype'=>'required',
+            'f_dashboard'=>'required',
         ]);
 
-      
-        
+
+
         $forklifttype = new MForklifttype;
         $forklifttype->namaforklifttype = $request->namaforklifttype;
+        $forklifttype->f_dashboard = $request->f_dashboard;
         $simpan = $forklifttype->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('forklifttype.index');
 
@@ -60,15 +63,17 @@ class forklifttypeController extends Controller
     {
         $request->validate([
             'namaforklifttype'=>'required',
+            'f_dashboard'=>'required',
         ]);
 
-      
-        
+
+
         $forklifttype = MForklifttype::find($id);
         $forklifttype->namaforklifttype = $request->namaforklifttype;
+        $forklifttype->f_dashboard = $request->f_dashboard;
         $simpan = $forklifttype->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('forklifttype.index');
 
