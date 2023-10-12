@@ -21,7 +21,7 @@ class _ListOfMaintenancePage extends State<ListOfMaintenancePage> {
   int? userid;
   bool isLoading = false;
   List<Unit> _unit = [];
-  int? idsitename = 0;
+  String? idsitename = '';
   void refreshData() async {
     setState(() {
       isLoading = true;

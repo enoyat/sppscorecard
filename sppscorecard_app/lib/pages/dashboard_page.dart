@@ -52,7 +52,7 @@ class _DashboardPageState extends State<DashboardPage> {
           'namauser': prefs.getString('username')!,
           'idcbu': prefs.getString('idcbu')!,
           'idregion': prefs.getString('idregion')!,
-          'idsitename': prefs.getInt('idsitename')!,
+          'idsitename': prefs.getString('idsitename')!,
           'namacbu': prefs.getString('namacbu')!,
           'namaregion': prefs.getString('namaregion')!,
           'namasitename': prefs.getString('namasitename')!,

@@ -53,12 +53,12 @@ class ApiMaintenance extends Controller
         $MMaintenance->tanggal = date("y-m-d",strtotime($request->tanggalakhir));
         $MMaintenance->hm = $request->hm;
         $MMaintenance->save();
-        
+
         return $data = [
             'idaction' => $idaction,
         ];
 
-       
+
     }
     public function listdokumen($id)
     {

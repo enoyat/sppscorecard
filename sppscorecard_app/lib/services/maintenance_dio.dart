@@ -12,7 +12,7 @@ class MaintenanceDio {
   MaintenanceDio() {
     dio = Dio();
   }
-  Future<List<Unit>> listofunit(int idsitename) async {
+  Future<List<Unit>> listofunit(String idsitename) async {
     try {
       final result = await dio.get('$baseUrl/listofunit/$idsitename');
       return (result.data as List)

@@ -11,7 +11,7 @@ class TroubleDio {
     dio = Dio();
   }
 
-  Future<List<Trouble>> listoftrouble(int idsitename) async {
+  Future<List<Trouble>> listoftrouble(String idsitename) async {
     try {
       final result = await dio.get('$baseUrl/listoftrouble/$idsitename');
       return (result.data as List)
