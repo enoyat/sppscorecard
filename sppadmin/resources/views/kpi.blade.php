@@ -24,57 +24,86 @@
                 </tr>
             </table>
             <br>
-            <div
-                style="border-top-left-radius: 20px; border: 1px solid grey; padding:10px; border-bottom-right-radius:20px">
-                <div
-                    style="margin-top:-25px; margin-left:10px; width:200px; height:30px; background: rgb(9, 136, 153); border-radius:10px; padding:5px; color:white; text-align:center">
-                    MHE Availability</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <TH width="25%" style="text-align: left">UNIT TYPE</TH>
-                            <TH width="20%" style="text-align: center">UNITS</TH>
-                            <TH width="20%" style="text-align: center">TOTAL HOUR AVAILABILITY (MINUTE)</TH>
-                            <TH width="20%" style="text-align: center">TARGET HOUR AVAILABILITY (MINUTE)</TH>
-                            <TH width="15%" style="text-align: center">ACHIEVEMENT (%)</TH>
-
-
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach ($kpi as $item)
+            <br>
+            <div class="row">
+                <div class="col-3">
+                    <div
+                        style="border-top-left-radius: 20px; border: 1px solid grey; padding:10px; border-bottom-right-radius:20px">
+                        <div
+                            style="margin-top:-25px; margin-left:10px; width:200px; height:30px; background: rgb(9, 136, 153); border-radius:10px; padding:5px; color:white; text-align:center">
+                            Total Unit</div>
+                        <table width="100%">
                             <tr>
-                                <td>{{ $item->namaforklifttype }}</td>
-                                <td style="text-align: center;">{{ $item->jmlunit }}</td>
-                                <td style="text-align: center;">{{ number_format($item->sumplanunitkerja) }}</td>
-                                <td style="text-align: center;">{{ number_format($item->sumtotaljamkerja) }}</td>
-                                <td style="text-align: center; color:blue">{{ number_format($item->avgpaforklift, 2) }}
+                                <td style="text-align: center; font-size: 20px; color:blue"><b>{{ $jmlunit }}</b>
                                 </td>
-
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div
+                        style="border-top-left-radius: 20px; border: 1px solid grey; padding:10px; border-bottom-right-radius:20px">
+                        <div
+                            style="margin-top:-25px; margin-left:10px; width:200px; height:30px; background: rgb(9, 136, 153); border-radius:10px; padding:5px; color:white; text-align:center">
+                            KPI</div>
+                        <table width="100%">
+                            <tr>
+                                <td style="text-align: center; font-size: 20px; color:blue"><b>{{ $avgkpi }}</b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div
+                        style="border-top-left-radius: 20px; border: 1px solid grey; padding:10px; border-bottom-right-radius:20px">
+                        <div
+                            style="margin-top:-25px; margin-left:10px; width:200px; height:30px; background: rgb(9, 136, 153); border-radius:10px; padding:5px; color:white; text-align:center">
+                            Delivery Schedule</div>
+                        <table width="100%">
+                            <tr>
+                                <td style="text-align: center; font-size: 20px; color:blue"><b>0</b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div
+                        style="border-top-left-radius: 20px; border: 1px solid grey; padding:10px; border-bottom-right-radius:20px">
+                        <div
+                            style="margin-top:-25px; margin-left:10px; width:200px; height:30px; background: rgb(9, 136, 153); border-radius:10px; padding:5px; color:white; text-align:center">
+                            Spare Parts</div>
+                        <table width="100%">
+                            <tr>
+                                <td style="text-align: center; font-size: 20px; color:blue"><b>0</b>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
+            <br>
+            <br>
+
             <div class="table-responsive">
 
                 <div class="card">
 
                     <div class="card-header">
-                        <h4 class="card-title mb-0">MHE PERFORMANCE CHART</h4>
+                        <h4 class="card-title mb-0">UNIT DIAGRAM CHART</h4>
                     </div>
                     <div class="card-body">
-                        <div id="column_chart" data-colors='["#077a75", "#5156be", "#fd625e"]'' class="apex-charts"
+                        <div id="pie_chart" data-colors='["#077a75", "#5156be", "#fd625e"]'' class="apex-charts"
                             dir="ltr">
 
                         </div>
+
                     </div>
                 </div>
                 <!--end card-->
             </div>
-            <div style="text-align: right"><img src="{{ URL::asset('img/mhe-kpi.png') }}" alt=""
-                    class="logo logo-dark"></div>
+
         </div>
     </div>
 </div>
@@ -110,106 +139,51 @@ File: Apex Chart init js
         })
     }
 
-
-    // column chart
-    var columnColors = getChartColorsArray("#column_chart");
-
+    // pie chart
+    var pieColors = getChartColorsArray("#pie_chart");
     var options = {
         chart: {
-            height: 350,
-            type: 'bar',
-            toolbar: {
-                show: false,
+            height: 320,
+            type: 'pie',
+            events: {
+                dataPointSelection: function(event, chartContext, config) {
+                    alert(config.w.config.labels[config.dataPointIndex]);
+                    alert(config.w.config.series[config.dataPointIndex]);
+                }
+
             }
-        },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                columnWidth: '50%',
-            },
 
         },
-        dataLabels: {
-            enabled: true,
-            style: {
-                fontSize: '10px',
-                colors: ['#141413']
-            },
 
-        },
-        stroke: {
+
+        series: {{ $unit }},
+        labels: <?php echo $kategori; ?>,
+        colors: pieColors,
+        legend: {
             show: true,
-            width: 1,
-            colors: ['#e9e9f2']
+            position: 'bottom',
+            horizontalAlign: 'center',
+            verticalAlign: 'middle',
+            floating: false,
+            fontSize: '14px',
+            offsetX: 0,
         },
-        series: [{
-            name: 'Achievement',
-            data: {{ $achievement }}
+        responsive: [{
+            breakpoint: 600,
+            options: {
+                chart: {
+                    height: 240
+                },
+                legend: {
+                    show: true
+                },
+            }
         }],
 
-        colors: columnColors,
-        xaxis: {
-            type: 'text',
-            categories: <?php echo $kategori; ?>,
-            labels: {
-                style: {
-                    fontSize: '7px',
-                    colors: ['#141413']
-                }
-            }
-
-        },
-        yaxis: {
-            max: 100,
-            min: 0,
-            tickAmount: 10,
-
-            labels: {
-                formatter: function(value) {
-                    var val = Math.abs(value)
-                    if (val > 100) {
-                        val = (val / 100).toFixed(0) + ' K'
-                    }
-                    return val
-                },
-
-            },
-
-        },
-        annotations: {
-            yaxis: [{
-                y: 100,
-                borderColor: '#f01405',
-                label: {
-                    show: true,
-                    text: 'Target',
-                    style: {
-                        color: "#e9f01f",
-                        background: '#f01405'
-                    }
-                }
-            }]
-        },
-
-        grid: {
-            borderColor: '#f1f1f1',
-        },
-        fill: {
-            opacity: 1
-
-        },
-
-        tooltip: {
-            y: {
-                formatter: function(val) {
-                    return "$ " + val + " %"
-                }
-            }
-        }
     }
 
     var chart = new ApexCharts(
-        document.querySelector("#column_chart"),
+        document.querySelector("#pie_chart"),
         options
     );
 

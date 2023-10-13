@@ -65,22 +65,40 @@ class HomeController extends Controller
 
         $customer=MCustomer::get();
         // dd($sitename);
+        $unit="[";
         $achievement="[";
         $max="[";
         $base="[";
         $kategori="";
-
+        $jmlunit=0;
+        $totalavgkpi=0;
+        $counter=0;
         foreach($kpi as $k){
             $achievement=$achievement.number_format($k->avgpaforklift,2).',';
             $max=$max.'100,';
             $base=$base.'98,';
+            $unit=$unit.$k->jmlunit.',';
             $kategori=$kategori.",'".$k->namaforklifttype."'";
+            $jmlunit=$jmlunit+$k->jmlunit;
+            $totalavgkpi=$totalavgkpi+$k->avgpaforklift;
+            $counter++;
+
         }
+       // dd($totalavgkpi."-".$counter);
         $achievement=$achievement."]";
+        $unit=$unit."]";
         $max=$max."]";
         $base=$base."]";
         $kategori="[".substr($kategori,1)."]";
-        return view('index',compact('kpi','cbu','achievement','max','base','kategori','sitename','customer'));
+        if ($counter==0) {
+            $avgkpi=0;
+        }
+        else {
+            $avgkpi=number_format($totalavgkpi/$counter,2);
+
+        }
+
+        return view('index',compact('kpi','cbu','achievement','max','base','kategori','sitename','customer','unit','mperiode','jmlunit','avgkpi'));
     }
 
     public function lang($locale)

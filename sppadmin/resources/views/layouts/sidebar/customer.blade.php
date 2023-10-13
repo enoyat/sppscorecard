@@ -77,26 +77,7 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
-                        <span data-key="t-apps">Pallete</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('pallete.index') }}">
-                                <span data-key="t-calendar">Withdrawal/Delivery</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('palleterenew.index') }}">
-                                <span data-key="t-chat">Pallete Renewal</span>
-                            </a>
-                        </li>
 
-
-                    </ul>
-                </li>
                 <li>
                     <a href="{{ route('beritaacara.index') }}">
                         <i data-feather="file-text"></i>

@@ -9,16 +9,17 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" data-key="t-menu">@lang('translation.Menu')</li>
 
-                <li>
-                    <a href="{{ route('root') }}">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">@lang('translation.Dashboard')</span>
-                    </a>
-                </li>
+
                 <li>
                     <a href="{{ route('lokasi.customer') }}">
                         <i data-feather="user"></i>
                         <span data-key="t-dashboard">@lang('translation.Customer')</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('root') }}">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard">@lang('translation.Dashboard')</span>
                     </a>
                 </li>
                 <li>
