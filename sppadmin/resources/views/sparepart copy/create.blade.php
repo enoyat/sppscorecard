@@ -6,7 +6,7 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Forms @endslot
-@slot('title') Update sparepart @endslot
+@slot('title') Create sparepart @endslot
 @endcomponent
 
 
@@ -18,8 +18,7 @@
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('sparepart.update',$sparepart->codeunit) }}" method="POST">
-                    @method('PUT')
+                <form action="{{ route('sparepart.store') }}" method="POST">
                     <div class="row">
                         @if ($message = Session::get('success'))
                         <div class="alert alert-success">
@@ -41,20 +40,25 @@
                         @csrf
                         <div class="col-lg-6">
                             <div>
-                            <div class="mb-3">
+
+                                <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Name of Spare Part</label>
-                                    <input class="form-control" type="text" value="{{ $sparepart->simplename }}" name="simplename" id="simplename">
+                                    <input class="form-control" type="text" value="" name="namasparepart" id="namasparepart">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-date-input" class="form-label">Uom</label>
-                                    <input class="form-control" type="text" value="{{ $sparepart->merkpart }}" name="merkpart" id="merkpart">
+                                    <input class="form-control" type="text" value="" name="uom" id="uom">
                                 </div>
+
+
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
                                 </div>
+
                             </div>
                         </div>
+
 
                     </div>
                 </form>
@@ -64,61 +68,5 @@
     </div> <!-- end col -->
 </div>
 <!-- end row -->
-<script>
-    jQuery('#idcbu').change(function() {
-    jQuery('#idregion').html('');
-    var id = $(this).val();
-    var string = "{{ asset('/lokasi/getregion/') }}/" + id;
-    $.ajax({
-        type: 'GET',
-        url: string,
-        data: {
-            id: id
-        },
-        dataType: 'json',
-        success: function(data) {
-            datax = JSON.stringify(data);
-            datax = JSON.parse(datax);
-            var i;
-            var html = '';
-            var html = '<option>Select</option>';
-            for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
-                    "</option>";
-            }
-            $('#idregion').html(html);
-        }
-    });
-    });
-    jQuery('#idregion').change(function() {
-    jQuery('#idsitename').html('');
-    var id = $(this).val();
-    var string = "{{ asset('/lokasi/getsitename/') }}/" + id;
-    $.ajax({
-        type: 'GET',
-        url: string,
-        data: {
-            id: id
-        },
-        dataType: 'json',
-        success: function(data) {
-            datax = JSON.stringify(data);
-            datax = JSON.parse(datax);
-            var i;
-            var html = '';
-            var html = '<option>Select</option>';
-            for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
-                    "</option>";
-            }
-            $('#idsitename').html(html);
-        }
-    });
-    });
-</script>
-
-
-
-
 
 @endsection

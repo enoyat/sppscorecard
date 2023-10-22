@@ -38,3 +38,4 @@ Route::post('apimedia', 'App\Http\Controllers\ApiMedia@store');
 Route::get('maintenance/listdokumen/{id}', [ApiMaintenance::class, 'listdokumen']);
 Route::post('maintenance/store', [ApiMaintenance::class, 'store']);
 Route::get('getunit/{id}', [ApiMaintenance::class, 'getunit'])->name('getunit');
+Route::get('/sparepart', [ApiMaintenance::class, 'index'])->name('sparepart');

@@ -7,16 +7,13 @@ class Unit {
   final String namaunit;
   final String idsitename;
   final int hm;
-  final String statusspp;
-  final String statusmekanik;
+
   Unit({
     required this.kdunit,
     required this.serialnumber,
     required this.namaunit,
     required this.idsitename,
     required this.hm,
-    required this.statusspp,
-    required this.statusmekanik,
   });
 
   Map<String, dynamic> toMap() {
@@ -26,8 +23,6 @@ class Unit {
       'namaunit': namaunit,
       'idsitename': idsitename,
       'hm': hm,
-      'statusspp': statusspp,
-      'statusmekanik': statusmekanik,
     };
   }
 
@@ -38,8 +33,6 @@ class Unit {
       namaunit: map['namaunit'] as String,
       idsitename: map['idsitename'] as String,
       hm: map['hm'] as int,
-      statusspp: map['statusspp'] as String,
-      statusmekanik: map['statusmekanik'] as String,
     );
   }
 

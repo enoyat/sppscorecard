@@ -128,4 +128,5 @@ rel="stylesheet" type="text/css" />
 <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
 
 
+
 @endsection

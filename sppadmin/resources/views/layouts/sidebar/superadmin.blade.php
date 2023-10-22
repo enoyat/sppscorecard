@@ -69,15 +69,14 @@
                                 <span data-key="t-calendar">Master Sparepart</span>
                             </a>
                         </li>
-
                         <li>
-                            <a href="{{ route('sparepartstok.index') }}">
-                                <span data-key="t-chat">Spare Part Stock</span>
+                            <a href="{{ route('orders.index') }}">
+                                <span data-key="t-calendar">Orders</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('sparepartstoktrans.index') }}">
-                                <span data-key="t-chat">Stock Transaction</span>
+                            <a href="{{ route('orders.history') }}">
+                                <span data-key="t-calendar">History Orders</span>
                             </a>
                         </li>
 

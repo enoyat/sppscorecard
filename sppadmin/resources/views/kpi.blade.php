@@ -8,124 +8,223 @@
     }
 </script>
 <div id="area-print">
-    <div class="card" style="border: 1px solid black">
-        <div class="card-body">
+    <table width="100%">
+        <tr>
+            <td style="background: white; padding:10px"><img src="{{ URL::asset('img/logo.png') }}" alt=""
+                    height="50">
+            </td>
+            <td style="background:rgb(9, 136, 153); padding:10px">
+                <div style="font-size: 16px; color: white;"><b>KPI DASHBOARD
+                        {{ Session::get('runnamaregion') }}</b></div>
+            </td>
+            <td style="background:rgb(9, 136, 153); color: white; padding:10px">Update: {{ date('Y/m/d') }}</td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xl-8 col-md-8">
+            <!-- card -->
+            <div class="card card-h-100">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Units</span>
+                            <h4 class="mb-3">
+                                <span class="counter-value" data-target="{{ $jmlunit }}">0</span>
+                            </h4>
+                        </div>
+                        <div id="pie-chartunit" data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be"]'
+                            class="e-charts">
+                        </div>
 
-            <table width="100%">
-                <tr>
-                    <td style="background: white; padding:10px"><img src="{{ URL::asset('img/logo.png') }}" alt=""
-                            height="50">
-                    </td>
-                    <td style="background:rgb(9, 136, 153); padding:10px">
-                        <div style="font-size: 16px; color: white;"><b>KPI DASHBOARD
-                                {{ Session::get('runnamaregion') }}</b></div>
-                    </td>
-                    <td style="background:rgb(9, 136, 153); color: white; padding:10px">Update: {{ date('Y/m/d') }}</td>
-                </tr>
-            </table>
-            <br>
-            <br>
-            <div class="row">
-                <div class="col-3">
-                    <div
-                        style="border-top-left-radius: 20px; border: 1px solid grey; padding:10px; border-bottom-right-radius:20px">
-                        <div
-                            style="margin-top:-25px; margin-left:10px; width:200px; height:30px; background: rgb(9, 136, 153); border-radius:10px; padding:5px; color:white; text-align:center">
-                            Total Unit</div>
-                        <table width="100%">
-                            <tr>
-                                <td style="text-align: center; font-size: 20px; color:blue"><b>{{ $jmlunit }}</b>
-                                </td>
-                            </tr>
-                        </table>
                     </div>
-                </div>
-                <div class="col-3">
-                    <div
-                        style="border-top-left-radius: 20px; border: 1px solid grey; padding:10px; border-bottom-right-radius:20px">
-                        <div
-                            style="margin-top:-25px; margin-left:10px; width:200px; height:30px; background: rgb(9, 136, 153); border-radius:10px; padding:5px; color:white; text-align:center">
-                            KPI</div>
-                        <table width="100%">
-                            <tr>
-                                <td style="text-align: center; font-size: 20px; color:blue"><b>{{ $avgkpi }}</b>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div
-                        style="border-top-left-radius: 20px; border: 1px solid grey; padding:10px; border-bottom-right-radius:20px">
-                        <div
-                            style="margin-top:-25px; margin-left:10px; width:200px; height:30px; background: rgb(9, 136, 153); border-radius:10px; padding:5px; color:white; text-align:center">
-                            Delivery Schedule</div>
-                        <table width="100%">
-                            <tr>
-                                <td style="text-align: center; font-size: 20px; color:blue"><b>0</b>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div
-                        style="border-top-left-radius: 20px; border: 1px solid grey; padding:10px; border-bottom-right-radius:20px">
-                        <div
-                            style="margin-top:-25px; margin-left:10px; width:200px; height:30px; background: rgb(9, 136, 153); border-radius:10px; padding:5px; color:white; text-align:center">
-                            Spare Parts</div>
-                        <table width="100%">
-                            <tr>
-                                <td style="text-align: center; font-size: 20px; color:blue"><b>0</b>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <br>
 
-            <div class="table-responsive">
-
-                <div class="card">
-
-                    <div class="card-header">
-                        <h4 class="card-title mb-0">UNIT DIAGRAM CHART</h4>
-                    </div>
-                    <div class="card-body">
-                        <div id="pie_chart" data-colors='["#077a75", "#5156be", "#fd625e"]'' class="apex-charts"
-                            dir="ltr">
-
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-xl-4 col-md-4">
+            <!-- card -->
+            <div class="card">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">KPI</span>
+                            <h4 class="mb-3">
+                                <span class="counter-value" data-target="{{ $avgkpi }}">0</span>%
+                            </h4>
                         </div>
 
                     </div>
                 </div>
-                <!--end card-->
-            </div>
+            </div><!-- end card body -->
+            <div class="card">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Delivery Schedule</span>
+                            <h4 class="mb-3">
+                                <span class="counter-value" data-target="{{ $avgkpi }}">0</span>%
+                            </h4>
+                        </div>
 
-        </div>
+                    </div>
+                </div>
+            </div><!-- end card body -->
+            <div class="card">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Spare Parts</span>
+                            <h4 class="mb-3">
+                                <span class="counter-value" data-target="{{ $avgkpi }}">0</span>%
+                            </h4>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+
+
+
     </div>
+
+<div class="row">
+    <?php $i = 0; ?>
+    @foreach ($arraykpi as $item)
+        <div class="col-xl-4 col-md-8">
+            <!-- card -->
+            <div class="card card-h-100">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <span
+                                class="text-muted mb-3 lh-1 d-block text-truncate">{{ $item['namaforklifttype'] }}</span>
+                            <h4 class="mb-3">
+                                <?php $kpi = ($item['sumtotaljamkerja'] / $item['sumplanunitkerja']) * 100; ?>
+
+                                <span class="counter-value" data-target="{{ number_format($kpi, 2) }}">0</span>%
+                            </h4>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div id="pie-chart{{ $i }}"
+                            data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be"]' class="e-charts">
+                        </div>
+                        <input type="hidden" name="totalbreakdown{{ $i }}"
+                            id="totalbreakdown{{ $i }}" value="{{ $item['totalbreakdown'] }}">
+
+                        <input type="hidden" name="sumtotaljamkerja{{ $i }}"
+                            id="sumtotaljamkerja{{ $i }}" value="{{ $item['sumtotaljamkerja'] }}">
+
+                    </div>
+                    <div class="text-nowrap">
+                        <span class="badge bg-primary ">{{ number_format($item['jmlunit']) }}</span>
+                        <span class="ms-1 text-muted font-size-13">Units</span>
+                    </div>
+                    <div class="text-nowrap">
+                        <span class="badge bg-primary ">{{ number_format($item['sumplanunitkerja']) }}</span>
+                        <span class="ms-1 text-muted font-size-13">Target Available (Minutes)</span>
+                    </div>
+                    <div class="text-nowrap">
+                        <span
+                            class="badge badge-soft-success text-success">{{ number_format($item['sumtotaljamkerja']) }}</span>
+                        <span class="ms-1 text-muted font-size-13">Total Available (Minutes)</span>
+                    </div>
+                    <div class="text-nowrap">
+                        <span
+                            class="badge badge-soft-danger text-success">{{ number_format($item['totalbreakdown']) }}</span>
+                        <span class="ms-1 text-muted font-size-13">Breakdown (Minutes)</span>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div>
+        <?php $i++; ?>
+    @endforeach
 </div>
+</div>
+{{ $kategori }}
+
 <style>
     .apexcharts-tooltip span {
         color: #ffffff;
     }
 </style>
-<div style="text-align: center;"><button type="button" class="btn btn-primary" id="cetak"
-        onclick="printDiv('area-print')">Print KPI</button></div>
+{{-- <div style="text-align: center;"><button type="button" class="btn btn-primary" id="cetak"
+        onclick="printDiv('area-print')">Print KPI</button></div> --}}
+<!-- echarts init -->
+<!-- echarts js -->
+<script src="{{ URL::asset('build/libs/echarts/echarts.min.js') }}"></script>
 <script>
-    /*
-Template Name: Minia - Admin & Dashboard Template
-Author: Themesbrand
-Website: https://themesbrand.com/
-Contact: themesbrand@gmail.com
-File: Apex Chart init js
-*/
+    $(document).ready(function() {
+        <?php $i = 0; ?>
+        @foreach ($arraykpi as $item)
+            generatechart({{ $i }});
+            <?php $i++; ?>
+        @endforeach
+        chartunit();
+    });
+
+    function chartunit() {
+        // pie chart
+        var pieColors = getChartColorsArray("#pie-chartunit");
+        var dom = document.getElementById("pie-chartunit");
+
+        var myChart = echarts.init(dom);
+
+        var app = {};
+        option = null;
+        option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'horizontal',
+                left: 'left',
+                data: {{ $kategori }},
+                textStyle: {
+                    color: '#858d98'
+                }
+            },
+            color: pieColors, //['#fd625e', '#2ab57d', '#4ba6ef', '#ffbf53', '#5156be'],
+            series: [{
+                name: 'KPI',
+                type: 'pie',
+                radius: '40%',
+                // center: ['50%', '60%'],
+                data: [
+                    for (var i = 0; i < {{ $kategori }}; i++) {
+                        {
+                            value: {{ $unit[$i] }},
+                            name: {{ $kategori[$i] }}
+                        }
+                    }
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    }
+
 
     // get colors array from the string
     function getChartColorsArray(chartId) {
-
         var colors = $(chartId).attr('data-colors');
         var colors = JSON.parse(colors);
         return colors.map(function(value) {
@@ -139,53 +238,55 @@ File: Apex Chart init js
         })
     }
 
-    // pie chart
-    var pieColors = getChartColorsArray("#pie_chart");
-    var options = {
-        chart: {
-            height: 320,
-            type: 'pie',
-            events: {
-                dataPointSelection: function(event, chartContext, config) {
-                    alert(config.w.config.labels[config.dataPointIndex]);
-                    alert(config.w.config.series[config.dataPointIndex]);
+    function generatechart(i) {
+        // pie chart
+        var pieColors = getChartColorsArray("#pie-chart" + i);
+        var dom = document.getElementById("pie-chart" + i);
+        var totalbreakdown = document.getElementById("totalbreakdown" + i).value;
+        var sumtotaljamkerja = document.getElementById("sumtotaljamkerja" + i).value;
+        var myChart = echarts.init(dom);
+
+        var app = {};
+        option = null;
+        option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'horizontal',
+                left: 'left',
+                data: ['Availables', 'Breakdowns'],
+                textStyle: {
+                    color: '#858d98'
                 }
-
-            }
-
-        },
-
-
-        series: {{ $unit }},
-        labels: <?php echo $kategori; ?>,
-        colors: pieColors,
-        legend: {
-            show: true,
-            position: 'bottom',
-            horizontalAlign: 'center',
-            verticalAlign: 'middle',
-            floating: false,
-            fontSize: '14px',
-            offsetX: 0,
-        },
-        responsive: [{
-            breakpoint: 600,
-            options: {
-                chart: {
-                    height: 240
-                },
-                legend: {
-                    show: true
-                },
-            }
-        }],
-
+            },
+            color: pieColors, //['#fd625e', '#2ab57d', '#4ba6ef', '#ffbf53', '#5156be'],
+            series: [{
+                name: 'KPI',
+                type: 'pie',
+                radius: '40%',
+                // center: ['50%', '60%'],
+                data: [{
+                        value: sumtotaljamkerja,
+                        name: 'Availables'
+                    },
+                    {
+                        value: totalbreakdown,
+                        name: 'Breakdowns'
+                    },
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
     }
-
-    var chart = new ApexCharts(
-        document.querySelector("#pie_chart"),
-        options
-    );
-
-    chart.render();
 </script>

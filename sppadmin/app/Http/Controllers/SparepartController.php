@@ -48,16 +48,18 @@ class SparepartController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'namasparepart'=>'required',
-            'uom'=>'required',
+            'codeunit'=>'required',
+            'simplename'=>'required',
+            'merkpart'=>'required',
 
         ]);
 
 
 
         $sparepart = new MSparepart;
-        $sparepart->namasparepart = $request->namasparepart;
-        $sparepart->uom = $request->uom;
+        $sparepart->codeunit = $request->codeunit;
+        $sparepart->simplename = $request->simplename;
+        $sparepart->merkpart = $request->merkpart;
 
         $simpan = $sparepart->save();
 
@@ -77,16 +79,16 @@ class SparepartController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'namasparepart'=>'required',
-            'uom'=>'required',
+            'simplename'=>'required',
+            'merkpart'=>'required',
 
         ]);
 
 
 
         $sparepart = MSparepart::find($id);
-        $sparepart->namasparepart = $request->namasparepart;
-        $sparepart->uom = $request->uom;
+        $sparepart->simplename = $request->simplename;
+        $sparepart->merkpart = $request->merkpart;
         $simpan = $sparepart->save();
 
         if ($simpan) {
@@ -125,13 +127,13 @@ class SparepartController extends Controller
         }
     }
     public function getsparepart(Request $request){
-        $sparepart = MSparepart::where('namasparepart', 'LIKE', '%'.$request->search.'%')->orderBy('namasparepart', 'ASC')->get();
+        $sparepart = MSparepart::where('simplename', 'LIKE', '%'.$request->search.'%')->orderBy('simplename', 'ASC')->get();
 
         $response = array();
         foreach ($sparepart as $value) {
             $response[] = array(
                 "id" => $value->id,
-                "text" => $value->namasparepart
+                "text" => $value->simplename
             );
         }
 

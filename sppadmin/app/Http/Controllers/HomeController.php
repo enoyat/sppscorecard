@@ -50,15 +50,41 @@ class HomeController extends Controller
             $bulan=date('m');
             $mperiode=$tahun.'-'.$bulan;
         }
+        $arraykpi=array();
         $kpi=DB::table('physicalavailable')->
         join('unit','unit.kdunit','=','physicalavailable.kdunit')->
         join('forklifttype','unit.idforklifttype','=','forklifttype.id')->
-        select(DB::raw('namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
+        select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
         ->where('periode',$mperiode)
         ->where('unit.idsitename',Session::get('runidsitename'))
         ->where('forklifttype.f_dashboard',"Y")
-        ->groupBy('namaforklifttype')
+        ->groupBy('namaforklifttype','idforklifttype')
         ->get();
+        $i=0;
+        foreach($kpi as $k){
+            $dataunit=DB::table('troubleaction')
+            ->join('unit','troubleaction.kdunit','=','unit.kdunit')
+            ->join('forklifttype','unit.idforklifttype','=','forklifttype.id')
+            ->where('troubleaction.periode',$mperiode)
+            ->where('unit.idforklifttype',$k->idforklifttype)
+            ->where('unit.idsitename',Session::get('runidsitename'))
+
+            ->get();
+
+
+            $arraykpi[$i]=array(
+                'idforklifttype'=>$k->idforklifttype,
+                'namaforklifttype'=>$k->namaforklifttype,
+                'jmlunit'=>$k->jmlunit,
+                'sumplanunitkerja'=>$k->sumplanunitkerja,
+                'sumtotaljamkerja'=>$k->sumtotaljamkerja,
+                'totalbreakdown'=>$k->sumplanunitkerja-$k->sumtotaljamkerja,
+                'avgpaforklift'=>number_format($k->sumtotaljamkerja/$k->sumplanunitkerja*100,2),
+                'dataunit'=>$dataunit
+            );
+            $i++;
+        }
+
         $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
 
         $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
@@ -98,7 +124,7 @@ class HomeController extends Controller
 
         }
 
-        return view('index',compact('kpi','cbu','achievement','max','base','kategori','sitename','customer','unit','mperiode','jmlunit','avgkpi'));
+        return view('index',compact('kpi','cbu','achievement','max','base','kategori','sitename','customer','unit','mperiode','jmlunit','avgkpi','arraykpi'));
     }
 
     public function lang($locale)

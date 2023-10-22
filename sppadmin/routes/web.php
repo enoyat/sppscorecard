@@ -143,16 +143,6 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::post('/updatestatus', [App\Http\Controllers\PhysicalController::class, 'updatestatus'])->name('physical.updatestatus');
         });
 
-        Route::group(['prefix' => 'sparepart'], function () {
-            Route::get('/', [App\Http\Controllers\SparepartController::class, 'index'])->name('sparepart.index');
-            Route::get('/create', [App\Http\Controllers\SparepartController::class, 'create'])->name('sparepart.create');
-            Route::post('/store', [App\Http\Controllers\SparepartController::class, 'store'])->name('sparepart.store');
-            Route::delete('/delete/{id}', [App\Http\Controllers\SparepartController::class, 'destroy'])->name('sparepart.destroy');
-            Route::get('/edit/{id}', [App\Http\Controllers\SparepartController::class, 'edit'])->name('sparepart.edit');
-            Route::put('/update/{id}', [App\Http\Controllers\SparepartController::class, 'update'])->name('sparepart.update');
-            Route::get('/show/{id}', [App\Http\Controllers\SparepartController::class, 'show'])->name('sparepart.show');
-            Route::get('/getsparepart', [App\Http\Controllers\SparepartController::class, 'getsparepart'])->name('sparepart.getsparepart');
-        });
 
         Route::group(['prefix' => 'sparepartstok'], function () {
             Route::get('/', [App\Http\Controllers\SparepartstokController::class, 'index'])->name('sparepartstok.index');
@@ -239,8 +229,35 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
 
 
 
-    });
 
+    });
+    Route::group(['roles' => ['administrator','headofficepart', 'inventorypart']], function () {
+        Route::group(['prefix' => 'orders'], function () {
+            Route::get('/', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
+            Route::get('/history', [App\Http\Controllers\OrderController::class, 'history'])->name('orders.history');
+            Route::get('/create', [App\Http\Controllers\OrderController::class, 'create'])->name('orders.create');
+            Route::post('/store', [App\Http\Controllers\OrderController::class, 'store'])->name('orders.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\OrderController::class, 'destroy'])->name('orders.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\OrderController::class, 'edit'])->name('orders.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\OrderController::class, 'update'])->name('orders.update');
+            Route::get('/show/{id}', [App\Http\Controllers\OrderController::class, 'show'])->name('orders.show');
+            Route::post('/accsite', [App\Http\Controllers\OrderController::class, 'accsite'])->name('orders.accsite');
+            Route::get('/docorder/{id}', [App\Http\Controllers\OrderController::class, 'docorder'])->name('orders.docorder');
+
+
+        });
+        Route::group(['prefix' => 'sparepart'], function () {
+            Route::get('/', [App\Http\Controllers\SparepartController::class, 'index'])->name('sparepart.index');
+            Route::get('/create', [App\Http\Controllers\SparepartController::class, 'create'])->name('sparepart.create');
+            Route::post('/store', [App\Http\Controllers\SparepartController::class, 'store'])->name('sparepart.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\SparepartController::class, 'destroy'])->name('sparepart.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\SparepartController::class, 'edit'])->name('sparepart.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\SparepartController::class, 'update'])->name('sparepart.update');
+            Route::get('/show/{id}', [App\Http\Controllers\SparepartController::class, 'show'])->name('sparepart.show');
+            Route::get('/getsparepart', [App\Http\Controllers\SparepartController::class, 'getsparepart'])->name('sparepart.getsparepart');
+        });
+
+    });
     Route::group(['roles' => ['administrator', 'manajersite', 'customerallsite']], function () {
         Route::get('/gantipassword', [App\Http\Controllers\HomeController::class, 'gantipassword'])->name('gantipassword');
         Route::post('utility/userpasswordupdate', [UtilityController::class, 'userpasswordupdate'])->name('utility.userpasswordupdate');
@@ -299,10 +316,6 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::post('/updatestatus', [App\Http\Controllers\PhysicalController::class, 'updatestatus'])->name('physical.updatestatus');
         });
 
-        Route::group(['prefix' => 'sparepart'], function () {
-            Route::get('/', [App\Http\Controllers\SparepartController::class, 'index'])->name('sparepart.index');
-            Route::get('/getsparepart', [App\Http\Controllers\SparepartController::class, 'getsparepart'])->name('sparepart.getsparepart');
-        });
 
         Route::group(['prefix' => 'sparepartstok'], function () {
             Route::get('/', [App\Http\Controllers\SparepartstokController::class, 'index'])->name('sparepartstok.index');

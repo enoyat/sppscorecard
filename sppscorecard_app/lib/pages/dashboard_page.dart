@@ -265,7 +265,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Image.asset(
-                                        'assets/images/trouble.png',
+                                        'assets/images/pallet.png',
                                         width: 70,
                                         height: 70,
                                       ),
@@ -300,7 +300,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Image.asset(
-                                        'assets/images/trouble.png',
+                                        'assets/images/spare-parts.png',
                                         width: 70,
                                         height: 70,
                                       ),

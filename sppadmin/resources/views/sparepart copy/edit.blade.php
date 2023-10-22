@@ -18,7 +18,7 @@
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('sparepart.update',$sparepart->codeunit) }}" method="POST">
+                <form action="{{ route('sparepart.update',$sparepart->id) }}" method="POST">
                     @method('PUT')
                     <div class="row">
                         @if ($message = Session::get('success'))
@@ -43,11 +43,11 @@
                             <div>
                             <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Name of Spare Part</label>
-                                    <input class="form-control" type="text" value="{{ $sparepart->simplename }}" name="simplename" id="simplename">
+                                    <input class="form-control" type="text" value="{{ $sparepart->namasparepart }}" name="namasparepart" id="namasparepart">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-date-input" class="form-label">Uom</label>
-                                    <input class="form-control" type="text" value="{{ $sparepart->merkpart }}" name="merkpart" id="merkpart">
+                                    <input class="form-control" type="text" value="{{ $sparepart->uom }}" name="uom" id="uom">
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
