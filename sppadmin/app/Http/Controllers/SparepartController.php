@@ -127,13 +127,13 @@ class SparepartController extends Controller
         }
     }
     public function getsparepart(Request $request){
-        $sparepart = MSparepart::where('simplename', 'LIKE', '%'.$request->search.'%')->orderBy('simplename', 'ASC')->get();
+        $sparepart = MSparepart::where('partname', 'LIKE', '%'.$request->search.'%')->orderBy('partname', 'ASC')->get();
 
         $response = array();
         foreach ($sparepart as $value) {
             $response[] = array(
-                "id" => $value->id,
-                "text" => $value->simplename
+                "id" => $value->codepart,
+                "text" => $value->partname
             );
         }
 

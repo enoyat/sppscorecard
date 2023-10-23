@@ -57,9 +57,9 @@
 </div>
 <!-- end row -->
 
-<div id="tablecontent">
+<div class="table-responsive mb-4" id="tablecontent">
     @include('unit.content')
-
+    
     <!-- end table -->
 </div>
 <!-- end table responsive -->

@@ -35,7 +35,7 @@
                                 <span class="counter-value" data-target="{{ $jmlunit }}">0</span>
                             </h4>
                         </div>
-                        <div id="pie-chartunit" data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be"]'
+                        <div id="pie-chartunit" data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be", "#32a852"]'
                             class="e-charts">
                         </div>
 
@@ -67,7 +67,7 @@
                         <div class="col-12">
                             <span class="text-muted mb-3 lh-1 d-block text-truncate">Delivery Schedule</span>
                             <h4 class="mb-3">
-                                <span class="counter-value" data-target="{{ $avgkpi }}">0</span>%
+                                <span class="counter-value" data-target="{{ $kpidelivery }}">0</span>%
                             </h4>
                         </div>
 
@@ -81,7 +81,7 @@
                         <div class="col-12">
                             <span class="text-muted mb-3 lh-1 d-block text-truncate">Spare Parts</span>
                             <h4 class="mb-3">
-                                <span class="counter-value" data-target="{{ $avgkpi }}">0</span>%
+                                <span class="counter-value" data-target="{{ $kpisparepart }}">0</span>%
                             </h4>
                         </div>
 
@@ -150,7 +150,7 @@
     @endforeach
 </div>
 </div>
-{{ $kategori }}
+
 
 <style>
     .apexcharts-tooltip span {
@@ -186,27 +186,27 @@
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-            legend: {
-                orient: 'horizontal',
-                left: 'left',
-                data: {{ $kategori }},
-                textStyle: {
-                    color: '#858d98'
-                }
-            },
+            // legend: {
+            //     orient: 'horizontal',
+            //     left: 'left',
+            //     data: {{ $kategori }},
+            //     textStyle: {
+            //         color: '#858d98'
+            //     }
+            // },
             color: pieColors, //['#fd625e', '#2ab57d', '#4ba6ef', '#ffbf53', '#5156be'],
             series: [{
-                name: 'KPI',
+                name: 'Type',
                 type: 'pie',
                 radius: '40%',
                 // center: ['50%', '60%'],
                 data: [
-                    for (var i = 0; i < {{ $kategori }}; i++) {
+                    @foreach ($arraykpi as $item)
                         {
-                            value: {{ $unit[$i] }},
-                            name: {{ $kategori[$i] }}
-                        }
-                    }
+                            value: {{ $item['jmlunit'] }},
+                            name: "{{ $item['namaforklifttype'] }}"
+                        },
+                    @endforeach
                 ],
                 itemStyle: {
                     emphasis: {
@@ -256,7 +256,7 @@
             legend: {
                 orient: 'horizontal',
                 left: 'left',
-                data: ['Availables', 'Breakdowns'],
+                data: ['Available', 'Breakdown'],
                 textStyle: {
                     color: '#858d98'
                 }
@@ -269,11 +269,11 @@
                 // center: ['50%', '60%'],
                 data: [{
                         value: sumtotaljamkerja,
-                        name: 'Availables'
+                        name: 'Available'
                     },
                     {
                         value: totalbreakdown,
-                        name: 'Breakdowns'
+                        name: 'Breakdown'
                     },
                 ],
                 itemStyle: {

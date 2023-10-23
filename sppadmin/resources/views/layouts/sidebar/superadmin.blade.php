@@ -63,6 +63,25 @@
                         <i data-feather="battery"></i>
                         <span data-key="t-apps">Sparepart</span>
                     </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    <li>
+                        <a href="{{ route('sparepartstok.index') }}">
+                            <span data-key="t-chat">Spare Part Stock</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('sparepartstoktrans.index') }}">
+                            <span data-key="t-chat">Stock Transaction</span>
+                        </a>
+                    </li>
+
+                </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="battery"></i>
+                        <span data-key="t-apps">Order Sparepart</span>
+                    </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
                             <a href="{{ route('sparepart.index') }}">

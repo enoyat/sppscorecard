@@ -84,8 +84,29 @@ class HomeController extends Controller
             );
             $i++;
         }
+        $restkpisparepart=DB::table('sparepartstok')->
+        select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+        ->where('idsitename',Session::get('runidsitename'))
+        ->get();
+        if ($restkpisparepart){
+            foreach($restkpisparepart as $item)
+            {
+                $kpisparepart=$item->kpisparepart;
+            }
+        }
+        else {
+            $kpisparepart=0;
+        }
 
         $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+        $delivery=DB::table('delivery')->where('idsitename',Session::get('runidsitename'))->count('*');
+        $delivered=DB::table('delivery')->where('idsitename',Session::get('runidsitename'))->where('statuscustomer','close')->count('*');
+        if ($delivery==0) {
+            $kpidelivery=0;
+        }
+        else {
+            $kpidelivery=number_format($delivered/$delivery*100,2);
+        }
 
         $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
 
@@ -124,7 +145,7 @@ class HomeController extends Controller
 
         }
 
-        return view('index',compact('kpi','cbu','achievement','max','base','kategori','sitename','customer','unit','mperiode','jmlunit','avgkpi','arraykpi'));
+        return view('index',compact('kpi','cbu','achievement','max','base','kategori','sitename','customer','unit','mperiode','jmlunit','avgkpi','arraykpi','kpidelivery','delivery','delivered','kpisparepart'));
     }
 
     public function lang($locale)

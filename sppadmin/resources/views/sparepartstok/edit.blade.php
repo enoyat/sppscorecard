@@ -70,8 +70,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Spare Part</label>
-                                    <input class="form-control" type="hidden" value="{{ $sparepart->idsparepart }}"
-                                        name="idsparepart" id="idsparepart">{{ $sparepart->getsparepart->namasparepart }}
+                                    <input class="form-control" type="hidden" value="{{ $sparepart->codepart }}"
+                                        name="codepart" id="codepart">{{ $sparepart->getsparepart->partname }}
 
                                 </div>
                                 <div class="mb-3">

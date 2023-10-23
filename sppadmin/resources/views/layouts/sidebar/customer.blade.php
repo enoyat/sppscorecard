@@ -27,52 +27,21 @@
                         <span data-key="t-horizontal">Unit</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('maintenance.index') }}">
-                        <i data-feather="settings"></i>
-                        <span data-key="t-horizontal">Maintenance</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('maintenance.listactionall') }}">
-                        <i data-feather="settings"></i>
-                        <span data-key="t-horizontal">List of Maintenance</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('physical.index') }}">
-                        <i data-feather="package"></i>
-                        <span data-key="t-horizontal">Phisical Availibility</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('trouble.index') }}">
-                        <i data-feather="alert-triangle"></i>
-                        <span data-key="t-horizontal">List of Trouble</span>
-                    </a>
-                </li>
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="battery"></i>
                         <span data-key="t-apps">Sparepart</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('sparepart.index') }}">
-                                <span data-key="t-calendar">Master Sparepart</span>
-                            </a>
-                        </li>
+
 
                         <li>
                             <a href="{{ route('sparepartstok.index') }}">
                                 <span data-key="t-chat">Spare Part Stock</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('sparepartstoktrans.index') }}">
-                                <span data-key="t-chat">Stock Transaction</span>
-                            </a>
-                        </li>
+
 
                     </ul>
                 </li>

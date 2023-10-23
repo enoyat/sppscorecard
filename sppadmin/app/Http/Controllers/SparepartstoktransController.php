@@ -54,21 +54,20 @@ class SparepartstoktransController extends Controller
     {
 
         $request->validate([
-            'idcbu'=>'required',
-            'idregion'=>'required',
-            'idsitename'=>'required',
-            'idsparepart'=>'required',
+            'codepart'=>'required',
             'qtytrans'=>'required',
+            'transaction'=>'required',
 
         ]);
 
 
 
         $sparepart = new MSparepartstoktrans;
-        $sparepart->idcbu = $request->idcbu;
-        $sparepart->idregion = $request->idregion;
-        $sparepart->idsitename = $request->idsitename;
-        $sparepart->idsparepart = $request->idsparepart;
+        $sparepart->idcbu = Session::get('runidcbu');
+        $sparepart->idregion = Session::get('runidregion');
+        $sparepart->idsitename = Session::get('runidsitename');
+        $sparepart->codepart = $request->codepart;
+        $sparepart->transaction = $request->transaction;
         $sparepart->tanggal =date('Y-m',strtotime($request->tanggal));
         $sparepart->qtytrans = $request->qtytrans;
         $sparepart->qty = $request->qty;
@@ -105,10 +104,10 @@ class SparepartstoktransController extends Controller
 
 
         $sparepart = MSparepartstoktrans::find($id);
-        $sparepart->idcbu = $request->idcbu;
-        $sparepart->idregion = $request->idregion;
-        $sparepart->idsitename = $request->idsitename;
-        $sparepart->idsparepart = $request->idsparepart;
+        $sparepart->idcbu = Session::get('runidcbu');
+        $sparepart->idregion = Session::get('runidregion');
+        $sparepart->idsitename = Session::get('runidsitename');
+        $sparepart->codepart = $request->codepart;
         $sparepart->qty = $request->qty;
 
         $simpan = $sparepart->save();
@@ -150,24 +149,24 @@ class SparepartstoktransController extends Controller
     }
     public function getsparepart(Request $request){
         $sparepart =
-        MSparepartstok::join('sparepart','sparepartstok.idsparepart','=','sparepart.id')
-        ->select('sparepartstok.*','sparepart.namasparepart')
-        ->where('idsitename',Session::get('runidsitename'))->where('namasparepart', 'LIKE', '%'.$request->search.'%')->orderBy('namasparepart', 'ASC')->get();
+        MSparepartstok::join('sparepart','sparepartstok.codepart','=','sparepart.codepart')
+        ->select('sparepartstok.*','sparepart.partname')
+        ->where('idsitename',Session::get('runidsitename'))->where('partname', 'LIKE', '%'.$request->search.'%')->orderBy('partname', 'ASC')->get();
 
         $response = array();
         foreach ($sparepart as $value) {
             $response[] = array(
-                "id" => $value->idsparepart,
-                "text" => $value->namasparepart
+                "id" => $value->codepart,
+                "text" => $value->partname
             );
         }
 
         return response()->json($response);
     }
     public function getstok(Request $request){
-        $sparepart = MSparepartstok::join('sparepart','sparepartstok.idsparepart','=','sparepart.id')
-        ->select('sparepartstok.*','sparepart.namasparepart', 'sparepartstok.qty')
-        ->where('idsitename',Session::get('runidsitename'))->where('idsparepart', '=', $request->id)->get();
+        $sparepart = MSparepartstok::join('sparepart','sparepartstok.codepart','=','sparepart.codepart')
+        ->select('sparepartstok.*','sparepart.partname', 'sparepartstok.qty','sparepartstok.stok')
+        ->where('idsitename',Session::get('runidsitename'))->where('sparepartstok.codepart', '=', $request->id)->get();
         return response()->json($sparepart);
     }
 }

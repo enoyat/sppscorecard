@@ -48,7 +48,7 @@ class ApiLokasi extends Controller
         else {
             $region=MSitename::where('id',$sitename->parentid)->first();
             $cbu=MSitename::where('id',$region->parentid)->first();
-            Session::put('runidcbu',$cbu);
+            Session::put('runidcbu',$cbu->id);
             Session::put('runnamacbu',$cbu->namasitename);
             Session::put('runidregion',$region->id);
             Session::put('runnamaregion',$region->namasitename);

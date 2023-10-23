@@ -17,7 +17,7 @@ class MSparepartstoktrans extends Model
     public $timestamps = false;
     public function getsparepart()
     {
-        return $this->belongsTo(MSparepart::class, 'idsparepart', 'id');
+        return $this->belongsTo(MSparepart::class, 'codepart', 'codepart');
     }
     public function getcbu(){
         return $this->belongsTo(MSitename::class,'idcbu','id');

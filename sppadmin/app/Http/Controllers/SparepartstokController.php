@@ -52,7 +52,7 @@ class SparepartstokController extends Controller
     }
     public function store(Request $request)
     {
-        $cek=MSparepartstok::where('idsitename',$request->idsitename)->where('idsparepart',$request->idsparepart)->count();
+        $cek=MSparepartstok::where('idsitename',$request->idsitename)->where('codepart',$request->codepart)->count();
         if ($cek>0) {
             Session::flash('success', 'Data sudah ada!');
             Session::flash('alert-class', 'alert-danger');
@@ -63,7 +63,7 @@ class SparepartstokController extends Controller
             'idcbu'=>'required',
             'idregion'=>'required',
             'idsitename'=>'required',
-            'idsparepart'=>'required',
+            'codepart'=>'required',
             'qty'=>'required',
         ]);
 
@@ -73,8 +73,9 @@ class SparepartstokController extends Controller
         $sparepart->idcbu = $request->idcbu;
         $sparepart->idregion = $request->idregion;
         $sparepart->idsitename = $request->idsitename;
-        $sparepart->idsparepart = $request->idsparepart;
+        $sparepart->codepart = $request->codepart;
         $sparepart->qty = $request->qty;
+        $sparepart->stok = $request->qty;
         $simpan = $sparepart->save();
 
         if ($simpan) {
@@ -96,7 +97,7 @@ class SparepartstokController extends Controller
             'idcbu'=>'required',
             'idregion'=>'required',
             'idsitename'=>'required',
-            'idsparepart'=>'required',
+            'codepart'=>'required',
             'qty'=>'required',
 
         ]);
@@ -107,7 +108,7 @@ class SparepartstokController extends Controller
         $sparepart->idcbu = $request->idcbu;
         $sparepart->idregion = $request->idregion;
         $sparepart->idsitename = $request->idsitename;
-        $sparepart->idsparepart = $request->idsparepart;
+        $sparepart->codepart = $request->codepart;
         $sparepart->qty = $request->qty;
 
         $simpan = $sparepart->save();

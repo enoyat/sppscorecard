@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Name of Spare Part</label>
-                                    <select  name="idsparepart" id="idsparepart" required class="form-control"></select>
+                                    <select  name="codepart" id="codepart" required class="form-control"></select>
 
                                 </div>
                                 <div class="mb-3">
@@ -145,7 +145,7 @@
         });
     });
 
-    $("#idsparepart").select2({
+    $("#codepart").select2({
         placeholder: 'Pilih Sparepart',
         ajax: {
             url: "{{ route('sparepart.getsparepart') }}",

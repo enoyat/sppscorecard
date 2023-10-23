@@ -343,6 +343,8 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
         Route::group(['prefix' => 'unit'], function () {
             Route::get('/', [App\Http\Controllers\UnitController::class, 'index'])->name('unit.index');
             Route::get('/getunit', [App\Http\Controllers\UnitController::class, 'getunit'])->name('unit.getunit');
+            Route::get('/search', [App\Http\Controllers\UnitController::class, 'search'])->name('unit.search');
+
         });
         Route::group(['prefix' => 'lokasi'], function () {
             Route::get('/getcbu/{id}', [App\Http\Controllers\ApiLokasi::class, 'getcbu'])->name('lokasi.getcbu');

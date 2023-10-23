@@ -7,6 +7,8 @@ use App\Models\MUnit;
 use App\Models\MForklifttype;
 use App\Models\User;
 use App\Models\MSitename;
+use App\Models\MMaintenanceaction;
+use App\Models\MTroubleaction;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -170,4 +172,13 @@ class UnitController extends Controller
 
         return response()->json($response);
     }
+
+    public function search(Request $request){
+
+        $units = MUnit::where('kdunit', 'LIKE', '%' . $request->keyword . '%')->orderBy('kdunit', 'ASC')->get();
+        $listactions= $listactions=MMaintenanceaction::where('kdunit',$request->keyword)->get();
+        $listtroubleactions=MTroubleaction::where('kdunit',$request->keyword)->get();
+        return view('unit.search', compact('units','listactions','listtroubleactions'));
+    }
+
 }
