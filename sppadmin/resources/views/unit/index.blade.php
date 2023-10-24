@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') Maintenance @endsection
+@section('title') Unit @endsection
 
 @section('css')
 
@@ -35,9 +35,7 @@
 
                 </ul>
             </div>
-            <div>
-                <a href="{{ route('unit.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
-            </div>
+
 
 
             <!-- <div class="dropdown">
