@@ -18,7 +18,7 @@
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('unit.update', $unit->kdunit) }}" method="POST">
+                <form action="{{ route('masterunit.update', $unit->kdunit) }}" method="POST">
                     @method('PUT')
                     <div class="row">
                         @if ($message = Session::get('success'))

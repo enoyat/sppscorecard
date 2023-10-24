@@ -134,6 +134,12 @@
                         <span data-key="t-horizontal">Surat Jalan</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('ticket.index') }}">
+                        <i data-feather="file-text"></i>
+                        <span data-key="t-horizontal">Ticket</span>
+                    </a>
+                </li>
                 @if(Session::get('roles_id')==1 || Session::get('roles_id')==5)
 
                 <li>
@@ -142,6 +148,12 @@
                         <span data-key="t-apps">@lang('translation.Master')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('masterunit.index') }}">
+
+                                <span data-key="t-horizontal">Unit</span>
+                            </a>
+                        </li>
                         <li>
                             <a href="{{ route('customer.listcustomer') }}">
                                 <span data-key="t-calendar">Customer</span>

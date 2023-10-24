@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') Maintenance @endsection
+@section('title') Unit @endsection
 
 @section('css')
 
@@ -29,14 +29,14 @@
             <div>
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('unit.index') }}" data-bs-toggle="tooltip"
+                        <a class="nav-link active" href="{{ route('masterunit.index') }}" data-bs-toggle="tooltip"
                             data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
                     </li>
 
                 </ul>
             </div>
             <div>
-                <a href="{{ route('unit.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
+                <a href="{{ route('masterunit.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
             </div>
 
 
@@ -58,8 +58,8 @@
 <!-- end row -->
 
 <div class="table-responsive mb-4" id="tablecontent">
-    @include('unit.content')
-    
+    @include('master.unit.content')
+
     <!-- end table -->
 </div>
 <!-- end table responsive -->

@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\UtilityController;
+use App\Http\Controllers\TicketController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -190,15 +193,15 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::post('/updatestatus', [App\Http\Controllers\PalleterenewController::class, 'updatestatus'])->name('palleterenew.updatestatus');
         });
 
-        Route::group(['prefix' => 'unit'], function () {
-            Route::get('/', [App\Http\Controllers\UnitController::class, 'index'])->name('unit.index');
-            Route::get('/create', [App\Http\Controllers\UnitController::class, 'create'])->name('unit.create');
-            Route::post('/store', [App\Http\Controllers\UnitController::class, 'store'])->name('unit.store');
-            Route::delete('/delete/{id}', [App\Http\Controllers\UnitController::class, 'destroy'])->name('unit.destroy');
-            Route::get('/edit/{id}', [App\Http\Controllers\UnitController::class, 'edit'])->name('unit.edit');
-            Route::put('/update/{id}', [App\Http\Controllers\UnitController::class, 'update'])->name('unit.update');
-            Route::get('/show/{id}', [App\Http\Controllers\UnitController::class, 'show'])->name('unit.show');
-            Route::get('/getunit', [App\Http\Controllers\UnitController::class, 'getunit'])->name('unit.getunit');
+        Route::group(['prefix' => 'masterunit'], function () {
+            Route::get('/', [App\Http\Controllers\MasterUnitController::class, 'index'])->name('masterunit.index');
+            Route::get('/create', [App\Http\Controllers\MasterUnitController::class, 'create'])->name('masterunit.create');
+            Route::post('/store', [App\Http\Controllers\MasterUnitController::class, 'store'])->name('masterunit.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\MasterUnitController::class, 'destroy'])->name('masterunit.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\MasterUnitController::class, 'edit'])->name('masterunit.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\MasterUnitController::class, 'update'])->name('masterunit.update');
+            Route::get('/show/{id}', [App\Http\Controllers\MasterUnitController::class, 'show'])->name('masterunit.show');
+            Route::get('/getunit', [App\Http\Controllers\MasterUnitController::class, 'getunit'])->name('masterunit.getunit');
         });
         Route::group(['prefix' => 'lokasi'], function () {
             Route::get('/getcbu/{id}', [App\Http\Controllers\ApiLokasi::class, 'getcbu'])->name('lokasi.getcbu');
@@ -352,6 +355,18 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/getsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'getsitename'])->name('lokasi.getsitename');
             Route::get('/setsitename', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
         });
+
+        Route::group(['prefix' => 'ticket'], function () {
+            Route::get('/', [TicketController::class, 'index'])->name('ticket.index');
+            Route::get('read/{id}', [TicketController::class, 'read'])->name('ticket.read');
+            Route::post('sendticket',  [TicketController::class, 'sendticket'])->name('ticket.sendticket');
+            Route::post('replyticket',  [TicketController::class, 'replyticket'])->name('ticket.replyticket');
+            Route::post('close',  [TicketController::class, 'close'])->name('ticket.close');
+
+        });
+
+
+
     });
 
 

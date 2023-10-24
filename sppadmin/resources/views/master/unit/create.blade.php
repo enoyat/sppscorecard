@@ -18,7 +18,7 @@
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('unit.store') }}" method="POST">
+                <form action="{{ route('masterunit.store') }}" method="POST">
                     <div class="row">
                         @if ($message = Session::get('success'))
                         <div class="alert alert-success">

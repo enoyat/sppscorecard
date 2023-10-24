@@ -44,9 +44,9 @@
                 <th scope="col">{{ $key->getsitename->namasitename }}</th>
                 <th scope="col">
 
-                                <form action="{{ route('unit.destroy',$key->kdunit) }}" method="POST">
+                                <form action="{{ route('masterunit.destroy',$key->kdunit) }}" method="POST">
                                     @csrf
-                                    <a href="{{ route('unit.edit',$key->kdunit) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    <a href="{{ route('masterunit.edit',$key->kdunit) }}" class="btn btn-sm btn-warning">Edit</a>
                                     @method('DELETE')
                                     <button type="submit"
                                         onclick="return confirm('Hapus Data ini?');" class="btn btn-sm btn-danger">Hapus</button>

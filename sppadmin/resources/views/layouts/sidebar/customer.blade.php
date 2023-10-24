@@ -59,7 +59,12 @@
                         <span data-key="t-horizontal">Surat Jalan</span>
                     </a>
                 </li>
-
+                <li>
+                    <a href="{{ route('ticket.index') }}">
+                        <i data-feather="file-text"></i>
+                        <span data-key="t-horizontal">Ticket</span>
+                    </a>
+                </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="users"></i>
