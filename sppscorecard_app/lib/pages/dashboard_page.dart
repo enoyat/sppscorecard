@@ -254,12 +254,12 @@ class _DashboardPageState extends State<DashboardPage> {
                                 ),
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return ListOfTroublePage(
-                                        profil: _profil,
-                                      );
-                                    }));
+                                    // Navigator.push(context,
+                                    //     MaterialPageRoute(builder: (context) {
+                                    //   return ListOfTroublePage(
+                                    //     profil: _profil,
+                                    //   );
+                                    // }));
                                   },
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -289,12 +289,12 @@ class _DashboardPageState extends State<DashboardPage> {
                                 ),
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return ListOfTroublePage(
-                                        profil: _profil,
-                                      );
-                                    }));
+                                    // Navigator.push(context,
+                                    //     MaterialPageRoute(builder: (context) {
+                                    //   return ListOfTroublePage(
+                                    //     profil: _profil,
+                                    //   );
+                                    // }));
                                   },
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
