@@ -45,18 +45,18 @@
                                     <label for="example-text-input" class="form-label">CBU</label>
                                     <select class="form-select" aria-label="Default select example" name="idcbu"
                                         id="idcbu">
-                                        <option value="{{ $sparepart->idcbu }}" selected>{{ $sparepart->getcbu->namacbu }}</option>
-               
-    
+                                        <option value="{{ $sparepart->idcbu }}" selected>{{ $sparepart->getcbu->namasitename }}</option>
+
+
                                     </select>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Region</label>
-                                    
+
                                     <select class="form-select" aria-label="Default select example" name="idregion"
                                         id="idregion" >
-                                        <option value="{{ $sparepart->idregion }}">{{ $sparepart->getregion->namaregion }}</option>
+                                        <option value="{{ $sparepart->idregion }}">{{ $sparepart->getregion->namasitename }}</option>
                                     </select>
 
                                 </div>
@@ -70,8 +70,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Spare Part</label>
-                                    <input class="form-control" type="hidden" value="{{ $sparepart->idsparepart }}"
-                                        name="idsparepart" id="idsparepart">{{ $sparepart->getsparepart->namasparepart }}
+                                    <input class="form-control" type="hidden" value="{{ $sparepart->codepart }}"
+                                        name="codepart" id="codepart">{{ $sparepart->getsparepart->partname }}
 
                                 </div>
                                 <div class="mb-3">
@@ -86,7 +86,7 @@
 
                             </div>
                         </div>
-                       
+
 
                     </div>
                 </form>

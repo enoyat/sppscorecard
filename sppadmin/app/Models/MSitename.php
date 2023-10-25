@@ -19,8 +19,31 @@ class MSitename extends Model
     //protected $keyType = 'string';
 
     protected $guarded = [];
+
+    public function parent()
+    {
+        return $this->belongsTo($this, 'parentid','id');
+    }
+    public function children()
+    {
+        return $this->hasMany($this, 'parentid','id');
+    }
+
+    public function getcbu()
+    {
+        return $this->belongsTo(Msitename::class,'idregion','id');
+    }
     public function getregion()
     {
-        return $this->belongsTo(MRegion::class,'idregion','id');
+        return $this->belongsTo(Msitename::class,'idregion','id');
     }
+    public function scopeMember($query, $kdcustomer)
+    {
+        return $query->where('kdcustomer', $kdcustomer);
+    }
+    public function scopeKategori($query, $kategori)
+    {
+        return $query->where('kategori', $kategori);
+    }
+
 }

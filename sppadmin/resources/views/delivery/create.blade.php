@@ -46,7 +46,7 @@
                                         id="idcbu">
                                         <option value="" selected>select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
@@ -88,7 +88,7 @@
                                         id="capacity">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Mas Height (m)</label>
+                                    <label for="example-password-input" class="form-label">Mast Height (m)</label>
                                     <input class="form-control" type="text" value="" name="masheight"
                                         id="masheight">
                                 </div>
@@ -114,6 +114,11 @@
                                         id="dateestimated">
                                 </div>
                                 <div class="mb-3">
+                                    <label for="example-time-input" class="form-label">Actual Delivery</label>
+                                    <input class="form-control" type="date" value="" name="dateactual"
+                                        id="dateactual" onchange="days_between($(this).val(),$('#dateestimated').val())">
+                                </div>
+                                <div class="mb-3">
                                     <label for="example-month-input" class="form-label">Days of Lapse</label>
                                     <input class="form-control" type="text" value="" name="daysoflapse" id="daysoflapse">
                                 </div>
@@ -121,21 +126,7 @@
                                     <label for="example-month-input" class="form-label">Reason of Lapse</label>
                                     <input class="form-control" type="text" value="" name="reason" id="reason">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="example-week-input" class="form-label">Remark Plant</label>
-                                    <input class="form-control" type="text" value="" name="remarkplant"
-                                        id="remarkplant">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-time-input" class="form-label">Actual Delivery</label>
-                                    <input class="form-control" type="date" value="" name="dateactual"
-                                        id="dateactual">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-color-input" class="form-label">Confirmation by Plant</label>
-                                    <input class="form-control" type="text" value="" name="confirmationplan"
-                                        id="confirmationplan">
-                                </div>
+
                                 <div class="mb-3">
                                     <label class="form-label">Status SPP</label>
                                     <select class="form-select" name="statusspp" id="statusspp">
@@ -170,6 +161,19 @@
 </div>
 <!-- end row -->
 <script>
+    function days_between(date1, date2) {
+        $("#daysoflapse").val('');
+        // The number of milliseconds in one day
+        var ONE_DAY = 1000 * 60 * 60 * 24
+        // Convert both dates to milliseconds
+        var date1_ms = date1.getTime()
+        var date2_ms = date2.getTime()
+        // Calculate the difference in milliseconds
+        var difference_ms = Math.abs(date1_ms - date2_ms)
+        // Convert back to days and return
+       alert(Math.round(difference_ms / ONE_DAY))
+    }
+
     jQuery('#idcbu').change(function() {
     jQuery('#idregion').html('');
     var id = $(this).val();
@@ -188,7 +192,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

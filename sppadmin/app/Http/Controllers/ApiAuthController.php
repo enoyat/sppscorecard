@@ -6,6 +6,9 @@ use App\Models\Customer;
 use App\Models\M_sesionuser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use App\Models\MSitename;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Validator;
@@ -29,11 +32,25 @@ class ApiAuthController extends Controller
                     'status' => 'success',
                     'data' => [$cek],
                 ];
-            }  
-            else if ($cek->roles_id == '3')  
+            }
+            else if ($cek->roles_id == '3')
             {
-                $datauser=User::find($cek->id);
-                
+                $roles = Auth::user()->roles_id;
+                $kdcustomer=Auth::user()->kdcustomer;
+                $namacustomer=Auth::user()->getcustomer->namacustomer;
+                $category=Auth::user()->getcustomer->category;
+                $idsitename=Auth::user()->idsitename;
+                 $xnamasitename=MSitename::where('id',$idsitename)->first();
+                 $namasitename=$xnamasitename->namasitename;
+                 $idregion=$xnamasitename->parentid;
+                 $xnamaregion=MSitename::where('id',$idregion)->first();
+                 $namaregion=$xnamaregion->namasitename;
+                 $idcbu=$xnamaregion->parentid;
+                 $xnamacbu=MSitename::where('id',$idcbu)->first();
+                 $namacbu=$xnamacbu->namasitename;
+
+                // $datauser=User::find($cek->id);
+                // $namasitename=MSitename::where('id',$sitename)->first();
 
                 return $data = [
                     'status' => true,
@@ -41,17 +58,17 @@ class ApiAuthController extends Controller
                     'username' => $cek->name,
                     'email'=>$cek->email,
                     'roles_id'=>$cek->roles_id,
-                    'idsitename' => $cek->idsitename,
-                    'namasitename'=>$datauser->getsitename->namasitename,
-                    'idregion' => $datauser->getsitename->idregion,
-                    'namaregion'=>$datauser->getsitename->getregion->namaregion,
-                    'idcbu' => $datauser->getsitename->getregion->idcbu,
-                    'namacbu'=>$datauser->getsitename->getregion->getcbu->namacbu,
+                     'idsitename' => $idsitename,
+                    'namasitename'=>$namasitename,
+                     'idregion' => $idregion,
+                     'namaregion'=>$namaregion,
+                     'idcbu' => $idcbu,
+                     'namacbu'=>$namacbu,
 
                 ];
             }
-            
-            
+
+
         } else { // false
             return $data = [
                 'status' =>false,
@@ -59,7 +76,7 @@ class ApiAuthController extends Controller
             ];
         }
     }
-    
+
 
     public function gantipassword(Request $request)
     {

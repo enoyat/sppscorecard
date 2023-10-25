@@ -42,39 +42,21 @@
                         @csrf
                         <div class="col-lg-6">
                             <div class="mb-3">
-                                <label for="example-text-input" class="form-label">CBU</label>
-                                <select class="form-select" aria-label="Default select example" name="idcbu" id="idcbu">
-                                    <option value="" selected>select</option>
-                                    @foreach ($cbu as $itemcbu)
-                                    <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
-                                    @endforeach
+                                <label for="example-password-input" class="form-label">Transaction</label>
+                                <select name="transaction" id="transaction" class="form-control">
+                                    <option value="">-- select transaction --</option>
+                                    <option value="in">in</option>
+                                    <option value="out">out</option>
                                 </select>
-
                             </div>
-                            <div class="mb-3">
-                                <label for="example-text-input" class="form-label">Region</label>
 
-                                <select class="form-select" aria-label="Default select example" name="idregion"
-                                    id="idregion">
-
-                                </select>
-
-                            </div>
-                            <div class="mb-3">
-                                <label for="example-text-input" class="form-label">Site Name</label>
-                                <select class="form-select" aria-label="Default select example" name="idsitename"
-                                    id="idsitename">
-
-                                </select>
-
-                            </div>
                             <div class="mb-3">
                                 <label for="example-password-input" class="form-label">Bulan Tahun</label>
                                 <input class="form-control" type="date" value="" name="tanggal" id="tanggal">
                             </div>
                             <div class="mb-3">
-                                <label for="example-password-input" class="form-label">Nama Spare Part</label>
-                                <select name="idsparepart" id="idsparepart" required class="form-control"></select>
+                                <label for="example-password-input" class="form-label">Name of Spare Part</label>
+                                <select name="codepart" id="codepart" required class="form-control"></select>
 
                             </div>
                             <div class="mb-3">
@@ -109,58 +91,7 @@
 <!-- end row -->
 <script>
 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-jQuery('#idcbu').change(function() {
-    jQuery('#idregion').html('');
-    var id = $(this).val();
-    var string = "{{ asset('/lokasi/getregion/') }}/" + id;
-    $.ajax({
-        type: 'GET',
-        url: string,
-        data: {
-            id: id
-        },
-        dataType: 'json',
-        success: function(data) {
-            datax = JSON.stringify(data);
-            datax = JSON.parse(datax);
-            var i;
-            var html = '';
-            var html = '<option>Select</option>';
-            for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
-                    "</option>";
-            }
-            $('#idregion').html(html);
-        }
-    });
-});
-jQuery('#idregion').change(function() {
-    jQuery('#idsitename').html('');
-    var id = $(this).val();
-    var string = "{{ asset('/lokasi/getsitename/') }}/" + id;
-    $.ajax({
-        type: 'GET',
-        url: string,
-        data: {
-            id: id
-        },
-        dataType: 'json',
-        success: function(data) {
-            datax = JSON.stringify(data);
-            datax = JSON.parse(datax);
-            var i;
-            var html = '';
-            var html = '<option>Select</option>';
-            for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
-                    "</option>";
-            }
-            $('#idsitename').html(html);
-        }
-    });
-});
-
-$("#idsparepart").select2({
+$("#codepart").select2({
     placeholder: 'Pilih Sparepart',
     ajax: {
         url: "{{ route('sparepartstoktrans.getsparepart') }}",
@@ -181,7 +112,7 @@ $("#idsparepart").select2({
         cache: true
     }
 });
-$("#idsparepart").change(function() {
+$("#codepart").change(function() {
     var id = $(this).val();
     $.ajax({
         url: "{{ route('sparepartstoktrans.getstok') }}",
@@ -194,7 +125,7 @@ $("#idsparepart").change(function() {
         success: function(data) {
             datax = JSON.stringify(data);
             datax = JSON.parse(datax);
-            $('#qty').val(datax[0].qty);
+            $('#qty').val(datax[0].stok);
         }
     });
 });

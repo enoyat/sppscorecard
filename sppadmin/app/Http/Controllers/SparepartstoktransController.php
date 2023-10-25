@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MCbu;
+
 use App\Models\MSparepart;
 use App\Models\MForklifttype;
 use App\Models\MSparepartstok;
 use App\Models\MSparepartstoktrans;
 use App\Models\User;
+use App\Models\MSitename;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -28,45 +29,45 @@ class SparepartstoktransController extends Controller
      */
     public function index()
     {
-        $cbu=MCbu::get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $sparepartstoktrans = MSparepartstoktrans::where('idsitename',Session::get('runidsitename'))->get();
-        return view('sparepartstoktrans.index', compact('sparepartstoktrans','cbu'));
+        return view('sparepartstoktrans.index', compact('sparepartstoktrans','cbu','sitename'));
     }
     public function create()
     {
         if(Session::get('roles_id')==2) {
             $cbu=MCbu::where('id',Session::get('runidcbu'))->get();
         } else {
-            $cbu=MCbu::get();
+            $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         }
         return view('sparepartstoktrans.create',compact('cbu'));
     }
     public function edit($id)
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $sparepart = MSparepartstoktrans::find($id);
-        
+
         return view('sparepartstoktrans.edit',compact('cbu','sparepart'));
     }
     public function store(Request $request)
     {
 
         $request->validate([
-            'idcbu'=>'required',
-            'idregion'=>'required', 
-            'idsitename'=>'required',
-            'idsparepart'=>'required',
+            'codepart'=>'required',
             'qtytrans'=>'required',
+            'transaction'=>'required',
 
         ]);
 
-      
-        
+
+
         $sparepart = new MSparepartstoktrans;
-        $sparepart->idcbu = $request->idcbu;
-        $sparepart->idregion = $request->idregion;
-        $sparepart->idsitename = $request->idsitename;
-        $sparepart->idsparepart = $request->idsparepart;
+        $sparepart->idcbu = Session::get('runidcbu');
+        $sparepart->idregion = Session::get('runidregion');
+        $sparepart->idsitename = Session::get('runidsitename');
+        $sparepart->codepart = $request->codepart;
+        $sparepart->transaction = $request->transaction;
         $sparepart->tanggal =date('Y-m',strtotime($request->tanggal));
         $sparepart->qtytrans = $request->qtytrans;
         $sparepart->qty = $request->qty;
@@ -76,7 +77,7 @@ class SparepartstoktransController extends Controller
 
         $simpan = $sparepart->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('sparepartstoktrans.index');
 
@@ -93,25 +94,25 @@ class SparepartstoktransController extends Controller
     {
         $request->validate([
             'idcbu'=>'required',
-            'idregion'=>'required', 
+            'idregion'=>'required',
             'idsitename'=>'required',
             'idsparepart'=>'required',
             'qty'=>'required',
-          
+
         ]);
 
-      
-        
+
+
         $sparepart = MSparepartstoktrans::find($id);
-        $sparepart->idcbu = $request->idcbu;
-        $sparepart->idregion = $request->idregion;
-        $sparepart->idsitename = $request->idsitename;
-        $sparepart->idsparepart = $request->idsparepart;
+        $sparepart->idcbu = Session::get('runidcbu');
+        $sparepart->idregion = Session::get('runidregion');
+        $sparepart->idsitename = Session::get('runidsitename');
+        $sparepart->codepart = $request->codepart;
         $sparepart->qty = $request->qty;
 
         $simpan = $sparepart->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('sparepartstoktrans.index');
 
@@ -147,25 +148,25 @@ class SparepartstoktransController extends Controller
         }
     }
     public function getsparepart(Request $request){
-        $sparepart = 
-        MSparepartstok::join('sparepart','sparepartstok.idsparepart','=','sparepart.id')
-        ->select('sparepartstok.*','sparepart.namasparepart')
-        ->where('idsitename',Session::get('runidsitename'))->where('namasparepart', 'LIKE', '%'.$request->search.'%')->orderBy('namasparepart', 'ASC')->get();
+        $sparepart =
+        MSparepartstok::join('sparepart','sparepartstok.codepart','=','sparepart.codepart')
+        ->select('sparepartstok.*','sparepart.partname')
+        ->where('idsitename',Session::get('runidsitename'))->where('partname', 'LIKE', '%'.$request->search.'%')->orderBy('partname', 'ASC')->get();
 
         $response = array();
         foreach ($sparepart as $value) {
             $response[] = array(
-                "id" => $value->idsparepart,
-                "text" => $value->namasparepart
+                "id" => $value->codepart,
+                "text" => $value->partname
             );
         }
 
         return response()->json($response);
     }
     public function getstok(Request $request){
-        $sparepart = MSparepartstok::join('sparepart','sparepartstok.idsparepart','=','sparepart.id')
-        ->select('sparepartstok.*','sparepart.namasparepart', 'sparepartstok.qty')
-        ->where('idsitename',Session::get('runidsitename'))->where('idsparepart', '=', $request->id)->get();
+        $sparepart = MSparepartstok::join('sparepart','sparepartstok.codepart','=','sparepart.codepart')
+        ->select('sparepartstok.*','sparepart.partname', 'sparepartstok.qty','sparepartstok.stok')
+        ->where('idsitename',Session::get('runidsitename'))->where('sparepartstok.codepart', '=', $request->id)->get();
         return response()->json($sparepart);
     }
 }

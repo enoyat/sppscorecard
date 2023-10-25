@@ -70,7 +70,6 @@ class _FormMaintenancePageState extends State<FormMaintenancePage> {
   final _deskripsi = TextEditingController();
   final _sparepart = TextEditingController();
   final _hm = TextEditingController();
-  final _idaction = TextEditingController();
 
   List<String> dokumen = [];
   List<Unit> _unit = [];

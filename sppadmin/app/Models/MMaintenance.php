@@ -20,11 +20,12 @@ class MMaintenance extends Model
 
     protected $guarded = [];
     public function getcbu(){
-        return $this->belongsTo(MCbu::class,'idcbu','id');
+        return $this->belongsTo(MSitename::class,'idcbu','id');
     }
     public function getregion(){
-        return $this->belongsTo(MRegion::class,'idregion','id');
-    }   
+        return $this->belongsTo(MSitename::class,'idregion','id');
+    }
+
     public function getsitename(){
         return $this->belongsTo(MSitename::class,'idsitename','id');
     }
@@ -35,5 +36,5 @@ class MMaintenance extends Model
     public function getunit() //getunit itu nama fungsi yang akan dipanggil di view
     {
         return $this->belongsTo(MUnit::class, 'idunit', 'id');
-    }    
+    }
 }

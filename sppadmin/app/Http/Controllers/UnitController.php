@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MCbu;
+
 use App\Models\MUnit;
 use App\Models\MForklifttype;
 use App\Models\User;
+use App\Models\MSitename;
+use App\Models\MMaintenanceaction;
+use App\Models\MTroubleaction;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -26,19 +29,20 @@ class UnitController extends Controller
      */
     public function index()
     {
-        $cbu=MCbu::get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $unit = MUnit::where('idsitename',Session::get('runidsitename'))->get();
-        return view('unit.index', compact('unit','cbu'));
+        return view('unit.index', compact('unit','cbu','sitename'));
     }
     public function create()
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $forklifttype = MForklifttype::get();
         return view('unit.create',compact('cbu','forklifttype'));
     }
     public function edit($id)
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $unit = MUnit::find($id);
         $forklifttype = MForklifttype::get();
         return view('unit.edit',compact('cbu','unit','forklifttype'));
@@ -46,14 +50,14 @@ class UnitController extends Controller
     public function store(Request $request){
         $request->validate([
             'idcbu'=>'required',
-            'idregion'=>'required', 
+            'idregion'=>'required',
             'idsitename'=>'required',
             'kdunit'=>'required|unique:unit,kdunit',
             'hm'=>'required',
         ]);
 
-      
-        
+
+
         $unit = new MUnit;
         $unit->idcbu = $request->idcbu;
         $unit->idregion = $request->idregion;
@@ -75,7 +79,7 @@ class UnitController extends Controller
         $unit->statusmekanik = "CLOSE";
         $simpan = $unit->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('unit.index');
 
@@ -89,17 +93,17 @@ class UnitController extends Controller
         }
 
     }
-   
+
     public function update(Request $request, $id)
     {
         $request->validate([
             'idcbu'=>'required',
-            'idregion'=>'required', 
+            'idregion'=>'required',
             'idsitename'=>'required',
         ]);
 
-      
-        
+
+
         $unit = MUnit::find($id);
         $unit->idcbu = $request->idcbu;
         $unit->idregion = $request->idregion;
@@ -118,7 +122,7 @@ class UnitController extends Controller
         $unit->statusspp = "CLOSE";
         $unit->statusmekanik = "CLOSE";
         $simpan = $unit->save();
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('unit.index');
 
@@ -168,4 +172,13 @@ class UnitController extends Controller
 
         return response()->json($response);
     }
+
+    public function search(Request $request){
+
+        $units = MUnit::where('kdunit', 'LIKE', '%' . $request->keyword . '%')->orderBy('kdunit', 'ASC')->get();
+        $listactions= $listactions=MMaintenanceaction::where('kdunit',$request->keyword)->get();
+        $listtroubleactions=MTroubleaction::where('kdunit',$request->keyword)->get();
+        return view('unit.search', compact('units','listactions','listtroubleactions'));
+    }
+
 }

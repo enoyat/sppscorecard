@@ -39,7 +39,7 @@
                         </div>
                         @endif
 
-                        
+
                         <div class="col-lg-6">
                             <div>
                             <div class="mb-3">
@@ -102,7 +102,7 @@ jQuery('#idcbu').change(function() {
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

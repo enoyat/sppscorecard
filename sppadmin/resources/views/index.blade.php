@@ -64,7 +64,7 @@ rel="stylesheet" type="text/css" />
                 <br>
                 <div class="row">
 
-                    <div class="col-md-8"  >
+                    <div class="col-md-12"  >
 
                         @if($kpi)
                         @include('kpi')
@@ -126,6 +126,7 @@ rel="stylesheet" type="text/css" />
 
 <!-- Datatable init js -->
 <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+
 
 
 @endsection

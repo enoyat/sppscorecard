@@ -21,7 +21,7 @@ class _ListOfTroublePage extends State<ListOfTroublePage> {
   int? userid;
   bool isLoading = false;
   List<Unit> _unit = [];
-  int? idsitename = 0;
+  String? idsitename = '';
   void refreshData() async {
     setState(() {
       isLoading = true;

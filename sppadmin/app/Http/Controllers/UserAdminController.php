@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\MSitename;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
@@ -29,7 +30,7 @@ class UserAdminController extends Controller
 
     public function create()
     {
-        
+
         return view('admin.create');
     }
     public function store(Request $request)

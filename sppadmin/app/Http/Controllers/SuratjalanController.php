@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\MSuratjalan;
-use App\Models\MCbu;
+
 use App\Models\MOffice;
 use App\Models\MSitename;
 use App\Models\User;
+
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -27,9 +28,10 @@ class SuratjalanController extends Controller
      */
     public function index()
     {
-        $cbu = MCbu::get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $suratjalan = MSuratjalan::where('pengirim', Session::get('runidsitename'))->get();
-        return view('suratjalan.index', compact('suratjalan', 'cbu'));
+        return view('suratjalan.index', compact('suratjalan', 'cbu','sitename'));
     }
     public function create()
     {

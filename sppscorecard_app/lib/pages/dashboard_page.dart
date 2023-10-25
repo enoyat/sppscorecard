@@ -52,7 +52,7 @@ class _DashboardPageState extends State<DashboardPage> {
           'namauser': prefs.getString('username')!,
           'idcbu': prefs.getString('idcbu')!,
           'idregion': prefs.getString('idregion')!,
-          'idsitename': prefs.getInt('idsitename')!,
+          'idsitename': prefs.getString('idsitename')!,
           'namacbu': prefs.getString('namacbu')!,
           'namaregion': prefs.getString('namaregion')!,
           'namasitename': prefs.getString('namasitename')!,
@@ -237,6 +237,76 @@ class _DashboardPageState extends State<DashboardPage> {
                                       const SizedBox(height: 10),
                                       const Text(
                                         'Maintenance',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Card(
+                                color: const Color.fromARGB(255, 43, 40, 226),
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    // Navigator.push(context,
+                                    //     MaterialPageRoute(builder: (context) {
+                                    //   return ListOfTroublePage(
+                                    //     profil: _profil,
+                                    //   );
+                                    // }));
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/pallet.png',
+                                        width: 70,
+                                        height: 70,
+                                      ),
+                                      const SizedBox(height: 10),
+                                      const Text(
+                                        'Pallete',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Card(
+                                color: const Color.fromARGB(255, 205, 15, 158),
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    // Navigator.push(context,
+                                    //     MaterialPageRoute(builder: (context) {
+                                    //   return ListOfTroublePage(
+                                    //     profil: _profil,
+                                    //   );
+                                    // }));
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/spare-parts.png',
+                                        width: 70,
+                                        height: 70,
+                                      ),
+                                      const SizedBox(height: 10),
+                                      const Text(
+                                        'Sparepart',
                                         style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,

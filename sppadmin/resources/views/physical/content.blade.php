@@ -4,12 +4,13 @@
     <thead>
         <tr>
             <TH SCOPE="COL">PERIODE</TH>
-            <TH SCOPE="COL">KODE UNIT</TH>
+            <TH SCOPE="COL">CODE UNIT</TH>
             <TH SCOPE="COL">SERIAL NUMBER</TH>
-            <TH SCOPE="COL">HARI KERJA</TH>
-            <TH SCOPE="COL">PLAN KERJA UNIT (MINUTES)</TH>
+            <TH SCOPE="COL">WORK DAYS</TH>
+            <TH SCOPE="COL">UNIT WORK PLAN (MINUTES)</TH>
             <TH SCOPE="COL">TOTAL BREAKDOWN UNIT (MINUTES)</TH>
-            <TH SCOPE="COL">TOTAL JAM KERJA UNIT</TH>
+            <TH SCOPE="COL">TOTAL BACKUP UNIT (MINUTES)</TH>
+            <TH SCOPE="COL">TOTAL WORKING UNIT (MINUTES)</TH>
             <TH SCOPE="COL">PA FORKLIFT (%)</TH>
             <TH SCOPE="COL">CBU</TH>
             <TH SCOPE="COL">REGION</TH>
@@ -29,11 +30,12 @@
             <th scope="col">{{ $key->harikerja }}</th>
             <th scope="col">{{ number_format($key->planunitkerja) }}</th>
             <th scope="col"><a href="{{ route('trouble.listaction',$key->kdunit) }}">{{ $key->totalbreakdown }}</a></th>
+            <th scope="col">{{ number_format($key->totalbackup) }}</th>
             <th scope="col">{{ number_format($key->totaljamkerja) }}</th>
             <th scope="col">{{ number_format($key->paforklift,2) }}</th>
 
-            <th scope="col">{{ $key->getcbu->namacbu }}</th>
-            <th scope="col">{{ $key->getregion->namaregion }}</th>
+            <th scope="col">{{ $key->getcbu->namasitename }}</th>
+            <th scope="col">{{ $key->getregion->namasitename }}</th>
             <th scope="col">{{ $key->getsitename->namasitename }}</th>
 
 

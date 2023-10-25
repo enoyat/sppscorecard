@@ -48,7 +48,7 @@
                                         id="idcbu">
                                         <option value="" selected>select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
@@ -77,22 +77,22 @@
                                 <div>
                                 <h5 class="font-size-14 mb-3">Pilih Unit</h5>
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="pilihunit" 
-                                        
+                                    <input class="form-check-input" type="radio" name="pilihunit"
+
                                         id="formRadios1" checked value="allunit">
                                     <label class="form-check-label" for="formRadios1">
-                                        All Unit
+                                        ALL UNIT
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="pilihunit" 
+                                    <input class="form-check-input" type="radio" name="pilihunit"
                                         id="formRadios2" value="itemunit">
                                     <label class="form-check-label" for="formRadios2">
-                                        Unit Tertentu
+                                        ONLY UNIT
                                     </label>
                                 </div>
                             </div>
-      
+
                                 </div>
 
                                 <div class="mb-3">
@@ -103,11 +103,11 @@
 
 
                                 <div class="mb-3">
-                                    <label for="example-tel-input" class="form-label">Hari Kerja</label>
+                                    <label for="example-tel-input" class="form-label">WORK DAYS</label>
                                     <input class="form-control" type="tel" value="" name="harikerja" id="harikerja">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Plan Hari Kerja
+                                    <label for="example-password-input" class="form-label">PLAN WORK DAYS
                                         (Minutes)</label>
                                     <input class="form-control" type="text" value="" name="planunitkerja"
                                         id="planunitkerja">
@@ -153,7 +153,7 @@ jQuery('#idcbu').change(function() {
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

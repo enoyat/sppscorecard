@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MCbu;
+
 use App\Models\MDokumentrouble;
 use App\Models\MForklifttype;
 use App\Models\MTrouble;
 use App\Models\MTroubleaction;
 use App\Models\User;
+use App\Models\MSitename;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -28,24 +29,24 @@ class TroubleController extends Controller
      */
     public function index()
     {
-        $cbu=MCbu::get();
-
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         $listactions=MTroubleaction::join('unit','troubleaction.kdunit','=','unit.kdunit')->where('idsitename',Session::get('runidsitename'))->get();
-        return view('trouble.index', compact('listactions','cbu'));
+        return view('trouble.index', compact('listactions','cbu','sitename'));
     }
     public function create()
     {
         if(Session::get('roles_id')==2) {
             $cbu=MCbu::where('id',Session::get('runidcbu'))->get();
         } else {
-            $cbu=MCbu::get();
+            $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         }
         $forklifttype = MForklifttype::get();
         return view('trouble.create',compact('cbu','forklifttype'));
     }
     public function edit($id)
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $forklifttype = MForklifttype::get();
         $trouble = MTrouble::find($id);
         return view('trouble.edit',compact('cbu','forklifttype','trouble'));
@@ -61,8 +62,8 @@ class TroubleController extends Controller
             'statusspp'=>'required',
         ]);
 
-      
-        
+
+
         $trouble = new MTrouble;
         $trouble->idcbu = $request->idcbu;
         $trouble->idregion = $request->idregion;
@@ -74,10 +75,10 @@ class TroubleController extends Controller
         $trouble->actionplanspp= $request->actionplanspp;
         $trouble->statusspp = $request->statusspp;
         $trouble->statuscustomer = "OPEN";
-   
+
         $simpan = $trouble->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('trouble.index');
 
@@ -97,12 +98,12 @@ class TroubleController extends Controller
             'idregion'=>'required',
             'idsitename'=>'required',
             'tanggal'=>'required',
-            'kdunit'=>'required',        
+            'kdunit'=>'required',
             'statusspp'=>'required',
         ]);
 
-      
-        
+
+
         $trouble = MTrouble::find($id);
         $trouble->idcbu = $request->idcbu;
         $trouble->idregion = $request->idregion;
@@ -117,7 +118,7 @@ class TroubleController extends Controller
         $trouble->statusspp = $request->statusspp;
         $simpan = $trouble->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('trouble.index');
 
@@ -192,12 +193,12 @@ class TroubleController extends Controller
     {
         $id = $request->id;
         $aid = $request->aid;
-        $trouble = MTrouble::find($id);
+        $trouble = MTroubleaction::find($id);
         return view('trouble.formstatus', compact('trouble','aid'));
     }
     public function updatestatus(Request $request)
     {
-       
+
         $id = $request->id;
         $aid = $request->aid;
         if($request->aid == 'spp'){
@@ -205,7 +206,7 @@ class TroubleController extends Controller
                 'statusspp'=>'required',
             ]);
             $statusspp = $request->statusspp;
-            $trouble = MTrouble::find($id);
+            $trouble = MTroubleaction::find($id);
             $trouble->statusspp = $statusspp;
             $trouble->save();
         }
@@ -214,11 +215,11 @@ class TroubleController extends Controller
                 'statuscustomer'=>'required',
             ]);
             $statuscustomer = $request->statuscustomer;
-            $trouble = MTrouble::find($id);
+            $trouble = MTroubleaction::find($id);
             $trouble->statuscustomer = $statuscustomer;
             $trouble->save();
         }
-       
-        return redirect()->route('trouble.index');
+
+        return redirect()->back();
     }
 }

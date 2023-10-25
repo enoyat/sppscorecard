@@ -8,8 +8,9 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <TH SCOPE="COL">KODE FORKLIFTTYPE</TH>
+                <TH SCOPE="COL">CODE FORKLIFTTYPE</TH>
                 <TH SCOPE="COL">FORKLIFTTYPE</TH>
+                <TH SCOPE="COL">DASHBOARD</TH>
                 <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
 
 
@@ -27,6 +28,7 @@
                 </th>
                 <th scope="col">{{ $key->id }}</th>
                 <th scope="col">{{ $key->namaforklifttype }}</th>
+                <th scope="col">{{ $key->f_dashboard }}</th>
                 <th style="width: 80px; min-width: 80px;">
                 <div class="dropdown">
                             <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
@@ -43,8 +45,8 @@
                                     </form></li>
                             </ul>
                         </div>
-                                   
-            
+
+
             </th>
             </tr>
             @endforeach

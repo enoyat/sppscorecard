@@ -40,10 +40,14 @@
                         @csrf
                         <div class="col-lg-6">
                             <div>
-
+                                <div class="mb-3">
+                                    <label for="example-text-input" class="form-label">Region Code</label>
+                                    <input class="form-control" type="text" name="id" id="id"
+                                        placeholder="">
+                                </div>
                                 <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Region</label>
-                                    <input class="form-control" type="text" name="namaregion" id="namaregion"
+                                    <input class="form-control" type="text" name="namasitename" id="namasitename"
                                         placeholder="">
                                 </div>
                                 <div class="mb-3">
@@ -52,12 +56,12 @@
                                         id="idcbu">
                                         <option value="" selected>select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
@@ -66,7 +70,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </form>
             </div>
@@ -94,7 +98,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

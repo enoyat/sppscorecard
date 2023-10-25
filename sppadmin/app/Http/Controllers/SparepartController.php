@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MCbu;
+
 use App\Models\MSparepart;
 use App\Models\MForklifttype;
 use App\Models\User;
+use App\Models\MSitename;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -26,19 +27,20 @@ class SparepartController extends Controller
      */
     public function index()
     {
-        $cbu=MCbu::get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $sparepart = MSparepart::get();
-        return view('sparepart.index', compact('sparepart','cbu'));
+        return view('sparepart.index', compact('sparepart','cbu','sitename'));
     }
     public function create()
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $forklifttype = MForklifttype::get();
         return view('sparepart.create',compact('cbu','forklifttype'));
     }
     public function edit($id)
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $forklifttype = MForklifttype::get();
         $sparepart = MSparepart::find($id);
         return view('sparepart.edit',compact('cbu','forklifttype','sparepart'));
@@ -46,20 +48,22 @@ class SparepartController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'namasparepart'=>'required',
-            'uom'=>'required',
-            
+            'codeunit'=>'required',
+            'simplename'=>'required',
+            'merkpart'=>'required',
+
         ]);
 
-      
-        
+
+
         $sparepart = new MSparepart;
-        $sparepart->namasparepart = $request->namasparepart;
-        $sparepart->uom = $request->uom;
-        
+        $sparepart->codeunit = $request->codeunit;
+        $sparepart->simplename = $request->simplename;
+        $sparepart->merkpart = $request->merkpart;
+
         $simpan = $sparepart->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('sparepart.index');
 
@@ -75,19 +79,19 @@ class SparepartController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'namasparepart'=>'required',
-            'uom'=>'required',
-          
+            'simplename'=>'required',
+            'merkpart'=>'required',
+
         ]);
 
-      
-        
+
+
         $sparepart = MSparepart::find($id);
-        $sparepart->namasparepart = $request->namasparepart;
-        $sparepart->uom = $request->uom; 
+        $sparepart->simplename = $request->simplename;
+        $sparepart->merkpart = $request->merkpart;
         $simpan = $sparepart->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('sparepart.index');
 
@@ -123,13 +127,13 @@ class SparepartController extends Controller
         }
     }
     public function getsparepart(Request $request){
-        $sparepart = MSparepart::where('namasparepart', 'LIKE', '%'.$request->search.'%')->orderBy('namasparepart', 'ASC')->get();
+        $sparepart = MSparepart::where('partname', 'LIKE', '%'.$request->search.'%')->orderBy('partname', 'ASC')->get();
 
         $response = array();
         foreach ($sparepart as $value) {
             $response[] = array(
-                "id" => $value->id,
-                "text" => $value->namasparepart
+                "id" => $value->codepart,
+                "text" => $value->partname
             );
         }
 

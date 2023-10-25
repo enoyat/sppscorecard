@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\MSitename;
 
-use App\Models\MCbu;
-use App\Models\MRegion;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
@@ -19,35 +19,42 @@ class RegionController extends Controller
      */
     public function index()
     {
-        $region = MRegion::get();
+
+        $region = MSitename::member(Session::get('kdcustomer'))->kategori("region")->with(['parent'])->get();
+
         return view('region.index', compact('region'));
     }
     public function create()
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         return view('region.create',compact('cbu'));
     }
     public function edit($id)
     {
-        $region = MRegion::find($id);
-        $cbu=MCbu::get();        
+        $region = MSitename::member(Session::get('kdcustomer'))->kategori("region")->with(['parent'])->where('id',$id)->first();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         return view('region.edit',compact('region','cbu'));
     }
     public function store(Request $request)
     {
         $request->validate([
-            'namaregion'=>'required',   
-            'idcbu'=>'required'         
+            'id'=>'required|unique:sitename,id',
+            'namasitename'=>'required',
+            'idcbu'=>'required'
         ]);
 
-      
-        
-        $region = new MRegion;
-        $region->namaregion = $request->namaregion;
-        $region->idcbu = $request->idcbu;
+
+
+
+        $region = new MSitename();
+        $region->id = $request->id;
+        $region->namasitename = $request->namasitename;
+        $region->parentid = $request->idcbu;
+        $region->kategori = "region";
+        $region->kdcustomer = Session::get('kdcustomer');
         $simpan = $region->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('region.index');
 
@@ -63,18 +70,20 @@ class RegionController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'namaregion'=>'required',
-            'idcbu'=>'required'     
+            'id'=>'required|unique:sitename,id,'.$id.',id',
+            'namasitename'=>'required',
+            'idcbu'=>'required'
         ]);
 
-      
-        
-        $region = MRegion::find($id);
-        $region->namaregion = $request->namaregion;
-        $region->idcbu = $request->idcbu;
+
+
+        $region = MSitename::find($id);
+        $region->id = $request->id;
+        $region->namasitename = $request->namasitename;
+        $region->parentid = $request->idcbu;
         $simpan = $region->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('region.index');
 
@@ -91,7 +100,7 @@ class RegionController extends Controller
     {
         try {
             $id = $request->id;
-            MRegion::where('id', '=', $id)->delete();
+            MSitename::where('id', '=', $id)->delete();
             return redirect()->route('region.index');
         } catch (QueryException $ex) {
             return redirect()->route('region.index');
@@ -108,17 +117,5 @@ class RegionController extends Controller
             return redirect()->back();
         }
     }
-    public function getregion(Request $request){
-        $region = MRegion::where('namaregion', 'LIKE', '%'.$request->search.'%')->orderBy('namaregion', 'ASC')->get();
 
-        $response = array();
-        foreach ($region as $value) {
-            $response[] = array(
-                "id" => $value->id,
-                "text" => $value->namaregion
-            );
-        }
-
-        return response()->json($response);
-    }
 }

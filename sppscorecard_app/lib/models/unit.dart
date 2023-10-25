@@ -5,18 +5,15 @@ class Unit {
   final String kdunit;
   final String serialnumber;
   final String namaunit;
-  final int idsitename;
+  final String idsitename;
   final int hm;
-  final String statusspp;
-  final String statusmekanik;
+
   Unit({
     required this.kdunit,
     required this.serialnumber,
     required this.namaunit,
     required this.idsitename,
     required this.hm,
-    required this.statusspp,
-    required this.statusmekanik,
   });
 
   Map<String, dynamic> toMap() {
@@ -26,8 +23,6 @@ class Unit {
       'namaunit': namaunit,
       'idsitename': idsitename,
       'hm': hm,
-      'statusspp': statusspp,
-      'statusmekanik': statusmekanik,
     };
   }
 
@@ -36,14 +31,13 @@ class Unit {
       kdunit: map['kdunit'] as String,
       serialnumber: map['serialnumber'] as String,
       namaunit: map['namaunit'] as String,
-      idsitename: map['idsitename'] as int,
+      idsitename: map['idsitename'] as String,
       hm: map['hm'] as int,
-      statusspp: map['statusspp'] as String,
-      statusmekanik: map['statusmekanik'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Unit.fromJson(String source) => Unit.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Unit.fromJson(String source) =>
+      Unit.fromMap(json.decode(source) as Map<String, dynamic>);
 }

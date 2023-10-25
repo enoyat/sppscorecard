@@ -18,7 +18,7 @@
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('sparepart.update',$sparepart->id) }}" method="POST">
+                <form action="{{ route('sparepart.update',$sparepart->codeunit) }}" method="POST">
                     @method('PUT')
                     <div class="row">
                         @if ($message = Session::get('success'))
@@ -42,12 +42,12 @@
                         <div class="col-lg-6">
                             <div>
                             <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Nama Spare Part</label>
-                                    <input class="form-control" type="text" value="{{ $sparepart->namasparepart }}" name="namasparepart" id="namasparepart">
+                                    <label for="example-password-input" class="form-label">Name of Spare Part</label>
+                                    <input class="form-control" type="text" value="{{ $sparepart->simplename }}" name="simplename" id="simplename">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-date-input" class="form-label">Uom</label>
-                                    <input class="form-control" type="text" value="{{ $sparepart->uom }}" name="uom" id="uom">
+                                    <input class="form-control" type="text" value="{{ $sparepart->merkpart }}" name="merkpart" id="merkpart">
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
@@ -83,7 +83,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

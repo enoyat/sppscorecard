@@ -23,7 +23,7 @@
         <div class="col-lg-6">
 
             <div class="mb-3">
-                
+
                 @if ($aid=="customer")
                 <label class="form-label">Status Customer</label>
                 <select class="form-select" name="statuscustomer" id="statuscustomer">
@@ -43,7 +43,7 @@
                 </select>
                 @endif
                 <input type='hidden' name='aid' value='{{ $aid }}' />
-                <input type='hidden' name='kdunit' value='{{ $maintenance->kdunit }}' />
+                <input type='hidden' name='id' value='{{ $maintenance->id }}' />
 
             </div>
 

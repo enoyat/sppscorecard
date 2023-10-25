@@ -42,22 +42,27 @@
                             <div>
 
                                 <div class="mb-3">
-                                    <label for="example-text-input" class="form-label">Site Name</label>
-                                    <input class="form-control" type="text" name="namasitename" id="namasitename"
+                                    <label for="example-text-input" class="form-label">Sitename Code</label>
+                                    <input class="form-control" type="text" name="id" id="id" value=""
                                         placeholder="">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-text-input" class="form-label">Region</label>
+                                    <label for="example-text-input" class="form-label">Sitename</label>
+                                    <input class="form-control" type="text" name="namasitename"
+                                        value="" id="namasitename" placeholder="">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-text-input" class="form-label">REGION</label>
                                     <select class="form-select" aria-label="Default select example" name="idregion"
                                         id="idregion">
-                                        <option value="" selected>select</option>
+
+                                        <option value="">== select ==</option>
                                         @foreach ($region as $itemregion)
-                                        <option value="{{ $itemregion->id }}">{{ $itemregion->namaregion }}</option>
+                                            <option value="{{ $itemregion->id }}">{{ $itemregion->namasitename }}</option>
                                         @endforeach
                                     </select>
 
                                 </div>
-                                
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
@@ -66,7 +71,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </form>
             </div>
@@ -94,7 +99,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

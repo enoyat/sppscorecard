@@ -45,20 +45,20 @@
                                     <label for="example-text-input" class="form-label">CBU</label>
                                     <select class="form-select" aria-label="Default select example" name="idcbu"
                                         id="idcbu">
-                                        <option value="{{ $palleterenew->idcbu }}" selected>{{ $palleterenew->getcbu->namacbu }}</option>
+                                        <option value="{{ $palleterenew->idcbu }}" selected>{{ $palleterenew->getcbu->namasitename }}</option>
                                         <option value="" >select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Region</label>
-                                    
+
                                     <select class="form-select" aria-label="Default select example" name="idregion"
                                         id="idregion">
-                                        <option value="{{ $palleterenew->idregion }}">{{ $palleterenew->getregion->namaregion }}</option>
+                                        <option value="{{ $palleterenew->idregion }}">{{ $palleterenew->getregion->namasitename }}</option>
                                     </select>
 
                                 </div>
@@ -128,7 +128,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

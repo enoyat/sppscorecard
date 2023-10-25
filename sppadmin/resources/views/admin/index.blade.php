@@ -29,15 +29,15 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Kode
+                                        CODE
                                     </th>
                                     <th>
-                                        Name 
+                                        Name
                                     </th>
                                     <th>
-                                        email 
+                                        email
                                     </th>
-                                    
+
 
                                 </tr>
                             </thead>
@@ -48,7 +48,7 @@
                                         <td><?php echo $key->id; ?></td>
                                         <td><?php echo $key->name; ?></td>
                                         <td><?php echo $key->email; ?></td>
-                                        
+
                                     </tr>
                                     <?php $i++; ?>
                                 @endforeach

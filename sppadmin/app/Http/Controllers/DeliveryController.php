@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MCbu;
-use App\Models\MDelivery;
-use App\Models\MForklifttype;
-use App\Models\User;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -16,6 +12,12 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 
+
+
+use App\Models\MDelivery;
+use App\Models\MForklifttype;
+use App\Models\User;
+use App\Models\MSitename;
 class DeliveryController extends Controller
 {
 
@@ -26,24 +28,25 @@ class DeliveryController extends Controller
      */
     public function index()
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $delivery = MDelivery::where('idsitename',Session::get('runidsitename'))->get();
+        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         $forklifttype = MForklifttype::get();
-        return view('delivery.index', compact('delivery','forklifttype','cbu'));
+        return view('delivery.index', compact('delivery','forklifttype','cbu','sitename'));
     }
     public function create()
     {
         if(Session::get('roles_id')==2) {
             $cbu=MCbu::where('id',Session::get('runidcbu'))->get();
         } else {
-            $cbu=MCbu::get();
+            $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         }
         $forklifttype = MForklifttype::get();
         return view('delivery.create',compact('cbu','forklifttype'));
     }
     public function edit($id)
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $forklifttype = MForklifttype::get();
         $delivery = MDelivery::find($id);
         return view('delivery.edit',compact('cbu','forklifttype','delivery'));
@@ -63,8 +66,8 @@ class DeliveryController extends Controller
 
         ]);
 
-      
-        
+
+
         $delivery = new MDelivery;
         $delivery->idcbu = $request->idcbu;
         $delivery->idregion = $request->idregion;
@@ -78,14 +81,14 @@ class DeliveryController extends Controller
         $delivery->daterequest = $request->daterequest;
         $delivery->ponumber  = $request->ponumber;
         $delivery->daysoflapse  = $request->daysoflapse;
-        $delivery->remarkplant  = $request->remarkplant;
+
         $delivery->dateactual  = $request->dateactual;
-        $delivery->confirmationplan  = $request->confirmationplan;
+
         $delivery->statusspp  = $request->statusspp;
-        $delivery->statuscustomer   = "OPEN";        
+        $delivery->statuscustomer   = "OPEN";
         $simpan = $delivery->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('delivery.index');
 
@@ -112,8 +115,8 @@ class DeliveryController extends Controller
             'statusspp'=>'required',
         ]);
 
-      
-        
+
+
         $delivery = MDelivery::find($id);
         $delivery->idcbu = $request->idcbu;
         $delivery->idregion = $request->idregion;
@@ -127,13 +130,13 @@ class DeliveryController extends Controller
         $delivery->daterequest = $request->daterequest;
         $delivery->ponumber  = $request->ponumber;
         $delivery->daysoflapse  = $request->daysoflapse;
-        $delivery->remarkplant  = $request->remarkplant;
+
         $delivery->dateactual  = $request->dateactual;
-        $delivery->confirmationplan  = $request->confirmationplan;
+
         $delivery->statusspp  = $request->statusspp;
         $simpan = $delivery->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('delivery.index');
 
@@ -173,12 +176,19 @@ class DeliveryController extends Controller
     {
         $id = $request->id;
         $aid = $request->aid;
-        $delivery = MDelivery::find($id);
-        return view('delivery.formstatus', compact('delivery','aid'));
+        if($request->aid == 'spp'){
+            $delivery = MDelivery::find($id);
+            return view('delivery.formstatus', compact('delivery','aid'));
+        }
+        else {
+            $delivery = MDelivery::find($id);
+            return view('delivery.formstatuscustomer', compact('delivery','aid'));
+        }
+
     }
     public function updatestatus(Request $request)
     {
-       
+
         $id = $request->id;
         $aid = $request->aid;
         if($request->aid == 'spp'){
@@ -195,11 +205,13 @@ class DeliveryController extends Controller
                 'statuscustomer'=>'required',
             ]);
             $statuscustomer = $request->statuscustomer;
+
             $delivery = MDelivery::find($id);
             $delivery->statuscustomer = $statuscustomer;
+            $delivery->remarkplan = $request->remarkplan;
             $delivery->save();
         }
-       
+
         return redirect()->route('delivery.index');
     }
 

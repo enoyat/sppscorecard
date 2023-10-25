@@ -41,7 +41,7 @@
                                         <div class="form-group">
                                             <label>id</label>
                                             <input type="text" class="form-control" id="id" name="id"
-                                                placeholder="kode (otomatis)" value="{{ old('id') }}" readonly>
+                                                placeholder="CODE (otomatis)" value="{{ old('id') }}" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Name </label>
@@ -53,12 +53,12 @@
                                             <input type="email" class="form-control" id="email" name="email"
                                                 placeholder="email " value="{{ old('email') }}" required="">
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <label>Password </label>
                                             <input type="password" class="form-control" id="password" name="password"
                                                 placeholder="password" value="{{ old('password') }}" required="">
-                                        </div>                                 
+                                        </div>
                                         <button type="submit" class="btn btn-primary">Simpan</button>
                                         <a href="{{ route('admin.index') }}">
                                             <div class="btn btn-primary">Kembali</div>
@@ -78,7 +78,7 @@
     $('#kdkab').change(function() {
         $('#kdkec').html('');
         var id = $(this).val();
-        var string="{{ asset('/wilayah/getkecamatan/') }}/"+id;      
+        var string="{{ asset('/wilayah/getkecamatan/') }}/"+id;
         $.ajax({
             type: 'GET',
             url: string,
@@ -103,7 +103,7 @@
     $('#kdkec').change(function() {
         $('#kdkel').html('');
         var id = $(this).val();
-        var string="{{ asset('/wilayah/getkelurahan/') }}/"+id;      
+        var string="{{ asset('/wilayah/getkelurahan/') }}/"+id;
         $.ajax({
             type: 'GET',
             url: string,

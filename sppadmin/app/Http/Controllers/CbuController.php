@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MCbu;
+use App\Models\MSitename;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
@@ -18,32 +18,38 @@ class CbuController extends Controller
      */
     public function index()
     {
-        $cbu = MCbu::get();
+        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         return view('cbu.index', compact('cbu'));
     }
     public function create()
     {
-        $cbu=MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         return view('cbu.create',compact('cbu'));
     }
     public function edit($id)
     {
-        $cbu = MCbu::find($id);
+        $cbu = MSitename::find($id);
         return view('cbu.edit',compact('cbu'));
     }
     public function store(Request $request)
     {
         $request->validate([
-            'namacbu'=>'required',            
+            'id'=>'required|unique:sitename,id',
+            'namasitename'=>'required',
         ]);
 
-      
-        
-        $cbu = new MCbu;
-        $cbu->namacbu = $request->namacbu;
+
+
+        $cbu = new MSitename();
+        $cbu->id = $request->id;
+        $cbu->namasitename = $request->namasitename;
+        $cbu->kdcustomer = Session::get('kdcustomer');
+      //  $cbu->parentid = $request->parentid;
+        $cbu->kategori = "cbu";
+
         $simpan = $cbu->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('cbu.index');
 
@@ -59,16 +65,18 @@ class CbuController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'namacbu'=>'required',
+            'id'=>'required|unique:sitename,id,'.$id.',id',
+            'namasitename'=>'required',
         ]);
 
-      
-        
-        $cbu = MCbu::find($id);
-        $cbu->namacbu = $request->namacbu;
+
+
+        $cbu = MSitename::find($id);
+        $cbu->id = $request->id;
+        $cbu->namasitename = $request->namasitename;
         $simpan = $cbu->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('cbu.index');
 
@@ -85,7 +93,7 @@ class CbuController extends Controller
     {
         try {
             $id = $request->id;
-            MCbu::where('id', '=', $id)->delete();
+            Msitename::where('id', '=', $id)->delete();
             return redirect()->route('cbu.index');
         } catch (QueryException $ex) {
             return redirect()->route('cbu.index');
@@ -102,17 +110,5 @@ class CbuController extends Controller
             return redirect()->back();
         }
     }
-    public function getcbu(Request $request){
-        $cbu = MCbu::where('namacbu', 'LIKE', '%'.$request->search.'%')->orderBy('namacbu', 'ASC')->get();
 
-        $response = array();
-        foreach ($cbu as $value) {
-            $response[] = array(
-                "id" => $value->id,
-                "text" => $value->namacbu
-            );
-        }
-
-        return response()->json($response);
-    }
 }

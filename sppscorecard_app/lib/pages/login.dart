@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   final _isLogin = true;
   var email = '';
   var password = '';
-  var idsitename = 0;
+  var idsitename = '';
   var idcbu = '';
   var idregion = '';
   var namacbu = '';
@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
     await prefs.setString('email', email);
     await prefs.setInt('rolesid', rolesid!);
     await prefs.setInt('userid', userid);
-    await prefs.setInt('idsitename', idsitename);
+    await prefs.setString('idsitename', idsitename);
     await prefs.setString('idcbu', idcbu);
     await prefs.setString('idregion', idregion);
     await prefs.setString('namacbu', namacbu);

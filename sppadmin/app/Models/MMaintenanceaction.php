@@ -22,6 +22,10 @@ class MMaintenanceaction extends Model
     public function getuser() {
         return $this->belongsTo(User::class, 'iduser', 'id');
     }
-   
+    public function getunit() {
+        return $this->belongsTo(MUnit::class, 'kdunit', 'kdunit');
+    }
+
+
 
 }

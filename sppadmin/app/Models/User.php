@@ -76,4 +76,7 @@ class User extends Authenticatable
     public function getsitename(){
         return $this->belongsTo(MSitename::class,'idsitename','id');
     }
+    public function getcustomer(){
+        return $this->belongsTo(MCustomer::class,'kdcustomer','kdcustomer');
+    }
 }

@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use App\Models\MCustomer;
+use App\Models\MSitename;
+
+use Session;
 
 class LoginController extends Controller
 {
@@ -37,4 +42,50 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    public function redirectTo()
+    {
+        $roles = Auth::user()->roles_id;
+        $kdcustomer=Auth::user()->kdcustomer;
+        $namacustomer=Auth::user()->getcustomer->namacustomer;
+        $category=Auth::user()->getcustomer->category;
+        $sitename=Auth::user()->idsitename;
+        $namasitename=MSitename::where('id',$sitename)->first();
+
+        switch ($roles) {
+            case 1:
+
+                Session::put('runidsitename', $sitename);
+                Session::put('runnamasitename', $namasitename->namasitename);
+                Session::put('roles_id', $roles);
+                Session::put('kdcustomer', $kdcustomer);
+                Session::put('namacustomer', $namacustomer);
+                Session::put('category', $category);
+                return route('root');
+                break;
+            case 2:
+
+                Session::put('runidsitename', $sitename);
+                Session::put('runnamasitename', $namasitename->namasitename);
+                Session::put('roles_id', $roles);
+                Session::put('kdcustomer', $kdcustomer);
+                Session::put('namacustomer', $namacustomer);
+                Session::put('category', $category);
+                return route('root');
+                break;
+            case 5:
+
+                Session::put('runidsitename', $sitename);
+                Session::put('runnamasitename', $namasitename->namasitename);
+                Session::put('roles_id', $roles);
+                Session::put('kdcustomer', $kdcustomer);
+                Session::put('namacustomer', $namacustomer);
+                Session::put('category', $category);
+                return route('root');
+                break;
+            default:
+                return redirect()->route('login');
+                break;
+        }
+    }
+
 }

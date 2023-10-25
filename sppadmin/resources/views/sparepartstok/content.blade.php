@@ -8,12 +8,13 @@
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
+
+                <TH SCOPE="COL">SPARE PART</TH>
+                <TH SCOPE="COL">QTY</TH>
+                <TH SCOPE="COL">STOK</TH>
                 <TH SCOPE="COL">CBU</TH>
                 <TH SCOPE="COL">REGION</TH>
                 <TH SCOPE="COL">SITE NAME</TH>
-                <TH SCOPE="COL">SPARE PART</TH>
-                <TH SCOPE="COL">QTY</TH>
-                <TH SCOPE="COL">UOM</TH>
                 <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
 
 
@@ -23,19 +24,20 @@
             @php $i=1; @endphp
             @foreach ($sparepartstok as $key)
             <tr>
-                <th scope="row">
+                <td scope="row">
                     <div class="form-check font-size-16">
                         <input type="checkbox" class="form-check-input" id="contacusercheck1">
                         <label class="form-check-label" for="contacusercheck1"></label>
                     </div>
-                </th>
-                <th scope="col">{{ $key->getcbu->namacbu }}</th>
-                <th scope="col">{{ $key->getregion->namaregion }}</th>
-                <th scope="col">{{ $key->getsitename->namasitename }}</th>
-                <th scope="col">{{ $key->getsparepart->namasparepart }}</th>
-                <th scope="col">{{ $key->qty }}</th>  
-                <th scope="col">{{ $key->getsparepart->uom }}</th>   
-                <th style="width: 80px; min-width: 80px;">
+                </td>
+
+                <td scope="col">{{ $key->getsparepart->partname }}</td>
+                <td scope="col">{{ $key->qty }}</td>
+                <td scope="col">{{ $key->stok }}</td>
+                <td scope="col">{{ $key->getcbu->namasitename }}</td>
+                <td scope="col">{{ $key->getregion->namasitename }}</td>
+                <td scope="col">{{ $key->getsitename->namasitename }}</td>
+                <td style="width: 80px; min-width: 80px;">
                 <div class="dropdown">
                             <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
                                 type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -51,9 +53,9 @@
                                     </form></li>
                             </ul>
                         </div>
-                                   
-            
-            </th>
+
+
+            </td>
             </tr>
             @endforeach
         </tbody>

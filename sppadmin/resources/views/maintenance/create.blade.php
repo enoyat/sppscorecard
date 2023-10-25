@@ -46,7 +46,7 @@
                                         id="idcbu">
                                         <option value="" selected>select</option>
                                         @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namacbu }}</option>
+                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
                                         @endforeach
                                     </select>
 
@@ -68,16 +68,16 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Kode Unit</label>
+                                    <label for="example-password-input" class="form-label">CODE Unit</label>
                                     <input class="form-control" type="text" value="" name="kdunit"
                                         id="kdunit">
-                                        <small class="text-danger">Kode Unit tidak boleh sama dan tidak boleh ada spasi</small>
+                                        <small class="text-danger">CODE Unit tidak boleh sama dan tidak boleh ada spasi</small>
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Serial Number</label>
                                     <input class="form-control" type="text" value="" name="serialnumber"
                                         id="serialnumber">
-                                       
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-date-input" class="form-label">HM</label>
@@ -92,7 +92,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </form>
             </div>
@@ -120,7 +120,7 @@
             var html = '';
             var html = '<option>Select</option>';
             for (i = 0; i < datax.length; i++) {
-                html += "<option value='" + datax[i].id + "'>" + datax[i].namaregion +
+                html += "<option value='" + datax[i].id + "'>" + datax[i].namasitename +
                     "</option>";
             }
             $('#idregion').html(html);

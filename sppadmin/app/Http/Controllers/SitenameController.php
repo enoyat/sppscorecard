@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\MCbu;
-use App\Models\MRegion;
 use App\Models\MSitename;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
@@ -20,38 +19,43 @@ class SitenameController extends Controller
      */
     public function index()
     {
-        $sitename = MSitename::get();
+
+        $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->with(['parent'])->get();
+
         return view('sitename.index', compact('sitename'));
     }
     public function create()
     {
-        $cbu=MCbu::get();
-        $region=MRegion::get();
-        $sitename=Msitename::get();
-        return view('sitename.create',compact('cbu','region','sitename'));
+        $region=MSitename::member(Session::get('kdcustomer'))->kategori("region")->get();
+
+        return view('sitename.create',compact('region'));
     }
     public function edit($id)
     {
-        $sitename = Msitename::find($id);
-        $cbu=MCbu::get();  
-        $region=MRegion::get();      
-        return view('sitename.edit',compact('sitename','cbu','region'));
+        $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->with(['parent'])->where('id',$id)->first();
+        $region=MSitename::member(Session::get('kdcustomer'))->kategori("region")->get();
+        return view('sitename.edit',compact('sitename','region'));
     }
     public function store(Request $request)
     {
         $request->validate([
-            'namasitename'=>'required',   
-            'idregion'=>'required'         
+            'id'=>'required|unique:sitename,id',
+            'namasitename'=>'required',
+            'idregion'=>'required'
         ]);
 
-      
-        
-        $sitename = new Msitename;
+
+
+
+        $sitename = new MSitename();
+        $sitename->id = $request->id;
         $sitename->namasitename = $request->namasitename;
-        $sitename->idregion = $request->idregion;
+        $sitename->parentid = $request->idregion;
+        $sitename->kategori = "sitename";
+        $sitename->kdcustomer = Session::get('kdcustomer');
         $simpan = $sitename->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('sitename.index');
 
@@ -67,18 +71,20 @@ class SitenameController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'id'=>'required|unique:sitename,id,'.$id.',id',
             'namasitename'=>'required',
-            'idregion'=>'required'     
+            'idregion'=>'required'
         ]);
 
-      
-        
-        $sitename = Msitename::find($id);
+
+
+        $sitename = MSitename::find($id);
+        $sitename->id = $request->id;
         $sitename->namasitename = $request->namasitename;
-        $sitename->idregion = $request->idregion;
+        $sitename->parentid = $request->idregion;
         $simpan = $sitename->save();
 
-        if ($simpan) {                      
+        if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('sitename.index');
 
@@ -95,7 +101,7 @@ class SitenameController extends Controller
     {
         try {
             $id = $request->id;
-            Msitename::where('id', '=', $id)->delete();
+            MSitename::where('id', '=', $id)->delete();
             return redirect()->route('sitename.index');
         } catch (QueryException $ex) {
             return redirect()->route('sitename.index');
@@ -112,17 +118,5 @@ class SitenameController extends Controller
             return redirect()->back();
         }
     }
-    public function getsitename(Request $request){
-        $sitename = Msitename::where('namasitename', 'LIKE', '%'.$request->search.'%')->orderBy('namasitename', 'ASC')->get();
 
-        $response = array();
-        foreach ($sitename as $value) {
-            $response[] = array(
-                "id" => $value->id,
-                "text" => $value->namasitename
-            );
-        }
-
-        return response()->json($response);
-    }
 }
