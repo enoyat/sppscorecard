@@ -40,7 +40,7 @@ class _FormTroublePageState extends State<FormTroublePage> {
       context: context,
       initialTime: selectedTime,
     );
-    if (time != null && time != selectedTime) {
+    if (time != null) {
       setState(() {
         selectedTime = time;
         _jampengerjaan.text = '${selectedTime.hour}:${selectedTime.minute}';
@@ -53,7 +53,7 @@ class _FormTroublePageState extends State<FormTroublePage> {
       context: context,
       initialTime: selectedTimeakhir,
     );
-    if (time != null && time != selectedTimeakhir) {
+    if (time != null) {
       setState(() {
         selectedTimeakhir = time;
         _jamselesai.text =
@@ -85,7 +85,7 @@ class _FormTroublePageState extends State<FormTroublePage> {
       firstDate: DateTime(2021),
       lastDate: DateTime(2040),
     );
-    if (date != null && date != selectedwaktupengerjaan) {
+    if (date != null) {
       setState(() {
         selectedwaktupengerjaan = date;
         _waktuselesaipengerjaan.text =
