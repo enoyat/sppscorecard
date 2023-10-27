@@ -8,95 +8,223 @@
     }
 </script>
 <div id="area-print">
-    <div class="card" style="border: 1px solid black">
-        <div class="card-body">
-
-            <table style="background: gray" width="100%">
-                <tr>
-                    <td><img src="{{ URL::asset('img/forklift.png') }}" alt="" height="100"
-                            class="logo logo-dark">
-                    </td>
-                    <td>
-                        <div style="font-size: 20px;"><b>KPI DASHBOARD {{ Session::get('runnamaregion') }}</b></div>
-                    </td>
-                    <td>Update: {{ date('Y/m/d') }}</td>
-                </tr>
-            </table>
-            <br>
-            <div
-                style="border-top-left-radius: 20px; border: 1px solid grey; padding:10px; border-bottom-right-radius:20px">
-                <div
-                    style="margin-top:-25px; margin-left:10px; width:200px; height:30px; background: grey; border-radius:10px; padding:5px; color:white; text-align:center">
-                    MHE Availability</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <TH width="25%" style="text-align: left">UNIT TYPE</TH>
-                            <TH width="20%" style="text-align: center">UNITS</TH>
-                            <TH width="20%" style="text-align: center">TOTAL HOUR AVAILABILITY (MINUTE)</TH>
-                            <TH width="20%" style="text-align: center">TARGET HOUR AVAILABILITY (MINUTE)</TH>
-                            <TH width="15%" style="text-align: center">ACHIEVEMENT (%)</TH>
-
-
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach ($kpi as $item)
-                            <tr>
-                                <td>{{ $item->namaforklifttype }}</td>
-                                <td style="text-align: center;">{{ $item->jmlunit }}</td>
-                                <td style="text-align: center;">{{ number_format($item->sumplanunitkerja) }}</td>
-                                <td style="text-align: center;">{{ number_format($item->sumtotaljamkerja) }}</td>
-                                <td style="text-align: center; color:blue">{{ number_format($item->avgpaforklift, 2) }}
-                                </td>
-
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="table-responsive">
-
-                <div class="card">
-                
-                    <div class="card-header">
-                        <h4 class="card-title mb-0">MHE PERFORMANCE CHART</h4>
-                    </div>
-                    <div class="card-body">
-                        <div id="column_chart" data-colors='["#2ab57d", "#5156be", "#fd625e"]'' class="apex-charts"
-                            dir="ltr">
-
+    <table width="100%">
+        <tr>
+            <td style="background: white; padding:10px"><img src="{{ URL::asset('img/logo.png') }}" alt=""
+                    height="50">
+            </td>
+            <td style="background:rgb(9, 136, 153); padding:10px">
+                <div style="font-size: 16px; color: white;"><b>KPI DASHBOARD
+                        {{ Session::get('runnamaregion') }}</b></div>
+            </td>
+            <td style="background:rgb(9, 136, 153); color: white; padding:10px">Update: {{ date('Y/m/d') }}</td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xl-8 col-md-8">
+            <!-- card -->
+            <div class="card card-h-100">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Units</span>
+                            <h4 class="mb-3">
+                                <span class="counter-value" data-target="{{ $jmlunit }}">0</span>
+                            </h4>
                         </div>
+                        <div id="pie-chartunit" data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be", "#32a852"]'
+                            class="e-charts">
+                        </div>
+
+                    </div>
+
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-xl-4 col-md-4">
+            <!-- card -->
+            <div class="card">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">KPI</span>
+                            <h4 class="mb-3">
+                                <span class="counter-value" data-target="{{ $avgkpi }}">0</span>%
+                            </h4>
+                        </div>
+
                     </div>
                 </div>
-                <!--end card-->
-            </div>
-            <div style="text-align: right"><img src="{{ URL::asset('img/mhe-kpi.png') }}" alt=""
-                    class="logo logo-dark"></div>
-        </div>
+            </div><!-- end card body -->
+            <div class="card">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Delivery Schedule</span>
+                            <h4 class="mb-3">
+                                <span class="counter-value" data-target="{{ $kpidelivery }}">0</span>%
+                            </h4>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- end card body -->
+            <div class="card">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Spare Parts</span>
+                            <h4 class="mb-3">
+                                <span class="counter-value" data-target="{{ $kpisparepart }}">0</span>%
+                            </h4>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- end card body -->
+        </div><!-- end card -->
+
+
+
     </div>
+
+<div class="row">
+    <?php $i = 0; ?>
+    @foreach ($arraykpi as $item)
+        <div class="col-xl-4 col-md-8">
+            <!-- card -->
+            <div class="card card-h-100">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <span
+                                class="text-muted mb-3 lh-1 d-block text-truncate">{{ $item['namaforklifttype'] }}</span>
+                            <h4 class="mb-3">
+                                <?php $kpi = ($item['sumtotaljamkerja'] / $item['sumplanunitkerja']) * 100; ?>
+
+                                <span class="counter-value" data-target="{{ number_format($kpi, 2) }}">0</span>%
+                            </h4>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div id="pie-chart{{ $i }}"
+                            data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be"]' class="e-charts">
+                        </div>
+                        <input type="hidden" name="totalbreakdown{{ $i }}"
+                            id="totalbreakdown{{ $i }}" value="{{ $item['totalbreakdown'] }}">
+
+                        <input type="hidden" name="sumtotaljamkerja{{ $i }}"
+                            id="sumtotaljamkerja{{ $i }}" value="{{ $item['sumtotaljamkerja'] }}">
+
+                    </div>
+                    <div class="text-nowrap">
+                        <span class="badge bg-primary ">{{ number_format($item['jmlunit']) }}</span>
+                        <span class="ms-1 text-muted font-size-13">Units</span>
+                    </div>
+                    <div class="text-nowrap">
+                        <span class="badge bg-primary ">{{ number_format($item['sumplanunitkerja']) }}</span>
+                        <span class="ms-1 text-muted font-size-13">Target Available (Minutes)</span>
+                    </div>
+                    <div class="text-nowrap">
+                        <span
+                            class="badge badge-soft-success text-success">{{ number_format($item['sumtotaljamkerja']) }}</span>
+                        <span class="ms-1 text-muted font-size-13">Total Available (Minutes)</span>
+                    </div>
+                    <div class="text-nowrap">
+                        <span
+                            class="badge badge-soft-danger text-success">{{ number_format($item['totalbreakdown']) }}</span>
+                        <span class="ms-1 text-muted font-size-13">Breakdown (Minutes)</span>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div>
+        <?php $i++; ?>
+    @endforeach
 </div>
+</div>
+
+
 <style>
     .apexcharts-tooltip span {
-    color: #ffffff;
-}
+        color: #ffffff;
+    }
 </style>
-<div style="text-align: center;"><button type="button" class="btn btn-primary" id="cetak"
-        onclick="printDiv('area-print')">Print KPI</button></div>
+{{-- <div style="text-align: center;"><button type="button" class="btn btn-primary" id="cetak"
+        onclick="printDiv('area-print')">Print KPI</button></div> --}}
+<!-- echarts init -->
+<!-- echarts js -->
+<script src="{{ URL::asset('build/libs/echarts/echarts.min.js') }}"></script>
 <script>
+    $(document).ready(function() {
+        <?php $i = 0; ?>
+        @foreach ($arraykpi as $item)
+            generatechart({{ $i }});
+            <?php $i++; ?>
+        @endforeach
+        chartunit();
+    });
 
-    /*
-Template Name: Minia - Admin & Dashboard Template
-Author: Themesbrand
-Website: https://themesbrand.com/
-Contact: themesbrand@gmail.com
-File: Apex Chart init js
-*/
+    function chartunit() {
+        // pie chart
+        var pieColors = getChartColorsArray("#pie-chartunit");
+        var dom = document.getElementById("pie-chartunit");
+
+        var myChart = echarts.init(dom);
+
+        var app = {};
+        option = null;
+        option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            // legend: {
+            //     orient: 'horizontal',
+            //     left: 'left',
+            //     data: {{ $kategori }},
+            //     textStyle: {
+            //         color: '#858d98'
+            //     }
+            // },
+            color: pieColors, //['#fd625e', '#2ab57d', '#4ba6ef', '#ffbf53', '#5156be'],
+            series: [{
+                name: 'Type',
+                type: 'pie',
+                radius: '40%',
+                // center: ['50%', '60%'],
+                data: [
+                    @foreach ($arraykpi as $item)
+                        {
+                            value: {{ $item['jmlunit'] }},
+                            name: "{{ $item['namaforklifttype'] }}"
+                        },
+                    @endforeach
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    }
+
 
     // get colors array from the string
     function getChartColorsArray(chartId) {
-
         var colors = $(chartId).attr('data-colors');
         var colors = JSON.parse(colors);
         return colors.map(function(value) {
@@ -110,83 +238,55 @@ File: Apex Chart init js
         })
     }
 
+    function generatechart(i) {
+        // pie chart
+        var pieColors = getChartColorsArray("#pie-chart" + i);
+        var dom = document.getElementById("pie-chart" + i);
+        var totalbreakdown = document.getElementById("totalbreakdown" + i).value;
+        var sumtotaljamkerja = document.getElementById("sumtotaljamkerja" + i).value;
+        var myChart = echarts.init(dom);
 
-    // column chart
-    var columnColors = getChartColorsArray("#column_chart");
-
-    var options = {
-        chart: {
-            height: 350,
-            type: 'bar',
-            toolbar: {
-                show: false,
-            }
-        },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                columnWidth: '50%',
+        var app = {};
+        option = null;
+        option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-
-        },
-        dataLabels: {
-            enabled: true,
-            style: {
-                fontSize: '8px',
-                colors: ['black']
-            },
-           
-        },
-        stroke: {
-            show: true,
-            width: 1,
-            colors: ['#e9e9f2']
-        },
-        series: [{
-            name: 'Achievement',
-            data: {{ $achievement }}
-        },],
-        colors: columnColors,
-        xaxis: {
-            categories: <?php echo $kategori ?>,
-            labels: {
-            style: {
-                fontSize: '7px',
-                colors: ['#0b0b0d']
-            }
-       }
-
-        },
-        yaxis: {
-            
-            title: {
-                text: '% (percent)',
-                style: {
-                    fontWeight: '500',
-                },
-            }
-        },
-        grid: {
-            borderColor: '#f1f1f1',
-        },
-        fill: {
-            opacity: 1
-
-        },
-
-        tooltip: {
-            y: {
-                formatter: function(val) {
-                    return "$ " + val + " %"
+            legend: {
+                orient: 'horizontal',
+                left: 'left',
+                data: ['Available', 'Breakdown'],
+                textStyle: {
+                    color: '#858d98'
                 }
-            }
+            },
+            color: pieColors, //['#fd625e', '#2ab57d', '#4ba6ef', '#ffbf53', '#5156be'],
+            series: [{
+                name: 'KPI',
+                type: 'pie',
+                radius: '40%',
+                // center: ['50%', '60%'],
+                data: [{
+                        value: sumtotaljamkerja,
+                        name: 'Available'
+                    },
+                    {
+                        value: totalbreakdown,
+                        name: 'Breakdown'
+                    },
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
         }
     }
-
-    var chart = new ApexCharts(
-        document.querySelector("#column_chart"),
-        options
-    );
-
-    chart.render();
 </script>

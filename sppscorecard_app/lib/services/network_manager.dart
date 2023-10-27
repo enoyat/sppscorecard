@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 
 class NetworkManager {
   late Dio dio;
-  /*final String baseUrl = "https://satriapirantiperkasa.com/api";*/
-  final String baseUrl = "http://192.168.200.252:8000/api";
+  final String baseUrl = "https://satriapirantiperkasa.com/api";
+  //final String baseUrl = "http://192.168.200.252:8000/api";
   NetworkManager() {
     dio = Dio();
   }
