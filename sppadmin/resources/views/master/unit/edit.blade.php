@@ -128,6 +128,16 @@
                                         id="qty" required>
                                 </div>
                                 <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Mast (Stage)</label>
+                                    <input class="form-control" type="text" value="{{ $unit->mast }}" name="mast"
+                                        id="mast">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Mast Height (meter)</label>
+                                    <input class="form-control" type="text" value="{{ $unit->masheight }}" name="masheight"
+                                        id="masheight">
+                                </div>
+                                <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
                                 </div>

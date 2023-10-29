@@ -103,6 +103,11 @@
                                             name="capacity" id="capacity">
                                     </div>
                                     <div class="mb-3">
+                                        <label for="example-password-input" class="form-label">Mast (Stage)</label>
+                                        <input class="form-control" type="text" value="{{ $delivery->mast }}" name="mast"
+                                            id="mast">
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="example-password-input" class="form-label">Mas Height (m)</label>
                                         <input class="form-control" type="text" value="{{ $delivery->masheight }}"
                                             name="masheight" id="masheight">

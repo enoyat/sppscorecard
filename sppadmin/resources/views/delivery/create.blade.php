@@ -88,11 +88,15 @@
                                         id="capacity">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Mast Height (m)</label>
+                                    <label for="example-password-input" class="form-label">Mast (Stage)</label>
+                                    <input class="form-control" type="text" value="" name="mast"
+                                        id="mast">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Mast Height (meter)</label>
                                     <input class="form-control" type="text" value="" name="masheight"
                                         id="masheight">
                                 </div>
-
 
                             </div>
                         </div>

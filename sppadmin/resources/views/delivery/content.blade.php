@@ -4,23 +4,22 @@
     <thead>
         <tr>
 
-            <TH SCOPE="COL">STATUS SPP</TH>
-            <TH SCOPE="COL">STATUS CUSTOMER</TH>
+
             <TH SCOPE="COL">CUSTOMER DATE REQUEST <br>(YYYY/MM/DD)</TH>
             <TH SCOPE="COL">PO NUMBER</TH>
             <TH SCOPE="COL">SERIAL NUMBER</TH>
             <TH SCOPE="COL">FORKLIFT TYPE</TH>
-            <TH SCOPE="COL">CAPACITY (TON)</TH>
-            <TH SCOPE="COL">MAST HEIGHT (MTR)</TH>
+            <TH SCOPE="COL">CAPACITY (KILOGRAM)</TH>
+            <TH SCOPE="COL">MAST (STAGE)</TH>
+            <TH SCOPE="COL">HEIGHT (METER)</TH>
+
             <TH SCOPE="COL">ESTIMATED DELIVERY</TH>
             <TH SCOPE="COL">ACTUAL DELIVERY</TH>
             <TH SCOPE="COL">DAYS OF LAPSE</TH>
             <TH SCOPE="COL">REASON OF LAPSE</TH>
             <TH SCOPE="COL">REMARK PLANT</TH>
-            <TH SCOPE="COL">CBU</TH>
-            <TH SCOPE="COL">REGION</TH>
-            <TH SCOPE="COL">SITE NAME</TH>
-
+            <TH SCOPE="COL">STATUS SPP</TH>
+            <TH SCOPE="COL">STATUS CUSTOMER</TH>
             <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
 
 
@@ -30,6 +29,21 @@
         @php $i=1; @endphp
         @foreach ($delivery as $key)
             <tr>
+
+                <th scope="col">{{ $key->daterequest }}</th>
+                <th scope="col">{{ $key->ponumber }}</th>
+                <th scope="col">{{ $key->serialnumber }}</th>
+                <th scope="col">{{ $key->getforklifttype->namaforklifttype }}</th>
+                <th scope="col">{{ $key->capacity }}</th>
+                <th scope="col">{{ $key->mast }}</th>
+                <th scope="col">{{ $key->masheight }}</th>
+                <th scope="col">{{ $key->dateestimated }}</th>
+                <th scope="col">{{ $key->dateactual }}</th>
+
+
+                <th scope="col">{{ $key->daysoflapse }}</th>
+                <th scope="col">{{ $key->reason }}</th>
+                <th scope="col">{{ $key->remarkplan }}</th>
                 <th scope="col">
 
                     @if ($key->statusspp == 'CLOSE')
@@ -55,24 +69,7 @@
                         @endif
                     @endif
                 </th>
-                <th scope="col">{{ $key->daterequest }}</th>
-                <th scope="col">{{ $key->ponumber }}</th>
-                <th scope="col">{{ $key->serialnumber }}</th>
-                <th scope="col">{{ $key->getforklifttype->namaforklifttype }}</th>
-                <th scope="col">{{ $key->capacity }}</th>
-                <th scope="col">{{ $key->masheight }}</th>
-                <th scope="col">{{ $key->dateestimated }}</th>
-                <th scope="col">{{ $key->dateactual }}</th>
 
-
-                <th scope="col">{{ $key->daysoflapse }}</th>
-                <th scope="col">{{ $key->reason }}</th>
-                <th scope="col">{{ $key->remarkplan }}</th>
-
-
-                <th scope="col">{{ $key->getcbu->namasitename }}</th>
-                <th scope="col">{{ $key->getregion->namasitename }}</th>
-                <th scope="col">{{ $key->getsitename->namasitename }}</th>
 
                 <th style="width: 80px; min-width: 80px;">
                     <div class="dropdown">

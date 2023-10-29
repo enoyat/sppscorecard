@@ -73,6 +73,8 @@ class MasterUnitController extends Controller
         $unit->serialnumber = $request->serialnumber;
         $unit->specification = $request->specification;
         $unit->qty = $request->qty;
+        $unit->mast = $request->mast;
+        $unit->masheight = $request->masheight;
         $unit->namaunit = $request->kdunit;
         $unit->hm = $request->hm;
 
@@ -116,7 +118,10 @@ class MasterUnitController extends Controller
         $unit->capcity = $request->capcity;
         $unit->serialnumber = $request->serialnumber;
         $unit->specification = $request->specification;
+        $unit->mast = $request->mast;
+        $unit->masheight = $request->masheight;
         $unit->qty = $request->qty;
+
         $unit->namaunit = $request->kdunit;
 
         $simpan = $unit->save();

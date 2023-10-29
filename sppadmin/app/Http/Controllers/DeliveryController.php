@@ -60,6 +60,7 @@ class DeliveryController extends Controller
             'serialnumber'=>'required',
             'idforklifttype'=>'required',
             'capacity'=>'required',
+            'mast'=>'required',
             'masheight'=>'required',
             'dateestimated'=>'required',
             'statusspp'=>'required',
@@ -75,6 +76,7 @@ class DeliveryController extends Controller
         $delivery->serialnumber = $request->serialnumber;
         $delivery->idforklifttype = $request->idforklifttype;
         $delivery->capacity = $request->capacity;
+        $delivery->mast  = $request->mast;
         $delivery->masheight  = $request->masheight;
         $delivery->dateestimated = $request->dateestimated;
         $delivery->reason = $request->reason;
@@ -111,6 +113,7 @@ class DeliveryController extends Controller
             'idforklifttype'=>'required',
             'capacity'=>'required',
             'masheight'=>'required',
+            'mast'=>'required',
             'dateestimated'=>'required',
             'statusspp'=>'required',
         ]);
@@ -124,6 +127,7 @@ class DeliveryController extends Controller
         $delivery->serialnumber = $request->serialnumber;
         $delivery->idforklifttype = $request->idforklifttype;
         $delivery->capacity = $request->capacity;
+        $delivery->mast  = $request->mast;
         $delivery->masheight  = $request->masheight;
         $delivery->dateestimated = $request->dateestimated;
         $delivery->reason = $request->reason;

@@ -9,13 +9,10 @@ cellspacing="0" style="border-collapse: collapse;  widtd: 100%;">
         <th SCOPE="COL">MERK</th>
         <th SCOPE="COL">TYPE</th>
         <th SCOPE="COL">MODEL</th>
-        <th SCOPE="COL">CAPACITY (kg)</th>
         <th SCOPE="COL">SERIAL NUMBER</th>
-        <th SCOPE="COL">SPECIFICATION</th>
-        <th SCOPE="COL">QUANTITY (UNIT)</th>
-
-
-
+        <th SCOPE="COL">CAPACITY (KILOGRAM)</th>
+        <th SCOPE="COL">MAST (STAGE)</th>
+        <th SCOPE="COL">HEIGHT (METER)</th>
     </tr>
 </thead>
 <tbody>
@@ -33,10 +30,10 @@ cellspacing="0" style="border-collapse: collapse;  widtd: 100%;">
             <td scope="col">{{ $key->merk }}</td>
             <td scope="col">{{ $key->type }}</td>
             <td scope="col">{{ $key->model }}</td>
-            <td scope="col">{{ $key->capcity }}</td>
             <td scope="col">{{ $key->serialnumber }}</td>
-            <td scope="col">{{ $key->specification }}</td>
-            <td scope="col">{{ $key->qty }}</td>
+            <td scope="col">{{ number_format($key->capcity) }}</td>
+            <td scope="col">{{ $key->mast }}</td>
+            <td scope="col">{{ $key->masheight }}</td>
 
 
         </tr>
