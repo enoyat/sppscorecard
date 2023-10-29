@@ -50,7 +50,18 @@ rel="stylesheet" type="text/css" />
 
                                     <input name="periode" type="search" value="{{ request()->get('periode') }}"
                                         class="form-control" placeholder="Periode (yyyy-mm)">
-                                    <div class="input-group-append">
+                                    
+                                    <select name="filter" class="form-control">
+                                        
+                                        <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                                            SITENAME</option>
+                                            
+                                            <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
+                                                REGION</option>
+                                                <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
+                                                    CBU</option>
+                                    </select>
+                                        <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit">
                                             <i class="fas fa-search"></i>
                                         </button>

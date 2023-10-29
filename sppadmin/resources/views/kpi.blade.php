@@ -99,7 +99,7 @@
                     </div>
                     <div class="row">
                         <div id="pie-chartunit"
-                            data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be", "#32a852"]'
+                            data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be", "#32a852", "#fc0f03", "#f7f705", "#0bfc05", "#0bfcf5", "#0b0bfc", "#fc0bfc"]'
                             class="e-charts">
                         </div>
 
@@ -118,43 +118,36 @@
                         <div class="row align-items-center">
                             <div class="col-12">
                                 <span
-                                    class="text-muted mb-3 lh-1 d-block text-truncate">{{ $arraykpi[0]['namaforklifttype'] }}</span>
+                                    class="text-muted mb-3 lh-1 d-block text-truncate" id="detnamatype"></span>
                                 <h4 class="mb-3">
-                                    <?php $kpi = ($arraykpi[0]['sumtotaljamkerja'] / $arraykpi[0]['sumplanunitkerja']) * 100; ?>
-
-                                    <span class="counter-value" data-target="{{ number_format($kpi, 2) }}">0</span>%
+                                    <span class="counter-value" id="detkpi"></span> %
                                 </h4>
                             </div>
 
                         </div>
                         <div class="row">
-                            <div id="pie-chart" data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be"]'
+                            <div id="pie-chart" data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be", "#32a852"]'
                                 class="e-charts">
                             </div>
-                            <input type="hidden" name="totalbreakdown" id="totalbreakdown"
-                                value="{{ $arraykpi[0]['totalbreakdown'] }}">
-
-                            <input type="hidden" name="sumtotaljamkerja" id="sumtotaljamkerja"
-                                value="{{ $arraykpi[0]['sumtotaljamkerja'] }}">
 
                         </div>
                         <div class="text-nowrap">
-                            <span class="badge bg-primary ">{{ number_format($arraykpi[0]['jmlunit']) }}</span>
+                            <span class="badge bg-primary " id="detjmlunit"></span>
                             <span class="ms-1 text-muted font-size-13">Units</span>
                         </div>
                         <div class="text-nowrap">
                             <span
-                                class="badge bg-primary ">{{ number_format($arraykpi[0]['sumplanunitkerja']) }}</span>
+                                class="badge bg-primary " id="dettargetavailable"></span>
                             <span class="ms-1 text-muted font-size-13">Target Available (Minutes)</span>
                         </div>
                         <div class="text-nowrap">
                             <span
-                                class="badge badge-soft-success text-success">{{ number_format($arraykpi[0]['sumtotaljamkerja']) }}</span>
+                                class="badge badge-soft-success text-success" id="dettotalavailable"></span>
                             <span class="ms-1 text-muted font-size-13">Total Available (Minutes)</span>
                         </div>
                         <div class="text-nowrap">
                             <span
-                                class="badge badge-soft-danger text-success">{{ number_format($arraykpi[0]['totalbreakdown']) }}</span>
+                                class="badge badge-soft-danger text-success" id="dettotalbreakdown"></span>
                             <span class="ms-1 text-muted font-size-13">Breakdown (Minutes)</span>
                         </div>
                     </div><!-- end card body -->
@@ -185,7 +178,7 @@
     $(document).ready(function() {
         <?php $i = 0; ?>
         chartunit();
-        generatechart();
+        
     });
 
     function chartunit() {
@@ -200,8 +193,9 @@
         option = {
             tooltip: {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                formatter: "100 <br>{b} : Units: {c} ({d}%)"
             },
+
             // legend: {
             //     orient: 'horizontal',
             //     left: 'left',
@@ -211,19 +205,23 @@
             //     }
             // },
             color: pieColors, //['#fd625e', '#2ab57d', '#4ba6ef', '#ffbf53', '#5156be'],
+
             series: [{
                 name: 'Type',
                 type: 'pie',
+                selectedMode: 'single',
                 radius: '75%',
                 // center: ['50%', '60%'],
                 data: [
                     @foreach ($arraykpi as $item)
                         {
                             value: {{ $item['jmlunit'] }},
-                            name: "{{ $item['namaforklifttype'] }}"
+                            name: "{{ $item['namaforklifttype'] }}",
+                            
                         },
                     @endforeach
                 ],
+
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -232,18 +230,36 @@
                     }
                 }
             }]
-        };;
+        };
+        var js_array = JSON.parse('<?= addslashes(json_encode($arraykpi)) ?>');
+
         if (option && typeof option === "object") {
             myChart.setOption(option, true);
+            myChart.on('click',
+                function(params) {
+                    var namaforklifttype = params.name;
+                    var id = arrayLookup(namaforklifttype, js_array, 'namaforklifttype');                  
+                    generatechart(id);
+                    //your code
+                });
         }
 
 
     }
-    myChart.on('click', function(params) {
-            // printing data name in console
-            alert(params.name);
-            console.log(params.name);
-        });
+
+    function arrayLookup(searchValue, array, searchIndex) // Posted on Tathyika.com (also refer for more codes there)
+    {
+        var returnVal = null;
+        var i;
+        for (i = 0; i < array.length; i++) {
+            if (array[i][searchIndex] == searchValue) {
+                returnVal = i;
+                break;
+            }
+        }
+
+        return returnVal;
+    }
 
     // get colors array from the string
     function getChartColorsArray(chartId) {
@@ -260,12 +276,22 @@
         })
     }
 
-    function generatechart() {
+    function generatechart(idx) {
         // pie chart
+        var js_array = JSON.parse('<?= addslashes(json_encode($arraykpi)) ?>');
         var pieColors = getChartColorsArray("#pie-chart");
         var dom = document.getElementById("pie-chart");
-        var totalbreakdown = document.getElementById("totalbreakdown").value;
-        var sumtotaljamkerja = document.getElementById("sumtotaljamkerja").value;
+        var totalbreakdown = js_array[idx]["totalbreakdown"];
+        var sumtotaljamkerja = js_array[idx]["sumtotaljamkerja"];
+        $("#detjmlunit").html(js_array[idx]["jmlunit"]);
+        $("#detnamatype").html(js_array[idx]["namaforklifttype"]);
+        $("#dettargetavailable").html(js_array[idx]["sumplanunitkerja"]);
+        $("#dettotalavailable").html(js_array[idx]["sumtotaljamkerja"]);
+        $("#dettotalbreakdown").html(js_array[idx]["totalbreakdown"]);
+        $kpi=(js_array[idx]["sumtotaljamkerja"] / js_array[idx]['sumplanunitkerja']) * 100;
+        $("#detkpi").html($kpi.toFixed(2));
+
+
         var myChart2 = echarts.init(dom);
 
         var app = {};
