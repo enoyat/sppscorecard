@@ -89,14 +89,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
-  chrome_launcher:
-    dependency: "direct main"
-    description:
-      name: chrome_launcher
-      sha256: b42b2e454c182a1529762cb25f666f9a481b9e8b13e9dce560418dee5d687937
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
   cli_util:
     dependency: transitive
     description:

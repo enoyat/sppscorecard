@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\MDetailorder;
 use App\Models\MDokumentrouble;
+use App\Models\MOrder;
 use App\Models\MTrouble;
 use App\Models\MTroubleaction;
+use App\Models\MSparepart;
+
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -21,36 +26,26 @@ class ApiSparepart extends Controller
 
     public function store(Request $request)
     {
-        $tahun=date('Y');
-        $bulan=date('m');
-        $periode=$tahun.'-'.$bulan;
-        $trouble = New MTroubleaction();
-        $trouble->kdunit = $request->kdunit;
-        $trouble->periode = $periode;
-        $trouble->iduser = $request->iduser;
-
-        $tglmulai=new DateTime($request->tanggalmulai.' '.$request->jammulai);
-        $tglselesai=new DateTime($request->tanggalakhir.' '.$request->jamselesai);
-        $lapsetime = $tglmulai->diff($tglselesai);
-        $hari=$lapsetime->format('%d');
-        $jam=$lapsetime->format('%H');
-        $menit=$lapsetime->format('%I');
-        $interval=(($hari*24+$jam)*60)+$menit;
-
-
-        $trouble->tanggalmulai = $tglmulai;
-        $trouble->tanggalakhir = $tglselesai;
-        $trouble->lapsetime = $interval;
-
-        $trouble->shift = $request->shift;
-        $trouble->actionplan = $request->actionplan;
-        $trouble->sparepart = $request->sparepart;
-        $trouble->statusmekanik = $request->statusmekanik;
-        $trouble->save();
-        $idaction = $trouble->id;
+        
+         
+        $order = new MOrder();
+        $order->iduser = $request->iduser;
+        $order->kdunit = $request->kdunit;   
+        $order->idsitename = $request->idsitename;
+        $order->dateorder = Carbon::now();
+        $order->save();
+        $noorder = $order->noorder;
+        foreach($request->itemorder as $cart){
+            $detailorder = MDetailorder::create([
+                'noorder' => $noorder,
+                'description' => $cart['partname'],
+                'qty' => $cart['partqty'],
+            ]);
+        }
+       
 
         return $data = [
-            'idaction' => $idaction,
+            'noorder' => $noorder,
         ];
 
 

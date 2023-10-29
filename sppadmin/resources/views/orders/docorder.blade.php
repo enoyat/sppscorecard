@@ -36,7 +36,7 @@
                                     <p>
                                         <strong>Order Date: </strong> {{ $item->dateorder }}<br>
                                         <strong>Area: </strong> #{{ $item->getsitename->namasitename }} <br>
-                                        <strong>Mechanic : </strong> #{{ $item->email }}<br>
+                                        <strong>Mechanic : </strong> #{{ $item->iduser }} - {{ $item->getmekanik->namamekanik }} <br>
                                         <strong>Unit : </strong> #{{ $item->kdunit }}<br>
                                     </p>
 
@@ -74,7 +74,7 @@
                                                 <tr>
                                                     <td width="3%">{{ $i }}</td>
                                                     <td width="10%">{{ $data->codepart }}</td>
-                                                    <td width="50%">{{ $data->getsparepart->simplename }}</td>
+                                                    <td width="50%">{{ $data->description }}</td>
                                                     <td width="5%">{{ $data->qty }}</td>
 
 

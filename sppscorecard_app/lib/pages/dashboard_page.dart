@@ -2,6 +2,7 @@
 
 import "package:flutter/material.dart";
 import "package:sppscorecard_app/pages/mekanik/listofmaintenanace_page.dart";
+import "package:sppscorecard_app/pages/mekanik/listunitsparepart_page.dart";
 import "package:sppscorecard_app/widgets/profil_widget.dart";
 import "package:intl/intl.dart";
 import "package:shared_preferences/shared_preferences.dart";
@@ -173,7 +174,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20, right: 20),
                         child: GridView.count(
-                            crossAxisCount: 2,
+                            crossAxisCount: 3,
                             shrinkWrap: true,
                             children: [
                               Card(
@@ -196,8 +197,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                     children: [
                                       Image.asset(
                                         'assets/images/trouble.png',
-                                        width: 70,
-                                        height: 70,
+                                        width: 60,
+                                        height: 60,
                                       ),
                                       const SizedBox(height: 10),
                                       const Text(
@@ -231,8 +232,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                     children: [
                                       Image.asset(
                                         'assets/images/maintenance.png',
-                                        width: 70,
-                                        height: 70,
+                                        width: 60,
+                                        height: 60,
                                       ),
                                       const SizedBox(height: 10),
                                       const Text(
@@ -246,41 +247,41 @@ class _DashboardPageState extends State<DashboardPage> {
                                   ),
                                 ),
                               ),
-                              Card(
-                                color: const Color.fromARGB(255, 43, 40, 226),
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: InkWell(
-                                  onTap: () {
-                                    // Navigator.push(context,
-                                    //     MaterialPageRoute(builder: (context) {
-                                    //   return ListOfTroublePage(
-                                    //     profil: _profil,
-                                    //   );
-                                    // }));
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/pallet.png',
-                                        width: 70,
-                                        height: 70,
-                                      ),
-                                      const SizedBox(height: 10),
-                                      const Text(
-                                        'Pallete',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                              // Card(
+                              //   color: const Color.fromARGB(255, 43, 40, 226),
+                              //   elevation: 5,
+                              //   shape: RoundedRectangleBorder(
+                              //     borderRadius: BorderRadius.circular(10),
+                              //   ),
+                              //   child: InkWell(
+                              //     onTap: () {
+                              //       // Navigator.push(context,
+                              //       //     MaterialPageRoute(builder: (context) {
+                              //       //   return ListOfTroublePage(
+                              //       //     profil: _profil,
+                              //       //   );
+                              //       // }));
+                              //     },
+                              //     child: Column(
+                              //       mainAxisAlignment: MainAxisAlignment.center,
+                              //       children: [
+                              //         Image.asset(
+                              //           'assets/images/pallet.png',
+                              //           width: 70,
+                              //           height: 70,
+                              //         ),
+                              //         const SizedBox(height: 10),
+                              //         const Text(
+                              //           'Pallete',
+                              //           style: TextStyle(
+                              //             fontSize: 15,
+                              //             fontWeight: FontWeight.bold,
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
                               Card(
                                 color: const Color.fromARGB(255, 205, 15, 158),
                                 elevation: 5,
@@ -289,20 +290,20 @@ class _DashboardPageState extends State<DashboardPage> {
                                 ),
                                 child: InkWell(
                                   onTap: () {
-                                    // Navigator.push(context,
-                                    //     MaterialPageRoute(builder: (context) {
-                                    //   return ListOfTroublePage(
-                                    //     profil: _profil,
-                                    //   );
-                                    // }));
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return ListOfUnitSparepartPage(
+                                        profil: _profil,
+                                      );
+                                    }));
                                   },
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Image.asset(
                                         'assets/images/spare-parts.png',
-                                        width: 70,
-                                        height: 70,
+                                          width: 60,
+                                        height: 60,
                                       ),
                                       const SizedBox(height: 10),
                                       const Text(

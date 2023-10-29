@@ -72,7 +72,7 @@ class MaintenanceDio {
     FormData formData = FormData.fromMap({
       "image": await MultipartFile.fromFile(
         file.path,
-        filename: fileName,
+         filename: fileName,
       ),
       "idaction": idaction,
       "keterangan": keterangan,

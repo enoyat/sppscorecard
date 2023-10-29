@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiAuthController;
 use App\Http\Controllers\ApiLokasi;
 use App\Http\Controllers\ApiTrouble;
 use App\Http\Controllers\ApiMaintenance;
+use App\Http\Controllers\ApiSparepart;
 
 
 /*
@@ -38,4 +39,4 @@ Route::post('apimedia', 'App\Http\Controllers\ApiMedia@store');
 Route::get('maintenance/listdokumen/{id}', [ApiMaintenance::class, 'listdokumen']);
 Route::post('maintenance/store', [ApiMaintenance::class, 'store']);
 Route::get('getunit/{id}', [ApiMaintenance::class, 'getunit'])->name('getunit');
-Route::get('/sparepart', [ApiMaintenance::class, 'index'])->name('sparepart');
+Route::post('sparepart/store', [ApiSparepart::class, 'store']);
