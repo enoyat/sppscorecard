@@ -37,27 +37,28 @@
                     <td scope="col">{{ $key->noorder }}</td>
                     <td scope="col">{{ $key->dateorder }}</td>
                     <td scope="col">{{ $key->kdunit }}</td>
-                    <td scope="col">{{ $key->email }}</td>
+                    <td scope="col">{{ $key->getmekanik->namamekanik }}</td>
                     <td scope="col">{{ $key->getsitename->namasitename }}</td>
                     <td scope="col">@include('statusorders.statusorder')
-                    <input type="hidden" name="f_status" id="f_status" value="{{ $key->f_status }}">
+                        
                     </td>
-                    <td scope="col">Detail</td>
+                    <td scope="col"> <a href="{{ route('orders.docorder', $key->noorder) }}"
+                            class="btn btn-sm btn-dark"><i class="fa fa-print" aria-hidden="false">
+                            </i></a></td>
                     <td scope="col">{{ $key->dateaccsite }}</td>
-                    <td>{{ $key->dateaccsite }}</td>
+                    <td>{{ $key->dateaccho }}</td>
                     <td>{{ $key->dateaccgudang }}</td>
                     <td scope="col">
-                        <a href="{{ route('orders.docorder',$key->noorder) }}"
-                            class="btn btn-sm btn-dark"><i class="fa fa-print"
-                                aria-hidden="false">
-                            </i></a>
+                        <div id="f_status" style="display: none">{{ $key->f_status }}</div>
                         <div id="kode" style="display: none">{{ $key->noorder }}</div>
-                        @if ($key->f_status == 'order')
+                        @if ($key->f_status == 'order' && (Auth::user()->roles_id == '1' || Auth::user()->roles_id == '2'))
                             <div class="accsite btn btn-sm btn-pink">Acc Site</div>
-                        @elseif ($key->f_status == 'accsite')
-                            <div class="accsite btn btn-sm btn-warning">Acc HO</div>
-                        @elseif ($key->f_status == 'accho')
-                            <div class="accsite btn btn-sm btn-success">Acc Inventory</div>
+                        @endif
+                        @if ($key->f_status == 'accsite' && Auth::user()->roles_id == '100')
+                                <div class="accsite btn btn-sm btn-warning">Acc HO</div>
+                        @endif
+                        @if ($key->f_status == 'accho' && Auth::user()->roles_id == '101')
+                                <div class="accsite btn btn-sm btn-success">Acc Inventory</div>
                         @endif
                     </td>
                 </tr>
@@ -71,14 +72,14 @@
         $('.accsite').click(function() {
             var id = $(this).siblings('#kode').text();
             var confirmText = "Agree Orders?";
-            var f_status=$("#f_status").val();
-            var url="{{ route('orders.accsite') }}";
+            var f_status = $(this).siblings('#f_status').text();            
+            var url = "{{ route('orders.accsite') }}";
             if (confirm(confirmText)) {
                 $.ajax({
                     type: "post",
                     data: {
                         id: id,
-                        f_status:f_status,
+                        f_status: f_status,
                         _token: csrf
                     },
                     url: url,
