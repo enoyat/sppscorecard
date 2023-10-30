@@ -15,7 +15,7 @@
             </td>
             <td style="background:rgb(9, 136, 153); padding:10px">
                 <div style="font-size: 16px; color: white;"><b>AVAILABILITY DASHBOARD
-                        {{ Session::get('runnamaregion') }}</b></div>
+                       </b></div>
             </td>
             <td style="background:rgb(9, 136, 153); color: white; padding:10px">Update: {{ date('Y/m/d') }}</td>
         </tr>
