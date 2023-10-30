@@ -35,7 +35,7 @@
                                 <div class="card-body">
                                     <div class="row align-items-center">
                                         <div class="col-12">
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Units</span>
+                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">TOTAL UNITS</span>
                                             <h4 class="mb-3">
                                                 <span class="counter-value" data-target="{{ $jmlunit }}">0</span>
                                             </h4>
@@ -67,8 +67,8 @@
                                 <div class="card-body">
                                     <div class="row align-items-center">
                                         <div class="col-12">
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Delivery
-                                                Schedule</span>
+                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">DELIVERY SCHEDULE
+                                                </span>
                                             <h4 class="mb-3">
                                                 <span class="counter-value" data-target="{{ $kpidelivery }}">0</span>%
                                             </h4>
@@ -84,7 +84,7 @@
                                 <div class="card-body">
                                     <div class="row align-items-center">
                                         <div class="col-12">
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">Spare Parts</span>
+                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">SPARE PARTS</span>
                                             <h4 class="mb-3">
                                                 <span class="counter-value" data-target="{{ $kpisparepart }}">0</span>%
                                             </h4>

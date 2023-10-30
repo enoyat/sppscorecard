@@ -54,15 +54,24 @@ class HomeController extends Controller
         }
         $arraykpi = array();
         if ($filter == "sitename") {
-             $kpi = DB::select("select qunit.idforklifttype, qunit.kdunit, qunit.jmlunit, qkpi.* from  
-             (select ANY_VALUE(kdunit), count(*) as jmlunit, ANY_VALUE(idforklifttype) from unit where unit.idsitename='P7' group by idforklifttype) as qunit join 
-             (select sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift, unit.kdunit, idforklifttype, namaforklifttype  from physicalavailable
-                             join unit on unit.kdunit = physicalavailable.kdunit
-                             join forklifttype on unit.idforklifttype=forklifttype.id
-             
-                             and unit.idsitename='P7'
-                             and forklifttype.f_dashboard='Y' group by idforklifttype, kdunit,namaforklifttype ) as qkpi on qunit.kdunit=qkpi.kdunit");
-           
+             $kpi = DB::table('physicalavailable')->
+                join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->
+                join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->
+                select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
+                ->where('periode','like', '%'.$mperiode.'%')
+                ->where('unit.idsitename', Session::get('runidsitename'))
+                ->where('forklifttype.f_dashboard', "Y")
+                ->groupBy('namaforklifttype', 'idforklifttype')
+                ->get();
+            $kpi = DB::table('physicalavailable')->
+                join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->
+                join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->
+                select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
+                ->where('periode','like', '%'.$mperiode.'%')
+                ->where('unit.idsitename', Session::get('runidsitename'))
+                ->where('forklifttype.f_dashboard', "Y")
+                ->groupBy('namaforklifttype', 'idforklifttype')
+                ->get();
         } else if ($request->filter == "region") {
             $kpi = DB::table('physicalavailable')->
                 join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->

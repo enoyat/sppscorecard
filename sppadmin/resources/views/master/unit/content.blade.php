@@ -3,20 +3,18 @@
         style="border-collapse: collapse;  width: 100%;"  >
         <thead>
             <tr>
-                <TH SCOPE="COL">CODE UNIT</TH>
-                <TH SCOPE="COL">EQUIPMENT</TH>
-                <TH SCOPE="COL">FORKLIFT TYPE</TH>
-                <TH SCOPE="COL">MERK</TH>
-                <TH SCOPE="COL">TYPE</TH>
-                <TH SCOPE="COL">MODEL</TH>
-                <TH SCOPE="COL">CAPACITY (kg)</TH>
-                <TH SCOPE="COL">SERIAL NUMBER</TH>
-                <TH SCOPE="COL">SPECIFICATION</TH>
-                <TH SCOPE="COL">QUANTITY (UNIT)</TH>
-                <TH SCOPE="COL">CBU</TH>
-                <TH SCOPE="COL">REGION</TH>
-                <TH SCOPE="COL">SITE NAME</TH>
-                <TH SCOPE="COL">ACTION</TH>
+                <th SCOPE="COL">CODE UNIT</th>
+                <th SCOPE="COL">EQUIPMENT</th>
+                <th SCOPE="COL">FORKLIFT TYPE</th>
+                <th SCOPE="COL">MERK</th>
+                <th SCOPE="COL">TYPE</th>
+                <th SCOPE="COL">MODEL</th>
+                <th SCOPE="COL">SERIAL NUMBER</th>
+                <th SCOPE="COL">CAPACITY (KILOGRAM)</th>
+                <th SCOPE="COL">MAST (STAGE)</th>
+                <th SCOPE="COL">HEIGHT (METER)</th>
+                <th SCOPE="COL">ACTION</th>
+
 
 
 
@@ -30,18 +28,15 @@
 
 
                 <th scope="col"><a href="{{ route('maintenance.listaction',$key->kdunit) }}">{{ $key->kdunit }}</a></th>
-                <th scope="col">{{ $key->equipment }}</th>
-                <th scope="col">{{ $key->getforklifttype->namaforklifttype }}</th>
-            <th scope="col">{{ $key->merk }}</th>
-            <th scope="col">{{ $key->type }}</th>
-            <th scope="col">{{ $key->model }}</th>
-            <th scope="col">{{ $key->capcity }}</th>
-            <th scope="col">{{ $key->serialnumber }}</th>
-            <th scope="col">{{ $key->specification }}</th>
-            <th scope="col">{{ $key->qty }}</th>
-                <th scope="col">{{ $key->getcbu->namasitename }}</th>
-                <th scope="col">{{ $key->getregion->namasitename }}</th>
-                <th scope="col">{{ $key->getsitename->namasitename }}</th>
+                <td scope="col">{{ $key->equipment }}</td>
+                <td scope="col">{{ $key->getforklifttype->namaforklifttype }}</td>
+                <td scope="col">{{ $key->merk }}</td>
+                <td scope="col">{{ $key->type }}</td>
+                <td scope="col">{{ $key->model }}</td>
+                <td scope="col">{{ $key->serialnumber }}</td>
+                <td scope="col">{{ number_format($key->capcity) }}</td>
+                <td scope="col">{{ $key->mast }}</td>
+                <td scope="col">{{ $key->masheight }}</td>
                 <th scope="col">
 
                                 <form action="{{ route('masterunit.destroy',$key->kdunit) }}" method="POST">

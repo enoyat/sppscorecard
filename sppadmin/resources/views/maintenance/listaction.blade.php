@@ -65,16 +65,17 @@
                     <TH SCOPE="COL">STATUS SPP</TH>
                     <TH SCOPE="COL">STATUS MEKANIK</TH>
                     <TH SCOPE="COL">STATUS CUSTOMER</TH>
-                    <th scope="col">id User/Mekanik</th>
-                    <th scope="col">CODE Unit</th>
-                    <th scope="col">List Foto</th>
-                    <th scope="col">START DATE</th>
-                    <th scope="col">DATE OF COMPLETION</th>
-                    <th scope="col">shift</th>
-                    <th scope="col">Action Plan</th>
-                    <th scope="col">Spareparts</th>
-                    <th scope="col">HM</th>
-                    <th scope="col">Action</th>
+                    <TH SCOPE="COL">ID USER/MEKANIK</TH>
+                    <TH SCOPE="COL">CODE UNIT</TH>
+                    <TH SCOPE="COL">LIST FOTO</TH>
+                    <TH SCOPE="COL">START DATE</TH>
+                    <TH SCOPE="COL">DATE OF COMPLETION</TH>
+                    <TH SCOPE="COL">SHIFT</TH>
+                    <TH SCOPE="COL">ACTION PLAN</TH>
+                    <TH SCOPE="COL">SPAREPARTS</TH>
+                    <TH SCOPE="COL">HM</TH>
+                    <TH SCOPE="COL">ACTION</TH>
+
                 </tr>
             </thead>
             <tbody>
