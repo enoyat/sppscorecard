@@ -37,7 +37,7 @@ rel="stylesheet" type="text/css" />
 
         <div class="card " >
             <div class="card-header">
-                <h4 class="card-title">KPI DASHBOARD</h4>
+                <h4 class="card-title">AVAILABILITY DASHBOARD</h4>
 
             </div>
             <div class="card-body">
@@ -50,12 +50,12 @@ rel="stylesheet" type="text/css" />
 
                                     <input name="periode" type="search" value="{{ request()->get('periode') }}"
                                         class="form-control" placeholder="Periode (yyyy-mm)">
-                                    
+
                                     <select name="filter" class="form-control">
-                                        
+
                                         <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
                                             SITENAME</option>
-                                            
+
                                             <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
                                                 REGION</option>
                                                 <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>

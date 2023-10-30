@@ -63,9 +63,9 @@
                 <tr>
 
                     <TH SCOPE="COL">STATUS SPP</TH>
-                    <TH SCOPE="COL">STATUS MEKANIK</TH>
+                    <TH SCOPE="COL">STATUS MECHANIC</TH>
                     <TH SCOPE="COL">STATUS CUSTOMER</TH>
-                    <TH SCOPE="COL">ID USER/MEKANIK</TH>
+                    <TH SCOPE="COL">MECHANIC</TH>
                     <TH SCOPE="COL">CODE UNIT</TH>
                     <TH SCOPE="COL">LIST FOTO</TH>
                     <TH SCOPE="COL">START DATE</TH>

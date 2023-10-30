@@ -14,7 +14,7 @@
                     height="50">
             </td>
             <td style="background:rgb(9, 136, 153); padding:10px">
-                <div style="font-size: 16px; color: white;"><b>KPI DASHBOARD
+                <div style="font-size: 16px; color: white;"><b>AVAILABILITY DASHBOARD
                         {{ Session::get('runnamaregion') }}</b></div>
             </td>
             <td style="background:rgb(9, 136, 153); color: white; padding:10px">Update: {{ date('Y/m/d') }}</td>
@@ -178,7 +178,7 @@
     $(document).ready(function() {
         <?php $i = 0; ?>
         chartunit();
-        
+
     });
 
     function chartunit() {
@@ -217,7 +217,7 @@
                         {
                             value: {{ $item['jmlunit'] }},
                             name: "{{ $item['namaforklifttype'] }}",
-                            
+
                         },
                     @endforeach
                 ],
@@ -238,7 +238,7 @@
             myChart.on('click',
                 function(params) {
                     var namaforklifttype = params.name;
-                    var id = arrayLookup(namaforklifttype, js_array, 'namaforklifttype');                  
+                    var id = arrayLookup(namaforklifttype, js_array, 'namaforklifttype');
                     generatechart(id);
                     //your code
                 });

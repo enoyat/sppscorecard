@@ -6,6 +6,7 @@ use App\Models\MBeritaacara;
 
 use App\Models\MOffice;
 use App\Models\MSitename;
+use App\Models\MCbu;
 use App\Models\User;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
@@ -30,11 +31,12 @@ class BeritaacaraController extends Controller
         $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $beritaacara = MBeritaacara::where('pengirim', Session::get('runidsitename'))->get();
+
         return view('beritaacara.index', compact('beritaacara', 'cbu', 'sitename'));
     }
     public function create()
     {
-        $cbu = MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $sitename = MSitename::get();
         return view('beritaacara.create', compact('sitename', 'cbu'));
     }

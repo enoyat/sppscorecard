@@ -34,7 +34,7 @@
                 <th scope="col">{{ $key->ponumber }}</th>
                 <th scope="col">{{ $key->serialnumber }}</th>
                 <th scope="col">{{ $key->getforklifttype->namaforklifttype }}</th>
-                <th scope="col">{{ $key->capacity }}</th>
+                <th scope="col">{{ number_format($key->capacity,0) }}</th>
                 <th scope="col">{{ $key->mast }}</th>
                 <th scope="col">{{ $key->masheight }}</th>
                 <th scope="col">{{ $key->dateestimated }}</th>

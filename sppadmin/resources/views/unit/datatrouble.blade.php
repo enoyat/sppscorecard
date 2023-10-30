@@ -5,7 +5,7 @@
                 <tr>
 
 
-                    <TH SCOPE="COL">ID USER/MEKANIK</TH>
+                    <TH SCOPE="COL">MECHANIC</TH>
                     <TH SCOPE="COL">CODE UNIT</TH>
                     <TH SCOPE="COL">START DATE</TH>
                     <TH SCOPE="COL">DATE OF COMPLETION</TH>
@@ -16,7 +16,7 @@
                     <TH SCOPE="COL">SPAREPARTS</TH>
                     <TH SCOPE="COL">DOCUMENTS</TH>
 
-                    <TH SCOPE="COL">STATUS MEKANIK</TH>
+                    <TH SCOPE="COL">STATUS MECHANIC</TH>
                     <TH SCOPE="COL">STATUS SPP</TH>
                     <TH SCOPE="COL">STATUS CUSTOMER</TH>
 
