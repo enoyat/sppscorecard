@@ -88,5 +88,35 @@ class ApiLokasi extends Controller
 
         }
     }
+    public function filtersite(Request $request){
+        $filter = $request->get('filter');
+            if ($filter == "sitename") {
+                $id = $request->get('xidsitename');
+                $sitename = MSitename::where('id', $id)->first();
+                $region = MSitename::where('id', $sitename->parentid)->first();
+                $cbu = MSitename::where('id', $region->parentid)->first();
+                Session::put('runidcbu', $cbu->id);
+                Session::put('runnamacbu', $cbu->namasitename);
+                Session::put('runidregion', $region->id);
+                Session::put('runnamaregion', $region->namasitename);
+                Session::put('runidsitename', $id);
+                Session::put('runnamasitename', $sitename->namasitename);
+
+            }
+            if ($filter == "region") {
+                $id = $request->get('xidregion');                
+                $region = MSitename::where('id', $id)->first();
+                $cbu = MSitename::where('id', $region->parentid)->first();
+                $sitename = MSitename::where('parentid', $id)->first();
+                Session::put('runidcbu', $cbu->id);
+                Session::put('runnamacbu', $cbu->namasitename);
+                Session::put('runidregion', $region->id);
+                Session::put('runnamaregion', $region->namasitename);
+                Session::put('runidsitename', $sitename->id);
+                Session::put('runnamasitename', $sitename->namasitename);
+
+            }
+            return redirect()->back();
+    }
 
 }

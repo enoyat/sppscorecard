@@ -37,11 +37,45 @@ class UnitController extends Controller
         $arraykpi = array();
         if ($filter == "sitename") {
             $unit = MUnit::where('idsitename',Session::get('runidsitename'))->get();
+            if ($request->get('xidsitename') == null) {
+                $id = Session::get('runidsitename');
+            } else {
+                $id = $request->get('xidsitename');
+            }
+                $sitename = MSitename::where('id', $id)->first();
+                $region = MSitename::where('id', $sitename->parentid)->first();
+                $cbu = MSitename::where('id', $region->parentid)->first();
+                Session::put('runidcbu', $cbu->id);
+                Session::put('runnamacbu', $cbu->namasitename);
+                Session::put('runidregion', $region->id);
+                Session::put('runnamaregion', $region->namasitename);
+                Session::put('runidsitename', $id);
+                Session::put('runnamasitename', $sitename->namasitename);
         } else if ($request->filter == "region") {
             $unit = MUnit::where('idregion',Session::get('runidregion'))->get();
+            $id = $request->get('xidregion');                
+            $region = MSitename::where('id', $id)->first();
+            $cbu = MSitename::where('id', $region->parentid)->first();
+            $sitename = MSitename::where('parentid', $id)->first();
+            Session::put('runidcbu', $cbu->id);
+            Session::put('runnamacbu', $cbu->namasitename);
+            Session::put('runidregion', $region->id);
+            Session::put('runnamaregion', $region->namasitename);
+            Session::put('runidsitename', $sitename->id);
+            Session::put('runnamasitename', $sitename->namasitename);
         }
         else if ($request->filter == "cbu") {
             $unit = MUnit::where('idcbu',Session::get('runidcbu'))->get();
+            $id = $request->get('xidcbu');                
+            $cbu = MSitename::where('id', $id)->first();
+            $region = MSitename::where('parentid', $cbu->id)->first();
+            $sitename = MSitename::where('parentid', $region->id)->first();
+            Session::put('runidcbu', $cbu->id);
+            Session::put('runnamacbu', $cbu->namasitename);
+            Session::put('runidregion', $region->id);
+            Session::put('runnamaregion', $region->namasitename);
+            Session::put('runidsitename', $sitename->id);
+            Session::put('runnamasitename', $sitename->namasitename);
         }
         else if ($request->filter == "allsn") {
             $unit = MUnit::where('idcbu','SN')->get();

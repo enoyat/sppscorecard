@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\MCustomer;
-use App\Models\MPhysical;
 use App\Models\MSitename;
 use App\Models\User;
-use App\Models\MUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -51,14 +49,55 @@ class HomeController extends Controller
         }
         if ($request->get('filter')) {
             $filter = $request->get('filter');
+            if ($filter == "sitename") {
+                $id = $request->get('xidsitename');
+                $sitename = MSitename::where('id', $id)->first();
+                $region = MSitename::where('id', $sitename->parentid)->first();
+                $cbu = MSitename::where('id', $region->parentid)->first();
+                Session::put('runidcbu', $cbu->id);
+                Session::put('runnamacbu', $cbu->namasitename);
+                Session::put('runidregion', $region->id);
+                Session::put('runnamaregion', $region->namasitename);
+                Session::put('runidsitename', $id);
+                Session::put('runnamasitename', $sitename->namasitename);
+
+            }
+            if ($filter == "region") {
+                $id = $request->get('xidregion');                
+                $region = MSitename::where('id', $id)->first();
+                $cbu = MSitename::where('id', $region->parentid)->first();
+                $sitename = MSitename::where('parentid', $id)->first();
+                Session::put('runidcbu', $cbu->id);
+                Session::put('runnamacbu', $cbu->namasitename);
+                Session::put('runidregion', $region->id);
+                Session::put('runnamaregion', $region->namasitename);
+                Session::put('runidsitename', $sitename->id);
+                Session::put('runnamasitename', $sitename->namasitename);
+
+            }
+            if ($filter == "cbu") {
+                $id = $request->get('xidcbu');                
+                $cbu = MSitename::where('id', $id)->first();
+                $region = MSitename::where('parentid', $cbu->id)->first();
+                $sitename = MSitename::where('parentid', $region->id)->first();
+                Session::put('runidcbu', $cbu->id);
+                Session::put('runnamacbu', $cbu->namasitename);
+                Session::put('runidregion', $region->id);
+                Session::put('runnamaregion', $region->namasitename);
+                Session::put('runidsitename', $sitename->id);
+                Session::put('runnamasitename', $sitename->namasitename);
+
+            }
+
         } else {
             $filter = "sitename";
         }
+
         $arraykpi = array();
         if ($filter == "sitename") {
-            $sitename=Session::get('runidsitename');
+            $sitename = Session::get('runidsitename');
             DB::statement("SET SQL_MODE=''");
-            $kpi=DB::select("select qunittype.jmlunit, qpa.* from (
+            $kpi = DB::select("select qunittype.jmlunit, qpa.* from (
                 SELECT idforklifttype, forklifttype.namaforklifttype, count(kdunit) as jmlunit, idcbu,idregion,idsitename from unit join forklifttype on unit.idforklifttype=forklifttype.id
                 where unit.idsitename='$sitename'
                 group by idforklifttype) as qunittype join (
@@ -66,9 +105,9 @@ class HomeController extends Controller
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idsitename='$sitename') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
 
         } else if ($request->filter == "region") {
-            $sitename=Session::get('runidregion');
+            $sitename = Session::get('runidregion');
             DB::statement("SET SQL_MODE=''");
-            $kpi=DB::select("select qunittype.jmlunit, qpa.* from (
+            $kpi = DB::select("select qunittype.jmlunit, qpa.* from (
                 SELECT idforklifttype, forklifttype.namaforklifttype, count(kdunit) as jmlunit, idcbu,idregion,idsitename from unit join forklifttype on unit.idforklifttype=forklifttype.id
                 where unit.idregion='$sitename'
                 group by idforklifttype) as qunittype join (
@@ -76,9 +115,9 @@ class HomeController extends Controller
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idregion='$sitename') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
         } else if ($request->filter == "cbu") {
 
-            $sitename=Session::get('runidcbu');
+            $sitename = Session::get('runidcbu');
             DB::statement("SET SQL_MODE=''");
-            $kpi=DB::select("select qunittype.jmlunit, qpa.* from (
+            $kpi = DB::select("select qunittype.jmlunit, qpa.* from (
                 SELECT idforklifttype, forklifttype.namaforklifttype, count(kdunit) as jmlunit, idcbu,idregion,idsitename from unit join forklifttype on unit.idforklifttype=forklifttype.id
                 where unit.idcbu='$sitename'
                 group by idforklifttype) as qunittype join (
@@ -86,7 +125,7 @@ class HomeController extends Controller
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='$sitename') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
         } else if ($request->filter == "allsn") {
             DB::statement("SET SQL_MODE=''");
-            $kpi=DB::select("select qunittype.jmlunit, qpa.* from (
+            $kpi = DB::select("select qunittype.jmlunit, qpa.* from (
                 SELECT idforklifttype, forklifttype.namaforklifttype, count(kdunit) as jmlunit, idcbu,idregion,idsitename from unit join forklifttype on unit.idforklifttype=forklifttype.id
                 where unit.idcbu='SN'
                 group by idforklifttype) as qunittype join (
@@ -94,7 +133,7 @@ class HomeController extends Controller
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='SN') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
         } else if ($request->filter == "allwater") {
             DB::statement("SET SQL_MODE=''");
-            $kpi=DB::select("select qunittype.jmlunit, qpa.* from (
+            $kpi = DB::select("select qunittype.jmlunit, qpa.* from (
                 SELECT idforklifttype, forklifttype.namaforklifttype, count(kdunit) as jmlunit, idcbu,idregion,idsitename from unit join forklifttype on unit.idforklifttype=forklifttype.id
                 where unit.idcbu='Waters'
                 group by idforklifttype) as qunittype join (
@@ -102,7 +141,7 @@ class HomeController extends Controller
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='Waters') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
         } else if ($request->filter == "allsnwater") {
             DB::statement("SET SQL_MODE=''");
-            $kpi=DB::select("select qunittype.jmlunit, qpa.* from (
+            $kpi = DB::select("select qunittype.jmlunit, qpa.* from (
                 SELECT idforklifttype, forklifttype.namaforklifttype, count(kdunit) as jmlunit, idcbu,idregion,idsitename from unit join forklifttype on unit.idforklifttype=forklifttype.id
                 where unit.idcbu='SN' or unit.idcbu='Waters'
                 group by idforklifttype) as qunittype join (

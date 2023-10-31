@@ -42,10 +42,10 @@ rel="stylesheet" type="text/css" />
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <form action="" method="GET" class="form-inline form-row">
 
-                            <div class="col">
+                           
                                 <div class="input-group mx-1">
 
                                     <input name="periode" type="search" value="{{ request()->get('periode') }}"
@@ -58,8 +58,7 @@ rel="stylesheet" type="text/css" />
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                           </form>
                     </div>
 
                 </div>

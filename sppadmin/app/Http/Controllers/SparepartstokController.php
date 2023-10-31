@@ -2,21 +2,13 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\MSparepart;
 use App\Models\MForklifttype;
-use App\Models\MSparepartstok;
-use App\Models\User;
 use App\Models\MSitename;
-use Illuminate\Console\View\Components\Alert as ComponentsAlert;
-use Illuminate\Support\Facades\Auth;
+use App\Models\MSparepartstok;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
-use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Validator;
 
 class SparepartstokController extends Controller
 {
@@ -26,48 +18,100 @@ class SparepartstokController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
-        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
-        $sparepartstok = MSparepartstok::where('idsitename',Session::get('runidsitename'))->get();
-        return view('sparepartstok.index', compact('sparepartstok','cbu','sitename'));
+
+        if ($request->get('filter')) {
+            $filter = $request->get('filter');
+        } else {
+            $filter = "sitename";
+        }
+
+        if ($filter == "sitename") {
+            $sparepartstok = MSparepartstok::where('idsitename', Session::get('runidsitename'))->get();
+            if ($request->get('xidsitename') == null) {
+                $id = Session::get('runidsitename');
+            } else {
+                $id = $request->get('xidsitename');
+            }
+            $sitename = MSitename::where('id', $id)->first();
+            $region = MSitename::where('id', $sitename->parentid)->first();
+            $cbu = MSitename::where('id', $region->parentid)->first();
+            Session::put('runidcbu', $cbu->id);
+            Session::put('runnamacbu', $cbu->namasitename);
+            Session::put('runidregion', $region->id);
+            Session::put('runnamaregion', $region->namasitename);
+            Session::put('runidsitename', $id);
+            Session::put('runnamasitename', $sitename->namasitename);
+        } else if ($request->filter == "region") {
+            $sparepartstok = MSparepartstok::where('idregion', Session::get('runidregion'))->get();
+            $id = $request->get('xidregion');
+            $region = MSitename::where('id', $id)->first();
+            $cbu = MSitename::where('id', $region->parentid)->first();
+            $sitename = MSitename::where('parentid', $id)->first();
+            Session::put('runidcbu', $cbu->id);
+            Session::put('runnamacbu', $cbu->namasitename);
+            Session::put('runidregion', $region->id);
+            Session::put('runnamaregion', $region->namasitename);
+            Session::put('runidsitename', $sitename->id);
+            Session::put('runnamasitename', $sitename->namasitename);
+        } else if ($request->filter == "cbu") {
+            $sparepartstok = MSparepartstok::where('idcbu', Session::get('runidcbu'))->get();
+            $id = $request->get('xidcbu');
+            $cbu = MSitename::where('id', $id)->first();
+            $region = MSitename::where('parentid', $cbu->id)->first();
+            $sitename = MSitename::where('parentid', $region->id)->first();
+            Session::put('runidcbu', $cbu->id);
+            Session::put('runnamacbu', $cbu->namasitename);
+            Session::put('runidregion', $region->id);
+            Session::put('runnamaregion', $region->namasitename);
+            Session::put('runidsitename', $sitename->id);
+            Session::put('runnamasitename', $sitename->namasitename);
+        } else if ($request->filter == "allsn") {
+            $sparepartstok = MSparepartstok::where('idcbu', 'SN')->get();
+        } else if ($request->filter == "allwater") {
+            $sparepartstok = MSparepartstok::where('idcbu', 'Waters')->get();
+        } else if ($request->filter == "allsnwater") {
+            $sparepartstok = MSparepartstok::where('idcbu', 'SN')->orwhere('idcbu', 'Waters')->get();
+        }
+        $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+
+        return view('sparepartstok.index', compact('sparepartstok', 'cbu', 'sitename'));
     }
     public function create()
     {
-        if(Session::get('roles_id')==2) {
-            $cbu=MCbu::where('id',Session::get('runidcbu'))->get();
+        if (Session::get('roles_id') == 2) {
+            $cbu = MCbu::where('id', Session::get('runidcbu'))->get();
         } else {
-            $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+            $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         }
         $forklifttype = MForklifttype::get();
-        return view('sparepartstok.create',compact('cbu','forklifttype'));
+        return view('sparepartstok.create', compact('cbu', 'forklifttype'));
     }
     public function edit($id)
     {
-        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $sparepart = MSparepartstok::find($id);
 
-        return view('sparepartstok.edit',compact('cbu','sparepart'));
+        return view('sparepartstok.edit', compact('cbu', 'sparepart'));
     }
     public function store(Request $request)
     {
-        $cek=MSparepartstok::where('idsitename',$request->idsitename)->where('codepart',$request->codepart)->count();
-        if ($cek>0) {
+        $cek = MSparepartstok::where('idsitename', $request->idsitename)->where('codepart', $request->codepart)->count();
+        if ($cek > 0) {
             Session::flash('success', 'Data sudah ada!');
             Session::flash('alert-class', 'alert-danger');
             return redirect()->back();
         }
 
         $request->validate([
-            'idcbu'=>'required',
-            'idregion'=>'required',
-            'idsitename'=>'required',
-            'codepart'=>'required',
-            'qty'=>'required',
+            'idcbu' => 'required',
+            'idregion' => 'required',
+            'idsitename' => 'required',
+            'codepart' => 'required',
+            'qty' => 'required',
         ]);
-
-
 
         $sparepart = new MSparepartstok;
         $sparepart->idcbu = $request->idcbu;
@@ -87,22 +131,20 @@ class SparepartstokController extends Controller
             Session::flash('alert-class', 'alert-danger');
             return response()->json([
                 'isSuccess' => true,
-                'Message' => "Something went wrong!"
+                'Message' => "Something went wrong!",
             ], 200); // Status code here
         }
     }
     public function update(Request $request, $id)
     {
         $request->validate([
-            'idcbu'=>'required',
-            'idregion'=>'required',
-            'idsitename'=>'required',
-            'codepart'=>'required',
-            'qty'=>'required',
+            'idcbu' => 'required',
+            'idregion' => 'required',
+            'idsitename' => 'required',
+            'codepart' => 'required',
+            'qty' => 'required',
 
         ]);
-
-
 
         $sparepart = MSparepartstok::find($id);
         $sparepart->idcbu = $request->idcbu;
@@ -122,7 +164,7 @@ class SparepartstokController extends Controller
             Session::flash('alert-class', 'alert-danger');
             return response()->json([
                 'isSuccess' => true,
-                'Message' => "Something went wrong!"
+                'Message' => "Something went wrong!",
             ], 200); // Status code here
         }
     }

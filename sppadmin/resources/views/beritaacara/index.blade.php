@@ -55,7 +55,7 @@ Delivery
             <div>
                 <a href="{{ route('beritaacara.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
             </div>
-
+            
             <!-- <div class="dropdown">
                 <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">

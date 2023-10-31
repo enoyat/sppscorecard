@@ -355,6 +355,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/getregion/{id}', [App\Http\Controllers\ApiLokasi::class, 'getregion'])->name('lokasi.getregion');
             Route::get('/getsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'getsitename'])->name('lokasi.getsitename');
             Route::get('/setsitename', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
+            Route::get('/filtersite', [App\Http\Controllers\ApiLokasi::class, 'filtersite'])->name('lokasi.filtersite');
 
         });
 
@@ -368,6 +369,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
 
         });
         Route::get('/getsitename', [App\Http\Controllers\SitenameController::class, 'getsitename'])->name('sitename.getsitename');
+        Route::get('/getregion', [App\Http\Controllers\SitenameController::class, 'getregion'])->name('sitename.getregion');
 
 
     });

@@ -38,7 +38,21 @@
             <div>
                 <a href="{{ route('sparepartstok.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
             </div>
+            <form action="{{ route('lokasi.filtersite')}}" method="GET" class="form-inline form-row">
 
+                <div class="col">
+                    <div class="input-group mx-1">
+
+                        @include("filter_site")
+
+                            <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <!-- <div class="dropdown">
                 <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">

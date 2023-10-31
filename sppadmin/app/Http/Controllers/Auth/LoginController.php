@@ -92,6 +92,16 @@ class LoginController extends Controller
                 Session::put('category', $category);
                 return route('root');
                 break;
+                case 6:
+
+                    Session::put('runidsitename', $sitename);
+                    Session::put('runnamasitename', $namasitename->namasitename);
+                    Session::put('roles_id', $roles);
+                    Session::put('kdcustomer', $kdcustomer);
+                    Session::put('namacustomer', $namacustomer);
+                    Session::put('category', $category);
+                    return route('root');
+                    break;
             default:
                 return redirect()->route('login');
                 break;
