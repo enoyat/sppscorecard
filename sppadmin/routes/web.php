@@ -62,7 +62,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/edit/{id}', [App\Http\Controllers\SitenameController::class, 'edit'])->name('sitename.edit');
             Route::put('/update/{id}', [App\Http\Controllers\SitenameController::class, 'update'])->name('sitename.update');
             Route::get('/show/{id}', [App\Http\Controllers\SitenameController::class, 'show'])->name('sitename.show');
-            
+
         });
 
         Route::group(['prefix' => 'delivery'], function () {
@@ -262,7 +262,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
         });
 
     });
-    Route::group(['roles' => ['administrator', 'manajersite', 'customerallsite']], function () {
+    Route::group(['roles' => ['administrator', 'manajersite', 'customerallsite', 'customersite','cnp']], function () {
         Route::get('/gantipassword', [App\Http\Controllers\HomeController::class, 'gantipassword'])->name('gantipassword');
         Route::post('utility/userpasswordupdate', [UtilityController::class, 'userpasswordupdate'])->name('utility.userpasswordupdate');
         //Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
@@ -355,7 +355,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/getregion/{id}', [App\Http\Controllers\ApiLokasi::class, 'getregion'])->name('lokasi.getregion');
             Route::get('/getsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'getsitename'])->name('lokasi.getsitename');
             Route::get('/setsitename', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
-            
+
         });
 
         Route::group(['prefix' => 'ticket'], function () {

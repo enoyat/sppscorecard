@@ -23,9 +23,7 @@ cellspacing="0" style="border-collapse: collapse;  widtd: 100%;">
 
 
 
-            <td scope="col"><a
-                    href="{{ route('maintenance.listaction', $key->kdunit) }}">{{ $key->kdunit }}</a>
-            </td>
+            <td scope="col">{{ $key->kdunit }}</td>
             <td scope="col">{{ $key->equipment }}</td>
             <td scope="col">{{ $key->getforklifttype->namaforklifttype }}</td>
             <td scope="col">{{ $key->merk }}</td>

@@ -34,7 +34,7 @@ class DeliveryController extends Controller
             $filter = "sitename";
         }
         $arraykpi = array();
-        if ($filter == "sitename") {            
+        if ($filter == "sitename") {
             $delivery = MDelivery::where('idsitename',Session::get('runidsitename'))->get();
         } else if ($request->filter == "region") {
             $delivery = MDelivery::where('idregion',Session::get('runidregion'))->get();
@@ -46,13 +46,13 @@ class DeliveryController extends Controller
             $delivery = MDelivery::where('idcbu','SN')->get();
         }
         else if ($request->filter == "allwater") {
-            $delivery = MDelivery::where('idsitename','Waters')->get();
+            $delivery = MDelivery::where('idcbu','Waters')->get();
         }
         else if ($request->filter == "allsnwater") {
             $delivery = MDelivery::where('idcbu','SN')->orwhere('idcbu','Waters')->get();
         }
         $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
-       
+
         $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         $forklifttype = MForklifttype::get();
         return view('delivery.index', compact('delivery','forklifttype','cbu','sitename'));

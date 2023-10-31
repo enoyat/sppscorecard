@@ -12,12 +12,12 @@
                 <TH SCOPE="COL">MODEL</TH>
                 <TH SCOPE="COL">CAPACITY (kg)</TH>
                 <TH SCOPE="COL">SERIAL NUMBER</TH>
-                <TH SCOPE="COL">SPECIFICATION</TH>
-                <TH SCOPE="COL">QUANTITY (UNIT)</TH>
+                {{-- <TH SCOPE="COL">SPECIFICATION</TH>
+                <TH SCOPE="COL">QUANTITY (UNIT)</TH> --}}
                 <TH SCOPE="COL">CBU</TH>
                 <TH SCOPE="COL">REGION</TH>
                 <TH SCOPE="COL">SITE NAME</TH>
-    
+
 
 
 
@@ -38,8 +38,8 @@
             <th scope="col">{{ $key->model }}</th>
             <th scope="col">{{ $key->capcity }}</th>
             <th scope="col">{{ $key->serialnumber }}</th>
-            <th scope="col">{{ $key->specification }}</th>
-            <th scope="col">{{ $key->qty }}</th>
+            {{-- <th scope="col">{{ $key->specification }}</th>
+            <th scope="col">{{ $key->qty }}</th> --}}
                 <th scope="col">{{ $key->getcbu->namasitename }}</th>
                 <th scope="col">{{ $key->getregion->namasitename }}</th>
                 <th scope="col">{{ $key->getsitename->namasitename }}</th>

@@ -35,7 +35,7 @@ class UnitController extends Controller
             $filter = "sitename";
         }
         $arraykpi = array();
-        if ($filter == "sitename") {            
+        if ($filter == "sitename") {
             $unit = MUnit::where('idsitename',Session::get('runidsitename'))->get();
         } else if ($request->filter == "region") {
             $unit = MUnit::where('idregion',Session::get('runidregion'))->get();
@@ -47,7 +47,7 @@ class UnitController extends Controller
             $unit = MUnit::where('idcbu','SN')->get();
         }
         else if ($request->filter == "allwater") {
-            $unit = MUnit::where('idsitename','Waters')->get();
+            $unit = MUnit::where('idcbu','Waters')->get();
         }
         else if ($request->filter == "allsnwater") {
             $unit = MUnit::where('idcbu','SN')->orwhere('idcbu','Waters')->get();

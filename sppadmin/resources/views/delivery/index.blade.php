@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
-@section('title') 
-Delivery 
+@section('title')
+Delivery
 @endsection
 
 @section('css')
@@ -46,24 +46,8 @@ Delivery
                         <div class="col">
                             <div class="input-group mx-1">
 
+                                @include("filter_site")
 
-                                <select name="filter" class="form-control">
-
-                                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
-                                        SITENAME</option>
-
-                                        <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
-                                            REGION</option>
-                                            <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
-                                                CBU</option>
-                                                <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
-                                                    ALL SN</option>
-                                                    <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
-                                                        ALL WATERS</option>
-
-                                                        <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
-                                                            ALL SN & WATERS</option>
-                                </select>
                                     <div class="input-group-append">
                                     <button class="btn btn-primary" type="submit">
                                         <i class="fas fa-search"></i>
@@ -72,7 +56,7 @@ Delivery
                             </div>
                         </div>
                     </form>
-               
+
             <!-- <div class="dropdown">
                 <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -92,7 +76,7 @@ Delivery
 
 <div class="table-responsive mb-4" id="tablecontent">
     @include('delivery.content')
-    
+
     <!-- end table -->
 </div>
 <!-- end table responsive -->
