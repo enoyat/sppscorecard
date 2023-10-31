@@ -96,7 +96,7 @@ class HomeController extends Controller
             DB::statement("SET SQL_MODE=''");
             $kpi=DB::select("select qunittype.jmlunit, qpa.* from (
                 SELECT idforklifttype, forklifttype.namaforklifttype, count(kdunit) as jmlunit, idcbu,idregion,idsitename from unit join forklifttype on unit.idforklifttype=forklifttype.id
-                where unit.idsitename='Waters'
+                where unit.idcbu='Waters'
                 group by idforklifttype) as qunittype join (
 
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='Waters') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");

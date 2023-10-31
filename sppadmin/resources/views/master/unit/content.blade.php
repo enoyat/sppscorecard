@@ -34,7 +34,7 @@
                 <td scope="col">{{ $key->type }}</td>
                 <td scope="col">{{ $key->model }}</td>
                 <td scope="col">{{ $key->serialnumber }}</td>
-                <td scope="col">{{ number_format($key->capcity) }}</td>
+                <td scope="col">{{ $key->capcity }}</td>
                 <td scope="col">{{ $key->mast }}</td>
                 <td scope="col">{{ $key->masheight }}</td>
                 <th scope="col">
