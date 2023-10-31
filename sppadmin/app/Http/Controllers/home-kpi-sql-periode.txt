@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\MCustomer;
-use App\Models\MPhysical;
 use App\Models\MSitename;
 use App\Models\User;
-use App\Models\MUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -55,66 +53,72 @@ class HomeController extends Controller
             $filter = "sitename";
         }
         $arraykpi = array();
-        if ($filter == "sitename") {
-            $sitename=Session::get('runidsitename');
-            DB::statement("SET SQL_MODE=''");
-            $kpi=DB::select("select idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable
-            join unit on unit.kdunit = physicalavailable.kdunit
-            join forklifttype on unit.idforklifttype=forklifttype.id
-            where periode like '$mperiode%'
-            and unit.idsitename='$sitename'
-            and forklifttype.f_dashboard= 'Y'
-            group By namaforklifttype, idforklifttype");
+        if ($filter == "sitename") {            
             
-
         } else if ($request->filter == "region") {
-            $sitename=Session::get('runidregion');
-            DB::statement("SET SQL_MODE=''");
-            $kpi=DB::select("select idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable
-            join unit on unit.kdunit = physicalavailable.kdunit
-            join forklifttype on unit.idforklifttype=forklifttype.id
-            where periode like '$mperiode%'
-            and unit.idregion='$sitename'
-            and forklifttype.f_dashboard= 'Y'
-            group By namaforklifttype, idforklifttype");
-        } else if ($request->filter == "cbu") {
-
-            $sitename=Session::get('runidcbu');
-            DB::statement("SET SQL_MODE=''");
-            $kpi=DB::select("select idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable
-            join unit on unit.kdunit = physicalavailable.kdunit
-            join forklifttype on unit.idforklifttype=forklifttype.id
-            where periode like '$mperiode%'
-            and unit.idcbu='$sitename'
-            and forklifttype.f_dashboard= 'Y'
-            group By namaforklifttype, idforklifttype");
-        } else if ($request->filter == "allsn") {
-            DB::statement("SET SQL_MODE=''");
-            $kpi=DB::select("select idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable
-            join unit on unit.kdunit = physicalavailable.kdunit
-            join forklifttype on unit.idforklifttype=forklifttype.id
-            where periode like '$mperiode%'
-            and unit.idcbu='SN'
-            and forklifttype.f_dashboard= 'Y'
-            group By namaforklifttype, idforklifttype");
-        } else if ($request->filter == "allwater") {
-            DB::statement("SET SQL_MODE=''");
-            $kpi=DB::select("select idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable
-            join unit on unit.kdunit = physicalavailable.kdunit
-            join forklifttype on unit.idforklifttype=forklifttype.id
-            where periode like '$mperiode%'
-            and unit.idcbu='Waters'
-            and forklifttype.f_dashboard= 'Y'
-            group By namaforklifttype, idforklifttype");
-        } else if ($request->filter == "allsnwater") {
-            DB::statement("SET SQL_MODE=''");
-            $kpi=DB::select("select idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable
-            join unit on unit.kdunit = physicalavailable.kdunit
-            join forklifttype on unit.idforklifttype=forklifttype.id
-            where periode like '$mperiode%' 
-            and (unit.idcbu='SN' or unit.idcbu='Waters')
-            and forklifttype.f_dashboard= 'Y'
-            group By namaforklifttype, idforklifttype");
+            $kpi = DB::table('physicalavailable')->
+                join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->
+                join('sitename', 'unit.idsitename', '=', 'sitename.id')->
+                join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->
+                select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
+                ->where('periode','like', '%'.$mperiode.'%')
+                ->where('unit.idregion', Session::get('runidregion'))
+                ->where('forklifttype.f_dashboard', "Y")
+                ->groupBy('namaforklifttype', 'idforklifttype')
+                ->get();
+        }
+        else if ($request->filter == "cbu") {
+          
+            $kpi = DB::table('physicalavailable')->
+                join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->
+                join('sitename', 'unit.idsitename', '=', 'sitename.id')->
+                join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->
+                select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
+                ->where('periode','like', '%'.$mperiode.'%')
+                ->where('unit.idcbu', Session::get('runidcbu'))
+                ->where('forklifttype.f_dashboard', "Y")
+                ->groupBy('namaforklifttype', 'idforklifttype')
+                ->get();
+        }
+        else if ($request->filter == "allsn") {
+          
+            $kpi = DB::table('physicalavailable')->
+                join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->
+                join('sitename', 'unit.idsitename', '=', 'sitename.id')->
+                join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->
+                select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
+                ->where('periode','like', '%'.$mperiode.'%')
+                ->where('unit.idcbu', 'SN')
+                ->where('forklifttype.f_dashboard', "Y")
+                ->groupBy('namaforklifttype', 'idforklifttype')
+                ->get();
+        }
+        else if ($request->filter == "allwater") {
+          
+            $kpi = DB::table('physicalavailable')->
+                join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->
+                join('sitename', 'unit.idsitename', '=', 'sitename.id')->
+                join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->
+                select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
+                ->where('periode','like', '%'.$mperiode.'%')
+                ->where('unit.idcbu', 'Waters')
+                ->where('forklifttype.f_dashboard', "Y")
+                ->groupBy('namaforklifttype', 'idforklifttype')
+                ->get();
+        }
+        else if ($request->filter == "allsnwater") {
+          
+            $kpi = DB::table('physicalavailable')->
+                join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->
+                join('sitename', 'unit.idsitename', '=', 'sitename.id')->
+                join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->
+                select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
+                ->where('periode','like', '%'.$mperiode.'%')
+                ->Where('unit.idcbu', 'Waters')
+                ->orWhere('unit.idcbu', 'SN')
+                ->where('forklifttype.f_dashboard', "Y")
+                ->groupBy('namaforklifttype', 'idforklifttype')
+                ->get();
         }
         $i = 0;
         foreach ($kpi as $k) {
@@ -151,7 +155,7 @@ class HomeController extends Controller
             $kpisparepart = 0;
         }
 
-        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->where('f_aktif', '1')->get();
+        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->where('f_aktif','1')->get();
         $delivery = DB::table('delivery')->where('idsitename', Session::get('runidsitename'))->count('*');
         $delivered = DB::table('delivery')->where('idsitename', Session::get('runidsitename'))->where('statuscustomer', 'close')->count('*');
         if ($delivery == 0) {

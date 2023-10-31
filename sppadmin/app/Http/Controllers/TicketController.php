@@ -22,6 +22,10 @@ class TicketController extends Controller
        // dd($tickets);
         return view('ticket.inbox', ['tickets' => $tickets]);
     }
+    public function create()
+    {       
+        return view('ticket.create');
+    }
 
     public function read(Request $request){
         $mainticket=Ticket::with('getuser')->where('id', $request->id)->orderby('id','desc')->first();
@@ -48,11 +52,12 @@ class TicketController extends Controller
         $ticket->userid = Auth::user()->id;
         $ticket->subject = $request->subject;
         $ticket->message = $request->message;
+        $ticket->idsitename = $request->search;
         $ticket->type = '0';
         $ticket->status = 'unread';
         $ticket->save();
-        return redirect()->back();
-    }
+        return redirect()->route('ticket.index');
+     }
     public function replyticket(Request $request){
         $ticket = new Ticket();
         $ticket->userid = Auth::user()->id;

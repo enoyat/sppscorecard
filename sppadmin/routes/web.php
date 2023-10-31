@@ -62,6 +62,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/edit/{id}', [App\Http\Controllers\SitenameController::class, 'edit'])->name('sitename.edit');
             Route::put('/update/{id}', [App\Http\Controllers\SitenameController::class, 'update'])->name('sitename.update');
             Route::get('/show/{id}', [App\Http\Controllers\SitenameController::class, 'show'])->name('sitename.show');
+            
         });
 
         Route::group(['prefix' => 'delivery'], function () {
@@ -354,17 +355,19 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/getregion/{id}', [App\Http\Controllers\ApiLokasi::class, 'getregion'])->name('lokasi.getregion');
             Route::get('/getsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'getsitename'])->name('lokasi.getsitename');
             Route::get('/setsitename', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
+            
         });
 
         Route::group(['prefix' => 'ticket'], function () {
             Route::get('/', [TicketController::class, 'index'])->name('ticket.index');
             Route::get('read/{id}', [TicketController::class, 'read'])->name('ticket.read');
+            Route::get('create', [TicketController::class, 'create'])->name('ticket.create');
             Route::post('sendticket',  [TicketController::class, 'sendticket'])->name('ticket.sendticket');
             Route::post('replyticket',  [TicketController::class, 'replyticket'])->name('ticket.replyticket');
             Route::post('close',  [TicketController::class, 'close'])->name('ticket.close');
 
         });
-
+        Route::get('/getsitename', [App\Http\Controllers\SitenameController::class, 'getsitename'])->name('sitename.getsitename');
 
 
     });

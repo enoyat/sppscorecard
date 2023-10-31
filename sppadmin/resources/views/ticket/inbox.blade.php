@@ -3,6 +3,8 @@
 @section('title') @lang('translation.Inbox') @endsection
 
 @section('content')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     @component('components.breadcrumb')
         @slot('li_1') Ticket @endslot
@@ -12,18 +14,18 @@
 
     <div class="row">
         <div class="col-12">
+
             <!-- Left sidebar -->
             <div class="email-leftbar card">
-                <div class="mail-list mt-4">
+               
                     @if(Auth::user()->roles_id == "4" || Auth::user()->roles_id == "5")
-                    <button type="button" class="btn btn-primary waves-light " data-bs-toggle="modal"
-                    data-bs-target="#composemodal">
+                    <a href="{{ route('ticket.create')}}" class="btn btn-sm btn-primary" >
                     + Request
+                    </a>
                     @endif
                 </button>
-                    <a href="#" class="active"><i class="fas fa-eye" style="color:chartreuse"></i> Open</a>
-                    <a href="#"><i class="fas fa-eye-slash" style="color:rgb(121, 121, 121)"></i> Closed</a>
-                </div>
+
+                
 
             </div>
             <!-- End Left sidebar -->
@@ -42,30 +44,41 @@
 
 
                     </div>
+                    <table class="table table-hover">
                     <ul class="message-list">
                         @php $i=1; @endphp
                         @foreach ($tickets as $key)
-                        <li>
+                        <tr>
 
-                            <div class="col-mail col-mail-1">
-                                #{{ $key->id }}
-                                <a href="{{ route('ticket.read',$key->id)}}" class="title">{{ $key->getuser->name }}</a>
+                            <td>
+                                #{{ $key->id }} - 
                                 @if ($key->status == "close")
-                                <i class="fas fa-eye-slash" style="color:rgb(121, 121, 121)"></i>
+                                closed
                                 @else
-                                <i class="fas fa-eye" style="color:chartreuse"></i>
+                                 <span style="color:rgb(108, 211, 5)">open</span>
                                 @endif
-
-                            </div>
-                            <div class="col-mail col-mail-2">
+                               
+                            </td>
+                            <td>
+                                <a href="{{ route('ticket.read',$key->id)}}" class="title">{{ $key->getuser->name }}</a>
+                            </td>
+                            
+                            <td>
                                 <a href="#" class="subject"><span class="teaser">{{ $key->subject }}</span>
                                 </a>
+                            </td>
+                            <td>
+                               
                                 <div class="date">{{ date_format($key->created_at,"d M Y"); }}</div>
-                            </div>
-                        </li>
+                            </td>
+                            <td>
+                                <div >{{ $key->getsitename->namasitename }}</div>
+                            </td>
+
+                        </tr>
                         <?php $i++; ?>
                         @endforeach
-                    </ul>
+                    </table>
 
 
                 </div> <!-- card -->
@@ -104,6 +117,8 @@
                 </div>
                 <div class="modal-body">
                     <div>
+                       
+                        <select name="search" id="search" required class="form-control"></select>            
 
                         <div class="mb-3">
                             <input type="text" name="subject" class="form-control" placeholder="Subject">
@@ -118,13 +133,38 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Send <i class="fab fa-telegram-plane ms-1"></i></button>
                 </div>
+                <script>
+                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                    $("#search").select2({
+                        placeholder: '-- select unit --',
+                        ajax: {
+                            url: "{{ route('unit.getunit') }}",
+                            type: "GET",
+                            dataType: 'JSON',
+                            delay: 250,
+                            data: function(params) {
+                                return {
+                                    _token: CSRF_TOKEN,
+                                    search: params.term,
+                                    idsitename: $("#idsitename").val(),
+                                };
+                            },
+                            processResults: function(response) {
+                                return {
+                                    results: response
+                                };
+                            },
+                            cache: true
+                        }
+                    });
+                </script>
             </div>
         </div>
         </form>
     </div>
     <!-- end modal -->
     <!-- end modal -->
-
+    
 @endsection
 
 @section('script')

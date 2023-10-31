@@ -1,98 +1,81 @@
 @include('layouts.tabel')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<div class="row">
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Units</h4>
-                <div class="row">
-                    <div class="col-3">
-                        <select name="search" id="search" required class="form-control"></select>
+    <table id="example" class="display nowrap table table-striped table-bordered scroll-horizontal font-size-11" cellspacing="0"
+        style="border-collapse: collapse;  width: 100%;"  >
+        <thead>
+            <tr>
+                <TH SCOPE="COL">CODE UNIT</TH>
+                <TH SCOPE="COL">EQUIPMENT</TH>
+                <TH SCOPE="COL">FORKLIFT TYPE</TH>
+                <TH SCOPE="COL">MERK</TH>
+                <TH SCOPE="COL">TYPE</TH>
+                <TH SCOPE="COL">MODEL</TH>
+                <TH SCOPE="COL">CAPACITY (kg)</TH>
+                <TH SCOPE="COL">SERIAL NUMBER</TH>
+                <TH SCOPE="COL">SPECIFICATION</TH>
+                <TH SCOPE="COL">QUANTITY (UNIT)</TH>
+                <TH SCOPE="COL">CBU</TH>
+                <TH SCOPE="COL">REGION</TH>
+                <TH SCOPE="COL">SITE NAME</TH>
+    
 
-                    </div>
-                    <div class="col-3">
-                        <button type="button" class="btn btn-primary btn-action" id="btnsearch" title="search"><i
-                                class="bx bx-search"></i></button>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @php $i=1; @endphp
+            @foreach ($unit as $key)
+            <tr>
+
+
+
+                <th scope="col"><a href="{{ URL::to("unit/search?keyword=$key->kdunit") }}">{{ $key->kdunit }}</a></th>
+                <th scope="col">{{ $key->equipment }}</th>
+                <th scope="col">{{ $key->getforklifttype->namaforklifttype }}</th>
+            <th scope="col">{{ $key->merk }}</th>
+            <th scope="col">{{ $key->type }}</th>
+            <th scope="col">{{ $key->model }}</th>
+            <th scope="col">{{ $key->capcity }}</th>
+            <th scope="col">{{ $key->serialnumber }}</th>
+            <th scope="col">{{ $key->specification }}</th>
+            <th scope="col">{{ $key->qty }}</th>
+                <th scope="col">{{ $key->getcbu->namasitename }}</th>
+                <th scope="col">{{ $key->getregion->namasitename }}</th>
+                <th scope="col">{{ $key->getsitename->namasitename }}</th>
+
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Form</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div><!-- end card header -->
+    <script>
 
-            <div class="card-body">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#units" role="tab">
-                            <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                            <span class="d-none d-sm-block">Unit</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#maintenance" role="tab">
-                            <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                            <span class="d-none d-sm-block">Maintenance</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#trouble" role="tab">
-                            <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                            <span class="d-none d-sm-block">Trouble</span>
-                        </a>
-                    </li>
+    $('.btn-action').click(function() {
+        var url = $(this).data("url");
 
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content p-3 text-muted" id="dataunit">
-
-                </div>
-            </div><!-- end card-body -->
-        </div><!-- end card -->
-    </div><!-- end col -->
-
-
-</div><!-- end row -->
-
-
-<script>
-    $('#btnsearch').click(function() {
-        var keyword = $('#search').val();
         $.ajax({
-
-            url: "{{ route('unit.search') }}",
-            method: "GET",
-            data: {
-                keyword: keyword
+            url: url,
+            dataType: 'html',
+            success: function(res) {
+                var data = res;
+                $('.modal-body').html(data);
+                $('#staticBackdrop').modal('show');
             },
-            success: function(data) {
-                $('#dataunit').html(data);
+            error: function(request, status, error) {
+                console.log("ajax call went wrong:" + request.responseText);
             }
         });
-        event.preventDefault();
-
-    });
-    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    $("#search").select2({
-        placeholder: 'select unit',
-        ajax: {
-            url: "{{ route('unit.getunit') }}",
-            type: "GET",
-            dataType: 'JSON',
-            delay: 250,
-            data: function(params) {
-                return {
-                    _token: CSRF_TOKEN,
-                    search: params.term,
-                    idsitename: $("#idsitename").val(),
-                };
-            },
-            processResults: function(response) {
-                return {
-                    results: response
-                };
-            },
-            cache: true
-        }
     });
 </script>

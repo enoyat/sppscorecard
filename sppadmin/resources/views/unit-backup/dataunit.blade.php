@@ -13,7 +13,6 @@ cellspacing="0" style="border-collapse: collapse;  widtd: 100%;">
         <th SCOPE="COL">CAPACITY (KILOGRAM)</th>
         <th SCOPE="COL">MAST (STAGE)</th>
         <th SCOPE="COL">HEIGHT (METER)</th>
-        <th SCOPE="COL">IMAGE</th>
     </tr>
 </thead>
 <tbody>
@@ -35,7 +34,6 @@ cellspacing="0" style="border-collapse: collapse;  widtd: 100%;">
             <td scope="col">{{ number_format($key->capcity) }}</td>
             <td scope="col">{{ $key->mast }}</td>
             <td scope="col">{{ $key->masheight }}</td>
-            <td scope="col"><img src="{{ asset('/img/'.$key->foto) }}" width="100px" ></td>
 
 
         </tr>

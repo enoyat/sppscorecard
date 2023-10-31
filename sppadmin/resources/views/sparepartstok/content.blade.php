@@ -10,8 +10,8 @@
                 </th>
 
                 <TH SCOPE="COL">SPARE PART</TH>
-                <TH SCOPE="COL">QTY</TH>
-                <TH SCOPE="COL">STOK</TH>
+                <TH SCOPE="COL">QUANTITY</TH>
+                <TH SCOPE="COL">STOCK</TH>
                 <TH SCOPE="COL">CBU</TH>
                 <TH SCOPE="COL">REGION</TH>
                 <TH SCOPE="COL">SITE NAME</TH>

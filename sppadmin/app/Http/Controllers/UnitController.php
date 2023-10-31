@@ -27,11 +27,34 @@ class UnitController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->get('filter')) {
+            $filter = $request->get('filter');
+        } else {
+            $filter = "sitename";
+        }
+        $arraykpi = array();
+        if ($filter == "sitename") {            
+            $unit = MUnit::where('idsitename',Session::get('runidsitename'))->get();
+        } else if ($request->filter == "region") {
+            $unit = MUnit::where('idregion',Session::get('runidregion'))->get();
+        }
+        else if ($request->filter == "cbu") {
+            $unit = MUnit::where('idcbu',Session::get('runidcbu'))->get();
+        }
+        else if ($request->filter == "allsn") {
+            $unit = MUnit::where('idcbu','SN')->get();
+        }
+        else if ($request->filter == "allwater") {
+            $unit = MUnit::where('idsitename','Waters')->get();
+        }
+        else if ($request->filter == "allsnwater") {
+            $unit = MUnit::where('idcbu','SN')->orwhere('idcbu','Waters')->get();
+        }
         $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
-        $unit = MUnit::where('idsitename',Session::get('runidsitename'))->get();
+        // $unit = MUnit::where('idsitename',Session::get('runidsitename'))->get();
         return view('unit.index', compact('unit','cbu','sitename'));
     }
     public function create()
@@ -159,14 +182,14 @@ class UnitController extends Controller
         }
     }
     public function getunit(Request $request){
-        $unit = MUnit::where('idsitename',$request->idsitename)->
+        $unit = MUnit::with('getsitename')->where('idsitename',$request->idsitename)->
         where('kdunit', 'LIKE', '%'.$request->search.'%')->orderBy('kdunit', 'ASC')->get();
 
         $response = array();
         foreach ($unit as $value) {
             $response[] = array(
                 "id" => $value->kdunit,
-                "text" => $value->kdunit
+                "text" => $value->kdunit . " - " . $value->getsitename->namasitename
             );
         }
 
@@ -178,7 +201,7 @@ class UnitController extends Controller
         $units = MUnit::where('kdunit', 'LIKE', '%' . $request->keyword . '%')->orderBy('kdunit', 'ASC')->get();
         $listactions= $listactions=MMaintenanceaction::where('kdunit',$request->keyword)->get();
         $listtroubleactions=MTroubleaction::where('kdunit',$request->keyword)->get();
-        return view('unit.search', compact('units','listactions','listtroubleactions'));
+        return view('unit.detail', compact('units','listactions','listtroubleactions'));
     }
 
 }

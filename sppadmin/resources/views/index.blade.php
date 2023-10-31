@@ -60,12 +60,12 @@ rel="stylesheet" type="text/css" />
                                                 REGION</option>
                                                 <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
                                                     CBU</option>
-                                                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                                                    <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
                                                         ALL SN</option>
-                                                        <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                                                        <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
                                                             ALL WATERS</option>
 
-                                                            <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                                                            <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
                                                                 ALL SN & WATERS</option>
                                     </select>
                                         <div class="input-group-append">

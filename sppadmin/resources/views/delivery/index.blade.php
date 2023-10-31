@@ -41,6 +41,38 @@ Delivery
                 <a href="{{ route('delivery.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
             </div>
 
+                    <form action="" method="GET" class="form-inline form-row">
+
+                        <div class="col">
+                            <div class="input-group mx-1">
+
+
+                                <select name="filter" class="form-control">
+
+                                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                                        SITENAME</option>
+
+                                        <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
+                                            REGION</option>
+                                            <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
+                                                CBU</option>
+                                                <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
+                                                    ALL SN</option>
+                                                    <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
+                                                        ALL WATERS</option>
+
+                                                        <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
+                                                            ALL SN & WATERS</option>
+                                </select>
+                                    <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+               
             <!-- <div class="dropdown">
                 <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">

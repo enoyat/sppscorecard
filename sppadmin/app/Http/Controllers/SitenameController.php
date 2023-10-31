@@ -118,5 +118,19 @@ class SitenameController extends Controller
             return redirect()->back();
         }
     }
+    public function getsitename(Request $request){
+        $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->
+        where('namasitename', 'LIKE', '%'.$request->search.'%')->orderBy('namasitename', 'ASC')->get();
+
+        $response = array();
+        foreach ($sitename as $value) {
+            $response[] = array(
+                "id" => $value->id,
+                "text" => $value->namasitename
+            );
+        }
+
+        return response()->json($response);
+    }
 
 }

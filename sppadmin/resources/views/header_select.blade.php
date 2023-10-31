@@ -98,7 +98,7 @@
 </div><!-- end row-->
 <script>
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-    jQuery('#idcbu').change(function() {
+    jQuery('#idcbu').click(function() {
         jQuery('#idregion').html('');
         var id = $(this).val();
         var string = "{{ asset('/lokasi/getregion/') }}/" + id;
@@ -123,7 +123,7 @@
             }
         });
     });
-    jQuery('#idregion').change(function() {
+    jQuery('#idregion').click(function() {
         jQuery('#idsitename').html('');
         var id = $(this).val();
         var string = "{{ asset('/lokasi/getsitename/') }}/" + id;

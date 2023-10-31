@@ -17,5 +17,10 @@ class Ticket extends Model
     function scopeNull($query){
         return $query->where('parentid',null);
     }
+    public function getsitename()
+    {
+        return $this->belongsTo(MSitename::class,'idsitename','id');
+
+    }
 
 }

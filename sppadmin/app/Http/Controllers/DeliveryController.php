@@ -26,10 +26,33 @@ class DeliveryController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->get('filter')) {
+            $filter = $request->get('filter');
+        } else {
+            $filter = "sitename";
+        }
+        $arraykpi = array();
+        if ($filter == "sitename") {            
+            $delivery = MDelivery::where('idsitename',Session::get('runidsitename'))->get();
+        } else if ($request->filter == "region") {
+            $delivery = MDelivery::where('idregion',Session::get('runidregion'))->get();
+        }
+        else if ($request->filter == "cbu") {
+            $delivery = MDelivery::where('idcbu',Session::get('runidcbu'))->get();
+        }
+        else if ($request->filter == "allsn") {
+            $delivery = MDelivery::where('idcbu','SN')->get();
+        }
+        else if ($request->filter == "allwater") {
+            $delivery = MDelivery::where('idsitename','Waters')->get();
+        }
+        else if ($request->filter == "allsnwater") {
+            $delivery = MDelivery::where('idcbu','SN')->orwhere('idcbu','Waters')->get();
+        }
         $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
-        $delivery = MDelivery::where('idsitename',Session::get('runidsitename'))->get();
+       
         $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         $forklifttype = MForklifttype::get();
         return view('delivery.index', compact('delivery','forklifttype','cbu','sitename'));

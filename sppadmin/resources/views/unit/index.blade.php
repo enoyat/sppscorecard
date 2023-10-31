@@ -21,7 +21,7 @@
 @include('sweetalert::alert')
 <div class="row align-items-center">
     <div class="col-md-6">
-
+        
     </div>
 
     <div class="col-md-6">
@@ -35,7 +35,37 @@
 
                 </ul>
             </div>
+            <form action="" method="GET" class="form-inline form-row">
 
+                <div class="col">
+                    <div class="input-group mx-1">
+
+
+                        <select name="filter" class="form-control">
+
+                            <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                                SITENAME</option>
+
+                                <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
+                                    REGION</option>
+                                    <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
+                                        CBU</option>
+                                        <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
+                                            ALL SN</option>
+                                            <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
+                                                ALL WATERS</option>
+
+                                                <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
+                                                    ALL SN & WATERS</option>
+                        </select>
+                            <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
 
 
             <!-- <div class="dropdown">
@@ -55,9 +85,9 @@
 </div>
 <!-- end row -->
 
-<div id="tablecontent">
+<div class="table-responsive mb-4" id="tablecontent">
     @include('unit.content')
-
+    
     <!-- end table -->
 </div>
 <!-- end table responsive -->
