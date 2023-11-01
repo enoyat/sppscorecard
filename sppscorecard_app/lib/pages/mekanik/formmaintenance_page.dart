@@ -75,12 +75,12 @@ class _FormMaintenancePageState extends State<FormMaintenancePage> {
   List<Unit> _unit = [];
 
   String status = "";
-  String _shift = 'shift 1';
+  String _shift = '1';
   String kdunit = '';
   final shiftlist = <String>[
-    'shift 1',
-    'shift 2',
-    'shift 3',
+    '1',
+    '2',
+    '3',
   ];
   final dokumentlist = <String>[
     'Before Unit',
