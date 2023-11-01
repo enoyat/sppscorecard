@@ -30,8 +30,8 @@ cellspacing="0" style="border-collapse: collapse;  widtd: 100%;">
             <td scope="col">{{ $key->type }}</td>
             <td scope="col">{{ $key->model }}</td>
             <td scope="col">{{ $key->serialnumber }}</td>
-            <td scope="col">{{ $key->capcity }}</td>
-            {{-- <td scope="col">{{ number_format($key->capcity) }}</td> --}}
+            {{-- <td scope="col">{{ $key->capcity }}</td> --}}
+            <td scope="col">{{ number_format($key->capcity) }}</td>
             <td scope="col">{{ $key->mast }}</td>
             <td scope="col">{{ $key->masheight }}</td>
             <td scope="col"><img src="{{ asset('/img/'.$key->foto) }}" width="100px" ></td>

@@ -19,9 +19,7 @@
     @elseif (Auth::user()->roles_id == '2')
         <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
             SITENAME</option>
-    @elseif (Auth::user()->roles_id == '4')
-        <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
-            SITENAME</option>
+    
     @elseif (Auth::user()->roles_id == '5')
         <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
             SITENAME</option>
