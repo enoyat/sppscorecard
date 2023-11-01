@@ -36,7 +36,7 @@
                         <th scope="col">{{ $key->shift }}</th>
                         <th scope="col">{{ $key->actionplan }}</th>
                         <th scope="col">{{ $key->sparepart }}</th>
-                        <th scope="col">{{ $key->hm }}</th>
+                        <th scope="col">{{ number_format($key->hm) }}</th>
                         <th scope="col">
                             @if ($key->statusmekanik == 'CLOSE')
                                 <span
