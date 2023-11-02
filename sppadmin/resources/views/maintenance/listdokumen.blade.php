@@ -68,9 +68,9 @@ trouble
                         <label class="form-check-label" for="checkAll"></label>
                     </div>
                 </th>
-                <th scope="col">keterangan</th>
-                <th scope="col">Foto</th>
-                <th >Action</th>
+                <th scope="col">DESCRIPTION</th>
+                <th scope="col">IMAGE</th>
+                <th >ACTION</th>
             </tr>
         </thead>
         <tbody>
@@ -86,14 +86,14 @@ trouble
                 <th scope="col">{{ $key->keterangan }}</th>
                 <th scope="col"><img src="{{ asset('assets/inventory/'.$key->filename) }}" width="500" ></th>
                 <th >
-                    
+                    @if(Auth::user()->roles_id == '1' || Auth::user()->roles_id == '2')
                                 <form action="{{ route('trouble.dokumendestroy',$key->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"
                                         onclick="return confirm('Hapus Data ini?');">Hapus</button>
                                 </form>
-                    
+                    @endif
                 </th>
             </tr>
             @endforeach
