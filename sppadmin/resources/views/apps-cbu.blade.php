@@ -75,7 +75,7 @@
                     <th scope="col">Position</th>
                     <th scope="col">Email</th>
                     <th scope="col">Tags</th>
-                    <th style="width: 80px; min-width: 80px;">Action</th>
+                    <th style="width: 80px; min-width: 80px;">ACTION</th>
                 </tr>
             </thead>
             <tbody>

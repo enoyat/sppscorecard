@@ -6,7 +6,7 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Forms @endslot
-@slot('title') Create Berita Acara @endslot
+@slot('title') Create OFFICIAL REPORT @endslot
 @endcomponent
 
 
@@ -14,7 +14,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Form Berita Acara</h4>
+                <h4 class="card-title">Form OFFICIAL REPORT</h4>
             </div>
             <div class="card-body p-4">
 
@@ -76,7 +76,7 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Foto Berita Acara</label>
+                                    <label for="example-password-input" class="form-label">Foto OFFICIAL REPORT</label>
                                     <input class="form-control" type="file" value="" name="filefoto"
                                         id="filefoto">
                                 </div>

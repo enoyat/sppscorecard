@@ -8,6 +8,7 @@ use App\Models\MOffice;
 use App\Models\MSitename;
 use App\Models\MCbu;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -30,8 +31,15 @@ class BeritaacaraController extends Controller
     {
         $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
-        $beritaacara = MBeritaacara::where('pengirim', Session::get('runidsitename'))->get();
-
+        if (Auth::user()->roles_id == "1" || Auth::user()->roles_id == "2") {
+            $beritaacara = MBeritaacara::where('pengirim', Session::get('runidsitename'))->get();
+        } else {
+            $beritaacara = MBeritaacara::where('penerima', Session::get('runidsitename'))->get();
+        }
+        if (Auth::user()->roles_id == "5" || Auth::user()->roles_id == "6") {
+            $beritaacara = MBeritaacara::get();
+        }
+       
         return view('beritaacara.index', compact('beritaacara', 'cbu', 'sitename'));
     }
     public function create()
@@ -95,6 +103,44 @@ class BeritaacaraController extends Controller
         $Beritaacara->statuspengirim = $request->statuspengirim;
 
 
+        $simpan = $Beritaacara->save();
+
+        if ($simpan) {
+            Session::flash('message', 'Data berhasil disimpan!');
+            return redirect()->route('beritaacara.index');
+        } else {
+            Session::flash('message', 'Something went wrong!');
+            Session::flash('alert-class', 'alert-danger');
+            return response()->json([
+                'isSuccess' => true,
+                'Message' => "Something went wrong!"
+            ], 200); // Status code here
+        }
+    }
+    public function show($id)
+    {
+        $beritaacara = MBeritaacara::find($id);
+        return view('beritaacara.reply', compact('beritaacara'));
+    }
+    public function reply(Request $request, $id)
+    {
+        $request->validate([
+            'filefoto' => 'required',
+        ]);
+        if (!empty($request->filefoto)) {
+            $file = $request->filefoto;
+            $pathUpload = 'assets/inventory';
+
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . "." . $extension;
+            $file->move($pathUpload, $filename);
+        } else {
+            $filename = 'default.png';
+        }
+
+        $Beritaacara = MBeritaacara::find($id);
+        $Beritaacara->tanggalterima = Carbon::now();    
+        $Beritaacara->filereply = $filename;   
         $simpan = $Beritaacara->save();
 
         if ($simpan) {

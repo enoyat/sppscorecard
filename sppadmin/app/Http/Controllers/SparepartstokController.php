@@ -28,7 +28,7 @@ class SparepartstokController extends Controller
         }
 
         if ($filter == "sitename") {
-            $sparepartstok = MSparepartstok::where('idsitename', Session::get('runidsitename'))->get();
+            
             if ($request->get('xidsitename') == null) {
                 $id = Session::get('runidsitename');
             } else {
@@ -43,8 +43,9 @@ class SparepartstokController extends Controller
             Session::put('runnamaregion', $region->namasitename);
             Session::put('runidsitename', $id);
             Session::put('runnamasitename', $sitename->namasitename);
+            $sparepartstok = MSparepartstok::where('idsitename', Session::get('runidsitename'))->get();
         } else if ($request->filter == "region") {
-            $sparepartstok = MSparepartstok::where('idregion', Session::get('runidregion'))->get();
+           
             $id = $request->get('xidregion');
             $region = MSitename::where('id', $id)->first();
             $cbu = MSitename::where('id', $region->parentid)->first();
@@ -55,8 +56,9 @@ class SparepartstokController extends Controller
             Session::put('runnamaregion', $region->namasitename);
             Session::put('runidsitename', $sitename->id);
             Session::put('runnamasitename', $sitename->namasitename);
+            $sparepartstok = MSparepartstok::where('idregion', Session::get('runidregion'))->get();
         } else if ($request->filter == "cbu") {
-            $sparepartstok = MSparepartstok::where('idcbu', Session::get('runidcbu'))->get();
+           
             $id = $request->get('xidcbu');
             $cbu = MSitename::where('id', $id)->first();
             $region = MSitename::where('parentid', $cbu->id)->first();
@@ -67,8 +69,11 @@ class SparepartstokController extends Controller
             Session::put('runnamaregion', $region->namasitename);
             Session::put('runidsitename', $sitename->id);
             Session::put('runnamasitename', $sitename->namasitename);
+            $sparepartstok = MSparepartstok::where('idcbu', Session::get('runidcbu'))->get();
+
         } else if ($request->filter == "allsn") {
             $sparepartstok = MSparepartstok::where('idcbu', 'SN')->get();
+           
         } else if ($request->filter == "allwater") {
             $sparepartstok = MSparepartstok::where('idcbu', 'Waters')->get();
         } else if ($request->filter == "allsnwater") {
@@ -120,6 +125,7 @@ class SparepartstokController extends Controller
         $sparepart->codepart = $request->codepart;
         $sparepart->qty = $request->qty;
         $sparepart->stok = $request->qty;
+        $sparepart->remark = $request->remark;
         $simpan = $sparepart->save();
 
         if ($simpan) {
@@ -152,7 +158,7 @@ class SparepartstokController extends Controller
         $sparepart->idsitename = $request->idsitename;
         $sparepart->codepart = $request->codepart;
         $sparepart->qty = $request->qty;
-
+        $sparepart->remark = $request->remark;
         $simpan = $sparepart->save();
 
         if ($simpan) {

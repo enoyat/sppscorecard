@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') Unit @endsection
+@section('title') UNIT @endsection
 
 @section('css')
 
@@ -15,8 +15,8 @@
 @endif
 <!-- start page title -->
 @component('components.breadcrumb')
-@slot('li_1') Unit @endslot
-@slot('title') Unit @endslot
+@slot('li_1') UNIT @endslot
+@slot('title') UNIT @endslot
 @endcomponent
 @include('sweetalert::alert')
 <div class="row align-items-center">

@@ -78,7 +78,11 @@
                                     <label for="example-date-input" class="form-label">Qty</label>
                                     <input class="form-control" type="text" value="{{ $sparepart->qty }}" name="qty" id="qty">
                                 </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Remark</label>
+                                    <input type="text"  name="remark" id="remark" required class="form-control" value="{{ $sparepart->remark }}">
 
+                                </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 

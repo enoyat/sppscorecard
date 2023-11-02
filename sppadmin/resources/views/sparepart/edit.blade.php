@@ -18,7 +18,7 @@
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('sparepart.update',$sparepart->codeunit) }}" method="POST">
+                <form action="{{ route('sparepart.update',$sparepart->codepart) }}" method="POST">
                     @method('PUT')
                     <div class="row">
                         @if ($message = Session::get('success'))

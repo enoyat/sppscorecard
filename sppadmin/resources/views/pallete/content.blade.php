@@ -22,7 +22,7 @@
                 <TH SCOPE="COL">CBU</TH>
                 <TH SCOPE="COL">REGION</TH>
                 <TH SCOPE="COL">SITE NAME</TH>
-                <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
+                <th style="width: 80px; min-width: 80px;">ACTION</th>
 
 
             </tr>

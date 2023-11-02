@@ -2,16 +2,20 @@
     <thead>
         <tr>
             <th>
-                userid
+                Userid
             </th>
             <th>
-                message
+                Message
             </th>
             <th>
-                time
+                Date Created
             </th>
             <th>
-                status
+                Due Date
+            </th>
+
+            <th>
+                Status
             </th>
         </tr>
     </thead>
@@ -27,6 +31,7 @@
             </td>
             <td><?php echo $key->message; ?></td>
             <td><?php echo $key->created_at; ?></td>
+            <td><?php echo $key->duedate; ?></td>
             <td>
                 @if ($key->type=="0")
 

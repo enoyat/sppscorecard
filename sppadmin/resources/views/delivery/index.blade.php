@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-Delivery
+DELIVERY
 @endsection
 
 @section('css')
@@ -17,8 +17,8 @@ Delivery
 @endif
 <!-- start page title -->
 @component('components.breadcrumb')
-@slot('li_1') Contacts @endslot
-@slot('title') Delivery @endslot
+@slot('li_1') DELIVERY @endslot
+@slot('title') DELIVERY @endslot
 @endcomponent
 
 <div class="row align-items-center">

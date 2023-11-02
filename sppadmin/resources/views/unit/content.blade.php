@@ -36,7 +36,7 @@
             <th scope="col">{{ $key->merk }}</th>
             <th scope="col">{{ $key->type }}</th>
             <th scope="col">{{ $key->model }}</th>
-            <th scope="col">{{ $key->capcity }}</th>
+            <th scope="col" style="text-align: center">{{ number_format($key->capcity) }}</th>
             <th scope="col">{{ $key->serialnumber }}</th>
             {{-- <th scope="col">{{ $key->specification }}</th>
             <th scope="col">{{ $key->qty }}</th> --}}

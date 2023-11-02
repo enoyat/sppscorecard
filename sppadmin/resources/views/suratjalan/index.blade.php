@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title') 
-Delivery 
+DELIVERY NOTE 
 @endsection
 
 @section('css')
@@ -32,8 +32,8 @@ Delivery
 
 <!-- start page title -->
 @component('components.breadcrumb')
-@slot('li_1') Contacts @endslot
-@slot('title') surat jalan @endslot
+@slot('li_1') DELIVERY NOTE  @endslot
+@slot('title') DELIVERY NOTE  @endslot
 @endcomponent
 
 <div class="row align-items-center">
@@ -53,7 +53,9 @@ Delivery
                 </ul>
             </div>
             <div>
+                @if (Auth::user()->roles_id==1 || Auth::user()->roles_id==2)
                 <a href="{{ route('suratjalan.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
+                @endif
             </div>
             
             <!-- <div class="dropdown">

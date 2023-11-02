@@ -6,7 +6,7 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Forms @endslot
-@slot('title') Create DELIVERY NOTE  @endslot
+@slot('title') REPLY OFFICIAL REPORT @endslot
 @endcomponent
 
 
@@ -14,11 +14,13 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Form DELIVERY NOTE </h4>
+                <h4 class="card-title">REPLY OFFICIAL REPORT</h4>
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('suratjalan.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('beritaacara.reply',$beritaacara->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
                     <div class="row">
                         @if ($message = Session::get('success'))
                         <div class="alert alert-success">
@@ -37,50 +39,14 @@
                         </div>
                         @endif
 
-                        @csrf
+
                         <div class="col-lg-6">
                             <div>
-                            <div class="mb-3">
-                                    <label for="example-text-input" class="form-label">Sitename Pengirim</label>
-                                    <input class="form-control" type="hidden" value="{{ Session::get('runidsitename') }}" name="pengirim"
-                                        id="pengirim" readonly > {{ Session::get('runnamasitename') }}
-
-                                </div>
-                                <label for="example-text-input" class="form-label">Sitename Tujuan</label>
                                 <div class="mb-3">
-                                    <label for="example-text-input" class="form-label">CBU</label>
-                                    <select class="form-select" aria-label="Default select example" name="idcbu"
-                                        id="idcbu">
-                                        <option value="" selected>select</option>
-                                        @foreach ($cbu as $itemcbu)
-                                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
-                                        @endforeach
-                                    </select>
-
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="example-text-input" class="form-label">Region</label>
-                                    <select class="form-select" aria-label="Default select example" name="idregion"
-                                        id="idregion">
-
-                                    </select>
-
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-text-input" class="form-label">Site Name</label>
-                                    <select class="form-select" aria-label="Default select example" name="idsitename"
-                                        id="idsitename">
-
-                                    </select>
-
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Foto DELIVERY NOTE </label>
+                                    <label for="example-password-input" class="form-label">FOTO REPLY OFFICIAL REPORT</label>
                                     <input class="form-control" type="file" value="" name="filefoto"
                                         id="filefoto">
                                 </div>
-
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
@@ -99,7 +65,7 @@
 </div>
 <!-- end row -->
 <script>
-    jQuery('#idcbu').change(function() {
+jQuery('#idcbu').change(function() {
     jQuery('#idregion').html('');
     var id = $(this).val();
     var string = "{{ asset('/lokasi/getregion/') }}/" + id;
@@ -123,8 +89,8 @@
             $('#idregion').html(html);
         }
     });
-    });
-    jQuery('#idregion').change(function() {
+});
+jQuery('#idregion').change(function() {
     jQuery('#idsitename').html('');
     var id = $(this).val();
     var string = "{{ asset('/lokasi/getsitename/') }}/" + id;
@@ -148,7 +114,7 @@
             $('#idsitename').html(html);
         }
     });
-    });
+});
 </script>
 
 

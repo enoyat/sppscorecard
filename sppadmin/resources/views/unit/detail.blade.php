@@ -18,7 +18,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Units</h4>
+                <h4 class="card-title">UNIT</h4>
                 <div class="row">
                     <div class="col-3">
                         <a href="{{ route('unit.index') }}" class="btn btn-primary" title="Add">Back</a>
@@ -34,19 +34,19 @@
                     <li class="nav-item">
                         <a class="nav-link active" data-bs-toggle="tab" href="#units" role="tab">
                             <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                            <span class="d-none d-sm-block">Unit</span>
+                            <span class="d-none d-sm-block">UNIT</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="tab" href="#maintenance" role="tab">
                             <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                            <span class="d-none d-sm-block">Maintenance</span>
+                            <span class="d-none d-sm-block">MAINTENANCE</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="tab" href="#trouble" role="tab">
                             <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
-                            <span class="d-none d-sm-block">Trouble</span>
+                            <span class="d-none d-sm-block">TROUBLE</span>
                         </a>
                     </li>
 

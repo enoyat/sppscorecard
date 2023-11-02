@@ -11,7 +11,7 @@
                 <th scope="col">REGION CODE</th>
                 <th scope="col">REGION NAME</th>
                 <th scope="col">CBU</th>
-                <th style="width: 80px; min-width: 80px;">Action</th>
+                <th style="width: 80px; min-width: 80px;">ACTION</th>
             </tr>
         </thead>
         <tbody>

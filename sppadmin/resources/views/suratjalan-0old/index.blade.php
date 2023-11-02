@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
-@section('title') SPARE PART @endsection
+@section('title') 
+Delivery 
+@endsection
 
 @section('css')
 
@@ -13,10 +15,25 @@
 @if(Session::get('roles_id')==1 || Session::get('roles_id')==5)
     @include('header_select')
 @endif
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" >
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">RETUR</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 <!-- start page title -->
 @component('components.breadcrumb')
-@slot('li_1') SPARE PART @endslot
-@slot('title') SPARE PART @endslot
+@slot('li_1') Contacts @endslot
+@slot('title') DELIVERY NOTE @endslot
 @endcomponent
 
 <div class="row align-items-center">
@@ -29,30 +46,16 @@
             <div>
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('sparepartstok.index') }}" data-bs-toggle="tooltip"
+                        <a class="nav-link active" href="{{ route('delivery.index') }}" data-bs-toggle="tooltip"
                             data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
                     </li>
 
                 </ul>
             </div>
             <div>
-                <a href="{{ route('sparepartstok.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
+                <a href="{{ route('suratjalan.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
             </div>
-            <form action="" method="GET" class="form-inline form-row">
-
-                <div class="col">
-                    <div class="input-group mx-1">
-
-                        @include("filter_site")
-
-                            <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            
             <!-- <div class="dropdown">
                 <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -71,7 +74,7 @@
 <!-- end row -->
 
 <div class="table-responsive mb-4" id="tablecontent">
-    @include('sparepartstok.content')
+    @include('suratjalan.content')
     
     <!-- end table -->
 </div>
@@ -102,5 +105,4 @@
 
 <!-- Datatable init js -->
 <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
-
 @endsection

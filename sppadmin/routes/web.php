@@ -296,9 +296,15 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
 
         Route::group(['prefix' => 'beritaacara'], function () {
             Route::get('/', [App\Http\Controllers\BeritaacaraController::class, 'index'])->name('beritaacara.index');
+            Route::get('/show/{id}', [App\Http\Controllers\BeritaacaraController::class, 'show'])->name('beritaacara.show');
+            Route::put('/reply/{id}', [App\Http\Controllers\BeritaacaraController::class, 'reply'])->name('beritaacara.reply');
+
+            
         });
         Route::group(['prefix' => 'suratjalan'], function () {
             Route::get('/', [App\Http\Controllers\SuratjalanController::class, 'index'])->name('suratjalan.index');
+            Route::get('/show/{id}', [App\Http\Controllers\SuratjalanController::class, 'show'])->name('suratjalan.show');
+            Route::put('/reply/{id}', [App\Http\Controllers\SuratjalanController::class, 'reply'])->name('suratjalan.reply');
         });
         Route::group(['prefix' => 'maintenance'], function () {
             Route::get('/', [App\Http\Controllers\MaintenanceController::class, 'index'])->name('maintenance.index');

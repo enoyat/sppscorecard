@@ -20,7 +20,7 @@
             <TH SCOPE="COL">REMARK PLANT</TH>
             <TH SCOPE="COL">STATUS SPP</TH>
             <TH SCOPE="COL">STATUS CUSTOMER</TH>
-            <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
+            <th style="width: 80px; min-width: 80px;">ACTION</th>
 
 
         </tr>
@@ -35,8 +35,8 @@
                 <th scope="col">{{ $key->serialnumber }}</th>
                 <th scope="col">{{ $key->getforklifttype->namaforklifttype }}</th>
                 <th scope="col">{{ number_format($key->capacity,0) }}</th>
-                <th scope="col">{{ $key->mast }}</th>
-                <th scope="col">{{ $key->masheight }}</th>
+                <th scope="col">{{ round($key->mast,1) }}</th>
+                <th scope="col">{{ round($key->masheight,1) }}</th>
                 <th scope="col">{{ $key->dateestimated }}</th>
                 <th scope="col">{{ $key->dateactual }}</th>
 
@@ -72,6 +72,7 @@
 
 
                 <th style="width: 80px; min-width: 80px;">
+                    @if(Auth::user()->roles_id == '1' || Auth::user()->roles_id == '2')
                     <div class="dropdown">
                         <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
                             type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -80,16 +81,18 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="{{ route('delivery.edit', $key->id) }}">Edit</a></li>
                             <li>
+                              
                                 <form action="{{ route('delivery.destroy', $key->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="dropdown-item"
                                         onclick="return confirm('Hapus Data ini?');">Hapus</button>
                                 </form>
+                              
                             </li>
                         </ul>
                     </div>
-
+                    @endif
 
                 </th>
             </tr>

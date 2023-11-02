@@ -6,7 +6,7 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Forms @endslot
-@slot('title') Create DELIVERY NOTE  @endslot
+@slot('title') Create DELIVERY NOTE @endslot
 @endcomponent
 
 
@@ -14,7 +14,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Form DELIVERY NOTE </h4>
+                <h4 class="card-title">Form DELIVERY NOTE</h4>
             </div>
             <div class="card-body p-4">
 
@@ -76,7 +76,7 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Foto DELIVERY NOTE </label>
+                                    <label for="example-password-input" class="form-label">Foto DELIVERY NOTE</label>
                                     <input class="form-control" type="file" value="" name="filefoto"
                                         id="filefoto">
                                 </div>

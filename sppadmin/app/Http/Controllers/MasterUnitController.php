@@ -55,6 +55,16 @@ class MasterUnitController extends Controller
             'kdunit'=>'required|unique:unit,kdunit',
             'hm'=>'required',
         ]);
+        if (!empty($request->filefoto)) {
+            $file = $request->filefoto;
+            $pathUpload = 'img';
+
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . "." . $extension;
+            $file->move($pathUpload, $filename);
+        } else {
+            $filename = 'default.png';
+        }
 
 
 
@@ -77,6 +87,7 @@ class MasterUnitController extends Controller
         $unit->masheight = $request->masheight;
         $unit->namaunit = $request->kdunit;
         $unit->hm = $request->hm;
+        $unit->foto = $filename;
 
         $simpan = $unit->save();
 
@@ -102,6 +113,16 @@ class MasterUnitController extends Controller
             'idregion'=>'required',
             'idsitename'=>'required',
         ]);
+        if (!empty($request->filefoto)) {
+            $file = $request->filefoto;
+            $pathUpload = 'img';
+
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . "." . $extension;
+            $file->move($pathUpload, $filename);
+        } else {
+            $filename = 'default.png';
+        }
 
 
 
@@ -123,6 +144,7 @@ class MasterUnitController extends Controller
         $unit->qty = $request->qty;
 
         $unit->namaunit = $request->kdunit;
+        $unit->foto = $filename;
 
         $simpan = $unit->save();
         if ($simpan) {

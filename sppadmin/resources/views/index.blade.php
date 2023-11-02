@@ -29,8 +29,8 @@ rel="stylesheet" type="text/css" />
     @include('header_select')
 @endif
 @component('components.breadcrumb')
-@slot('li_1') Extended @endslot
-@slot('title') Dashboard @endslot
+@slot('li_1') DASHBOARD @endslot
+@slot('title') DASHBOARD @endslot
 @endcomponent
 <div class="row">
     <div class="col-12">

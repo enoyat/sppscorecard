@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') region @endsection
+@section('title') REGION @endsection
 
 @section('css')
 
@@ -12,8 +12,8 @@
 @section('content')
 <!-- start page title -->
 @component('components.breadcrumb')
-@slot('li_1') Contacts @endslot
-@slot('title') region @endslot
+@slot('li_1') REGION @endslot
+@slot('title') REGION @endslot
 @endcomponent
 
 <div class="row align-items-center">

@@ -6,8 +6,10 @@ use App\Models\MSuratjalan;
 
 use App\Models\MOffice;
 use App\Models\MSitename;
+use App\Models\MCbu;
 use App\Models\User;
 
+use Carbon\Carbon;
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -18,7 +20,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 
-class SuratjalanController extends Controller
+class suratjalanController extends Controller
 {
 
     /**
@@ -30,12 +32,20 @@ class SuratjalanController extends Controller
     {
         $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
-        $suratjalan = MSuratjalan::where('pengirim', Session::get('runidsitename'))->get();
-        return view('suratjalan.index', compact('suratjalan', 'cbu','sitename'));
+        if (Auth::user()->roles_id == "1" || Auth::user()->roles_id == "2") {
+            $suratjalan = MSuratjalan::where('pengirim', Session::get('runidsitename'))->get();
+        } else {
+            $suratjalan = MSuratjalan::where('penerima', Session::get('runidsitename'))->get();
+        }
+        if (Auth::user()->roles_id == "5" || Auth::user()->roles_id == "6") {
+            $suratjalan = MSuratjalan::get();
+        }
+       
+        return view('suratjalan.index', compact('suratjalan', 'cbu', 'sitename'));
     }
     public function create()
     {
-        $cbu = MCbu::get();
+        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $sitename = MSitename::get();
         return view('suratjalan.create', compact('sitename', 'cbu'));
     }
@@ -94,6 +104,44 @@ class SuratjalanController extends Controller
         $suratjalan->statuspengirim = $request->statuspengirim;
 
 
+        $simpan = $suratjalan->save();
+
+        if ($simpan) {
+            Session::flash('message', 'Data berhasil disimpan!');
+            return redirect()->route('suratjalan.index');
+        } else {
+            Session::flash('message', 'Something went wrong!');
+            Session::flash('alert-class', 'alert-danger');
+            return response()->json([
+                'isSuccess' => true,
+                'Message' => "Something went wrong!"
+            ], 200); // Status code here
+        }
+    }
+    public function show($id)
+    {
+        $suratjalan = MSuratjalan::find($id);
+        return view('suratjalan.reply', compact('suratjalan'));
+    }
+    public function reply(Request $request, $id)
+    {
+        $request->validate([
+            'filefoto' => 'required',
+        ]);
+        if (!empty($request->filefoto)) {
+            $file = $request->filefoto;
+            $pathUpload = 'assets/inventory';
+
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . "." . $extension;
+            $file->move($pathUpload, $filename);
+        } else {
+            $filename = 'default.png';
+        }
+
+        $suratjalan = MSuratjalan::find($id);
+        $suratjalan->tanggalterima = Carbon::now();    
+        $suratjalan->filereply = $filename;   
         $simpan = $suratjalan->save();
 
         if ($simpan) {

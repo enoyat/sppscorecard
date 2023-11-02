@@ -288,8 +288,8 @@
         $("#dettargetavailable").html(js_array[idx]["sumplanunitkerja"]);
         $("#dettotalavailable").html(js_array[idx]["sumtotaljamkerja"]);
         $("#dettotalbreakdown").html(js_array[idx]["totalbreakdown"]);
-        $kpi=(js_array[idx]["sumtotaljamkerja"] / js_array[idx]['sumplanunitkerja']) * 100;
-        $("#detkpi").html($kpi.toFixed(2));
+        $kpi=Math.floor((js_array[idx]["sumtotaljamkerja"] / js_array[idx]['sumplanunitkerja']) * 100,2);
+        $("#detkpi").html($kpi);
 
 
         var myChart2 = echarts.init(dom);
@@ -313,7 +313,7 @@
             series: [{
                 name: 'KPI',
                 type: 'pie',
-                radius: '40%',
+                radius: '60%',
                 // center: ['50%', '60%'],
                 data: [{
                         value: sumtotaljamkerja,

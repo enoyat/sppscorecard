@@ -17,7 +17,7 @@
                 <TH SCOPE="COL">CONFIRMATION BY PLANT</TH>
                 <TH SCOPE="COL">AVERAGE %</TH>
 
-                <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
+                <th style="width: 80px; min-width: 80px;">ACTION</th>
 
 
             </tr>

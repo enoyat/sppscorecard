@@ -7,8 +7,8 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     @component('components.breadcrumb')
-        @slot('li_1') Ticket @endslot
-        @slot('title') Ticket Inbox @endslot
+    @slot('li_1') TICKET @endslot
+    @slot('title') TICKET INBOX @endslot
     @endcomponent
 
 
@@ -37,14 +37,24 @@
                 <div class="card">
                     <div class="btn-toolbar p-3" role="toolbar">
                         <div class="btn-group me-2 mb-2 mb-sm-0">
-                            Ticket Information
+                            TICKET INFORMATION
 
                         </div>
 
 
 
                     </div>
-                    <table class="table table-hover">
+                    <table class="table table-hover table-strip">
+                        <thead>
+                            <tr>
+                                <Th>TICKET NUMBER - STATUS</TH>
+                                    <TH>REQUESTER</TH>
+                                    <TH>SUBJECT</TH>
+                                    <TH>DATE CREATED</TH>
+                                    <TH>DUE DATE</TH>
+                                    <TH>SITE NAME</TH>    
+                            </tr>
+                        </thead>
                     <ul class="message-list">
                         @php $i=1; @endphp
                         @foreach ($tickets as $key)
@@ -69,7 +79,12 @@
                             </td>
                             <td>
                                
-                                <div class="date">{{ date_format($key->created_at,"d M Y"); }}</div>
+                                <div class="date">{{ date_format($key->created_at,"d-m-Y"); }}</div>
+                            </td>
+                            <td>
+                               @if($key->duedate != null)
+                                <div class="date">{{ date("d-m-Y", strtotime($key->duedate)); }}</div>
+                                @endif
                             </td>
                             <td>
                                 <div >{{ $key->getsitename->namasitename }}</div>
@@ -83,19 +98,7 @@
 
                 </div> <!-- card -->
 
-                <div class="row">
-                    <div class="col-7">
-                        Showing 1 - 20 of 1,524
-                    </div>
-                    <div class="col-5">
-                        <div class="btn-group float-end">
-                            <button type="button" class="btn btn-sm btn-success waves-effect"><i
-                                    class="fa fa-chevron-left"></i></button>
-                            <button type="button" class="btn btn-sm btn-success waves-effect"><i
-                                    class="fa fa-chevron-right"></i></button>
-                        </div>
-                    </div>
-                </div>
+              
             </div> <!-- end Col-9 -->
 
         </div>
@@ -118,13 +121,13 @@
                 <div class="modal-body">
                     <div>
                        
-                        <select name="search" id="search" required class="form-control"></select>            
+                        <select name="search" id="search" required class="form-control" ></select>            
 
                         <div class="mb-3">
-                            <input type="text" name="subject" class="form-control" placeholder="Subject">
+                            <input type="text" name="subject" class="form-control" placeholder="Subject" required>
                         </div>
                         <div class="mb-3 email-editor">
-                            <textarea id="email-editor" name="message"></textarea>
+                            <textarea id="email-editor" name="message" required></textarea>
                         </div>
 
                     </div>

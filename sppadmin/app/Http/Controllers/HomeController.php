@@ -63,7 +63,7 @@ class HomeController extends Controller
 
             }
             if ($filter == "region") {
-                $id = $request->get('xidregion');                
+                $id = $request->get('xidregion');
                 $region = MSitename::where('id', $id)->first();
                 $cbu = MSitename::where('id', $region->parentid)->first();
                 $sitename = MSitename::where('parentid', $id)->first();
@@ -76,7 +76,7 @@ class HomeController extends Controller
 
             }
             if ($filter == "cbu") {
-                $id = $request->get('xidcbu');                
+                $id = $request->get('xidcbu');
                 $cbu = MSitename::where('id', $id)->first();
                 $region = MSitename::where('parentid', $cbu->id)->first();
                 $sitename = MSitename::where('parentid', $region->id)->first();
@@ -103,7 +103,24 @@ class HomeController extends Controller
                 group by idforklifttype) as qunittype join (
 
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idsitename='$sitename') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
-
+            $delivery = DB::table('delivery')->where('idsitename', $sitename)->count('*');
+            $delivered = DB::table('delivery')->where('idsitename', $sitename)->where('statuscustomer', 'close')->count('*');
+            if ($delivery == 0) {
+                $kpidelivery = 0;
+            } else {
+                $kpidelivery = number_format($delivered / $delivery * 100, 2);
+            }
+            $restkpisparepart = DB::table('sparepartstok')->
+                select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+                ->where('idsitename', $sitename)
+                ->get();
+            if ($restkpisparepart) {
+                foreach ($restkpisparepart as $item) {
+                    $kpisparepart = $item->kpisparepart;
+                }
+            } else {
+                $kpisparepart = 0;
+            }
         } else if ($request->filter == "region") {
             $sitename = Session::get('runidregion');
             DB::statement("SET SQL_MODE=''");
@@ -113,6 +130,25 @@ class HomeController extends Controller
                 group by idforklifttype) as qunittype join (
 
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idregion='$sitename') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
+            $delivery = DB::table('delivery')->where('idregion', $sitename)->count('*');
+            $delivered = DB::table('delivery')->where('idregion', $sitename)->where('statuscustomer', 'close')->count('*');
+            if ($delivery == 0) {
+                $kpidelivery = 0;
+            } else {
+                $kpidelivery = number_format($delivered / $delivery * 100, 2);
+            }
+            $restkpisparepart = DB::table('sparepartstok')->
+                select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+                ->where('idregion', $sitename)
+                ->get();
+            if ($restkpisparepart) {
+                foreach ($restkpisparepart as $item) {
+                    $kpisparepart = $item->kpisparepart;
+                }
+            } else {
+                $kpisparepart = 0;
+            }
+
         } else if ($request->filter == "cbu") {
 
             $sitename = Session::get('runidcbu');
@@ -123,6 +159,24 @@ class HomeController extends Controller
                 group by idforklifttype) as qunittype join (
 
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='$sitename') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
+            $delivery = DB::table('delivery')->where('idcbu', $sitename)->count('*');
+            $delivered = DB::table('delivery')->where('idcbu', $sitename)->where('statuscustomer', 'close')->count('*');
+            if ($delivery == 0) {
+                $kpidelivery = 0;
+            } else {
+                $kpidelivery = number_format($delivered / $delivery * 100, 2);
+            }
+            $restkpisparepart = DB::table('sparepartstok')->
+            select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+            ->where('idcbu', $sitename)
+            ->get();
+        if ($restkpisparepart) {
+            foreach ($restkpisparepart as $item) {
+                $kpisparepart = $item->kpisparepart;
+            }
+        } else {
+            $kpisparepart = 0;
+        }
         } else if ($request->filter == "allsn") {
             DB::statement("SET SQL_MODE=''");
             $kpi = DB::select("select qunittype.jmlunit, qpa.* from (
@@ -131,6 +185,24 @@ class HomeController extends Controller
                 group by idforklifttype) as qunittype join (
 
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='SN') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
+            $delivery = DB::table('delivery')->where('idcbu', "SN")->count('*');
+            $delivered = DB::table('delivery')->where('idcbu', "SN")->where('statuscustomer', 'close')->count('*');
+            if ($delivery == 0) {
+                $kpidelivery = 0;
+            } else {
+                $kpidelivery = number_format($delivered / $delivery * 100, 2);
+            }
+            $restkpisparepart = DB::table('sparepartstok')->
+            select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+            ->where('idcbu', "SN")
+            ->get();
+        if ($restkpisparepart) {
+            foreach ($restkpisparepart as $item) {
+                $kpisparepart = $item->kpisparepart;
+            }
+        } else {
+            $kpisparepart = 0;
+        }
         } else if ($request->filter == "allwater") {
             DB::statement("SET SQL_MODE=''");
             $kpi = DB::select("select qunittype.jmlunit, qpa.* from (
@@ -139,6 +211,24 @@ class HomeController extends Controller
                 group by idforklifttype) as qunittype join (
 
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='Waters') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
+            $delivery = DB::table('delivery')->where('idcbu', "Waters")->count('*');
+            $delivered = DB::table('delivery')->where('idcbu', "Waters")->where('statuscustomer', 'close')->count('*');
+            if ($delivery == 0) {
+                $kpidelivery = 0;
+            } else {
+                $kpidelivery = number_format($delivered / $delivery * 100, 2);
+            }
+            $restkpisparepart = DB::table('sparepartstok')->
+            select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+            ->where('idcbu', "Waters")
+            ->get();
+        if ($restkpisparepart) {
+            foreach ($restkpisparepart as $item) {
+                $kpisparepart = $item->kpisparepart;
+            }
+        } else {
+            $kpisparepart = 0;
+        }
         } else if ($request->filter == "allsnwater") {
             DB::statement("SET SQL_MODE=''");
             $kpi = DB::select("select qunittype.jmlunit, qpa.* from (
@@ -147,7 +237,25 @@ class HomeController extends Controller
                 group by idforklifttype) as qunittype join (
 
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='SN' or unit.idcbu='Waters') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype;");
-
+            $delivery = DB::table('delivery')->where('idcbu', "SN")->orWhere('idcbu', "Waters")->count('*');
+            $delivered = DB::table('delivery')->where('idcbu', "SN")->orWhere('idcbu', "Waters")->where('statuscustomer', 'close')->count('*');
+            if ($delivery == 0) {
+                $kpidelivery = 0;
+            } else {
+                $kpidelivery = number_format($delivered / $delivery * 100, 2);
+            }
+            $restkpisparepart = DB::table('sparepartstok')->
+            select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+            ->where('idcbu',"SN")
+            ->orWhere('idcbu',"Waters")
+            ->get();
+        if ($restkpisparepart) {
+            foreach ($restkpisparepart as $item) {
+                $kpisparepart = $item->kpisparepart;
+            }
+        } else {
+            $kpisparepart = 0;
+        }
         }
         $i = 0;
         foreach ($kpi as $k) {
@@ -185,13 +293,6 @@ class HomeController extends Controller
         }
 
         $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->where('f_aktif', '1')->get();
-        $delivery = DB::table('delivery')->where('idsitename', Session::get('runidsitename'))->count('*');
-        $delivered = DB::table('delivery')->where('idsitename', Session::get('runidsitename'))->where('statuscustomer', 'close')->count('*');
-        if ($delivery == 0) {
-            $kpidelivery = 0;
-        } else {
-            $kpidelivery = number_format($delivered / $delivery * 100, 2);
-        }
 
         $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
 

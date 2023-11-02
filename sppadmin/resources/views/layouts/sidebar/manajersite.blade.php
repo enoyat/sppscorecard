@@ -96,13 +96,13 @@
                 <li>
                     <a href="{{ route('beritaacara.index') }}">
                         <i data-feather="file-text"></i>
-                        <span data-key="t-horizontal">Berita Acara</span>
+                        <span data-key="t-horizontal">Official Report</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('suratjalan.index') }}">
                         <i data-feather="file"></i>
-                        <span data-key="t-horizontal">Surat Jalan</span>
+                        <span data-key="t-horizontal">Delivery Note</span>
                     </a>
                 </li>
                 @if(Session::get('roles_id')==1 || Session::get('roles_id')==5)

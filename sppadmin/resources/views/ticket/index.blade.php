@@ -5,8 +5,8 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') Ticket @endslot
-        @slot('title') Ticket Inbox @endslot
+    @slot('li_1') TICKET @endslot
+    @slot('title') TICKET INBOX @endslot
     @endcomponent
 
 
@@ -97,11 +97,11 @@
                 <div class="modal-body">
                     <div>
                         <div class="mb-3">
-                            <input type="email" class="form-control" placeholder="To">
+                            <input type="email" class="form-control" placeholder="To" required>
                         </div>
 
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Subject">
+                            <input type="text" class="form-control" placeholder="Subject" required>
                         </div>
                         <div class="mb-3 email-editor">
                             <div id="email-editor"></div>

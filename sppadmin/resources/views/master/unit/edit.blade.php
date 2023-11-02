@@ -18,7 +18,7 @@
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('masterunit.update', $unit->kdunit) }}" method="POST">
+                <form action="{{ route('masterunit.update', $unit->kdunit) }}" method="POST" enctype="multipart/form-data">
                     @method('PUT')
                     <div class="row">
                         @if ($message = Session::get('success'))
@@ -136,6 +136,11 @@
                                     <label for="example-password-input" class="form-label">Mast Height (meter)</label>
                                     <input class="form-control" type="text" value="{{ $unit->masheight }}" name="masheight"
                                         id="masheight">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Foto Unit</label>
+                                    <input class="form-control" type="file" value="" name="filefoto"
+                                        id="filefoto">
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>

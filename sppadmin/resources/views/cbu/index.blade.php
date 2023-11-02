@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') cbu @endsection
+@section('title') CBU @endsection
 
 @section('css')
 
@@ -13,8 +13,8 @@
 
 <!-- start page title -->
 @component('components.breadcrumb')
-@slot('li_1') cbu @endslot
-@slot('title') cbu @endslot
+@slot('li_1') CBU @endslot
+@slot('title') CBU @endslot
 @endcomponent
 
 <div class="row align-items-center">

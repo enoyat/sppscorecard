@@ -7,16 +7,18 @@
                     <label class="form-check-label" for="checkAll"></label>
                 </div>
             </th>
-            <TH SCOPE="COL">ID BERITA</TH>
+            <TH SCOPE="COL">ID REPORT</TH>
             <TH SCOPE="COL">STATUS</TH>
-            <TH SCOPE="COL">PENGIRIM</TH>
-            <TH SCOPE="COL">PENERIMA</TH>
-            <TH SCOPE="COL">TANGGAL UPLOAD</TH>
-            <TH SCOPE="COL">TANGGAL TERIMA</TH>
-            <TH SCOPE="COL">NAMA PENERIMA</TH>
-            <TH SCOPE="COL">TANGGAL KEMBALI</TH>
-            <TH SCOPE="COL">FILE DOKUMEN</TH>
-            <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
+            <TH SCOPE="COL">SENDER</TH>
+            <TH SCOPE="COL">RECIPIENT</TH>
+            <TH SCOPE="COL">DATE UPLOAD</TH>
+            <TH SCOPE="COL">FILE DOCUMENTS</TH>
+            <TH SCOPE="COL">DATE OF RECEIPT</TH>
+            <TH SCOPE="COL">FILE DOCUMENTS REPLY</TH>
+            <TH SCOPE="COL">RECIPIENTS NAME</TH>
+            <TH SCOPE="COL">RETURN DATE</TH>
+            
+            <th style="width: 80px; min-width: 80px;">ACTION</th>
 
 
         </tr>
@@ -42,21 +44,25 @@
             <th scope="col">{{ $key->getpengirim->namasitename }}</th>
             <th scope="col">{{ $key->getpenerima->namasitename }}</th>
             <th scope="col">{{ $key->tanggal }}</th>
+            <th scope="col"><a href="{{ asset('assets/inventory/'.$key->filename) }}" target="_blank"><img src="{{ asset('assets/inventory/'.$key->filename) }}" width="100"></a></th>
             <th scope="col">{{ $key->tanggalterima}}</th>
+            <th scope="col"><a href="{{ asset('assets/inventory/'.$key->filereply) }}" target="_blank"><img src="{{ asset('assets/inventory/'.$key->filereply) }}" width="100"></a></th>
             <th scope="col">{{ $key->namapenerima}}</th>
             <th scope="col">{{ $key->tanggalkembali}}</th>
 
-            <th scope="col"><a href="{{ asset('assets/inventory/'.$key->filename) }}" target="_blank"><img src="{{ asset('assets/inventory/'.$key->filename) }}" width="100"></a></th>
 
             <th style="width: 80px; min-width: 80px;">
-            
+                @if (Auth::user()->roles_id==4)
+                    <a class="btn btn-sm btn-warning" href="{{ route('beritaacara.show',$key->id) }}">Reply</a>
+                @endif
+                @if (Auth::user()->roles_id==1 || Auth::user()->roles_id==2)
                 <form action="{{ route('beritaacara.destroy',$key->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <a class="btn btn-sm btn-warning" href="{{ route('beritaacara.edit',$key->id) }}">Edit</a>
                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Hapus Data ini?');">Hapus</button>
                 </form>
-
+                @endif
 
             </th>
         </tr>

@@ -48,7 +48,7 @@ class SparepartController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'codeunit'=>'required',
+            'codepart'=>'required|unique:sparepart,codepart|regex:/^\S*$/u',
             'simplename'=>'required',
             'merkpart'=>'required',
 
@@ -57,7 +57,7 @@ class SparepartController extends Controller
 
 
         $sparepart = new MSparepart;
-        $sparepart->codeunit = $request->codeunit;
+        $sparepart->codepart = $request->codepart;
         $sparepart->simplename = $request->simplename;
         $sparepart->merkpart = $request->merkpart;
 

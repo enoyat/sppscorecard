@@ -132,7 +132,7 @@
                                     <div class="mb-3">
                                         <label for="example-date-input" class="form-label">Estimated Delivery</label>
                                         <input class="form-control" type="date" value="{{ $delivery->dateestimated }}"
-                                            name="dateestimated" id="dateestimated" onchange="days_between($(this).val(),$('#dateactual').val())">
+                                            name="dateestimated" id="dateestimated" >
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-time-input" class="form-label">Actual Delivery</label>
@@ -188,9 +188,22 @@
             var date1_ms = new Date(date1).getTime();
             var date2_ms = new Date(date2).getTime();
             // Calculate the difference in milliseconds
-            var difference_ms = Math.abs(date1_ms - date2_ms);
+            if (date1_ms < date2_ms) {
+                var difference_ms = 0;
+            } else {
+                var difference_ms = date1_ms - date2_ms;
+            }
+         
+            if (difference_ms>0){
+               
+                $("#daysoflapse").val(Math.round(difference_ms / ONE_DAY));
+            }
+            else {
+                difference_ms=0;
+                $("#daysoflapse").val(0);
+            }
 
-            $("#daysoflapse").val(Math.round(difference_ms / ONE_DAY));
+           
         }
         jQuery('#idcbu').change(function() {
             jQuery('#idregion').html('');

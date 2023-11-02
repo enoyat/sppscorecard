@@ -8,11 +8,12 @@
 
     <div class="card-body">
         <a href="{{ route('ticket.index') }}" class="btn btn-primary waves-effect mt-4"><i class="mdi mdi-arrow-left me-1"></i> Back</a>
+        @if (Auth::user()->roles_id == "1" || Auth::user()->roles_id == "2" || Auth::user()->roles_id == "4")
         <button type="button" class="btn btn-secondary waves-effect mt-4" data-bs-toggle="modal"
                 data-bs-target="#composemodal">
                 <i class="mdi mdi-reply me-1"></i> Reply
             </button>
-
+        @endif
            <hr>
         <div class="d-flex align-items-center mb-4">
             <div class="flex-shrink-0 me-3">
@@ -77,7 +78,11 @@
                  <div class="mb-3 email-editor">
                      <textarea id="email-editor" name="message"></textarea>
                  </div>
-
+                 @if (Auth::user()->roles_id == "1" || Auth::user()->roles_id == "2")
+                 <div class="mb-3 email-editor">
+                    <input type="date" name="duedate" class="form-control" placeholder="due date" required>
+                </div>
+                    @endif
              </div>
          </div>
          <div class="modal-footer">

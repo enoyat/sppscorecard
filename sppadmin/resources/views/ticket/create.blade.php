@@ -7,8 +7,8 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     @component('components.breadcrumb')
-        @slot('li_1') Ticket @endslot
-        @slot('title') Ticket Inbox @endslot
+        @slot('li_1') TICKET @endslot
+        @slot('title') TICKET INBOX @endslot
     @endcomponent
 
 
@@ -27,10 +27,13 @@
                         <select name="search" id="search" required class="form-control"></select>            
 
                         <div class="mb-3">
-                            <input type="text" name="subject" class="form-control" placeholder="Subject">
+                            <input type="text" name="subject" class="form-control" placeholder="Subject" required>
                         </div>
                         <div class="mb-3 email-editor">
-                            <textarea id="email-editor" name="message"></textarea>
+                            <textarea id="email-editor" name="message" required></textarea>
+                        </div>
+                        <div class="mb-3 email-editor">
+                            <input type="date" name="duedate" class="form-control" placeholder="due date" required>
                         </div>
 
                     </div>

@@ -11,7 +11,7 @@
                 <TH SCOPE="COL">CODE FORKLIFTTYPE</TH>
                 <TH SCOPE="COL">FORKLIFTTYPE</TH>
                 <TH SCOPE="COL">DASHBOARD</TH>
-                <TH STYLE="WIDTH: 80PX; MIN-WIDTH: 80PX;">ACTION</TH>
+                <th style="width: 80px; min-width: 80px;">ACTION</th>
 
 
             </tr>

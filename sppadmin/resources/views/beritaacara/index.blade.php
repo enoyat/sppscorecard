@@ -33,7 +33,7 @@ Delivery
 <!-- start page title -->
 @component('components.breadcrumb')
 @slot('li_1') Contacts @endslot
-@slot('title') Berita Acara @endslot
+@slot('title') OFFICIAL REPORT @endslot
 @endcomponent
 
 <div class="row align-items-center">
@@ -53,7 +53,9 @@ Delivery
                 </ul>
             </div>
             <div>
+                @if (Auth::user()->roles_id==1 || Auth::user()->roles_id==2)
                 <a href="{{ route('beritaacara.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
+                @endif
             </div>
             
             <!-- <div class="dropdown">

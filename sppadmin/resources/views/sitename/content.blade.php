@@ -11,7 +11,7 @@
             <th scope="col">SITENAME CODE</th>
             <th scope="col">SITENAME NAME</th>
             <th scope="col">REGION</th>
-            <th style="width: 80px; min-width: 80px;">Action</th>
+            <th style="width: 80px; min-width: 80px;">ACTION</th>
         </tr>
     </thead>
     <tbody>
