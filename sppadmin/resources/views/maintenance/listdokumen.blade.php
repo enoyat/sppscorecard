@@ -15,8 +15,8 @@ trouble
 
 <!-- start page title -->
 @component('components.breadcrumb')
-@slot('li_1') Trouble @endslot
-@slot('title') trouble Dokumen @endslot
+@slot('li_1') MAINTENANCE @endslot
+@slot('title') MAINTENANCE DOCUMENTS @endslot
 @endcomponent
 
 <div class="row align-items-center">
