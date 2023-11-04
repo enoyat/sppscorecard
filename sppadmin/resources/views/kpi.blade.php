@@ -29,7 +29,7 @@
                 <!-- card body -->
                 <div class="card-body">
                     <div class="row align-items-center">
-                        <div class="col-3">
+                        <div class="col-2">
                             <div class="card" style="border:1px solid; ">
                                 <!-- card body -->
                                 <div class="card-body">
@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <div class="card" style="border:1px solid; ">
                                 <!-- card body -->
                                 <div class="card-body">
@@ -79,6 +79,23 @@
                             </div>
                         </div>
                         <div class="col-3">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-12">
+                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">LATE DELIVERY 
+                                                </span>
+                                            <h4 class="mb-3">
+                                                <span class="counter-value" data-target="{{ $kpiontimedelivery }}">0</span>%
+                                            </h4>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
                             <div class="card" style="border:1px solid; ">
                                 <!-- card body -->
                                 <div class="card-body">

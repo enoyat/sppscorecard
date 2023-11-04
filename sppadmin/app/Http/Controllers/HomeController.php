@@ -105,10 +105,15 @@ class HomeController extends Controller
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idsitename='$sitename') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
             $delivery = DB::table('delivery')->where('idsitename', $sitename)->count('*');
             $delivered = DB::table('delivery')->where('idsitename', $sitename)->where('statuscustomer', 'close')->count('*');
+            $delivered = DB::table('delivery')->where('idsitename', $sitename)->where('statuscustomer', 'close')->where('daysoflapse', ">", "0")->count('*');
             if ($delivery == 0) {
                 $kpidelivery = 0;
+                $kpiontimedelivery = 0;
+
             } else {
                 $kpidelivery = number_format($delivered / $delivery * 100, 2);
+                $kpiontimedelivery = number_format($delivered / $delivery * 100, 2);
+
             }
             $restkpisparepart = DB::table('sparepartstok')->
                 select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
@@ -132,10 +137,15 @@ class HomeController extends Controller
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idregion='$sitename') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
             $delivery = DB::table('delivery')->where('idregion', $sitename)->count('*');
             $delivered = DB::table('delivery')->where('idregion', $sitename)->where('statuscustomer', 'close')->count('*');
+            $delivered = DB::table('delivery')->where('idregion', $sitename)->where('statuscustomer', 'close')->where('daysoflapse', ">", "0")->count('*');
             if ($delivery == 0) {
                 $kpidelivery = 0;
+                $kpiontimedelivery = 0;
+
             } else {
                 $kpidelivery = number_format($delivered / $delivery * 100, 2);
+                $kpiontimedelivery = number_format($delivered / $delivery * 100, 2);
+
             }
             $restkpisparepart = DB::table('sparepartstok')->
                 select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
@@ -161,22 +171,27 @@ class HomeController extends Controller
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='$sitename') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
             $delivery = DB::table('delivery')->where('idcbu', $sitename)->count('*');
             $delivered = DB::table('delivery')->where('idcbu', $sitename)->where('statuscustomer', 'close')->count('*');
+            $delivered = DB::table('delivery')->where('idcbu', $sitename)->where('statuscustomer', 'close')->where('daysoflapse', ">", "0")->count('*');
             if ($delivery == 0) {
                 $kpidelivery = 0;
+                $kpiontimedelivery = 0;
+
             } else {
                 $kpidelivery = number_format($delivered / $delivery * 100, 2);
+                $kpiontimedelivery = number_format($delivered / $delivery * 100, 2);
+
             }
             $restkpisparepart = DB::table('sparepartstok')->
-            select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
-            ->where('idcbu', $sitename)
-            ->get();
-        if ($restkpisparepart) {
-            foreach ($restkpisparepart as $item) {
-                $kpisparepart = $item->kpisparepart;
+                select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+                ->where('idcbu', $sitename)
+                ->get();
+            if ($restkpisparepart) {
+                foreach ($restkpisparepart as $item) {
+                    $kpisparepart = $item->kpisparepart;
+                }
+            } else {
+                $kpisparepart = 0;
             }
-        } else {
-            $kpisparepart = 0;
-        }
         } else if ($request->filter == "allsn") {
             DB::statement("SET SQL_MODE=''");
             $kpi = DB::select("select qunittype.jmlunit, qpa.* from (
@@ -187,22 +202,27 @@ class HomeController extends Controller
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='SN') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
             $delivery = DB::table('delivery')->where('idcbu', "SN")->count('*');
             $delivered = DB::table('delivery')->where('idcbu', "SN")->where('statuscustomer', 'close')->count('*');
+            $delivered = DB::table('delivery')->where('idcbu', "SN")->where('statuscustomer', 'close')->where('daysoflapse', ">", "0")->count('*');
             if ($delivery == 0) {
                 $kpidelivery = 0;
+                $kpiontimedelivery = 0;
+
             } else {
                 $kpidelivery = number_format($delivered / $delivery * 100, 2);
+                $kpiontimedelivery = number_format($delivered / $delivery * 100, 2);
+
             }
             $restkpisparepart = DB::table('sparepartstok')->
-            select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
-            ->where('idcbu', "SN")
-            ->get();
-        if ($restkpisparepart) {
-            foreach ($restkpisparepart as $item) {
-                $kpisparepart = $item->kpisparepart;
+                select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+                ->where('idcbu', "SN")
+                ->get();
+            if ($restkpisparepart) {
+                foreach ($restkpisparepart as $item) {
+                    $kpisparepart = $item->kpisparepart;
+                }
+            } else {
+                $kpisparepart = 0;
             }
-        } else {
-            $kpisparepart = 0;
-        }
         } else if ($request->filter == "allwater") {
             DB::statement("SET SQL_MODE=''");
             $kpi = DB::select("select qunittype.jmlunit, qpa.* from (
@@ -213,22 +233,27 @@ class HomeController extends Controller
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='Waters') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype");
             $delivery = DB::table('delivery')->where('idcbu', "Waters")->count('*');
             $delivered = DB::table('delivery')->where('idcbu', "Waters")->where('statuscustomer', 'close')->count('*');
+            $delivered = DB::table('delivery')->where('idcbu', "Waters")->where('statuscustomer', 'close')->where('daysoflapse', ">", "0")->count('*');
             if ($delivery == 0) {
                 $kpidelivery = 0;
+                $kpiontimedelivery = 0;
+
             } else {
                 $kpidelivery = number_format($delivered / $delivery * 100, 2);
+                $kpiontimedelivery = number_format($delivered / $delivery * 100, 2);
+
             }
             $restkpisparepart = DB::table('sparepartstok')->
-            select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
-            ->where('idcbu', "Waters")
-            ->get();
-        if ($restkpisparepart) {
-            foreach ($restkpisparepart as $item) {
-                $kpisparepart = $item->kpisparepart;
+                select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+                ->where('idcbu', "Waters")
+                ->get();
+            if ($restkpisparepart) {
+                foreach ($restkpisparepart as $item) {
+                    $kpisparepart = $item->kpisparepart;
+                }
+            } else {
+                $kpisparepart = 0;
             }
-        } else {
-            $kpisparepart = 0;
-        }
         } else if ($request->filter == "allsnwater") {
             DB::statement("SET SQL_MODE=''");
             $kpi = DB::select("select qunittype.jmlunit, qpa.* from (
@@ -239,23 +264,28 @@ class HomeController extends Controller
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='SN' or unit.idcbu='Waters') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype;");
             $delivery = DB::table('delivery')->where('idcbu', "SN")->orWhere('idcbu', "Waters")->count('*');
             $delivered = DB::table('delivery')->where('idcbu', "SN")->orWhere('idcbu', "Waters")->where('statuscustomer', 'close')->count('*');
+            $delivered = DB::table('delivery')->where('idcbu', "SN")->orWhere('idcbu', "Waters")->where('statuscustomer', 'close')->where('daysoflapse', ">", "0")->count('*');
             if ($delivery == 0) {
                 $kpidelivery = 0;
+                $kpiontimedelivery = 0;
+
             } else {
                 $kpidelivery = number_format($delivered / $delivery * 100, 2);
+                $kpiontimedelivery = number_format($delivered / $delivery * 100, 2);
+
             }
             $restkpisparepart = DB::table('sparepartstok')->
-            select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
-            ->where('idcbu',"SN")
-            ->orWhere('idcbu',"Waters")
-            ->get();
-        if ($restkpisparepart) {
-            foreach ($restkpisparepart as $item) {
-                $kpisparepart = $item->kpisparepart;
+                select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+                ->where('idcbu', "SN")
+                ->orWhere('idcbu', "Waters")
+                ->get();
+            if ($restkpisparepart) {
+                foreach ($restkpisparepart as $item) {
+                    $kpisparepart = $item->kpisparepart;
+                }
+            } else {
+                $kpisparepart = 0;
             }
-        } else {
-            $kpisparepart = 0;
-        }
         }
         $i = 0;
         foreach ($kpi as $k) {
@@ -330,7 +360,9 @@ class HomeController extends Controller
 
         }
 
-        return view('index', compact('kpi', 'cbu', 'achievement', 'max', 'base', 'kategori', 'sitename', 'customer', 'unit', 'mperiode', 'jmlunit', 'avgkpi', 'arraykpi', 'kpidelivery', 'delivery', 'delivered', 'kpisparepart'));
+        return view('index', compact('kpi', 'cbu', 'achievement', 'max', 'base', 'kategori', 'sitename', 'customer', 
+        'unit', 'mperiode', 'jmlunit', 'avgkpi', 'arraykpi', 'kpidelivery', 'delivery', 'delivered', 
+        'kpisparepart', 'kpiontimedelivery'));
     }
 
     public function lang($locale)

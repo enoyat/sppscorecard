@@ -52,6 +52,7 @@
                                     <TH>SUBJECT</TH>
                                     <TH>DATE CREATED</TH>
                                     <TH>DUE DATE</TH>
+                                    <TH>ACTUAL DATE</TH>
                                     <TH>SITE NAME</TH>    
                             </tr>
                         </thead>
@@ -86,6 +87,11 @@
                                 <div class="date">{{ date("d-m-Y", strtotime($key->duedate)); }}</div>
                                 @endif
                             </td>
+                            <td>
+                                @if($key->actualdate != null)
+                                 <div class="date">{{ date("d-m-Y", strtotime($key->actualdate)); }}</div>
+                                 @endif
+                             </td>
                             <td>
                                 <div >{{ $key->getsitename->namasitename }}</div>
                             </td>

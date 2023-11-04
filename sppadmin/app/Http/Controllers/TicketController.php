@@ -64,6 +64,7 @@ class TicketController extends Controller
         if (Auth::user()->roles_id == '1' || Auth::user()->roles_id == '2') {
             $mainticket = Ticket::find($request->parentid);
             $mainticket->duedate = $request->duedate;
+            $mainticket->actualdate = $request->actualdate;
             $mainticket->save();
         }
         $ticket->type = '0';

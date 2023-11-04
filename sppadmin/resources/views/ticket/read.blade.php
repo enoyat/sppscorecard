@@ -82,6 +82,9 @@
                  <div class="mb-3 email-editor">
                     <input type="date" name="duedate" class="form-control" placeholder="due date" required>
                 </div>
+                <div class="mb-3 email-editor">
+                    <input type="date" name="actualdate" class="form-control" placeholder="actual date" required>
+                </div>
                     @endif
              </div>
          </div>
