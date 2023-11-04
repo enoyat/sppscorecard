@@ -17,9 +17,10 @@
             <TH SCOPE="COL">ACTUAL DELIVERY</TH>
             <TH SCOPE="COL">DAYS OF LAPSE</TH>
             <TH SCOPE="COL">REASON OF LAPSE</TH>
-            <TH SCOPE="COL">REMARK PLANT</TH>
+            
             <TH SCOPE="COL">STATUS SPP</TH>
             <TH SCOPE="COL">STATUS CUSTOMER</TH>
+            <TH SCOPE="COL">REMARK PLANT</TH>
             <th style="width: 80px; min-width: 80px;">ACTION</th>
 
 
@@ -43,7 +44,7 @@
 
                 <th scope="col">{{ $key->daysoflapse }}</th>
                 <th scope="col">{{ $key->reason }}</th>
-                <th scope="col">{{ $key->remarkplan }}</th>
+               
                 <th scope="col">
 
                     @if ($key->statusspp == 'CLOSE')
@@ -69,7 +70,7 @@
                         @endif
                     @endif
                 </th>
-
+                <th scope="col">{{ $key->remarkplan }}</th>
 
                 <th style="width: 80px; min-width: 80px;">
                     @if(Auth::user()->roles_id == '1' || Auth::user()->roles_id == '2')
