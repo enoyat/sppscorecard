@@ -28,6 +28,13 @@ class DeliveryController extends Controller
      */
     public function index(Request $request)
     {
+        if (Auth::user()->roles_id != 6) {
+            if (Session::get('runidsiteme')==null) {
+                Alert::warning('Warning', 'Please select site name first!');
+                return redirect()->route('root');
+            }
+        }
+       
         if ($request->get('filter')) {
             $filter = $request->get('filter');
         } else {
@@ -35,6 +42,7 @@ class DeliveryController extends Controller
         }
         $arraykpi = array();
         if ($filter == "sitename") {
+            
             $delivery = MDelivery::where('idsitename',Session::get('runidsitename'))->get();
             if ($request->get('xidsitename') == null) {
                 $id = Session::get('runidsitename');

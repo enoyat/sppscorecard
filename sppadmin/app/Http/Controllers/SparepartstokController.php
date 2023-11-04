@@ -9,6 +9,8 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
 
 class SparepartstokController extends Controller
 {
@@ -20,6 +22,13 @@ class SparepartstokController extends Controller
      */
     public function index(Request $request)
     {
+        if (Auth::user()->roles_id != 6) {
+            if (Session::get('runidsiteme')==null) {
+                Alert::warning('Warning', 'Please select site name first!');
+                return redirect()->route('root');
+            }
+        }
+       
 
         if ($request->get('filter')) {
             $filter = $request->get('filter');
