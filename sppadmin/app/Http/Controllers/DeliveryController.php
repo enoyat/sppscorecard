@@ -29,11 +29,12 @@ class DeliveryController extends Controller
     public function index(Request $request)
     {
         if (Auth::user()->roles_id != 6) {
-            if (Session::get('runidsiteme')==null) {
+            if (Session::get('runidsitename')==null) {
                 Alert::warning('Warning', 'Please select site name first!');
                 return redirect()->route('root');
             }
         }
+
        
         if ($request->get('filter')) {
             $filter = $request->get('filter');
