@@ -152,7 +152,7 @@
     $("#codepart").select2({
         placeholder: 'Pilih Sparepart',
         ajax: {
-            url: "{{ route('sparepart.getsparepart') }}",
+            url: "{{ route('sparepart.getsparepart') }}", 
             type: "GET",
             dataType: 'JSON',
             delay: 250,

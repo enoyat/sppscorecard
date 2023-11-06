@@ -53,7 +53,7 @@
                                         <div class="col-12">
                                             <span class="text-muted mb-3 lh-1 d-block text-truncate">AVAILABILITY</span>
                                             <h4 class="mb-3">
-                                                <span class="counter-value" data-target="{{ $avgkpi }}">0</span>%
+                                                <span class="counter-value" data-target="{{ round($avgkpi,2) }}">0</span>%
                                             </h4>
                                         </div>
 
@@ -70,7 +70,7 @@
                                             <span class="text-muted mb-3 lh-1 d-block text-truncate">DELIVERY SCHEDULE
                                                 </span>
                                             <h4 class="mb-3">
-                                                <span class="counter-value" data-target="{{ $kpidelivery }}">0</span>%
+                                                <span class="counter-value" data-target="{{ round($kpidelivery,2) }}">0</span>%
                                             </h4>
                                         </div>
 
@@ -87,7 +87,7 @@
                                             <span class="text-muted mb-3 lh-1 d-block text-truncate">LATE DELIVERY 
                                                 </span>
                                             <h4 class="mb-3">
-                                                <span class="counter-value" data-target="{{ $kpiontimedelivery }}">0</span>%
+                                                <span class="counter-value" data-target="{{ round($kpiontimedelivery,2) }}">0</span>%
                                             </h4>
                                         </div>
 
@@ -103,7 +103,7 @@
                                         <div class="col-12">
                                             <span class="text-muted mb-3 lh-1 d-block text-truncate">SPARE PARTS</span>
                                             <h4 class="mb-3">
-                                                <span class="counter-value" data-target="{{ $kpisparepart }}">0</span>%
+                                                <span class="counter-value" data-target="{{ round($kpisparepart,2) }}">0</span>%
                                             </h4>
                                         </div>
 
@@ -302,9 +302,9 @@
         var sumtotaljamkerja = js_array[idx]["sumtotaljamkerja"];
         $("#detjmlunit").html(js_array[idx]["jmlunit"]);
         $("#detnamatype").html(js_array[idx]["namaforklifttype"]);
-        $("#dettargetavailable").html(js_array[idx]["sumplanunitkerja"]);
-        $("#dettotalavailable").html(js_array[idx]["sumtotaljamkerja"]);
-        $("#dettotalbreakdown").html(js_array[idx]["totalbreakdown"]);
+        $("#dettargetavailable").html(Math.floor(js_array[idx]["sumplanunitkerja"]));
+        $("#dettotalavailable").html(Math.floor(js_array[idx]["sumtotaljamkerja"],2));
+        $("#dettotalbreakdown").html(Math.floor(js_array[idx]["totalbreakdown"]));
         $kpi=Math.floor((js_array[idx]["sumtotaljamkerja"] / js_array[idx]['sumplanunitkerja']) * 100,2);
         $("#detkpi").html($kpi);
 
