@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sppscorecard_app/models/itemorder.dart';
+import 'package:sppscorecard_app/models/sparepart.dart';
 import 'package:sppscorecard_app/pages/dashboard_page.dart';
 import 'package:sppscorecard_app/services/maintenance_dio.dart';
 import 'package:sppscorecard_app/services/sparepart_dio.dart';
@@ -36,16 +37,21 @@ class _FormSparepartPageState extends State<FormSparepartPage> {
     });
   }
 
+  final keyword = TextEditingController();
+  final _codepart = TextEditingController();
   final _sparepart = TextEditingController();
   final _partqty = TextEditingController();
 
   List<String> dokumen = [];
   List<ItemOrder> itemorder = [];
   List<Unit> _unit = [];
-
+  List<Sparepart> sparepart = [];
   String status = "";
   String kdunit = '';
+
   bool isLoading = false;
+  FocusNode qtyfocus = FocusNode();
+  FocusNode keywordfocus = FocusNode();
 
   void refreshData() {
     setState(() {
@@ -56,6 +62,54 @@ class _FormSparepartPageState extends State<FormSparepartPage> {
       setState(() {
         _unit = value;
         isLoading = false;
+      });
+    });
+  }
+
+  Future searchdata(var namasparepart) async {
+    await SparepartDio().searchsparepart(namasparepart).then((value) {
+      setState(() {
+        sparepart = value;
+        isLoading = false;
+        sparepart.isEmpty
+            ? showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const AlertDialog(
+                    title: Text('Information'),                    
+                    content: Text('Data tidak ditemukan'),
+                  );
+                })
+            : showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Pilih Sparepart'),
+                    content: SizedBox(
+                      width: 300,
+                      height: 200,
+                      child: ListView.builder(
+                        itemCount: sparepart.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(
+                                "${sparepart[index].simplename} - ${sparepart[index].partname!}",
+                                style: const TextStyle(fontSize: 10)),
+                            onTap: () {
+                              setState(() {
+                                _sparepart.text = sparepart[index].partname!;
+                                _codepart.text = sparepart[index].codepart;
+                                keyword.clear();
+                                Navigator.pop(context);
+                                qtyfocus.requestFocus();
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  );
+                });
       });
     });
   }
@@ -133,15 +187,60 @@ class _FormSparepartPageState extends State<FormSparepartPage> {
                   child: Column(
                     children: [
                       const SizedBox(height: 10),
+                      TextField(
+                          controller: keyword,
+                          focusNode: keywordfocus,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.search),
+                              onPressed: () async {
+                                await Future.delayed(const Duration(seconds: 1),
+                                    () {
+                                  setState(() {
+                                    isLoading = true;
+                                    sparepart.clear();
+                                    if (keyword.text.isEmpty) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Harap isi keyword terlebih dahulu'),
+                                        ),
+                                      );
+                                      return;
+                                    }
+                                    searchdata(keyword.text);
+                                  });
+                                });
+                              },
+                            ),
+                          )),
                       const SizedBox(height: 10),
                       TextFormField(
-                        enabled: true,
-                        controller: _sparepart,
+                        enabled: false,
+                        controller: _codepart,
                         decoration: const InputDecoration(
-                            hintText: 'Order Sparepart',
+                            hintText: 'Code Part',
                             border: OutlineInputBorder(),
                             suffixIcon: Icon(Icons.abc),
-                            labelText: 'Order Sparepart'),
+                            labelText: 'Code Sparepart'),
+                        onTap: () {},
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Code Part tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        enabled: false,
+                        controller: _sparepart,
+                        decoration: const InputDecoration(
+                            hintText: 'Name of  Sparepart',
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(Icons.abc),
+                            labelText: 'Name of Sparepart'),
                         onTap: () {},
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -153,6 +252,7 @@ class _FormSparepartPageState extends State<FormSparepartPage> {
                       const SizedBox(height: 10),
                       TextFormField(
                         enabled: true,
+                        focusNode: qtyfocus,
                         controller: _partqty,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
@@ -183,10 +283,14 @@ class _FormSparepartPageState extends State<FormSparepartPage> {
                             } else {
                               setState(() {
                                 itemorder.add(ItemOrder(
+                                    codepart: _codepart.text,
                                     partname: _sparepart.text,
                                     partqty: int.parse(_partqty.text)));
                                 _sparepart.clear();
                                 _partqty.clear();
+                                _codepart.clear();
+                                sparepart.clear();
+                                keywordfocus.requestFocus();
                               });
                             }
                           },
@@ -205,7 +309,7 @@ class _FormSparepartPageState extends State<FormSparepartPage> {
                                   child: ListTile(
                                     title: Text(itemorder[index].partname),
                                     subtitle: Text(
-                                        "qty: ${itemorder[index].partqty}"),
+                                        "Code: ${itemorder[index].codepart} qty: ${itemorder[index].partqty}"),
                                     trailing: IconButton(
                                       onPressed: () {
                                         setState(() {

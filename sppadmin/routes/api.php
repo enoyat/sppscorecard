@@ -40,3 +40,4 @@ Route::get('maintenance/listdokumen/{id}', [ApiMaintenance::class, 'listdokumen'
 Route::post('maintenance/store', [ApiMaintenance::class, 'store']);
 Route::get('getunit/{id}', [ApiMaintenance::class, 'getunit'])->name('getunit');
 Route::post('sparepart/store', [ApiSparepart::class, 'store']);
+Route::get('searchsparepart/{id}', [ApiSparepart::class, 'searchsparepart'])->name('searchsparepart');

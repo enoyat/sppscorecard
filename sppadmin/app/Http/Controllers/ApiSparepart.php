@@ -57,4 +57,10 @@ class ApiSparepart extends Controller
         ->get();
         return Response::json($trouble);
     }
+    public function searchsparepart($id)
+    {
+        $sparepart = MSparepart::where('simplename','like','%'.$id.'%')
+        ->get();
+        return Response::json($sparepart);
+    }
 }

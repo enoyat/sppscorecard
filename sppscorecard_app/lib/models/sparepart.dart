@@ -3,17 +3,13 @@ import 'dart:convert';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class Sparepart {
    final String codepart;
-  final String partname;
+  final String? partname;
   final String simplename;
-  final String merkpart;
-  final String tanggal;
   final String partno;
   Sparepart({
     required this.codepart,
     required this.partname,
     required this.simplename,
-    required this.merkpart,
-    required this.tanggal,
     required this.partno,
   });
 
@@ -22,8 +18,6 @@ class Sparepart {
       'codepart': codepart,
       'partname': partname,
       'simplename': simplename,
-      'merkpart': merkpart,
-      'tanggal': tanggal,
       'partno': partno,
     };
   }
@@ -33,8 +27,6 @@ class Sparepart {
       codepart: map['codepart'] as String,
       partname: map['partname'] as String,
       simplename: map['simplename'] as String,
-      merkpart: map['merkpart'] as String,
-      tanggal: map['tanggal'] as String,
       partno: map['partno'] as String,
     );
   }
