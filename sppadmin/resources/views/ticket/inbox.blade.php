@@ -71,11 +71,11 @@
                                
                             </td>
                             <td>
-                                <a href="{{ route('ticket.read',$key->id)}}" class="title">{{ $key->getuser->name }}</a>
+                                {{ $key->getuser->name }}
                             </td>
                             
                             <td>
-                                <a href="#" class="subject"><span class="teaser">{{ $key->subject }}</span>
+                                <a href="{{ route('ticket.read',$key->id)}}" class="subject"><span class="teaser">{{ $key->subject }}</span>
                                 </a>
                             </td>
                             <td>

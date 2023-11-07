@@ -23,6 +23,9 @@
             <div class="flex-grow-1">
                 <h5 class="font-size-14 mb-0">{{ $mainticket->getuser->name }}</h5>
                 <small class="text-muted">{{ $mainticket->getuser->email }}</small>
+                <small >                               
+                    <div class="date">{{ date("d-m-Y  h:m", strtotime($mainticket->created_at)); }}</div>
+                    </small>
             </div>
         </div>
 
@@ -37,6 +40,9 @@
             <div class="flex-grow-1">
                 <h5 class="font-size-14 mb-0">{{ $item->getuser->name }}</h5>
                 <small class="text-muted">{{ $item->getuser->email }}</small>
+                <small >                               
+                    <div class="date">{{ date("d-m-Y h:m", strtotime($item->created_at)); }}</div>
+                    </small>
             </div>
 
 
@@ -66,6 +72,7 @@
      <div class="modal-content">
          <div class="modal-header">
              <h5 class="modal-title font-size-16" id="composemodalTitle">New Message</h5>
+            
              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <div class="modal-body">
