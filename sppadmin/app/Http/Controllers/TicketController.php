@@ -44,6 +44,7 @@ class TicketController extends Controller
     }
     public function sendticket(Request $request)
     {
+
         $ticket = new Ticket();
         $ticket->userid = Auth::user()->id;
         $ticket->subject = $request->subject;
@@ -56,7 +57,7 @@ class TicketController extends Controller
     }
     public function replyticket(Request $request)
     {
-       
+
         $ticket = new Ticket();
         $ticket->userid = Auth::user()->id;
         $ticket->subject = $request->subject;
