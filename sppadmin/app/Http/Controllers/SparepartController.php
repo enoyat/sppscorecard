@@ -49,7 +49,12 @@ class SparepartController extends Controller
     {
         $request->validate([
             'codepart'=>'required|unique:sparepart,codepart|regex:/^\S*$/u',
+            'produkcategory'=>'required',
+            'partno'=>'required',
+            'partname'=>'required',
             'simplename'=>'required',
+            'merkjenisforklift'=>'required',
+            'description'=>'required',
             'merkpart'=>'required',
 
         ]);
@@ -58,7 +63,12 @@ class SparepartController extends Controller
 
         $sparepart = new MSparepart;
         $sparepart->codepart = $request->codepart;
+        $sparepart->produkcategory = $request->produkcategory;
+        $sparepart->partno = $request->partno;
+        $sparepart->partname = $request->partname;
         $sparepart->simplename = $request->simplename;
+        $sparepart->merkjenisforklift = $request->merkjenisforklift;
+        $sparepart->description = $request->description;
         $sparepart->merkpart = $request->merkpart;
 
         $simpan = $sparepart->save();
@@ -79,7 +89,12 @@ class SparepartController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'produkcategory'=>'required',
+            'partno'=>'required',
+            'partname'=>'required',
             'simplename'=>'required',
+            'merkjenisforklift'=>'required',
+            'description'=>'required',
             'merkpart'=>'required',
 
         ]);
@@ -87,7 +102,12 @@ class SparepartController extends Controller
 
 
         $sparepart = MSparepart::find($id);
+        $sparepart->produkcategory = $request->produkcategory;
+        $sparepart->partno = $request->partno;
+        $sparepart->partname = $request->partname;
         $sparepart->simplename = $request->simplename;
+        $sparepart->merkjenisforklift = $request->merkjenisforklift;
+        $sparepart->description = $request->description;
         $sparepart->merkpart = $request->merkpart;
         $simpan = $sparepart->save();
 

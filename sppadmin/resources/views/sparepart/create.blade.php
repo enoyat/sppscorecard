@@ -45,8 +45,28 @@
                                     <input class="form-control" type="text" value="" name="codepart" id="codepart">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Name of Spare Part</label>
+                                    <label for="example-password-input" class="form-label">Product Category</label>
+                                    <input class="form-control" type="text" value="" name="produkcategory" id="produkcategory">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Part No</label>
+                                    <input class="form-control" type="text" value="" name="partno" id="partno">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Part Name</label>
+                                    <input class="form-control" type="text" value="" name="partname" id="partname">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Simple Name</label>
                                     <input class="form-control" type="text" value="" name="simplename" id="simplename">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Merk Forklift</label>
+                                    <input class="form-control" type="text" value="" name="merkjenisforklift" id="merkjenisforklift">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Description</label>
+                                    <input class="form-control" type="text" value="" name="description" id="description">
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-date-input" class="form-label">merkpart</label>
