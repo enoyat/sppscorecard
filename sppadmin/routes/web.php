@@ -24,7 +24,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 Route::get('/registrasi', [App\Http\Controllers\HomeController::class, 'registrasi'])->name('registrasi');
 
-Route::get('/delivery/daysoflapse',[App\Http\Controllers\DeliveryController::class, 'daysoflapse'])->name('delivery.daysoflapse');
+
 //Update User Details
 
 
