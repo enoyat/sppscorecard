@@ -41,7 +41,8 @@
                 <h5 class="font-size-14 mb-0">{{ $item->getuser->name }}</h5>
                 <small class="text-muted">{{ $item->getuser->email }}</small>
                 <small >
-                    <div class="date">{{ date("d-m-Y h:m", strtotime($item->created_at)); }}</div>
+                  
+                    <div class="date">{{ date("d-m-Y h:i:s", strtotime($item->created_at)); }}</div>
                     </small>
             </div>
 

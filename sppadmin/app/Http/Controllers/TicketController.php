@@ -71,6 +71,7 @@ class TicketController extends Controller
         $ticket->type = '0';
         $ticket->status = 'open';
         $ticket->parentid = $request->parentid;
+        $ticket->datepost = date('Y-m-d H:i:s');
 
         $ticket->save();
         return redirect()->back();
