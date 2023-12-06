@@ -263,8 +263,10 @@ class HomeController extends Controller
 
             select idforklifttype, namaforklifttype,  sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift from physicalavailable join unit on unit.kdunit = physicalavailable.kdunit join forklifttype on unit.idforklifttype=forklifttype.id where periode like '$mperiode%' and (unit.idcbu='SN' or unit.idcbu='Waters') and forklifttype.f_dashboard= 'Y' group By namaforklifttype, idforklifttype) as qpa on qunittype.idforklifttype=qpa.idforklifttype;");
             $delivery = DB::table('delivery')->where('idcbu', "SN")->orWhere('idcbu', "Waters")->count('*');
-            $delivered = DB::table('delivery')->where('idcbu', "SN")->orWhere('idcbu', "Waters")->where('statuscustomer', 'close')->count('*');
-            $latedelivered = DB::table('delivery')->where('idcbu', "SN")->orWhere('idcbu', "Waters")->where('daysoflapse', ">", "0")->count('*');
+           // $delivered = DB::table('delivery')->where('idcbu', "SN")->orWhere('idcbu', "Waters")->where('statuscustomer', 'close')->count('*');
+            $delivered = count(DB::select("select * from delivery where (idcbu='SN' or idcbu='Waters') and statuscustomer='close'"));
+            $latedelivered = count(DB::select("select * from delivery where (idcbu='SN' or idcbu='Waters') and daysoflapse>0"));
+            
             if ($delivery == 0) {
                 $kpidelivery = 0;
                 $kpiontimedelivery = 0;
