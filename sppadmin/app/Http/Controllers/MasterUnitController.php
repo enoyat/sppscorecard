@@ -54,6 +54,7 @@ class MasterUnitController extends Controller
             'idsitename'=>'required',
             'kdunit'=>'required|unique:unit,kdunit',
             'hm'=>'required',
+
         ]);
         if (!empty($request->filefoto)) {
             $file = $request->filefoto;
@@ -88,6 +89,7 @@ class MasterUnitController extends Controller
         $unit->namaunit = $request->kdunit;
         $unit->hm = $request->hm;
         $unit->foto = $filename;
+        $unit->showcustomer = $request->showcustomer;
 
         $simpan = $unit->save();
 
@@ -145,6 +147,7 @@ class MasterUnitController extends Controller
 
         $unit->namaunit = $request->kdunit;
         $unit->foto = $filename;
+        $unit->showcustomer = $request->showcustomer;
 
         $simpan = $unit->save();
         if ($simpan) {

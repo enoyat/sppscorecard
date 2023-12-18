@@ -137,10 +137,21 @@
                                     <input class="form-control" type="text" value="{{ $unit->masheight }}" name="masheight"
                                         id="masheight">
                                 </div>
+
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Foto Unit</label>
                                     <input class="form-control" type="file" value="" name="filefoto"
                                         id="filefoto">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-date-input" class="form-label">Show Customer</label>
+                                    <select class="form-select" aria-label="Default select example" name="showcustomer"
+                                        id="showcustomer">
+
+                                        <option value="{{ $unit->showcustomer }}" selected>{{ $unit->showcustomer }}</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
