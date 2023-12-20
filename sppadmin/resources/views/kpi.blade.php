@@ -15,7 +15,7 @@
             </td>
             <td style="background:rgb(9, 136, 153); padding:10px">
                 <div style="font-size: 16px; color: white;"><b>AVAILABILITY DASHBOARD
-                       </b></div>
+                    </b></div>
             </td>
             <td style="background:rgb(9, 136, 153); color: white; padding:10px">Update: {{ date('Y/m/d') }}</td>
         </tr>
@@ -53,7 +53,8 @@
                                         <div class="col-12">
                                             <span class="text-muted mb-3 lh-1 d-block text-truncate">AVAILABILITY</span>
                                             <h4 class="mb-3">
-                                                <span class="counter-value" data-target="{{ round($avgkpi,2) }}">0</span>%
+                                                <span class="counter-value"
+                                                    data-target="{{ round($avgkpi, 2) }}">0</span>%
                                             </h4>
                                         </div>
 
@@ -68,9 +69,10 @@
                                     <div class="row align-items-center">
                                         <div class="col-12">
                                             <span class="text-muted mb-3 lh-1 d-block text-truncate">DELIVERY SCHEDULE
-                                                </span>
+                                            </span>
+
                                             <h4 class="mb-3">
-                                                <span class="counter-value" data-target="{{ round($kpidelivery,2) }}">0</span>%
+                                                <div id="xkpidelivery"></div>
                                             </h4>
                                         </div>
 
@@ -84,10 +86,10 @@
                                 <div class="card-body">
                                     <div class="row align-items-center">
                                         <div class="col-12">
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">LATE DELIVERY 
-                                                </span>
+                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">LATE DELIVERY
+                                            </span>
                                             <h4 class="mb-3">
-                                                <span class="counter-value" data-target="{{ round($kpiontimedelivery,2) }}">0</span>%
+                                                <div id="xkpiontimedelivery"></div>
                                             </h4>
                                         </div>
 
@@ -103,7 +105,8 @@
                                         <div class="col-12">
                                             <span class="text-muted mb-3 lh-1 d-block text-truncate">SPARE PARTS</span>
                                             <h4 class="mb-3">
-                                                <span class="counter-value" data-target="{{ round($kpisparepart,2) }}">0</span>%
+                                                <span class="counter-value"
+                                                    data-target="{{ round($kpisparepart, 2) }}">0</span>%
                                             </h4>
                                         </div>
 
@@ -134,8 +137,7 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-12">
-                                <span
-                                    class="text-muted mb-3 lh-1 d-block text-truncate" id="detnamatype"></span>
+                                <span class="text-muted mb-3 lh-1 d-block text-truncate" id="detnamatype"></span>
                                 <h4 class="mb-3">
                                     <span class="counter-value" id="detkpi"></span> %
                                 </h4>
@@ -143,7 +145,8 @@
 
                         </div>
                         <div class="row">
-                            <div id="pie-chart" data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be", "#32a852"]'
+                            <div id="pie-chart"
+                                data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be", "#32a852"]'
                                 class="e-charts">
                             </div>
 
@@ -153,18 +156,15 @@
                             <span class="ms-1 text-muted font-size-13">Units</span>
                         </div>
                         <div class="text-nowrap">
-                            <span
-                                class="badge bg-primary " id="dettargetavailable"></span>
+                            <span class="badge bg-primary " id="dettargetavailable"></span>
                             <span class="ms-1 text-muted font-size-13">Target Available (Minutes)</span>
                         </div>
                         <div class="text-nowrap">
-                            <span
-                                class="badge badge-soft-success text-success" id="dettotalavailable"></span>
+                            <span class="badge badge-soft-success text-success" id="dettotalavailable"></span>
                             <span class="ms-1 text-muted font-size-13">Total Available (Minutes)</span>
                         </div>
                         <div class="text-nowrap">
-                            <span
-                                class="badge badge-soft-danger text-success" id="dettotalbreakdown"></span>
+                            <span class="badge badge-soft-danger text-success" id="dettotalbreakdown"></span>
                             <span class="ms-1 text-muted font-size-13">Breakdown (Minutes)</span>
                         </div>
                     </div><!-- end card body -->
@@ -196,6 +196,28 @@
         <?php $i = 0; ?>
         chartunit();
 
+    });
+    $("#formkpideliery").submit(function(e) {
+        e.preventDefault();
+
+        var tglawal = $("#tglawal").val();
+        var tglakhir = $("#tglakhir").val();
+        $.ajax({
+            type: "GET",
+            url: "{{ url('kpidelivery') }}",
+            data: {
+                tglawal: tglawal,
+                tglakhir: tglakhir
+            },
+            dataType: "json",
+            success: function(data) {
+
+
+                $("#xkpidelivery").html(data.kpidelivery+"%");
+                $("#xkpiontimedelivery").html(data.kpiontimedelivery+"%");
+
+            }
+        });
     });
 
     function chartunit() {
@@ -264,7 +286,8 @@
 
     }
 
-    function arrayLookup(searchValue, array, searchIndex) // Posted on Tathyika.com (also refer for more codes there)
+    function arrayLookup(searchValue, array,
+        searchIndex) // Posted on Tathyika.com (also refer for more codes there)
     {
         var returnVal = null;
         var i;
@@ -285,7 +308,8 @@
         return colors.map(function(value) {
             var newValue = value.replace(' ', '');
             if (newValue.indexOf('--') != -1) {
-                var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+                var color = getComputedStyle(document.documentElement).getPropertyValue(
+                    newValue);
                 if (color) return color;
             } else {
                 return newValue;
@@ -303,10 +327,11 @@
         $("#detjmlunit").html(js_array[idx]["jmlunit"]);
         $("#detnamatype").html(js_array[idx]["namaforklifttype"]);
         $("#dettargetavailable").html(Math.floor(js_array[idx]["sumplanunitkerja"]));
-        $("#dettotalavailable").html(Math.floor(js_array[idx]["sumtotaljamkerja"],2));
+        $("#dettotalavailable").html(Math.floor(js_array[idx]["sumtotaljamkerja"], 2));
         $("#dettotalbreakdown").html(Math.floor(js_array[idx]["totalbreakdown"]));
-        $kpi=Math.floor((js_array[idx]["sumtotaljamkerja"] / js_array[idx]['sumplanunitkerja']) * 100,2);
-        $("#detkpi").html($kpi);
+        $kpi = Math.floor((js_array[idx]["sumtotaljamkerja"] / js_array[idx]['sumplanunitkerja']) *
+            100, 2);
+        $("#detkpidelivery").html($kpi);
 
 
         var myChart2 = echarts.init(dom);

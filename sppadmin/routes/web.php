@@ -32,6 +32,7 @@ Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class,
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 Route::get('restrictpage', [App\Http\Controllers\HomeController::class, 'restrictpage'])->name('restrictpage');
 Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
+    Route::get('kpidelivery',[App\Http\Controllers\HomeController::class, 'kpidelivery'])->name('kpidelivery');
     Route::group(['roles' => ['administrator']], function () {
         Route::get('utility/userlog', [UtilityController::class, 'userlog'])->name('utility.userlog');
         Route::get('utility/edituser/{id}', [UtilityController::class, 'edituser'])->name('utility.edituser');
@@ -299,7 +300,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/show/{id}', [App\Http\Controllers\BeritaacaraController::class, 'show'])->name('beritaacara.show');
             Route::put('/reply/{id}', [App\Http\Controllers\BeritaacaraController::class, 'reply'])->name('beritaacara.reply');
 
-            
+
         });
         Route::group(['prefix' => 'suratjalan'], function () {
             Route::get('/', [App\Http\Controllers\SuratjalanController::class, 'index'])->name('suratjalan.index');

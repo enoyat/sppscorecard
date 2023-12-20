@@ -45,13 +45,14 @@ rel="stylesheet" type="text/css" />
                     <div class="col-md-6">
                         <form action="" method="GET" class="form-inline form-row">
 
-                           
+
                                 <div class="input-group mx-1">
 
                                     <input name="periode" type="search" value="{{ request()->get('periode') }}"
                                         class="form-control" placeholder="Periode (yyyy-mm)">
 
                                         @include("filter_site")
+
                                         <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit">
                                             <i class="fas fa-search"></i>
@@ -68,6 +69,7 @@ rel="stylesheet" type="text/css" />
                     <div class="col-md-12"  >
 
                         @if($kpi)
+                        @include('filter_range')
                         @include('kpi')
 
                         @else

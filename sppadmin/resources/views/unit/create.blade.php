@@ -115,7 +115,6 @@
                                     <input class="form-control" type="number" value="" name="hm"
                                         id="hm" required>
                                 </div>
-
                                 <div class="mb-3">
                                     <label for="example-url-input" class="form-label">Forklif Type</label>
                                     <select class="form-select" aria-label="Default select example" name="idforklifttype"
