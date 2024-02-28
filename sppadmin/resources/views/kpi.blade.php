@@ -7,6 +7,108 @@
         document.body.innerHTML = originalContents;
     }
 </script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<div class="row">
+    <div class="col-md-6">
+
+
+
+        <div class="input-group mx-1">
+
+
+
+            <input type="date" name="tglakhir" id="tglakhir" value="" class="form-control">
+            <select name="filter" id="filter" class="form-control">
+                <option value="" {{ request()->get('filter') == '' ? 'selected' : '' }}>
+                    -- select filter --</option>
+                @if (Auth::user()->roles_id == '1')
+                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                        SITENAME</option>
+                    <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
+                        REGION</option>
+                    <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
+                        CBU</option>
+                    <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
+                        ALL SN</option>
+                    <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
+                        ALL WATERS</option>
+                    <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
+                        ALL SN & WATERS</option>
+                @elseif (Auth::user()->roles_id == '2')
+                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                        SITENAME</option>
+                @elseif (Auth::user()->roles_id == '5')
+                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                        SITENAME</option>
+                    <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
+                        REGION</option>
+                    <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
+                        CBU</option>
+                    <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
+                        ALL SN</option>
+                    <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
+                        ALL WATERS</option>
+                    <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
+                        ALL SN & WATERS</option>
+                @elseif (Auth::user()->roles_id == '6')
+                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                        SITENAME</option>
+                    <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
+                        REGION</option>
+                    <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
+                        CBU</option>
+                    <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
+                        ALL SN</option>
+                    <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
+                        ALL WATERS</option>
+                    <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
+                        ALL SN & WATERS</option>
+                @endif
+            </select>
+            <div id="filtersitename" style="width:300px">
+                <select name="xidsitename" id="xidsitename" class="form-control">
+                    @if (Session::get('runidsitename') != null)
+                        <option value="{{ Session::get('runidsitename') }}" selected>
+                            {{ Session::get('runnamasitename') }}</option>
+                    @endif
+                </select>
+            </div>
+            <div id="filterregion" style="width:150px">
+                <select name="xidregion" id="xidregion" class="form-control">
+                    @if (Session::get('runidregion') != null)
+                        <option value="{{ Session::get('runidregion') }}" selected>
+                            {{ Session::get('runnamaregion') }}</option>
+                    @endif
+                </select>
+            </div>
+            <div id="filtercbu" style="width:150px">
+
+                <select class="form-control" aria-label="Default select example" name="xidcbu" id="xidcbu">
+                    @if (Session::get('runidcbu') != null)
+                        <option value="{{ Session::get('runidcbu') }}" selected>
+                            {{ Session::get('runnamacbu') }}</option>
+                    @endif
+
+                    <option value="">-- select --</option>
+                    @foreach ($cbu as $itemcbu)
+                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
+                    @endforeach
+
+                </select>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary" id="btnfilter"><i class="fas fa-search"></i></button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <div id="area-print">
     <table width="100%">
         <tr>
@@ -23,113 +125,247 @@
     <br>
     <br>
     <div class="row">
-        <div class="col-xl-8 col-md-8">
+
             <!-- card -->
-            <div class="card card-h-100" style="border:1px solid; ">
+            <div class="row">
+            <div class="col-6">
+
                 <!-- card body -->
                 <div class="card-body">
                     <div class="row align-items-center">
-                        <div class="col-2">
-                            <div class="card" style="border:1px solid; ">
-                                <!-- card body -->
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-12">
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">TOTAL UNITS</span>
-                                            <h4 class="mb-3">
-                                                <span class="counter-value" data-target="{{ $jmlunit }}">0</span>
-                                            </h4>
-                                        </div>
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">YTD</span>
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">DELIVERY</span>
+                            <div class="col-4">
+                                <div class="card" style="border:1px solid; ">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row ">
 
+                                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">TARGET
+                                                (UNIT)</span>
+
+                                            <div id="jmlunit"></div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="card" style="border:1px solid; ">
-                                <!-- card body -->
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-12">
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">AVAILABILITY</span>
-                                            <h4 class="mb-3">
-                                                <span class="counter-value"
-                                                    data-target="{{ round($avgkpi, 2) }}">0</span>%
-                                            </h4>
-                                        </div>
+                            <div class="col-4">
+                                <div class="card" style="border:1px solid; ">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row ">
 
+                                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">ACTUAL
+                                                (UNIT)</span>
+
+                                            <div id="jmlunitactual"></div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="card" style="border:1px solid; ">
-                                <!-- card body -->
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-12">
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">DELIVERY SCHEDULE
-                                            </span>
+                            <div class="col-4">
+                                <div class="card" style="border:1px solid; ">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row ">
 
-                                            <h4 class="mb-3">
-                                                <div id="xkpidelivery"></div>
-                                            </h4>
+                                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">% DELIVERED
+                                                (UNIT)</span>
+
+                                            <div id="prosunit"></div>
+
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="card" style="border:1px solid; ">
-                                <!-- card body -->
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-12">
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">LATE DELIVERY
-                                            </span>
-                                            <h4 class="mb-3">
-                                                <div id="xkpiontimedelivery"></div>
-                                            </h4>
-                                        </div>
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">OTIF</span>
+                            <div class="col-4">
+                                <div class="card" style="border:1px solid; ">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row ">
 
+                                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">TARGET
+                                                (UNIT)</span>
+
+                                            <div id="jmlunitotif"></div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="card" style="border:1px solid; ">
-                                <!-- card body -->
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col-12">
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate">SPARE PARTS</span>
-                                            <h4 class="mb-3">
-                                                <span class="counter-value"
-                                                    data-target="{{ round($kpisparepart, 2) }}">0</span>%
-                                            </h4>
-                                        </div>
+                            <div class="col-4">
+                                <div class="card" style="border:1px solid; ">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row ">
 
+                                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">ACTUAL
+                                                (UNIT)</span>
+
+                                            <div id="jmlunitactualotif"></div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="col-4">
+                                <div class="card" style="border:1px solid; ">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row ">
+
+                                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">% LATE
+                                                (UNIT)</span>
+
+                                            <div id="proslate"></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900"> TOTAL PENALTY :</span>
+                            <div class="col-4">
+                                <div class="card" style="border:1px solid; ">
+                                    <!-- card body -->
+                                    <div class="card-body">
+                                        <div class="row ">
 
 
+                                            <div id="totalpenalty"></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
-                    <div class="row">
-                        <div id="pie-chartunit"
-                            data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be", "#32a852", "#fc0f03", "#f7f705", "#0bfc05", "#0bfcf5", "#0b0bfc", "#fc0bfc"]'
-                            class="e-charts">
-                        </div>
 
-                    </div>
 
 
                 </div><!-- end card body -->
-            </div><!-- end card -->
-        </div><!-- end col -->
-        <div class="col-xl-4 col-md-4">
+            <!-- end card -->
+            </div>
+            <div class="col-6">
+
+                    <!-- card body -->
+                    <div class="card-body">
+                        <div class="row align-items-center">
+
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">MTD</span>
+                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">AVAILABILITY</span>
+                                <div class="col-4">
+                                    <div class="card" style="border:1px solid; ">
+                                        <!-- card body -->
+                                        <div class="card-body">
+                                            <div class="row ">
+
+                                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">TARGET (HOUR)</span>
+
+                                                <div id="sumplanunitkerja"></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card" style="border:1px solid; ">
+                                        <!-- card body -->
+                                        <div class="card-body">
+                                            <div class="row ">
+
+                                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">ACTUAL (HOUR)</span>
+
+                                                <div id="sumtotaljamkerja"></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card" style="border:1px solid; ">
+                                        <!-- card body -->
+                                        <div class="card-body">
+                                            <div class="row ">
+
+                                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">% AVAILABILITY (HOUR)</span>
+
+                                                <div id="avgpaforklift"></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900"> TOTAL PAYMENT :</span>
+                                <div class="col-4">
+                                    <div class="card" style="border:1px solid; ">
+                                        <!-- card body -->
+                                        <div class="card-body">
+                                            <div class="row ">
+
+
+                                                <div id="totalpayment"></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900"> SPAREPART</span>
+                                <div class="col-4">
+                                    <div class="card" style="border:1px solid; ">
+                                        <!-- card body -->
+                                        <div class="card-body">
+                                            <div class="row ">
+
+                                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">TARGET (PCS)</span>
+
+                                                <div id="jmlqty"></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card" style="border:1px solid; ">
+                                        <!-- card body -->
+                                        <div class="card-body">
+                                            <div class="row ">
+
+                                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">ACTUAL (PCS)</span>
+
+                                                <div id="jmlstok"></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card" style="border:1px solid; ">
+                                        <!-- card body -->
+                                        <div class="card-body">
+                                            <div class="row ">
+
+                                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">%</span>
+
+                                                <div id="kpisparepart"></div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+
+
+                    </div><!-- end card body -->
+
+            </div>
+            </div>
+
+
+    </div><!-- end col -->
+    {{-- <div class="col-xl-4 col-md-4">
             @if (count($arraykpi) > 0)
                 <?php $i = 0; ?>
                 <div class="card card-h-100" style="border:1px solid; ">
@@ -171,11 +407,11 @@
                 </div>
                 <?php $i++; ?>
             @endif
-        </div><!-- end card -->
+        </div><!-- end card --> --}}
 
 
 
-    </div>
+</div>
 
 
 </div>
@@ -193,191 +429,204 @@
 <script src="{{ URL::asset('build/libs/echarts/echarts.min.js') }}"></script>
 <script>
     $(document).ready(function() {
-        <?php $i = 0; ?>
-        chartunit();
+        // <?php $i = 0; ?>
+        // chartunit();
+
+        $("#btnfilter").click(function() {
+            kpiavailability();
+            kpiunit();
+            kpisparepart();
+        });
+
+
 
     });
-    $("#formkpideliery").submit(function(e) {
-        e.preventDefault();
 
-        var tglawal = $("#tglawal").val();
+    function kpiunit() {
+
         var tglakhir = $("#tglakhir").val();
+        var filter = $("#filter").val();
+        var idcbu = $("#xidcbu").val();
+        var idsitename = $("#xidsitename").val();
+        var idregion = $("#xidregion").val();
         $.ajax({
             type: "GET",
-            url: "{{ url('kpidelivery') }}",
+            url: "{{ url('kpiunit') }}",
             data: {
-                tglawal: tglawal,
-                tglakhir: tglakhir
+                filter: filter,
+                tglakhir: tglakhir,
+                idcbu: idcbu,
+                idsitename: idsitename,
+                idregion: idregion
             },
             dataType: "json",
             success: function(data) {
+                $("#jmlunit").html(data.jmlunit);
+                $("#xjmlunit").html(data.jmlunit);
+                $("#jmlunitactual").html(data.jmlunitactual);
+                $("#prosunit").html(data.prosunit);
+                $("#jmlunitotif").html(data.jmlunit);
+                $("#jmlunitactualotif").html(data.jmlunitactualotif);
+                $("#proslate").html(data.proslate);
+                $("#totalpenalty").html(data.totalpenalty);
+                $("#totalpayment").html(data.totalpayment);
 
 
-                $("#xkpidelivery").html(data.kpidelivery+"%");
-                $("#xkpiontimedelivery").html(data.kpiontimedelivery+"%");
 
             }
         });
+    }
+
+    function kpiavailability() {
+
+        var tglakhir = $("#tglakhir").val();
+        var filter = $("#filter").val();
+        var idcbu = $("#xidcbu").val();
+        var idsitename = $("#xidsitename").val();
+        var idregion = $("#xidregion").val();
+        $.ajax({
+            type: "GET",
+            url: "{{ url('kpiavailability') }}",
+            data: {
+                filter: filter,
+                tglakhir: tglakhir,
+                idcbu: idcbu,
+                idsitename: idsitename,
+                idregion: idregion
+            },
+            dataType: "json",
+            success: function(data) {
+                $("#sumplanunitkerja").html(data.sumplanunitkerja);
+                $("#sumtotaljamkerja").html(data.sumtotaljamkerja);
+                $("#avgpaforklift").html(data.avgpaforklift);
+
+
+            }
+        });
+    }
+
+    function kpisparepart() {
+
+        var tglakhir = $("#tglakhir").val();
+        var filter = $("#filter").val();
+        var idcbu = $("#xidcbu").val();
+        var idsitename = $("#xidsitename").val();
+        var idregion = $("#xidregion").val();
+
+
+        $.ajax({
+            type: "GET",
+            url: "{{ url('kpisparepart') }}",
+            data: {
+                filter: filter,
+                tglakhir: tglakhir,
+                idcbu: idcbu,
+                idsitename: idsitename,
+                idregion: idregion
+            },
+            dataType: "json",
+            success: function(data) {
+                $("#jmlqty").html(data.jmlqty);
+                $("#jmlstok").html(data.jmlstok);
+                $("#kpisparepart").html(data.kpisparepart);
+
+
+            }
+        });
+    }
+</script>
+
+<script>
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $(document).ready(function() {
+        $("#filtersitename").hide();
+        $("#filterregion").hide();
+        $("#filtercbu").hide();
+        var filter = $("select[name='filter']").val();
+        if (filter == "sitename") {
+            $("#filtersitename").show();
+            $("#filterregion").hide();
+            $("#filtercbu").hide();
+        } else if (filter == "region") {
+            $("#filtersitename").hide();
+            $("#filterregion").show();
+            $("#filtercbu").hide();
+
+        } else if (filter == "cbu") {
+            $("#filtersitename").hide();
+            $("#filterregion").hide();
+            $("#filtercbu").show();
+        } else {
+            $("#filtersitename").hide();
+            $("#filterregion").hide();
+            $("#filtercbu").hide();
+        }
+
+
     });
 
-    function chartunit() {
-        // pie chart
-        var pieColors = getChartColorsArray("#pie-chartunit");
-        var dom = document.getElementById("pie-chartunit");
+    $("select[name='filter']").change(function() {
+        if ($(this).val() == "sitename") {
+            $("#filtersitename").show();
+            $("#filterregion").hide();
+            $("#filtercbu").hide();
+        } else if ($(this).val() == "region") {
+            $("#filtersitename").hide();
+            $("#filterregion").show();
+            $("#filtercbu").hide();
 
-        var myChart = echarts.init(dom);
-
-        var app = {};
-        option = null;
-        option = {
-            tooltip: {
-                trigger: 'item',
-                formatter: "100 <br>{b} : Units: {c} ({d}%)"
-            },
-
-            // legend: {
-            //     orient: 'horizontal',
-            //     left: 'left',
-            //     data: {{ $kategori }},
-            //     textStyle: {
-            //         color: '#858d98'
-            //     }
-            // },
-            color: pieColors, //['#fd625e', '#2ab57d', '#4ba6ef', '#ffbf53', '#5156be'],
-
-            series: [{
-                name: 'Type',
-                type: 'pie',
-                selectedMode: 'single',
-                radius: '75%',
-                // center: ['50%', '60%'],
-                data: [
-                    @foreach ($arraykpi as $item)
-                        {
-                            value: {{ $item['jmlunit'] }},
-                            name: "{{ $item['namaforklifttype'] }}",
-
-                        },
-                    @endforeach
-                ],
-
-                itemStyle: {
-                    emphasis: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }]
-        };
-        var js_array = JSON.parse('<?= addslashes(json_encode($arraykpi)) ?>');
-
-        if (option && typeof option === "object") {
-            myChart.setOption(option, true);
-            myChart.on('click',
-                function(params) {
-                    var namaforklifttype = params.name;
-                    var id = arrayLookup(namaforklifttype, js_array, 'namaforklifttype');
-                    generatechart(id);
-                    //your code
-                });
+        } else if ($(this).val() == "cbu") {
+            $("#filtersitename").hide();
+            $("#filterregion").hide();
+            $("#filtercbu").show();
+        } else {
+            $("#filtersitename").hide();
+            $("#filterregion").hide();
+            $("#filtercbu").hide();
         }
+    });
 
-
-    }
-
-    function arrayLookup(searchValue, array,
-        searchIndex) // Posted on Tathyika.com (also refer for more codes there)
-    {
-        var returnVal = null;
-        var i;
-        for (i = 0; i < array.length; i++) {
-            if (array[i][searchIndex] == searchValue) {
-                returnVal = i;
-                break;
-            }
-        }
-
-        return returnVal;
-    }
-
-    // get colors array from the string
-    function getChartColorsArray(chartId) {
-        var colors = $(chartId).attr('data-colors');
-        var colors = JSON.parse(colors);
-        return colors.map(function(value) {
-            var newValue = value.replace(' ', '');
-            if (newValue.indexOf('--') != -1) {
-                var color = getComputedStyle(document.documentElement).getPropertyValue(
-                    newValue);
-                if (color) return color;
-            } else {
-                return newValue;
-            }
-        })
-    }
-
-    function generatechart(idx) {
-        // pie chart
-        var js_array = JSON.parse('<?= addslashes(json_encode($arraykpi)) ?>');
-        var pieColors = getChartColorsArray("#pie-chart");
-        var dom = document.getElementById("pie-chart");
-        var totalbreakdown = js_array[idx]["totalbreakdown"];
-        var sumtotaljamkerja = js_array[idx]["sumtotaljamkerja"];
-        $("#detjmlunit").html(js_array[idx]["jmlunit"]);
-        $("#detnamatype").html(js_array[idx]["namaforklifttype"]);
-        $("#dettargetavailable").html(Math.floor(js_array[idx]["sumplanunitkerja"]));
-        $("#dettotalavailable").html(Math.floor(js_array[idx]["sumtotaljamkerja"], 2));
-        $("#dettotalbreakdown").html(Math.floor(js_array[idx]["totalbreakdown"]));
-        $kpi = Math.floor((js_array[idx]["sumtotaljamkerja"] / js_array[idx]['sumplanunitkerja']) *
-            100, 2);
-        $("#detkpidelivery").html($kpi);
-
-
-        var myChart2 = echarts.init(dom);
-
-        var app = {};
-        option = null;
-        option = {
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+    $("#xidsitename").select2({
+        placeholder: '-- select sitename --',
+        ajax: {
+            url: "{{ route('sitename.getsitename') }}",
+            type: "GET",
+            dataType: 'JSON',
+            delay: 250,
+            data: function(params) {
+                return {
+                    _token: CSRF_TOKEN,
+                    search: params.term
+                };
             },
-            legend: {
-                orient: 'horizontal',
-                left: 'left',
-                data: ['Available', 'Breakdown'],
-                textStyle: {
-                    color: '#858d98'
-                }
+            processResults: function(response) {
+                return {
+                    results: response
+                };
             },
-            color: pieColors, //['#fd625e', '#2ab57d', '#4ba6ef', '#ffbf53', '#5156be'],
-            series: [{
-                name: 'KPI',
-                type: 'pie',
-                radius: '60%',
-                // center: ['50%', '60%'],
-                data: [{
-                        value: sumtotaljamkerja,
-                        name: 'Available'
-                    },
-                    {
-                        value: totalbreakdown,
-                        name: 'Breakdown'
-                    },
-                ],
-                itemStyle: {
-                    emphasis: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }]
-        };;
-        if (option && typeof option === "object") {
-            myChart2.setOption(option, true);
+            cache: true
         }
+    });
 
-    }
+    $("#xidregion").select2({
+        placeholder: '-- select region --',
+        ajax: {
+            url: "{{ route('sitename.getregion') }}",
+            type: "GET",
+            dataType: 'JSON',
+            delay: 250,
+            data: function(params) {
+                return {
+                    _token: CSRF_TOKEN,
+                    search: params.term
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
+    });
 </script>

@@ -32,7 +32,10 @@ Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class,
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 Route::get('restrictpage', [App\Http\Controllers\HomeController::class, 'restrictpage'])->name('restrictpage');
 Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
-    Route::get('kpidelivery',[App\Http\Controllers\HomeController::class, 'kpidelivery'])->name('kpidelivery');
+    Route::get('kpiavailability',[App\Http\Controllers\HomeController::class, 'kpiavailability'])->name('kpiavailability');
+    Route::get('kpiunit',[App\Http\Controllers\HomeController::class, 'kpiunit'])->name('kpiunit');
+    Route::get('kpisparepart',[App\Http\Controllers\HomeController::class, 'kpisparepart'])->name('kpisparepart');
+
     Route::group(['roles' => ['administrator']], function () {
         Route::get('utility/userlog', [UtilityController::class, 'userlog'])->name('utility.userlog');
         Route::get('utility/edituser/{id}', [UtilityController::class, 'edituser'])->name('utility.edituser');

@@ -13,6 +13,7 @@
                 <th SCOPE="COL">CAPACITY (KILOGRAM)</th>
                 <th SCOPE="COL">MAST (STAGE)</th>
                 <th SCOPE="COL">HEIGHT (METER)</th>
+                <th SCOPE="COL">PRICE</th>
                 <th SCOPE="COL">SHOW CUSTOMER</th>
                 <th SCOPE="COL">ACTION</th>
 
@@ -38,6 +39,7 @@
                 <td scope="col">{{ $key->capcity }}</td>
                 <td scope="col">{{ $key->mast }}</td>
                 <td scope="col">{{ $key->masheight }}</td>
+                <td scope="col">{{ number_format($key->price) }}</td>
                 <td scope="col">{{ $key->showcustomer }}</td>
 
                 <th scope="col">

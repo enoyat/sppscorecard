@@ -144,13 +144,77 @@
                                         id="filefoto">
                                 </div>
                                 <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Price</label>
+                                    <input class="form-control" type="text" value="{{ $unit->price }}" name="price"
+                                        id="price">
+                                </div>
+                                <div class="mb-3">
                                     <label for="example-date-input" class="form-label">Show Customer</label>
                                     <select class="form-select" aria-label="Default select example" name="showcustomer"
                                         id="showcustomer">
 
                                         <option value="{{ $unit->showcustomer }}" selected>{{ $unit->showcustomer }}</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                        <option value="Y">Yes</option>
+                                        <option value="N">No</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-date-input" class="form-label">Flag Baru/Lama</label>
+                                    <select class="form-select" aria-label="Default select example" name="flag_baru"
+                                        id="flag_baru">
+
+                                        <option value="{{ $unit->flag_baru }}" selected>{{ $unit->flag_baru }}</option>
+                                        <option value="B">B</option>
+                                        <option value="L">L</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-date-input" class="form-label">Date Request</label>
+                                    <input class="form-control" type="date" value="{{ $unit->daterequest }}" name="daterequest"
+                                        id="daterequest">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-date-input" class="form-label">Date Estimated</label>
+                                    <input class="form-control" type="date" value="{{ $unit->dateestimated }}" name="dateestimated"
+                                        id="dateestimated">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-date-input" class="form-label">Date Actual</label>
+                                    <input class="form-control" type="date" value="{{ $unit->dateactual }}" name="dateactual"
+                                        id="dateactual">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-date-input" class="form-label">Reason</label>
+                                    <input class="form-control" type="text" value="{{ $unit->reason }}" name="reason" id="reason">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-date-input" class="form-label">Flag Target</label>
+                                    <select class="form-select" aria-label="Default select example" name="showcustomer"
+                                        id="showcustomer">
+
+                                        <option value="{{ $unit->flag_target }}" selected>{{ $unit->flag_target }}</option>
+                                        <option value="Y">Yes</option>
+                                        <option value="N">No</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-date-input" class="form-label">Flag Actual</label>
+                                    <select class="form-select" aria-label="Default select example" name="flag_actual"
+                                        id="flag_actual">
+
+                                        <option value="{{ $unit->flag_actual }}" selected>{{ $unit->flag_actual }}</option>
+                                        <option value="Y">Yes</option>
+                                        <option value="N">No</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-date-input" class="form-label">OTIF/LATE</label>
+                                    <select class="form-select" aria-label="Default select example" name="flag_otif"
+                                        id="flag_otif">
+
+                                        <option value="{{ $unit->flag_otif }}" selected>{{ $unit->flag_otif }}</option>
+                                        <option value="OTIF">OTIF</option>
+                                        <option value="LATE">LATE</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">

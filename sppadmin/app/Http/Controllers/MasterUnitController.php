@@ -54,6 +54,11 @@ class MasterUnitController extends Controller
             'idsitename'=>'required',
             'kdunit'=>'required|unique:unit,kdunit',
             'hm'=>'required',
+            'price'=>'required',
+            'idforklifttype'=>'required',
+            'showcustomer'=>'required',
+            'flag_baru' => 'required',
+
 
         ]);
         if (!empty($request->filefoto)) {
@@ -88,9 +93,18 @@ class MasterUnitController extends Controller
         $unit->masheight = $request->masheight;
         $unit->namaunit = $request->kdunit;
         $unit->hm = $request->hm;
+        $unit->price = $request->price;
+
         $unit->foto = $filename;
         $unit->showcustomer = $request->showcustomer;
-
+        $unit->flag_baru = $request->flag_baru;
+        $unit->daterequest = $request->daterequest;
+        $unit->dateestimated = $request->dateestimated;
+        $unit->dateactual = $request->dateactual;
+        $unit->reason = $request->reason;
+        $unit->flag_otif = $request->flag_otif;
+        $unit->flag_target = $request->flag_target;
+        $unit->flag_actual = $request->flag_actual;
         $simpan = $unit->save();
 
         if ($simpan) {
@@ -146,8 +160,18 @@ class MasterUnitController extends Controller
         $unit->qty = $request->qty;
 
         $unit->namaunit = $request->kdunit;
+        $unit->price = $request->price;
         $unit->foto = $filename;
         $unit->showcustomer = $request->showcustomer;
+        $unit->flag_baru = $request->flag_baru;
+        $unit->daterequest = $request->daterequest;
+        $unit->dateestimated = $request->dateestimated;
+        $unit->dateactual = $request->dateactual;
+        $unit->reason = $request->reason;
+        $unit->flag_otif = $request->flag_otif;
+        $unit->flag_target = $request->flag_target;
+        $unit->flag_actual = $request->flag_actual;
+
 
         $simpan = $unit->save();
         if ($simpan) {
