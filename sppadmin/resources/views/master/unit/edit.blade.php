@@ -149,7 +149,7 @@
                                         id="price">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-date-input" class="form-label">Show Customer</label>
+                                    <label for="example-date-input" class="form-label">Show Customer (Wajib)</label>
                                     <select class="form-select" aria-label="Default select example" name="showcustomer"
                                         id="showcustomer">
 
@@ -189,8 +189,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="example-date-input" class="form-label">Flag Target</label>
-                                    <select class="form-select" aria-label="Default select example" name="showcustomer"
-                                        id="showcustomer">
+                                    <select class="form-select" aria-label="Default select example" name="flag_target"
+                                        id="flag_target">
 
                                         <option value="{{ $unit->flag_target }}" selected>{{ $unit->flag_target }}</option>
                                         <option value="Y">Yes</option>

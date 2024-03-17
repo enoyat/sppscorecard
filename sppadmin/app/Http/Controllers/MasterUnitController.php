@@ -124,6 +124,7 @@ class MasterUnitController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $request->validate([
             'idcbu'=>'required',
             'idregion'=>'required',
@@ -158,11 +159,11 @@ class MasterUnitController extends Controller
         $unit->mast = $request->mast;
         $unit->masheight = $request->masheight;
         $unit->qty = $request->qty;
+        $unit->showcustomer = $request->showcustomer;
 
         $unit->namaunit = $request->kdunit;
         $unit->price = $request->price;
         $unit->foto = $filename;
-        $unit->showcustomer = $request->showcustomer;
         $unit->flag_baru = $request->flag_baru;
         $unit->daterequest = $request->daterequest;
         $unit->dateestimated = $request->dateestimated;

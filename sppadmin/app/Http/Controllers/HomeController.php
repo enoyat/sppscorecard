@@ -206,7 +206,7 @@ class HomeController extends Controller
                 }
 
 
-            $payment = DB::select("select * from unit where idcbu='$sitename' and showcustomer='Y' and daterequest <= '$tglakhir' and flag_target='Y' ");
+                $payment = DB::select("select sum(price) as payment from unit where idsitename='$sitename' and flag_baru='B' and daterequest <= '$tglakhir'");
 
 
         } elseif ($filter == 'region') {
@@ -253,8 +253,8 @@ class HomeController extends Controller
                     END AS penalty  FROM unit WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and idregion='$sitename'");
                 }
 
-            $payment = DB::select("select * from unit where idregion='$sitename' and showcustomer='Y' and daterequest <= '$tglakhir' and flag_target='Y' ");
-        } elseif ($filter == 'cbu') {
+                $payment = DB::select("select sum(price) as payment from unit where idregion='$sitename' and flag_baru='B' and daterequest <= '$tglakhir'");
+            } elseif ($filter == 'cbu') {
             $sitename = $request->idcbu;
             $jmlunit = count(DB::select("select * from unit where idcbu='$sitename' and showcustomer='Y' and daterequest <= '$tglakhir' and flag_target='Y' "));
             $jmlunitout = count(DB::select("select * from unitout where idcbu='$sitename' and dateout <= '$tglakhir'"));
@@ -297,7 +297,7 @@ class HomeController extends Controller
 
                     END AS penalty  FROM unit WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and idcbu='$sitename'");
                 }
-            $payment = DB::select("select * from unit where idcbu='$sitename' and showcustomer='Y' and daterequest <= '$tglakhir' and flag_target='Y' ");
+                $payment = DB::select("select sum(price) as payment from unit where idcbu='$sitename' and flag_baru='B' and daterequest <= '$tglakhir'");
 
         } elseif ($filter == 'allsn') {
             $sitename = 'SN';
@@ -346,7 +346,7 @@ class HomeController extends Controller
 
 
 
-                        $payment = DB::select("select * from unit where idcbu='$sitename' and showcustomer='Y' and daterequest <= '$tglakhir' and flag_target='Y' ");
+            $payment = DB::select("select sum(price) as payment from unit where idcbu='$sitename' and flag_baru='B' and daterequest <= '$tglakhir'");
         } elseif ($filter == 'allwater') {
 
             $sitename = 'Waters';
@@ -389,7 +389,8 @@ class HomeController extends Controller
                             WHEN dateactual is NOT null  and dateactual>='$tglawal' THEN (TIMESTAMPDIFF(MONTH, '$tglawal', dateactual)+1) *(price*0.05)
 
                     END AS penalty  FROM unit WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and idcbu='Waters'");
-                }            $payment = DB::select("select * from unit where idcbu='$sitename' and showcustomer='Y' and daterequest <= '$tglakhir' and flag_target='Y' ");
+                }
+                $payment = DB::select("select sum(price) as payment from unit where idcbu='$sitename' and flag_baru='B' and daterequest <= '$tglakhir'");
 
         } elseif ($filter == 'allsnwater') {
             $jmlunit = count(DB::select("select * from unit where (idcbu= 'SN' or idcbu='Waters')  and showcustomer='Y' and daterequest <= '$tglakhir' and flag_target='Y' "));
@@ -432,7 +433,7 @@ class HomeController extends Controller
 
                     END AS penalty  FROM unit WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and (idcbu= 'SN' or idcbu='Waters') ");
                 }
-                            $payment = DB::select("select * from unit where (idcbu= 'SN' or idcbu='Waters') and showcustomer='Y' and daterequest <= '$tglakhir' and flag_target='Y' ");
+                $payment = DB::select("select sum(price) as payment from unit where (idcbu= 'SN' or idcbu='Waters') and flag_baru='B' and daterequest <= '$tglakhir'");
 
         } else {
             $jmlunit = 0;
@@ -478,7 +479,7 @@ class HomeController extends Controller
                 $totalpayment = 0;
             } else {
                 foreach ($payment as $payments) {
-                    $totalpayment = $payments->price + $totalpayment;
+                    $totalpayment = $payments->payment;
                 }
                 $totalpayment = number_format($totalpayment);
             }
