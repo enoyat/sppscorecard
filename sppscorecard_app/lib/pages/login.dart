@@ -22,6 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   var namaregion = '';
   var namasitename = '';
   var username = '';
+  String pilihurl = 'All Site';
+  String urlapi = '';
 
   int? rolesid;
   int userid = 0;
@@ -41,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
     await prefs.setString('namacbu', namacbu);
     await prefs.setString('namaregion', namaregion);
     await prefs.setString('namasitename', namasitename);
+    await prefs.setString('urlapi', urlapi);
   }
 
   bool xobscureText = true;
@@ -50,6 +53,10 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  final urlbase = <String>[
+    'All Site',
+    'Danone',
+  ];
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -89,6 +96,23 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(height: 12),
                             const Text(
                                 'Hi ! Senang Bertemu Lagi Denganmu Lagi'),
+                            const Text('Silahkan Pilih Customer'),
+                            DropdownButton(
+                              value: pilihurl,
+                              items: urlbase
+                                  .map((e) => DropdownMenuItem(
+                                        value: e,
+                                        child: Text(e),
+                                      ))
+                                  .toList(),
+                              onChanged: (String? val) {
+                                setState(() {
+                                  if (val != null) {
+                                    pilihurl = val;
+                                  }
+                                });
+                              },
+                            ),
                             TextFormField(
                               key: const ValueKey('email'),
                               validator: (value) {
@@ -137,8 +161,17 @@ class _LoginPageState extends State<LoginPage> {
 
                                 if (isValid) {
                                   _formKey.currentState!.save();
+                                  if (pilihurl == 'Danone') {
+                                    urlapi =
+                                        'https://danone.satriapirantiperkasa.com/api';
+                                  } else {
+                                    urlapi =
+                                        'https://allsite.satriapirantiperkasa.com/api';
+                                  }
+                                  print(urlapi);
+
                                   await NetworkManager()
-                                      .login(email, password)
+                                      .login(email, password, urlapi)
                                       .then((value) => {
                                             if (value["status"] == true)
                                               {

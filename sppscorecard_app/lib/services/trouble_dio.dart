@@ -1,18 +1,26 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sppscorecard_app/models/dokumentrouble.dart';
 import 'package:sppscorecard_app/models/trouble.dart';
 
 class TroubleDio {
   late Dio dio;
-  final String baseUrl = "https://satriapirantiperkasa.com/api";
+  String? baseUrl = "";
+
+  Future<String> setter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return baseUrl = prefs.getString('urlapi')!;
+  }
+
   TroubleDio() {
     dio = Dio();
   }
 
   Future<List<Trouble>> listoftrouble(String idsitename) async {
     try {
+      baseUrl = await setter();
       final result = await dio.get('$baseUrl/listoftrouble/$idsitename');
       return (result.data as List)
           .map((e) => Trouble.fromMap(e as Map<String, dynamic>))
@@ -24,6 +32,7 @@ class TroubleDio {
 
   Future<List<Trouble>> gettrouble(int id) async {
     try {
+      baseUrl = await setter();
       final result = await dio.get('$baseUrl/gettrouble/$id');
       return (result.data as List)
           .map((e) => Trouble.fromMap(e as Map<String, dynamic>))
@@ -35,6 +44,7 @@ class TroubleDio {
 
   Future postData(Map<String, dynamic> item) async {
     try {
+      baseUrl = await setter();
       final result = await dio.post("$baseUrl/trouble/store", data: item);
       return result.data;
     } catch (e) {
@@ -43,6 +53,7 @@ class TroubleDio {
   }
 
   Future uploadfoto(File file, int idaction, String keterangan) async {
+    baseUrl = await setter();
     String fileName = file.path.split('/').last;
     String namafile = "";
     FormData formData = FormData.fromMap({
@@ -70,6 +81,7 @@ class TroubleDio {
 
   Future<List<Dokumentrouble>> listdokumen(int idaction) async {
     try {
+      baseUrl = await setter();
       final result = await dio.get('$baseUrl/trouble/listdokumen/$idaction');
       return (result.data as List)
           .map((e) => Dokumentrouble.fromMap(e as Map<String, dynamic>))

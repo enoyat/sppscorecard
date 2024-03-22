@@ -17,7 +17,7 @@ class _ProfilWidgetState extends State<ProfilWidget> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 5),
-      height: 130,
+      height: 150,
       width: 330,
       child: Card(
         margin: const EdgeInsets.only(top: 5, bottom: 5),
@@ -60,7 +60,8 @@ class _ProfilWidgetState extends State<ProfilWidget> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: Text(widget.profil['namaregion'],
+              child: Text(
+                  widget.profil['namaregion'] + ' - ' + widget.profil['urlapi'],
                   textAlign: TextAlign.left,
                   style: const TextStyle(
                     fontSize: 12,

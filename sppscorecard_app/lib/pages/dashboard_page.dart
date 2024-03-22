@@ -57,6 +57,7 @@ class _DashboardPageState extends State<DashboardPage> {
           'namacbu': prefs.getString('namacbu')!,
           'namaregion': prefs.getString('namaregion')!,
           'namasitename': prefs.getString('namasitename')!,
+          'urlapi': prefs.getString('urlapi')!,
         };
       });
     });
@@ -302,7 +303,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                     children: [
                                       Image.asset(
                                         'assets/images/spare-parts.png',
-                                          width: 60,
+                                        width: 60,
                                         height: 60,
                                       ),
                                       const SizedBox(height: 10),
