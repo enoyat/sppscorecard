@@ -6,9 +6,12 @@ namespace App\Http\Controllers;
 use App\Models\MUnit;
 
 use App\Models\MForklifttype;
-use App\Models\Mpayment;
+use App\Models\MCbu;
+use App\Models\MPayment;
+
 use App\Models\User;
 use App\Models\MSitename;
+
 use Illuminate\Console\View\Components\Alert as ComponentsAlert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -31,7 +34,7 @@ class PaymentController extends Controller
     {
         $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
-        $payment = Mpayment::with('getunit')->where('idsitename', Session::get('runidsitename'))->get();
+        $payment = MPayment::with('getunit')->where('idsitename', Session::get('runidsitename'))->get();
         $forklifttype = MForklifttype::get();
         return view('payment.index', compact('payment', 'forklifttype', 'cbu','sitename'));
     }
@@ -49,7 +52,7 @@ class PaymentController extends Controller
     {
         $cbu = MCbu::get();
         $forklifttype = MForklifttype::get();
-        $payment = Mpayment::find($id);
+        $payment = MPayment::find($id);
         return view('payment.edit', compact('cbu', 'forklifttype', 'payment'));
     }
     public function store(Request $request)
@@ -59,9 +62,7 @@ class PaymentController extends Controller
             'idregion' => 'required',
             'idsitename' => 'required',
             'periode' => 'required',
-            'pilihunit' => 'required',
-            'harikerja' => 'required',
-            'planunitkerja' => 'required',
+            'kdunit' => 'required',
         ]);
 
 
@@ -70,7 +71,7 @@ class PaymentController extends Controller
             $unit = MUnit::where('idsitename', $request->idsitename)->get();
 
             foreach ($unit as $item) {
-                $cek = Mpayment::where('kdunit', $item->kdunit)->where('periode', $request->periode)->count();
+                $cek = MPayment::where('kdunit', $item->kdunit)->where('periode', $request->periode)->count();
                 if ($cek < 1) {
 
                     $payment = new Mpayment;
@@ -78,12 +79,10 @@ class PaymentController extends Controller
                     $payment->idregion = $request->idregion;
                     $payment->idsitename = $request->idsitename;
                     $payment->periode = $request->periode;
-                    $payment->kdunit = $item->kdunit;
-                    $payment->harikerja = $request->harikerja;
-                    $payment->planunitkerja = $request->planunitkerja;
-                    $payment->totaljamkerja = $request->planunitkerja;
-                    $payment->paforklift = 100;
-
+                    $payment->kdunit = $request->kdunit;
+                    $payment->price = $unit->price;
+                    $payment->prosentase= $unit->prosentase;
+                    $payment->pay= $unit->price*$unit->prosentase/100;
                     $simpan = $payment->save();
                 }
             }
@@ -91,23 +90,25 @@ class PaymentController extends Controller
             return redirect()->route('payment.index');
         } else {
 
-            $cek = Mpayment::where('kdunit', $request->kdunit)->where('periode', $request->periode)->count();
+            $cek = MPayment::where('kdunit', $request->kdunit)->where('periode', $request->periode)->count();
             if ($cek > 0) {
                 Alert::error('Error', 'Data sudah ada!');
                 Session::flash('message', 'Data sudah ada!');
                 return redirect()->back();
             }
+            $unit = MUnit::where('kdunit', $request->kdunit)->first();
+            $price=$unit->price;
+            $prosentase=$unit->prosentase;
+
             $payment = new Mpayment;
             $payment->idcbu = $request->idcbu;
             $payment->idregion = $request->idregion;
             $payment->idsitename = $request->idsitename;
             $payment->periode = $request->periode;
             $payment->kdunit = $request->kdunit;
-            $payment->harikerja = $request->harikerja;
-            $payment->planunitkerja = $request->planunitkerja;
-            $payment->totaljamkerja = $request->planunitkerja;
-            $payment->paforklift = 100;
-
+            $payment->price = $price;
+            $payment->prosentase= $prosentase;
+            $payment->pay= $price*$prosentase/100;
             $simpan = $payment->save();
 
             if ($simpan) {
@@ -130,22 +131,21 @@ class PaymentController extends Controller
             'idsitename' => 'required',
             'periode' => 'required',
             'kdunit' => 'required',
-            'harikerja' => 'required',
-            'planunitkerja' => 'required',
+            'price' => 'required',
+            'prosentase' => 'required',
         ]);
 
 
 
-        $payment = Mpayment::find($id);
+        $payment = MPayment::find($id);
         $payment->idcbu = $request->idcbu;
         $payment->idregion = $request->idregion;
         $payment->idsitename = $request->idsitename;
         $payment->periode = $request->periode;
         $payment->kdunit = $request->kdunit;
-        $payment->harikerja = $request->harikerja;
-        $payment->planunitkerja = $request->planunitkerja;
-        $payment->totalbreakdown = $request->totalbreakdown;
-        $payment->totaljamkerja = $request->planunitkerja;
+        $payment->price = $request->price;
+        $payment->prosentase= $request->prosentase;
+        $payment->pay= $request->pay;
         $simpan = $payment->save();
 
         if ($simpan) {
@@ -164,7 +164,7 @@ class PaymentController extends Controller
     {
         try {
             $id = $request->id;
-            Mpayment::where('id', '=', $id)->delete();
+            MPayment::where('idpayment', '=', $id)->delete();
 
             return redirect()->route('payment.index');
         } catch (QueryException $ex) {
@@ -186,7 +186,7 @@ class PaymentController extends Controller
     {
         $id = $request->id;
         $aid = $request->aid;
-        $payment = Mpayment::find($id);
+        $payment = MPayment::find($id);
         return view('payment.formstatus', compact('payment', 'aid'));
     }
     public function updatestatus(Request $request)
@@ -199,7 +199,7 @@ class PaymentController extends Controller
                 'statusspp' => 'required',
             ]);
             $statusspp = $request->statusspp;
-            $payment = Mpayment::find($id);
+            $payment = MPayment::find($id);
             $payment->statusspp = $statusspp;
             $payment->save();
         } else {
@@ -207,7 +207,7 @@ class PaymentController extends Controller
                 'statuscustomer' => 'required',
             ]);
             $statuscustomer = $request->statuscustomer;
-            $payment = Mpayment::find($id);
+            $payment = MPayment::find($id);
             $payment->statuscustomer = $statuscustomer;
             $payment->save();
         }

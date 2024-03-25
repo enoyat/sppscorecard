@@ -146,6 +146,15 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::put('/update/{id}', [App\Http\Controllers\PhysicalController::class, 'update'])->name('physical.update');
             Route::get('/show/{id}', [App\Http\Controllers\PhysicalController::class, 'show'])->name('physical.show');
         });
+        Route::group(['prefix' => 'payment'], function () {
+            Route::get('/', [App\Http\Controllers\PaymentController::class, 'index'])->name('payment.index');
+            Route::get('/create', [App\Http\Controllers\PaymentController::class, 'create'])->name('payment.create');
+            Route::post('/store', [App\Http\Controllers\PaymentController::class, 'store'])->name('payment.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\PaymentController::class, 'destroy'])->name('payment.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\PaymentController::class, 'edit'])->name('payment.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\PaymentController::class, 'update'])->name('payment.update');
+            Route::get('/show/{id}', [App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
+        });
         Route::group(['prefix' => 'physical'], function () {
             Route::get('/formstatus', [App\Http\Controllers\PhysicalController::class, 'formstatus'])->name('physical.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\PhysicalController::class, 'updatestatus'])->name('physical.updatestatus');

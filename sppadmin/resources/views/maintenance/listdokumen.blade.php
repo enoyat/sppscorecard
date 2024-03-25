@@ -29,14 +29,14 @@ trouble
             <div>
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('trouble.index') }}" data-bs-toggle="tooltip"
+                        <a class="nav-link active" href="{{ route('maintenance.index') }}" data-bs-toggle="tooltip"
                             data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
                     </li>
 
                 </ul>
             </div>
             <div>
-                <a href="{{ route('trouble.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add
+                <a href="{{ route('maintenance.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add
                     New</a>
             </div>
 
@@ -87,7 +87,7 @@ trouble
                 <th scope="col"><img src="{{ asset('assets/inventory/'.$key->filename) }}" width="500" ></th>
                 <th >
                     @if(Auth::user()->roles_id == '1' || Auth::user()->roles_id == '2')
-                                <form action="{{ route('trouble.dokumendestroy',$key->id) }}" method="POST">
+                                <form action="{{ route('maintenance.dokumendestroy',$key->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"

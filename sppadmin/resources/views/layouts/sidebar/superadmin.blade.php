@@ -53,6 +53,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('payment.index') }}">
+                        <i data-feather="package"></i>
+                        <span data-key="t-horizontal">Payment</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('trouble.index') }}">
                         <i data-feather="alert-triangle"></i>
                         <span data-key="t-horizontal">List of Trouble</span>

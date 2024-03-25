@@ -19,26 +19,22 @@
     </thead>
     <tbody>
         @php $i=1; @endphp
-        @foreach ($physical as $key)
+        @foreach ($payment as $key)
         <tr>
             <th scope="col">{{ $key->periode }}</th>
             <th scope="col">{{ $key->kdunit }}</th>
             <th scope="col">{{ $key->getunit->serialnumber }}</th>
-            <th scope="col">{{ $key->harikerja }}</th>
-            <th scope="col">{{ number_format($key->planunitkerja) }}</th>
-            <th scope="col"><a href="{{ route('trouble.listaction',$key->kdunit) }}">{{ $key->totalbreakdown }}</a></th>
-            <th scope="col">{{ number_format($key->totalbackup) }}</th>
-            <th scope="col">{{ number_format($key->totaljamkerja) }}</th>
-            <th scope="col">{{ number_format($key->paforklift,2) }}</th>
-
+            <th scope="col">{{ number_format($key->price) }}</th>
+            <th scope="col">{{ number_format($key->prosentase) }}</th>
+            <th scope="col">{{ number_format($key->pay) }}</th>
             <th scope="col">{{ $key->getcbu->namasitename }}</th>
             <th scope="col">{{ $key->getregion->namasitename }}</th>
             <th scope="col">{{ $key->getsitename->namasitename }}</th>
 
 
             <th style="width: 200px; min-width: 80px;">
-                <div style="float:right; width:60px"><a class="btn btn-sm btn-warning" href="{{ route('physical.edit',$key->id) }}">Edit</a></div>
-                <div style="float:right; width:60px"><form action="{{ route('physical.destroy',$key->id) }}" method="POST">
+                <div style="float:right; width:60px"><a class="btn btn-sm btn-warning" href="{{ route('payment.edit',$key->idpayment) }}">Edit</a></div>
+                <div style="float:right; width:60px"><form action="{{ route('payment.destroy',$key->idpayment) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger"

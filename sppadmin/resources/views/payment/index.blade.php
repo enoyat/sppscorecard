@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-PHYSICAL
+payment
 @endsection
 
 @section('css')
@@ -18,7 +18,7 @@ PHYSICAL
 <!-- start page title -->
 @component('components.breadcrumb')
 @slot('li_1') Contacts @endslot
-@slot('title') PHYSICAL @endslot
+@slot('title') payment @endslot
 @endcomponent
 
 <div class="row align-items-center">
@@ -31,14 +31,14 @@ PHYSICAL
             <div>
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('physical.index') }}" data-bs-toggle="tooltip"
+                        <a class="nav-link active" href="{{ route('payment.index') }}" data-bs-toggle="tooltip"
                             data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
                     </li>
 
                 </ul>
             </div>
             <div>
-                <a href="{{ route('physical.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
+                <a href="{{ route('payment.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add New</a>
             </div>
 
             <!-- <div class="dropdown">
@@ -59,7 +59,7 @@ PHYSICAL
 <!-- end row -->
 
 <div class="table-responsive mb-4" id="tablecontent">
-    @include('physical.content')
+    @include('payment.content')
 
     <!-- end table -->
 </div>

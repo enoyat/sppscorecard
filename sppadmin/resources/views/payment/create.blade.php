@@ -6,7 +6,7 @@
 
 @component('components.breadcrumb')
 @slot('li_1') Forms @endslot
-@slot('title') Create physical @endslot
+@slot('title') Create payment @endslot
 @endcomponent
 @include('sweetalert::alert')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -16,11 +16,11 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Form physical</h4>
+                <h4 class="card-title">Form payment</h4>
             </div>
             <div class="card-body p-4">
 
-                <form action="{{ route('physical.store') }}" method="POST">
+                <form action="{{ route('payment.store') }}" method="POST">
                     <div class="row">
                         @if ($message = Session::get('success'))
                         <div class="alert alert-success">
@@ -101,17 +101,6 @@
                                     <select name="kdunit" id="kdunit"  class="form-control"></select>
                                 </div>
 
-
-                                <div class="mb-3">
-                                    <label for="example-tel-input" class="form-label">WORK DAYS</label>
-                                    <input class="form-control" type="tel" value="" name="harikerja" id="harikerja">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">PLAN WORK DAYS
-                                        (Minutes)</label>
-                                    <input class="form-control" type="text" value="" name="planunitkerja"
-                                        id="planunitkerja">
-                                </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
 
