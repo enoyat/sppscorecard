@@ -10,16 +10,13 @@
             REGION</option>
         <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
             CBU</option>
-        <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
-            ALL SN</option>
-        <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
-            ALL WATERS</option>
+
         <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
             ALL SN & WATERS</option>
     @elseif (Auth::user()->roles_id == '2')
         <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
             SITENAME</option>
-    
+
     @elseif (Auth::user()->roles_id == '5')
         <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
             SITENAME</option>
@@ -27,10 +24,7 @@
             REGION</option>
         <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
             CBU</option>
-        <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
-            ALL SN</option>
-        <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
-            ALL WATERS</option>
+
         <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
             ALL SN & WATERS</option>
     @elseif (Auth::user()->roles_id == '6')
@@ -40,10 +34,7 @@
             REGION</option>
         <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
             CBU</option>
-        <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
-            ALL SN</option>
-        <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
-            ALL WATERS</option>
+
         <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
             ALL SN & WATERS</option>
     @endif
@@ -64,7 +55,7 @@
 </select>
 </div>
 <div id="filtercbu"  style="width:150px">
-    
+
     <select class="form-select" aria-label="Default select example" name="xidcbu"
     id="xidcbu">
     @if (Session::get('runidcbu') != null)
@@ -94,18 +85,18 @@
                 $("#filtersitename").hide();
                 $("#filterregion").show();
                 $("#filtercbu").hide();
-            
+
         } else if (filter== "cbu") {
                 $("#filtersitename").hide();
                 $("#filterregion").hide();
                 $("#filtercbu").show();
-            } 
+            }
             else {
                 $("#filtersitename").hide();
                 $("#filterregion").hide();
                 $("#filtercbu").hide();
             }
-       
+
 
     });
 
@@ -118,12 +109,12 @@
                 $("#filtersitename").hide();
                 $("#filterregion").show();
                 $("#filtercbu").hide();
-            
+
         } else if ($(this).val() == "cbu") {
                 $("#filtersitename").hide();
                 $("#filterregion").hide();
                 $("#filtercbu").show();
-            } 
+            }
             else {
                 $("#filtersitename").hide();
                 $("#filterregion").hide();

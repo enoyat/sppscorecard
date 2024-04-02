@@ -155,6 +155,24 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::put('/update/{id}', [App\Http\Controllers\PaymentController::class, 'update'])->name('payment.update');
             Route::get('/show/{id}', [App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
         });
+        Route::group(['prefix' => 'penalty'], function () {
+            Route::get('/', [App\Http\Controllers\PenaltyController::class, 'index'])->name('penalty.index');
+            Route::get('/create', [App\Http\Controllers\PenaltyController::class, 'create'])->name('penalty.create');
+            Route::post('/store', [App\Http\Controllers\PenaltyController::class, 'store'])->name('penalty.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\PenaltyController::class, 'destroy'])->name('penalty.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\PenaltyController::class, 'edit'])->name('penalty.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\PenaltyController::class, 'update'])->name('penalty.update');
+            Route::get('/show/{id}', [App\Http\Controllers\PenaltyController::class, 'show'])->name('penalty.show');
+        });
+        Route::group(['prefix' => 'mutation'], function () {
+            Route::get('/', [App\Http\Controllers\MutationController::class, 'index'])->name('mutation.index');
+            Route::get('/create', [App\Http\Controllers\MutationController::class, 'create'])->name('mutation.create');
+            Route::post('/store', [App\Http\Controllers\MutationController::class, 'store'])->name('mutation.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\MutationController::class, 'destroy'])->name('mutation.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\MutationController::class, 'edit'])->name('mutation.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\MutationController::class, 'update'])->name('mutation.update');
+            Route::get('/show/{id}', [App\Http\Controllers\MutationController::class, 'show'])->name('mutation.show');
+        });
         Route::group(['prefix' => 'physical'], function () {
             Route::get('/formstatus', [App\Http\Controllers\PhysicalController::class, 'formstatus'])->name('physical.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\PhysicalController::class, 'updatestatus'])->name('physical.updatestatus');

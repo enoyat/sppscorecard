@@ -62,7 +62,7 @@ class PaymentController extends Controller
             'idregion' => 'required',
             'idsitename' => 'required',
             'periode' => 'required',
-            'kdunit' => 'required',
+
         ]);
 
 
@@ -72,6 +72,7 @@ class PaymentController extends Controller
 
             foreach ($unit as $item) {
                 $cek = MPayment::where('kdunit', $item->kdunit)->where('periode', $request->periode)->count();
+
                 if ($cek < 1) {
 
                     $payment = new Mpayment;
@@ -79,10 +80,11 @@ class PaymentController extends Controller
                     $payment->idregion = $request->idregion;
                     $payment->idsitename = $request->idsitename;
                     $payment->periode = $request->periode;
-                    $payment->kdunit = $request->kdunit;
-                    $payment->price = $unit->price;
-                    $payment->prosentase= $unit->prosentase;
-                    $payment->pay= $unit->price*$unit->prosentase/100;
+                    $payment->kdunit = $item->kdunit;
+
+                    $payment->price = $item->price;
+                    $payment->prosentase= $item->prosentase;
+                    $payment->pay= $item->price*$item->prosentase/100;
                     $simpan = $payment->save();
                 }
             }

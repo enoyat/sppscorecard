@@ -35,6 +35,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('mutation.index') }}">
+                        <i data-feather="package"></i>
+                        <span data-key="t-horizontal">Unit Mutation</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('maintenance.index') }}">
                         <i data-feather="settings"></i>
                         <span data-key="t-horizontal">Maintenance</span>
@@ -50,6 +56,13 @@
                     <a href="{{ route('physical.index') }}">
                         <i data-feather="package"></i>
                         <span data-key="t-horizontal">Phisical Availibility</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('penalty.index') }}">
+                        <i data-feather="package"></i>
+                        <span data-key="t-horizontal">Penalty</span>
                     </a>
                 </li>
                 <li>

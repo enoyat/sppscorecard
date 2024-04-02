@@ -29,10 +29,7 @@
                         REGION</option>
                     <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
                         CBU</option>
-                    <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
-                        ALL SN</option>
-                    <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
-                        ALL WATERS</option>
+
                     <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
                         ALL SN & WATERS</option>
                 @elseif (Auth::user()->roles_id == '2')
@@ -45,10 +42,7 @@
                         REGION</option>
                     <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
                         CBU</option>
-                    <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
-                        ALL SN</option>
-                    <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
-                        ALL WATERS</option>
+
                     <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
                         ALL SN & WATERS</option>
                 @elseif (Auth::user()->roles_id == '6')
@@ -58,10 +52,7 @@
                         REGION</option>
                     <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
                         CBU</option>
-                    <option value="allsn" {{ request()->get('filter') == 'allsn' ? 'selected' : '' }}>
-                        ALL SN</option>
-                    <option value="allwater" {{ request()->get('filter') == 'allwater' ? 'selected' : '' }}>
-                        ALL WATERS</option>
+
                     <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
                         ALL SN & WATERS</option>
                 @endif
