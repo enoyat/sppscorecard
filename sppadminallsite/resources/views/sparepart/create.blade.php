@@ -1,0 +1,95 @@
+@extends('layouts.master')
+
+@section('title') PT. Satria Piranti Perkasa @endsection
+
+@section('content')
+
+@component('components.breadcrumb')
+@slot('li_1') Forms @endslot
+@slot('title') Create sparepart @endslot
+@endcomponent
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Form sparepart</h4>
+            </div>
+            <div class="card-body p-4">
+
+                <form action="{{ route('sparepart.store') }}" method="POST">
+                    <div class="row">
+                        @if ($message = Session::get('success'))
+                        <div class="alert alert-success">
+                            <p>{{ $message }}</p>
+                        </div>
+                        @endif
+
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> Ada kesalahan data, silahkan dicek kembali<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+
+                        @csrf
+                        <div class="col-lg-6">
+                            <div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Code of Spare Part</label>
+                                    <input class="form-control" type="text" value="" name="codepart" id="codepart">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Product Category</label>
+                                    <input class="form-control" type="text" value="" name="produkcategory" id="produkcategory">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Part No</label>
+                                    <input class="form-control" type="text" value="" name="partno" id="partno">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Part Name</label>
+                                    <input class="form-control" type="text" value="" name="partname" id="partname">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Simple Name</label>
+                                    <input class="form-control" type="text" value="" name="simplename" id="simplename">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Merk Forklift</label>
+                                    <input class="form-control" type="text" value="" name="merkjenisforklift" id="merkjenisforklift">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-password-input" class="form-label">Description</label>
+                                    <input class="form-control" type="text" value="" name="description" id="description">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="example-date-input" class="form-label">merkpart</label>
+                                    <input class="form-control" type="text" value="" name="merkpart" id="merkpart">
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary w-md">Submit</button>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div> <!-- end col -->
+</div>
+<!-- end row -->
+
+@endsection
