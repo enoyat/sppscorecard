@@ -7,15 +7,108 @@
         document.body.innerHTML = originalContents;
     }
 </script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<form action="#" method="get" >
+    @csrf
+<div class="row">
+    <div class="col-md-6">
+
+
+
+        <div class="input-group mx-1">
+
+
+
+            <input type="text" name="periode" id="periode" value="@if (request()->get('periode') != null)
+            {{ request()->get('periode') }}@endif" placeholder="yyyy-mm" class="form-control">
+
+            <select name="filter" id="filter" class="form-control">
+                <option value="" {{ request()->get('filter') == '' ? 'selected' : '' }}>
+                    -- select filter --</option>
+                @if (Auth::user()->roles_id == '1')
+                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                        SITENAME</option>
+                    <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
+                        REGION</option>
+                    <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
+                        CBU</option>
+
+
+                @elseif (Auth::user()->roles_id == '2')
+                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                        SITENAME</option>
+                @elseif (Auth::user()->roles_id == '5')
+                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                        SITENAME</option>
+                    <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
+                        REGION</option>
+                    <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
+                        CBU</option>
+
+
+                @elseif (Auth::user()->roles_id == '6')
+                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                        SITENAME</option>
+                    <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
+                        REGION</option>
+                    <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
+                        CBU</option>
+
+
+                @endif
+            </select>
+            <div id="filtersitename" style="width:300px">
+                <select name="xidsitename" id="xidsitename" class="form-control">
+                    @if (request()->get('xidsitename') != null)
+                        <option value="{{ request()->get('xidsitename') }}" selected>
+                            {{ request()->get('xidsitename') }}</option>
+                    @endif
+                </select>
+            </div>
+            <div id="filterregion" style="width:150px">
+                <select name="xidregion" id="xidregion" class="form-control">
+                    @if (request()->get('xidregion') != null)
+                        <option value="{{ request()->get('xidregion') }}" selected>
+                            {{ request()->get('xidregion') }}</option>
+                    @endif
+                </select>
+            </div>
+            <div id="filtercbu" style="width:150px">
+
+                <select class="form-control" aria-label="Default select example" name="xidcbu" id="xidcbu">
+                    @if (request()->get('xidcbu') != null)
+                        <option value="{{ request()->get('xidcbu')  }}" selected>
+                            {{ request()->get('xidcbu')  }}</option>
+                    @endif
+
+                    <option value="">-- select --</option>
+                    @foreach ($cbu as $itemcbu)
+                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
+                    @endforeach
+
+                </select>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary" id="btnfilter"><i class="fas fa-search"></i></button>
+
+        </div>
+
+    </div>
+
+</div>
+</form>
 <div id="area-print">
     <table width="100%">
         <tr>
             <td style="background: white; padding:10px"><img src="{{ URL::asset('img/logo.png') }}" alt=""
                     height="50">
             </td>
-            <td style="background:rgb(9, 136, 153); padding:10px"> 
+            <td style="background:rgb(9, 136, 153); padding:10px">
                 <div style="font-size: 16px; color: white;"><b>KPI DASHBOARD
-                        {{ Session::get('runnamaregion') }}</b></div>
+                    </b></div>
             </td>
             <td style="background:rgb(9, 136, 153); color: white; padding:10px">Update: {{ date('Y/m/d') }}</td>
         </tr>
@@ -289,4 +382,99 @@
             myChart.setOption(option, true);
         }
     }
+</script>
+
+<script>
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $(document).ready(function() {
+        $("#filtersitename").hide();
+        $("#filterregion").hide();
+        $("#filtercbu").hide();
+        var filter = $("select[name='filter']").val();
+        if (filter == "sitename") {
+            $("#filtersitename").show();
+            $("#filterregion").hide();
+            $("#filtercbu").hide();
+        } else if (filter == "region") {
+            $("#filtersitename").hide();
+            $("#filterregion").show();
+            $("#filtercbu").hide();
+
+        } else if (filter == "cbu") {
+            $("#filtersitename").hide();
+            $("#filterregion").hide();
+            $("#filtercbu").show();
+        } else {
+            $("#filtersitename").hide();
+            $("#filterregion").hide();
+            $("#filtercbu").hide();
+        }
+
+
+    });
+
+    $("select[name='filter']").change(function() {
+        if ($(this).val() == "sitename") {
+            $("#filtersitename").show();
+            $("#filterregion").hide();
+            $("#filtercbu").hide();
+        } else if ($(this).val() == "region") {
+            $("#filtersitename").hide();
+            $("#filterregion").show();
+            $("#filtercbu").hide();
+
+        } else if ($(this).val() == "cbu") {
+            $("#filtersitename").hide();
+            $("#filterregion").hide();
+            $("#filtercbu").show();
+        } else {
+            $("#filtersitename").hide();
+            $("#filterregion").hide();
+            $("#filtercbu").hide();
+        }
+    });
+
+    $("#xidsitename").select2({
+        placeholder: '-- select sitename --',
+        ajax: {
+            url: "{{ route('sitename.getsitename') }}",
+            type: "GET",
+            dataType: 'JSON',
+            delay: 250,
+            data: function(params) {
+                return {
+                    _token: CSRF_TOKEN,
+                    search: params.term
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
+    });
+
+    $("#xidregion").select2({
+        placeholder: '-- select region --',
+        ajax: {
+            url: "{{ route('sitename.getregion') }}",
+            type: "GET",
+            dataType: 'JSON',
+            delay: 250,
+            data: function(params) {
+                return {
+                    _token: CSRF_TOKEN,
+                    search: params.term
+                };
+            },
+            processResults: function(response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
+    });
 </script>
