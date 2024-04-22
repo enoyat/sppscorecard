@@ -10,6 +10,7 @@ use App\Models\MUnit;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -25,16 +26,98 @@ class PenaltyController extends Controller
     {
         if (!empty($request->get('periode'))) {
             $mperiode = $request->get('periode');
+            $kdbulan = $request->get('periode');
+            $tglakhir = date('Y-m-t', strtotime($mperiode));
         } else {
             $tahun = date('Y');
             $bulan = date('m');
             $mperiode = $tahun . '-' . $bulan;
+            $kdbulan = $tahun . '-' . $bulan;
+            $tglakhir = date('Y-m-t', strtotime($mperiode));
         }
-        $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
-        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
-        $penalty = MPenalty::with('getunit')->where('idsitename', Session::get('runidsitename'))->where('periode', $mperiode)->get();
+        $penalty = MPenalty::with('getunit')->where('idcbu', Session::get('runidcbu'))->where('periode', $mperiode)->get();
+        $cbu = MSitename::member(Session::get('kdcustomer'))
+            ->kategori('cbu')
+            ->where('f_aktif', '1')
+            ->get();
+
+        $sitename = MSitename::member(Session::get('kdcustomer'))
+            ->kategori('sitename')
+            ->get();
+
         $forklifttype = MForklifttype::get();
         return view('penalty.index', compact('penalty', 'forklifttype', 'cbu', 'sitename'));
+    }
+
+    public function getpenalty(Request $request)
+    {
+        if (!empty($request->get('periode'))) {
+            $mperiode = $request->get('periode');
+            $kdbulan = $request->get('periode');
+            $tglakhir = date('Y-m-t', strtotime($mperiode));
+        } else {
+            $tahun = date('Y');
+            $bulan = date('m');
+            $mperiode = $tahun . '-' . $bulan;
+            $kdbulan = $tahun . '-' . $bulan;
+            $tglakhir = date('Y-m-t', strtotime($mperiode));
+        }
+        $idsitename = Session::get('runidsitename');
+        $idcbu = Session::get('runidcbu');
+
+        if ($kdbulan == "2023-10") {
+
+            $penalty = DB::select("SELECT penalty.*, price*0.05 as price5, sitename.namasitename,
+            CASE
+                    WHEN dateactual is null THEN TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')
+                    WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual>='$tglakhir' THEN TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')
+                    WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual<='$tglakhir' THEN TIMESTAMPDIFF(MONTH, daterequest, dateactual)
+
+            END AS JMBULAN,
+            CASE
+                    WHEN dateactual is null THEN (TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir'))*(price*0.05)
+                    WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual>='$tglakhir' THEN (TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir'))*(price*0.05)
+                    WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual<='$tglakhir' THEN (TIMESTAMPDIFF(MONTH, daterequest, dateactual)) *(price*0.05)
+
+            END AS jmlpenalty  FROM penalty  join sitename on penalty.idsitename=sitename.id WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and idcbu='$idcbu' and periode='$kdbulan'
+            ");
+
+        } else {
+            $tglawal = date('Y-m-01', strtotime($tglakhir));
+
+            $penalty = DB::select("SELECT penalty.*, price*0.05 as price5,  sitename.namasitename,
+                CASE
+                        -- WHEN dateactual is null THEN TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')
+                        WHEN dateactual is NOT null and dateactual>='$tglawal'  THEN TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')
+                        WHEN dateactual is NOT null  and dateactual>='$tglawal'  THEN TIMESTAMPDIFF(MONTH, '$tglawal', dateactual)
+                        WHEN dateactual is null and TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')=0 THEN TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1 ELSE TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')
+
+                END AS JMBULAN,
+                CASE
+                        -- WHEN dateactual is null THEN (TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir'))*(price*0.05)
+
+                        WHEN dateactual is NOT null  and dateactual>='$tglawal'  THEN (TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir'))*(price*0.05)
+                        WHEN dateactual is NOT null  and dateactual>='$tglawal' THEN (TIMESTAMPDIFF(MONTH, '$tglawal', dateactual)) *(price*0.05)
+                        WHEN TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')=0 THEN (TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1)*(price*0.05)
+                        WHEN dateactual is null and TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')=0 THEN (TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1)*(price*0.05) ELSE TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')*(price*0.05)
+                END AS jmlpenalty  FROM penalty  join sitename on penalty.idsitename=sitename.id WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and idcbu='$idcbu' and periode='$kdbulan'
+              ");
+
+        }
+
+        // dd($sitename, $cbu, $penalty, $tglawal, $tglakhir, $mperiode, $kdbulan);
+        $cbu = MSitename::member(Session::get('kdcustomer'))
+            ->kategori('cbu')
+            ->where('f_aktif', '1')
+            ->get();
+
+        $sitename = MSitename::member(Session::get('kdcustomer'))
+            ->kategori('sitename')
+            ->get();
+
+        // $penalty = MPenalty::with('getunit')->where('idsitename', Session::get('runidsitename'))->where('periode', $mperiode)->get();
+        $forklifttype = MForklifttype::get();
+        return view('penalty.listpenalty', compact('penalty', 'forklifttype', 'cbu', 'sitename'));
     }
     public function create()
     {
@@ -65,7 +148,11 @@ class PenaltyController extends Controller
 
         if ($request->pilihunit == "allunit") {
 
-            $unit = MUnit::where('idsitename', $request->idsitename)->get();
+            if ($request->pilihsite == "allsite") {
+                $unit = MUnit::where('idcbu', $request->idcbu)->where('showcustomer','Y')->get();
+            } else {
+                $unit = MUnit::where('idsitename', $request->idsitename)->where('showcustomer','Y')->get();
+            }
 
             foreach ($unit as $item) {
                 $cek = MPenalty::where('kdunit', $item->kdunit)->where('periode', $request->periode)->count();
@@ -73,25 +160,38 @@ class PenaltyController extends Controller
                 if ($cek < 1) {
 
                     $penalty = new Mpenalty;
-                    $penalty->idcbu = $request->idcbu;
-                    $penalty->idregion = $request->idregion;
-                    $penalty->idsitename = $request->idsitename;
                     $penalty->periode = $request->periode;
+                    $penalty->idcbu = $item->idcbu;
+                    $penalty->idregion = $item->idregion;
+                    $penalty->idsitename = $item->idsitename;
                     $penalty->kdunit = $item->kdunit;
+                    $penalty->serialnumber = $item->serialnumber;
                     $penalty->price = $item->price;
-                    $penalty->prosentase = $item->prosentase;
-                    $penalty->tanggal = $item->tanggal;
-                    $penalty->showcustomer = $item->showcustomer;
+                    $diff = abs(strtotime($item->daterequest) - strtotime($item->dateactual));
+                    $years = floor($diff / (365 * 60 * 60 * 24));
+                    $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
+                    $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
+                    if ($months == 0 && $days == 0) {
+                        $penalty->late = 0;
+                    } elseif ($months == 0 && $days > 0) {
+                        $penalty->late = 1;
+                    } elseif ($months > 0) {
+                        $penalty->late = $months;
+                    } else {
+                        $penalty->late = 0;
+                    }
+                    $penalty->pricelate = $item->price * 0.05;
+                    $penalty->penalty = $item->late * $item->price * 0.05;
+                    $penalty->datetarget = $item->daterequest;
                     $penalty->dateactual = $item->dateactual;
-                    $penalty->daterequest = $item->daterequest;
-                    $penalty->dateestimated = $item->dateestimated;
                     $penalty->reason = $item->reason;
-                    $penalty->flag_aktif = $item->flag_aktif;
-                    $penalty->flag_baru = $item->flag_baru;
-                    $penalty->flag_target = $item->flag_target;
-                    $penalty->flag_actual = $item->flag_actual;
+                    if ($item->dateactual != null) {
+                        $penalty->flag_delivered = 'Delivered';
+                    } else {
+                        $penalty->flag_delivered = 'Undelivered';
+                    }
+
                     $penalty->flag_otif = $item->flag_otif;
-                    $penalty->prosentase = $item->prosentase;
                     $simpan = $penalty->save();
                 }
             }
@@ -110,26 +210,38 @@ class PenaltyController extends Controller
             $prosentase = $unit->prosentase;
 
             $penalty = new Mpenalty;
-            $penalty->idcbu = $request->idcbu;
-            $penalty->idregion = $request->idregion;
-            $penalty->idsitename = $request->idsitename;
             $penalty->periode = $request->periode;
-            $penalty->kdunit = $request->kdunit;
-            $penalty->price = $price;
-            $penalty->prosentase = $unit->prosentase;
-            $penalty->tanggal = $unit->tanggal;
-            $penalty->showcustomer = $unit->showcustomer;
-            $penalty->dateactual = $unit->dateactual;
-            $penalty->daterequest = $unit->daterequest;
-            $penalty->dateestimated = $unit->dateestimated;
-            $penalty->reason = $unit->reason;
-            $penalty->flag_aktif = $unit->flag_aktif;
-            $penalty->flag_baru = $unit->flag_baru;
-            $penalty->flag_target = $unit->flag_target;
-            $penalty->flag_actual = $unit->flag_actual;
-            $penalty->flag_otif = $unit->flag_otif;
-            $penalty->prosentase = $unit->prosentase;
+            $penalty->idcbu = $unit->idcbu;
+            $penalty->idregion = $unit->idregion;
+            $penalty->idsitename = $unit->idsitename;
+            $penalty->kdunit = $unit->kdunit;
+            $penalty->serialnumber = $unit->serialnumber;
+            $penalty->price = $unit->price;
+            $diff = abs(strtotime($unit->daterequest) - strtotime($unit->dateactual));
+            $years = floor($diff / (365 * 60 * 60 * 24));
+            $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
+            $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
+            if ($months == 0 && $days == 0) {
+                $penalty->late = 0;
+            } elseif ($months == 0 && $days > 0) {
+                $penalty->late = 1;
+            } elseif ($months > 0) {
+                $penalty->late = $months;
+            } else {
+                $penalty->late = 0;
+            }
 
+            $penalty->pricelate = $unit->price * 0.05;
+            $penalty->penalty = $unit->late * $unit->price * 0.05;
+            $penalty->datetarget = $unit->daterequest;
+            $penalty->dateactual = $unit->dateactual;
+            $penalty->reason = $unit->reason;
+            if ($unit->dateactual != null) {
+                $penalty->flag_delivered = 'Delivered';
+            } else {
+                $penalty->flag_delivered = 'Undelivered';
+            }
+            $penalty->flag_otif = $unit->flag_otif;
             $simpan = $penalty->save();
 
             if ($simpan) {
@@ -151,7 +263,6 @@ class PenaltyController extends Controller
             'idregion' => 'required',
             'idsitename' => 'required',
             'periode' => 'required',
-            'kdunit' => 'required',
             'price' => 'required',
 
         ]);
@@ -162,9 +273,17 @@ class PenaltyController extends Controller
         $penalty->idsitename = $request->idsitename;
         $penalty->periode = $request->periode;
         $penalty->kdunit = $request->kdunit;
+        $penalty->serialnumber = $request->serialnumber;
         $penalty->price = $request->price;
-
+        $penalty->late = $request->late;
+        $penalty->pricelate = $request->pricelate;
         $penalty->penalty = $request->penalty;
+        $penalty->datetarget = $request->datetarget;
+        $penalty->dateactual = $request->dateactual;
+        $penalty->reason = $request->reason;
+        $penalty->flag_delivered = $request->flag_delivered;
+        $penalty->flag_otif = $request->flag_otif;
+
         $simpan = $penalty->save();
 
         if ($simpan) {

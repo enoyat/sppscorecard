@@ -89,48 +89,24 @@
                                         <input class="form-control" type="text" value="{{ $penalty->kdunit }}"
                                             name="kdunit" id="kdunit" readonly>
                                     </div>
-
+                                    <div class="mb-3">
+                                        <label for="example-password-input" class="form-label">Serial Number</label>
+                                        <input class="form-control" type="text" value="{{ $penalty->serialnumber }}"
+                                            name="serialnumber" id="serialnumber" readonly>
+                                    </div>
 
                                     <div class="mb-3">
                                         <label for="example-tel-input" class="form-label">Price</label>
                                         <input class="form-control" type="tel" value="{{ $penalty->price }}"
                                             name="price" id="price">
                                     </div>
+                                  
                                     <div class="mb-3">
-                                        <label for="example-tel-input" class="form-label">Penalty</label>
-                                        <input class="form-control" type="tel" value="{{ $penalty->penalty }}"
-                                            name="penalty" id="penalty">
+                                        <label for="example-date-input" class="form-label">Date Target</label>
+                                        <input class="form-control" type="date" value="{{ $penalty->datetarget }}" name="datetarget"
+                                            id="datetarget">
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="example-date-input" class="form-label">Show Customer (Wajib)</label>
-                                        <select class="form-select" aria-label="Default select example" name="showcustomer"
-                                            id="showcustomer">
-
-                                            <option value="{{ $penalty->showcustomer }}" selected>{{ $penalty->showcustomer }}</option>
-                                            <option value="Y">Yes</option>
-                                            <option value="N">No</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="example-date-input" class="form-label">Flag Baru/Lama</label>
-                                        <select class="form-select" aria-label="Default select example" name="flag_baru"
-                                            id="flag_baru">
-
-                                            <option value="{{ $penalty->flag_baru }}" selected>{{ $penalty->flag_baru }}</option>
-                                            <option value="B">B</option>
-                                            <option value="L">L</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="example-date-input" class="form-label">Date Request</label>
-                                        <input class="form-control" type="date" value="{{ $penalty->daterequest }}" name="daterequest"
-                                            id="daterequest">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="example-date-input" class="form-label">Date Estimated</label>
-                                        <input class="form-control" type="date" value="{{ $penalty->dateestimated }}" name="dateestimated"
-                                            id="dateestimated">
-                                    </div>
+                                  
                                     <div class="mb-3">
                                         <label for="example-date-input" class="form-label">Date Actual</label>
                                         <input class="form-control" type="date" value="{{ $penalty->dateactual }}" name="dateactual"
@@ -140,37 +116,40 @@
                                         <label for="example-date-input" class="form-label">Reason</label>
                                         <input class="form-control" type="text" value="{{ $penalty->reason }}" name="reason" id="reason">
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="example-date-input" class="form-label">Flag Target</label>
-                                        <select class="form-select" aria-label="Default select example" name="flag_target"
-                                            id="flag_target">
+                      
 
-                                            <option value="{{ $penalty->flag_target }}" selected>{{ $penalty->flag_target }}</option>
-                                            <option value="Y">Yes</option>
-                                            <option value="N">No</option>
+                                    <div class="mb-3">
+                                        <label for="example-date-input" class="form-label">Delivered</label>
+                                        <select class="form-select" aria-label="Default select example" name="flag_delivered"
+                                            id="flag_delivered">
+
+                                            <option value="{{ $penalty->flag_delivered }}" selected>{{ $penalty->flag_delivered }}</option>
+                                            <option value="Undelivered">Undelivered</option>
+                                            <option value="Delivered">Delivered</option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="example-date-input" class="form-label">Flag Actual</label>
-                                        <select class="form-select" aria-label="Default select example" name="flag_actual"
-                                            id="flag_actual">
-
-                                            <option value="{{ $penalty->flag_actual }}" selected>{{ $penalty->flag_actual }}</option>
-                                            <option value="Y">Yes</option>
-                                            <option value="N">No</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="example-date-input" class="form-label">OTIF/LATE</label>
+                                        <label for="example-date-input" class="form-label">LATE/ON TIME</label>
                                         <select class="form-select" aria-label="Default select example" name="flag_otif"
                                             id="flag_otif">
 
                                             <option value="{{ $penalty->flag_otif }}" selected>{{ $penalty->flag_otif }}</option>
-                                            <option value="OTIF">OTIF</option>
+                                            <option value="ON TIME">ON TIME</option>
                                             <option value="LATE">LATE</option>
                                         </select>
                                     </div>
-
+                                    <div class="mb-3">
+                                        <label for="example-date-input" class="form-label">Late (Month)</label>
+                                        <input class="form-control" type="text" value="{{ $penalty->late }}" name="late" id="late">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="example-date-input" class="form-label">Price 5%</label>
+                                        <input class="form-control" type="text" value="{{ $penalty->pricelate }}" name="pricelate" id="pricelate">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="example-date-input" class="form-label">Penalty</label>
+                                        <input class="form-control" type="text" value="{{ $penalty->penalty }}" name="penalty" id="penalty">
+                                    </div>
                                     <div class="mb-3">
                                         <button type="submit" class="btn btn-primary w-md">Submit</button>
 

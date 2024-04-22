@@ -163,6 +163,8 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/edit/{id}', [App\Http\Controllers\PenaltyController::class, 'edit'])->name('penalty.edit');
             Route::put('/update/{id}', [App\Http\Controllers\PenaltyController::class, 'update'])->name('penalty.update');
             Route::get('/show/{id}', [App\Http\Controllers\PenaltyController::class, 'show'])->name('penalty.show');
+            Route::get('/getpenalty', [App\Http\Controllers\PenaltyController::class, 'getpenalty'])->name('penalty.getpenalty');
+
         });
         Route::group(['prefix' => 'mutation'], function () {
             Route::get('/', [App\Http\Controllers\MutationController::class, 'index'])->name('mutation.index');

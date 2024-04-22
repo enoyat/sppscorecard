@@ -19,7 +19,7 @@
             Contacts
         @endslot
         @slot('title')
-            LIST ALL UNIT
+            RESULT PENALTY
         @endslot
     @endcomponent
 
@@ -39,10 +39,10 @@
                     <button type="submit" class="btn btn-primary ">Filter</button>
                 </div>
                 </form>
-                <DIV class="col-md-2">
-                    {{-- <a href="{{ route('penalty.getpenalty') }}" class="btn btn-pink">
-                        GET PENALTY
-                    </a> --}}
+                <DIV class="col-md-4">
+                    <a href="{{ route('penalty.index') }}" class="btn btn-primary">
+                        BAKTO TO LIST PENALTY
+                    </a>
                 </DIV>
             </div>
         </div>
@@ -51,16 +51,11 @@
             <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
                 <div>
                     <ul class="nav nav-pills">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('penalty.index') }}" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
-                        </li>
+
 
                     </ul>
                 </div>
                 <div>
-                    <a href="{{ route('penalty.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add
-                        New</a>
                 </div>
 
                 <!-- <div class="dropdown">
@@ -81,7 +76,7 @@
     <!-- end row -->
 
     <div class="table-responsive mb-4" id="tablecontent">
-        @include('penalty.content')
+        @include('penalty.penalty')
 
         <!-- end table -->
     </div>

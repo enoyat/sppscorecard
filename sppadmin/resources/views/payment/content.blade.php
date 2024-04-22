@@ -5,7 +5,7 @@
         <tr>
             <TH SCOPE="COL">PERIODE</TH>
             <TH SCOPE="COL">CODE UNIT</TH>
-            <TH SCOPE="COL">SERIAL NUMBER</TH>
+
             <TH SCOPE="COL">PRICE</TH>
             <TH SCOPE="COL">PERCENTAGE (%)</TH>
             <TH SCOPE="COL">PAYMENT</TH>
@@ -23,7 +23,7 @@
         <tr>
             <th scope="col">{{ $key->periode }}</th>
             <th scope="col">{{ $key->kdunit }}</th>
-            <th scope="col">{{ $key->getunit->serialnumber }}</th>
+
             <th scope="col">{{ number_format($key->price) }}</th>
             <th scope="col">{{ number_format($key->prosentase) }}</th>
             <th scope="col">{{ number_format($key->pay) }}</th>

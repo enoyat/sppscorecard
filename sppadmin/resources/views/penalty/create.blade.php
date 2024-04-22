@@ -75,6 +75,23 @@
                                 </div>
                                 <div class="mb-3">
                                 <div>
+                                    <h5 class="font-size-14 mb-3">Pilih Mode</h5>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="pilihsite"
+
+                                        id="formRadios1" checked value="allsite">
+                                    <label class="form-check-label" for="formRadios1">
+                                        ALL CBU
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="pilihsite"
+
+                                        id="formRadios1" checked value="onlysite">
+                                    <label class="form-check-label" for="formRadios1">
+                                        ONLY SITE
+                                    </label>
+                                </div>
                                 <h5 class="font-size-14 mb-3">Pilih Unit</h5>
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="radio" name="pilihunit"

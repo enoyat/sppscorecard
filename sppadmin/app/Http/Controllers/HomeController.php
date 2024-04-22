@@ -159,167 +159,54 @@ class HomeController extends Controller
 
         if ($filter == 'sitename') {
             $sitename = $request->idsitename;
-            $jmlunit = count(DB::select("select * from penalty where idsitename='$sitename' and showcustomer='Y' and daterequest <= '$tglakhir' and flag_target='Y' and periode='$kdbulan' "));
-
-            $jmlunitactual = count(DB::select("select * from penalty where idsitename='$sitename' and showcustomer='Y' and dateactual <= '$tglakhir' and  (dateactual is not null) and (dateactual !='0000-00-00') and flag_actual='Y' and flag_baru='B' and periode='$kdbulan' "));
-
-            $jmlunitactualotif = count(DB::select("select * from penalty where idsitename='$sitename' and showcustomer='Y' and (dateactual is not null) and (dateactual !='0000-00-00') and (dateactual <= daterequest) and dateactual <='$tglakhir' and flag_baru='B' and flag_actual='Y' and periode='$kdbulan'"));
+            $jmlunit = count(DB::select("select * from penalty where idsitename='$sitename' and periode='$kdbulan' "));
+            $jmlunitactual = count(DB::select("select * from penalty where idsitename='$sitename' and dateactual <= '$tglakhir' and  (dateactual is not null) and (dateactual !='0000-00-00') and periode='$kdbulan' "));
+            $jmlunitactualotif = count(DB::select("select * from penalty where idsitename='$sitename' and flag_otif='ON TIME' and periode='$kdbulan'"));
 
             if ($kdbulan == "2023-10") {
-
-                $unitlate = DB::select("SELECT kdunit, flag_otif,price,price*0.05,daterequest,dateactual,
-                CASE
-                        WHEN dateactual is null THEN TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual>='$tglakhir' THEN TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual<='$tglakhir' THEN TIMESTAMPDIFF(MONTH, daterequest, dateactual)+1
-
-                END AS JMBULAN,
-                CASE
-                        WHEN dateactual is null THEN (TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1)*(price*0.05)
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual>='$tglakhir' THEN (TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1)*(price*0.05)
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual<='$tglakhir' THEN (TIMESTAMPDIFF(MONTH, daterequest, dateactual)+1) *(price*0.05)
-
-                END AS penalty  FROM penalty WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and idsitename='$sitename' and periode='$kdbulan'");
+                $unitlate = DB::select("SELECT * from penalty where idsitename='$sitename' and periode='$kdbulan'");
             } else {
                 $tglawal = date('Y-m-01', strtotime($tglakhir));
-
-                $unitlate = DB::select("SELECT kdunit, flag_otif,price,price*0.05,daterequest,dateactual,
-                    CASE
-                            WHEN dateactual is null THEN TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1
-                            WHEN dateactual is NOT null and dateactual>='$tglawal'  THEN TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1
-                            WHEN dateactual is NOT null  and dateactual>='$tglawal'  THEN TIMESTAMPDIFF(MONTH, '$tglawal', dateactual)+1
-
-                    END AS JMBULAN,
-                    CASE
-                            WHEN dateactual is null THEN (TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1)*(price*0.05)
-                            WHEN dateactual is NOT null  and dateactual>='$tglawal'  THEN (TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1)*(price*0.05)
-                            WHEN dateactual is NOT null  and dateactual>='$tglawal' THEN (TIMESTAMPDIFF(MONTH, '$tglawal', dateactual)+1) *(price*0.05)
-
-                    END AS penalty  FROM penalty WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and idsitename='$sitename' and periode='$kdbulan'");
+                $unitlate = DB::select("SELECT * from penalty WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and idsitename='$sitename' and periode='$kdbulan'");
             }
-
             $payment = DB::select("select sum(pay) as payment from payment where idsitename='$sitename'  and  periode = '$kdbulan'");
 
         } elseif ($filter == 'region') {
             $sitename = $request->idregion;
-            $jmlunit = count(DB::select("select * from penalty where idregion='$sitename' and showcustomer='Y' and daterequest <= '$tglakhir' and flag_target='Y' and periode='$kdbulan'"));
-
-            $jmlunitactual = count(DB::select("select * from penalty where idregion='$sitename' and showcustomer='Y' and dateactual <= '$tglakhir' and  (dateactual is not null) and (dateactual !='0000-00-00') and flag_actual='Y' and flag_baru='B' and periode='$kdbulan'"));
-
-            $jmlunitactualotif = count(DB::select("select * from penalty where idregion='$sitename' and showcustomer='Y' and (dateactual is not null) and (dateactual !='0000-00-00') and (dateactual <= daterequest) and dateactual <='$tglakhir' and flag_baru='B' and flag_actual='Y' and periode='$kdbulan'"));
+            $jmlunit = count(DB::select("select * from penalty where idregion='$sitename' and periode='$kdbulan' "));
+            $jmlunitactual = count(DB::select("select * from penalty where idregion='$sitename' and dateactual <= '$tglakhir' and  (dateactual is not null) and (dateactual !='0000-00-00') and periode='$kdbulan' "));
+            $jmlunitactualotif = count(DB::select("select * from penalty where idregion='$sitename' and flag_otif='ON TIME' and periode='$kdbulan'"));
 
             if ($kdbulan == "2023-10") {
-
-                $unitlate = DB::select("SELECT kdunit, flag_otif,price,price*0.05,daterequest,dateactual,
-                CASE
-                        WHEN dateactual is null THEN TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual>='$tglakhir' THEN TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual<='$tglakhir' THEN TIMESTAMPDIFF(MONTH, daterequest, dateactual)+1
-
-                END AS JMBULAN,
-                CASE
-                        WHEN dateactual is null THEN (TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1)*(price*0.05)
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual>='$tglakhir' THEN (TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1)*(price*0.05)
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual<='$tglakhir' THEN (TIMESTAMPDIFF(MONTH, daterequest, dateactual)+1) *(price*0.05)
-
-                END AS penalty  FROM penalty WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and idregion='$sitename' and periode='$kdbulan'");
+                $unitlate = DB::select("SELECT * from penalty where idregion='$sitename' and periode='$kdbulan'");
             } else {
                 $tglawal = date('Y-m-01', strtotime($tglakhir));
-
-                $unitlate = DB::select("SELECT kdunit, flag_otif,price,price*0.05,daterequest,dateactual,
-                    CASE
-                            WHEN dateactual is null THEN TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1
-                            WHEN dateactual is NOT null and dateactual>='$tglawal'  THEN TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1
-                            WHEN dateactual is NOT null  and dateactual>='$tglawal'  THEN TIMESTAMPDIFF(MONTH, '$tglawal', dateactual)+1
-
-                    END AS JMBULAN,
-                    CASE
-                            WHEN dateactual is null THEN (TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1)*(price*0.05)
-                            WHEN dateactual is NOT null  and dateactual>='$tglawal'  THEN (TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1)*(price*0.05)
-                            WHEN dateactual is NOT null  and dateactual>='$tglawal' THEN (TIMESTAMPDIFF(MONTH, '$tglawal', dateactual)+1) *(price*0.05)
-
-                    END AS penalty  FROM penalty WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and idregion='$sitename' and periode='$kdbulan'");
+                $unitlate = DB::select("SELECT * from penalty WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and idregion='$sitename' and periode='$kdbulan'");
             }
-
             $payment = DB::select("select sum(pay) as payment from payment where idregion='$sitename' and periode = '$kdbulan'");
         } elseif ($filter == 'cbu') {
             $sitename = $request->idcbu;
-            $jmlunit = count(DB::select("select * from penalty where idcbu='$sitename' and showcustomer='Y' and daterequest <= '$tglakhir' and flag_target='Y' and periode='$kdbulan'"));
-
-            $jmlunitactual = count(DB::select("select * from penalty where idcbu='$sitename' and showcustomer='Y' and dateactual <= '$tglakhir' and  (dateactual is not null) and (dateactual !='0000-00-00') and flag_actual='Y' and flag_baru='B' and periode='$kdbulan'"));
-
-            $jmlunitactualotif = count(DB::select("select * from penalty where idcbu='$sitename' and showcustomer='Y' and (dateactual is not null) and (dateactual !='0000-00-00') and (dateactual <= daterequest) and dateactual <='$tglakhir' and flag_baru='B' and flag_actual='Y' and periode='$kdbulan'"));
+            $jmlunit = count(DB::select("select * from penalty where idcbu='$sitename' and periode='$kdbulan' "));
+            $jmlunitactual = count(DB::select("select * from penalty where idcbu='$sitename' and dateactual <= '$tglakhir' and  (dateactual is not null) and (dateactual !='0000-00-00') and periode='$kdbulan' "));
+            $jmlunitactualotif = count(DB::select("select * from penalty where idcbu='$sitename' and flag_otif='ON TIME' and periode='$kdbulan'"));
 
             if ($kdbulan == "2023-10") {
-
-                $unitlate = DB::select("SELECT kdunit, flag_otif,price,price*0.05,daterequest,dateactual,
-                CASE
-                        WHEN dateactual is null THEN TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual>='$tglakhir' THEN TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual<='$tglakhir' THEN TIMESTAMPDIFF(MONTH, daterequest, dateactual)+1
-
-                END AS JMBULAN,
-                CASE
-                        WHEN dateactual is null THEN (TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1)*(price*0.05)
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual>='$tglakhir' THEN (TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1)*(price*0.05)
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual<='$tglakhir' THEN (TIMESTAMPDIFF(MONTH, daterequest, dateactual)+1) *(price*0.05)
-
-                END AS penalty  FROM penalty WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and idregion='$sitename' and periode='$kdbulan'");
+                $unitlate = DB::select("SELECT * from penalty where idcbu='$sitename' and periode='$kdbulan'");
             } else {
                 $tglawal = date('Y-m-01', strtotime($tglakhir));
-
-                $unitlate = DB::select("SELECT kdunit, flag_otif,price,price*0.05,daterequest,dateactual,
-                    CASE
-                            WHEN dateactual is null THEN TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1
-                            WHEN dateactual is NOT null and dateactual>='$tglawal'  THEN TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1
-                            WHEN dateactual is NOT null  and dateactual>='$tglawal'  THEN TIMESTAMPDIFF(MONTH, '$tglawal', dateactual)+1
-
-                    END AS JMBULAN,
-                    CASE
-                            WHEN dateactual is null THEN (TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1)*(price*0.05)
-                            WHEN dateactual is NOT null  and dateactual>='$tglawal'  THEN (TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1)*(price*0.05)
-                            WHEN dateactual is NOT null  and dateactual>='$tglawal' THEN (TIMESTAMPDIFF(MONTH, '$tglawal', dateactual)+1) *(price*0.05)
-
-                    END AS penalty  FROM penalty WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and idcbu='$sitename' and periode='$kdbulan'");
+                $unitlate = DB::select("SELECT * from penalty WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and idcbu='$sitename' and periode='$kdbulan'");
             }
             $payment = DB::select("select sum(pay) as payment from payment where idcbu='$sitename' and periode = '$kdbulan'");
         } elseif ($filter == 'allsnwater') {
-            $jmlunit = count(DB::select("select * from penalty where (idcbu= 'SN' or idcbu='Waters')  and showcustomer='Y' and daterequest <= '$tglakhir' and flag_target='Y' and periode='$kdbulan'"));
+            $jmlunit = count(DB::select("select * from penalty where (idcbu= 'SN' or idcbu='Waters') and  periode='$kdbulan' "));
+            $jmlunitactual = count(DB::select("select * from penalty where (idcbu= 'SN' or idcbu='Waters') and dateactual <= '$tglakhir' and  (dateactual is not null) and (dateactual !='0000-00-00') and periode='$kdbulan' "));
+            $jmlunitactualotif = count(DB::select("select * from penalty where (idcbu= 'SN' or idcbu='Waters') and flag_otif='ON TIME' and periode='$kdbulan'"));
 
-            $jmlunitactual = count(DB::select("select * from penalty where (idcbu= 'SN' or idcbu='Waters')  and showcustomer='Y' and dateactual <= '$tglakhir' and  (dateactual is not null) and (dateactual !='0000-00-00') and flag_actual='Y' and flag_baru='B' and periode='$kdbulan'"));
-
-            $jmlunitactualotif = count(DB::select("select * from penalty where (idcbu= 'SN' or idcbu='Waters')  and showcustomer='Y' and (dateactual is not null) and (dateactual !='0000-00-00') and (dateactual <= daterequest) and dateactual <='$tglakhir' and flag_baru='B' and flag_actual='Y' and periode='$kdbulan'"));
             if ($kdbulan == "2023-10") {
-
-                $unitlate = DB::select("SELECT kdunit, flag_otif,price,price*0.05,daterequest,dateactual,
-                CASE
-                        WHEN dateactual is null THEN TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual>='$tglakhir' THEN TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual<='$tglakhir' THEN TIMESTAMPDIFF(MONTH, daterequest, dateactual)+1
-
-                END AS JMBULAN,
-                CASE
-                        WHEN dateactual is null THEN (TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1)*(price*0.05)
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual>='$tglakhir' THEN (TIMESTAMPDIFF(MONTH, daterequest, '$tglakhir')+1)*(price*0.05)
-                        WHEN dateactual is NOT null  and daterequest<'$tglakhir' and dateactual<='$tglakhir' THEN (TIMESTAMPDIFF(MONTH, daterequest, dateactual)+1) *(price*0.05)
-
-                END AS penalty  FROM penalty WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and (idcbu= 'SN' or idcbu='Waters') and periode='$kdbulan'");
+                $unitlate = DB::select("SELECT * from penalty where (idcbu= 'SN' or idcbu='Waters') and periode='$kdbulan'");
             } else {
                 $tglawal = date('Y-m-01', strtotime($tglakhir));
-
-                $unitlate = DB::select("SELECT kdunit, flag_otif,price,price*0.05,daterequest,dateactual,
-                    CASE
-                            WHEN dateactual is null THEN TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1
-                            WHEN dateactual is NOT null and dateactual>='$tglawal'  THEN TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1
-                            WHEN dateactual is NOT null  and dateactual>='$tglawal'  THEN TIMESTAMPDIFF(MONTH, '$tglawal', dateactual)+1
-
-                    END AS JMBULAN,
-                    CASE
-                            WHEN dateactual is null THEN (TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1)*(price*0.05)
-                            WHEN dateactual is NOT null  and dateactual>='$tglawal'  THEN (TIMESTAMPDIFF(MONTH, '$tglawal', '$tglakhir')+1)*(price*0.05)
-                            WHEN dateactual is NOT null  and dateactual>='$tglawal' THEN (TIMESTAMPDIFF(MONTH, '$tglawal', dateactual)+1) *(price*0.05)
-
-                    END AS penalty  FROM penalty WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and flag_baru='B' and (idcbu= 'SN' or idcbu='Waters') and periode='$kdbulan'");
+                $unitlate = DB::select("SELECT * from penalty WHERE flag_otif='LATE' and (dateactual is null or dateactual is not null) and (idcbu= 'SN' or idcbu='Waters') and periode='$kdbulan'");
             }
             $payment = DB::select("select sum(pay) as payment from payment where (idcbu= 'SN' or idcbu='Waters') and  periode = '$kdbulan'");
 
