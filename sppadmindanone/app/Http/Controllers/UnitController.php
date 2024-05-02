@@ -32,7 +32,7 @@ class UnitController extends Controller
         }
         $arraykpi = array();
         if ($filter == "sitename") {
-            if (Auth::user()->role == "4" || Auth::user()->role == "5" || Auth::user()->role == "6") {
+            if (Auth::user()->roles_id == "4" || Auth::user()->roles_id == "5" || Auth::user()->roles_id == "6") {
                 $unit = MUnit::where('idsitename', Session::get('runidsitename'))->where('showcustomer', 'Y')->get();
             } else {
 
@@ -53,7 +53,7 @@ class UnitController extends Controller
             Session::put('runidsitename', $id);
             Session::put('runnamasitename', $sitename->namasitename);
         } else if ($request->filter == "region") {
-            if (Auth::user()->role == "4" || Auth::user()->role == "5" || Auth::user()->role == "6") {
+            if (Auth::user()->roles_id == "4" || Auth::user()->roles_id == "5" || Auth::user()->roles_id == "6") {
                 $unit = MUnit::where('idregion', Session::get('runidregion'))->where('showcustomer', 'Y')->get();
             } else {
                 $unit = MUnit::where('idregion', Session::get('runidregion'))->get();
@@ -69,7 +69,7 @@ class UnitController extends Controller
             Session::put('runidsitename', $sitename->id);
             Session::put('runnamasitename', $sitename->namasitename);
         } else if ($request->filter == "cbu") {
-            if (Auth::user()->role == "4" || Auth::user()->role == "5" || Auth::user()->role == "6") {
+            if (Auth::user()->roles_id == "4" || Auth::user()->roles_id == "5" || Auth::user()->roles_id == "6") {
                 $unit = MUnit::where('idcbu', Session::get('runidcbu'))->where('showcustomer', 'Y')->get();
             } else {
                 $unit = MUnit::where('idcbu', Session::get('runidcbu'))->get();
@@ -85,20 +85,20 @@ class UnitController extends Controller
             Session::put('runidsitename', $sitename->id);
             Session::put('runnamasitename', $sitename->namasitename);
         } else if ($request->filter == "allsn") {
-            if (Auth::user()->role == "4" || Auth::user()->role == "5" || Auth::user()->role == "6") {
+            if (Auth::user()->roles_id == "4" || Auth::user()->roles_id == "5" || Auth::user()->roles_id == "6") {
             $unit = MUnit::where('idcbu', 'SN')->where('showcustomer', 'Y')->get();
             }
             else {
                 $unit = MUnit::where('idcbu', 'SN')->get();
             }
         } else if ($request->filter == "allwater") {
-            if (Auth::user()->role == "4" || Auth::user()->role == "5" || Auth::user()->role == "6") {
+            if (Auth::user()->roles_id == "4" || Auth::user()->roles_id == "5" || Auth::user()->roles_id == "6") {
             $unit = MUnit::where('idcbu', 'Waters')->where('showcustomer', 'Y')->get();
             } else {
                 $unit = MUnit::where('idcbu', 'Waters')->get();
             }
         } else if ($request->filter == "allsnwater") {
-            if (Auth::user()->role == "4" || Auth::user()->role == "5" || Auth::user()->role == "6") {
+            if (Auth::user()->roles_id == "4" || Auth::user()->roles_id == "5" || Auth::user()->roles_id == "6") {
             $unit = MUnit::where('idcbu', 'SN')->orwhere('idcbu', 'Waters')->where('showcustomer', 'Y')->get();
             } else {
                 $unit = MUnit::where('idcbu', 'SN')->orwhere('idcbu', 'Waters')->get();
