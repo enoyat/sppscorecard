@@ -6,13 +6,14 @@ use App\Models\Ticket;
 use App\Models\UserCustomer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Session;
 
 class TicketController extends Controller
 {
     public function index()
     {
-        $tickets = Ticket::null()->with('getuser')->orderby('id', 'desc')->get();
-        // dd($tickets);
+        $tickets = Ticket::null()->with('getuser')->orderby('id', 'desc')->where('idsitename',Session::get('runidsitename'))->get();
+
         return view('ticket.inbox', ['tickets' => $tickets]);
     }
     public function create()

@@ -53,6 +53,7 @@ class HomeController extends Controller
         } else {
             $filter = "sitename";
         }
+
         $arraykpi = array();
         if ($filter == "sitename") {
              $kpi = DB::table('physicalavailable')->
@@ -168,6 +169,8 @@ class HomeController extends Controller
         if ($request->filter == "sitename") {
         $delivery = DB::table('delivery')->where('idsitename', request()->get('xidsitename'))->count('*');
         $delivered = DB::table('delivery')->where('idsitename', request()->get('xidsitename'))->where('statuscustomer', 'close')->count('*');
+
+
         }
         else if ($request->filter == "region") {
         $delivery = DB::table('delivery')->where('idregion', request()->get('xidregion'))->count('*');
@@ -178,8 +181,9 @@ class HomeController extends Controller
         $delivered = DB::table('delivery')->where('idcbu', request()->get('xidcbu'))->where('statuscustomer', 'close')->count('*');
         }
         else {
-            $delivery = DB::table('delivery')->count('*');
-            $delivered = DB::table('delivery')->where('statuscustomer', 'close')->count('*');
+            $delivery = 0;
+            $delivered =0;
+
         }
         if ($delivery == 0) {
             $kpidelivery = 0;
