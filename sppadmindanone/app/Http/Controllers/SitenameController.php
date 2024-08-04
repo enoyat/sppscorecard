@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
 
 class SitenameController extends Controller
 {
@@ -133,8 +134,15 @@ class SitenameController extends Controller
         return response()->json($response);
     }
     public function getsitename(Request $request){
-        $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->
-        where('namasitename', 'LIKE', '%'.$request->search.'%')->orderBy('namasitename', 'ASC')->get();
+        if(Auth::user()->roles_id == '4' ){
+            $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->where('namasitename',$request->search)->get();
+        }
+        else{
+         
+            $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->where('namasitename', 'LIKE', '%'.$request->search.'%')->orderBy('namasitename', 'ASC')->get();
+        }
+        // $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->
+        // where('namasitename', 'LIKE', '%'.$request->search.'%')->orderBy('namasitename', 'ASC')->get();
 
         $response = array();
         foreach ($sitename as $value) {

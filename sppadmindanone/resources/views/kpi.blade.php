@@ -45,6 +45,9 @@
 
                     <option value="allsnwater" {{ request()->get('filter') == 'allsnwater' ? 'selected' : '' }}>
                         ALL SN & WATERS</option>
+                @elseif (Auth::user()->roles_id == '4')
+                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                        SITENAME</option>
                 @elseif (Auth::user()->roles_id == '6')
                     <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
                         SITENAME</option>
@@ -117,242 +120,259 @@
     <br>
     <div class="row">
 
-            <!-- card -->
-            <div class="row">
+        <!-- card -->
+        <div class="row">
             <div class="col-6">
 
                 <!-- card body -->
                 <div class="card-body">
                     <div class="row align-items-center">
-                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">YTD</span>
-                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">DELIVERY</span>
-                            <div class="col-4">
-                                <div class="card" style="border:1px solid; ">
-                                    <!-- card body -->
-                                    <div class="card-body">
-                                        <div class="row ">
+                        <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">YTD</span>
+                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                            style="font-weight: 900">DELIVERY</span>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">TARGET
-                                                (UNIT)</span>
+                                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                                            style="font-weight: 900">TARGET
+                                            (UNIT)</span>
 
-                                            <div id="jmlunit"></div>
+                                        <div id="jmlunit"></div>
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="card" style="border:1px solid; ">
-                                    <!-- card body -->
-                                    <div class="card-body">
-                                        <div class="row ">
+                        </div>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">ACTUAL
-                                                (UNIT)</span>
+                                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                                            style="font-weight: 900">ACTUAL
+                                            (UNIT)</span>
 
-                                            <div id="jmlunitactual"></div>
+                                        <div id="jmlunitactual"></div>
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="card" style="border:1px solid; ">
-                                    <!-- card body -->
-                                    <div class="card-body">
-                                        <div class="row ">
+                        </div>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">% DELIVERED
-                                                (UNIT)</span>
+                                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                                            style="font-weight: 900">% DELIVERED
+                                            (UNIT)</span>
 
-                                            <div id="prosunit"></div>
+                                        <div id="prosunit"></div>
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">OTIF</span>
-                            <div class="col-4">
-                                <div class="card" style="border:1px solid; ">
-                                    <!-- card body -->
-                                    <div class="card-body">
-                                        <div class="row ">
+                        </div>
+                        <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">OTIF</span>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">TARGET
-                                                (UNIT)</span>
+                                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                                            style="font-weight: 900">TARGET
+                                            (UNIT)</span>
 
-                                            <div id="jmlunitotif"></div>
+                                        <div id="jmlunitotif"></div>
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="card" style="border:1px solid; ">
-                                    <!-- card body -->
-                                    <div class="card-body">
-                                        <div class="row ">
+                        </div>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">ACTUAL
-                                                (UNIT)</span>
+                                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                                            style="font-weight: 900">ACTUAL
+                                            (UNIT)</span>
 
-                                            <div id="jmlunitactualotif"></div>
+                                        <div id="jmlunitactualotif"></div>
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="card" style="border:1px solid; ">
-                                    <!-- card body -->
-                                    <div class="card-body">
-                                        <div class="row ">
+                        </div>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
-                                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">% LATE
-                                                (UNIT)</span>
+                                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                                            style="font-weight: 900">% LATE
+                                            (UNIT)</span>
 
-                                            <div id="proslate"></div>
+                                        <div id="proslate"></div>
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900"> TOTAL PENALTY :</span>
-                            <div class="col-4">
-                                <div class="card" style="border:1px solid; ">
-                                    <!-- card body -->
-                                    <div class="card-body">
-                                        <div class="row ">
+                        </div>
+                        <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900"> TOTAL
+                            PENALTY :</span>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
 
-                                            <div id="totalpenalty"></div>
+                                        <div id="totalpenalty"></div>
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
 
 
 
                 </div><!-- end card body -->
-            <!-- end card -->
+                <!-- end card -->
             </div>
             <div class="col-6">
 
-                    <!-- card body -->
-                    <div class="card-body">
-                        <div class="row align-items-center">
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="row align-items-center">
 
-                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">MTD</span>
-                            <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">AVAILABILITY</span>
-                                <div class="col-4">
-                                    <div class="card" style="border:1px solid; ">
-                                        <!-- card body -->
-                                        <div class="card-body">
-                                            <div class="row ">
+                        <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">MTD</span>
+                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                            style="font-weight: 900">AVAILABILITY</span>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
-                                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">TARGET (HOUR)</span>
+                                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                                            style="font-weight: 900">TARGET (HOUR)</span>
 
-                                                <div id="sumplanunitkerja"></div>
+                                        <div id="sumplanunitkerja"></div>
 
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <div class="card" style="border:1px solid; ">
-                                        <!-- card body -->
-                                        <div class="card-body">
-                                            <div class="row ">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
-                                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">ACTUAL (HOUR)</span>
+                                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                                            style="font-weight: 900">ACTUAL (HOUR)</span>
 
-                                                <div id="sumtotaljamkerja"></div>
+                                        <div id="sumtotaljamkerja"></div>
 
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <div class="card" style="border:1px solid; ">
-                                        <!-- card body -->
-                                        <div class="card-body">
-                                            <div class="row ">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
-                                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">% AVAILABILITY (HOUR)</span>
+                                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                                            style="font-weight: 900">% AVAILABILITY (HOUR)</span>
 
-                                                <div id="avgpaforklift"></div>
+                                        <div id="avgpaforklift"></div>
 
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900"> TOTAL PAYMENT :</span>
-                                <div class="col-4">
-                                    <div class="card" style="border:1px solid; ">
-                                        <!-- card body -->
-                                        <div class="card-body">
-                                            <div class="row ">
+                            </div>
+                        </div>
+                        <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900"> TOTAL
+                            PAYMENT :</span>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
 
-                                                <div id="totalpayment"></div>
+                                        <div id="totalpayment"></div>
 
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900"> SPAREPART</span>
-                                <div class="col-4">
-                                    <div class="card" style="border:1px solid; ">
-                                        <!-- card body -->
-                                        <div class="card-body">
-                                            <div class="row ">
+                            </div>
+                        </div>
+                        <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">
+                            SPAREPART</span>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
-                                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">TARGET (PCS)</span>
+                                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                                            style="font-weight: 900">TARGET (PCS)</span>
 
-                                                <div id="jmlqty"></div>
+                                        <div id="jmlqty"></div>
 
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <div class="card" style="border:1px solid; ">
-                                        <!-- card body -->
-                                        <div class="card-body">
-                                            <div class="row ">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
-                                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">ACTUAL (PCS)</span>
+                                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                                            style="font-weight: 900">ACTUAL (PCS)</span>
 
-                                                <div id="jmlstok"></div>
+                                        <div id="jmlstok"></div>
 
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <div class="card" style="border:1px solid; ">
-                                        <!-- card body -->
-                                        <div class="card-body">
-                                            <div class="row ">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card" style="border:1px solid; ">
+                                <!-- card body -->
+                                <div class="card-body">
+                                    <div class="row ">
 
-                                                <span class="text-muted mb-3 lh-1 d-block text-truncate" style="font-weight: 900">%</span>
+                                        <span class="text-muted mb-3 lh-1 d-block text-truncate"
+                                            style="font-weight: 900">%</span>
 
-                                                <div id="kpisparepart"></div>
+                                        <div id="kpisparepart"></div>
 
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-
+                            </div>
                         </div>
 
+                    </div>
 
-                    </div><!-- end card body -->
+
+                </div><!-- end card body -->
 
             </div>
-            </div>
+        </div>
 
 
     </div><!-- end col -->
