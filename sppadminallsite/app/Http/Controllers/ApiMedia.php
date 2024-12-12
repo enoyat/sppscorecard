@@ -6,6 +6,8 @@ use App\Models\Cart;
 use App\Models\MDokumen;
 use App\Models\MDokumenmaintenance;
 use App\Models\MDokumentrouble;
+use App\Models\MDokumenpresensi;
+
 use App\Models\Transaction;
 
 use Illuminate\Http\Request;
@@ -33,6 +35,14 @@ class ApiMedia extends Controller
         }
         if ($request->transaksi=="maintenance") {
             MDokumenmaintenance::create([
+                'idaction' => $request->idaction,
+                'filename' => $filename,
+                'keterangan' => $request->keterangan,
+
+            ]);
+        }
+        if ($request->transaksi=="presensi") {
+            MDokumenpresensi::create([
                 'idaction' => $request->idaction,
                 'filename' => $filename,
                 'keterangan' => $request->keterangan,

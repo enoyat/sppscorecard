@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
 
 class HomeController extends Controller
 {
@@ -56,36 +57,23 @@ class HomeController extends Controller
 
         $arraykpi = array();
         if ($filter == "sitename") {
-             $kpi = DB::table('physicalavailable')->
-                join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->
-                join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->
-                select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
-                ->where('periode','like', '%'.$mperiode.'%')
+            $kpi = DB::table('physicalavailable')->join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
+                ->where('periode', 'like', '%' . $mperiode . '%')
                 ->where('unit.idsitename', request()->get('xidsitename'))
                 ->where('forklifttype.f_dashboard', "Y")
                 ->groupBy('namaforklifttype', 'idforklifttype')
                 ->get();
-
         } else if ($request->filter == "region") {
-            $kpi = DB::table('physicalavailable')->
-                join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->
-                join('sitename', 'unit.idsitename', '=', 'sitename.id')->
-                join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->
-                select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
-                ->where('periode','like', '%'.$mperiode.'%')
+            $kpi = DB::table('physicalavailable')->join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->join('sitename', 'unit.idsitename', '=', 'sitename.id')->join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
+                ->where('periode', 'like', '%' . $mperiode . '%')
                 ->where('unit.idregion', request()->get('xidregion'))
                 ->where('forklifttype.f_dashboard', "Y")
                 ->groupBy('namaforklifttype', 'idforklifttype')
                 ->get();
-        }
-        else if ($request->filter == "cbu") {
+        } else if ($request->filter == "cbu") {
 
-            $kpi = DB::table('physicalavailable')->
-                join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->
-                join('sitename', 'unit.idsitename', '=', 'sitename.id')->
-                join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->
-                select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
-                ->where('periode','like', '%'.$mperiode.'%')
+            $kpi = DB::table('physicalavailable')->join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->join('sitename', 'unit.idsitename', '=', 'sitename.id')->join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
+                ->where('periode', 'like', '%' . $mperiode . '%')
                 ->where('unit.idcbu', request()->get('xidcbu'))
                 ->where('forklifttype.f_dashboard', "Y")
                 ->groupBy('namaforklifttype', 'idforklifttype')
@@ -93,33 +81,31 @@ class HomeController extends Controller
         }
         $i = 0;
         foreach ($kpi as $k) {
-             if ($request->filter == "sitename") {
-            $dataunit = DB::table('troubleaction')
-                ->join('unit', 'troubleaction.kdunit', '=', 'unit.kdunit')
-                ->join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')
-                ->where('troubleaction.periode', $mperiode)
-                ->where('unit.idforklifttype', $k->idforklifttype)
-                ->where('unit.idsitename', request()->get('xidsitename'))
-                ->get();
-             }
-            else if ($request->filter == "region"){
-            $dataunit = DB::table('troubleaction')
-                ->join('unit', 'troubleaction.kdunit', '=', 'unit.kdunit')
-                ->join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')
-                ->where('troubleaction.periode', $mperiode)
-                ->where('unit.idforklifttype', $k->idforklifttype)
-                ->where('unit.idregion', request()->get('xidregion'))
-                ->get();
+            if ($request->filter == "sitename") {
+                $dataunit = DB::table('troubleaction')
+                    ->join('unit', 'troubleaction.kdunit', '=', 'unit.kdunit')
+                    ->join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')
+                    ->where('troubleaction.periode', $mperiode)
+                    ->where('unit.idforklifttype', $k->idforklifttype)
+                    ->where('unit.idsitename', request()->get('xidsitename'))
+                    ->get();
+            } else if ($request->filter == "region") {
+                $dataunit = DB::table('troubleaction')
+                    ->join('unit', 'troubleaction.kdunit', '=', 'unit.kdunit')
+                    ->join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')
+                    ->where('troubleaction.periode', $mperiode)
+                    ->where('unit.idforklifttype', $k->idforklifttype)
+                    ->where('unit.idregion', request()->get('xidregion'))
+                    ->get();
+            } else if ($request->filter == "cbu") {
+                $dataunit = DB::table('troubleaction')
+                    ->join('unit', 'troubleaction.kdunit', '=', 'unit.kdunit')
+                    ->join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')
+                    ->where('troubleaction.periode', $mperiode)
+                    ->where('unit.idforklifttype', $k->idforklifttype)
+                    ->where('unit.idsitename', request()->get('xidcbu'))
+                    ->get();
             }
-                else if ($request->filter == "cbu"){
-            $dataunit = DB::table('troubleaction')
-                ->join('unit', 'troubleaction.kdunit', '=', 'unit.kdunit')
-                ->join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')
-                ->where('troubleaction.periode', $mperiode)
-                ->where('unit.idforklifttype', $k->idforklifttype)
-                ->where('unit.idsitename', request()->get('xidcbu'))
-                ->get();
-                }
 
             $arraykpi[$i] = array(
                 'idforklifttype' => $k->idforklifttype,
@@ -135,26 +121,19 @@ class HomeController extends Controller
         }
 
         if ($request->filter == "sitename") {
-        $restkpisparepart = DB::table('sparepartstok')->
-            select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
-            ->where('idsitename', request()->get('xidsitename'))
-            ->get();
-        }
-        else if ($request->filter == "region") {
-        $restkpisparepart = DB::table('sparepartstok')->
-            select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
-            ->where('idregion', request()->get('xidregion'))
-            ->get();
-        }
-        else if ($request->filter == "cbu") {
-        $restkpisparepart = DB::table('sparepartstok')->
-            select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
-            ->where('idcbu', request()->get('xidcbu'))
-            ->get();
-        }
-        else {
-            $restkpisparepart = DB::table('sparepartstok')->
-                select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+            $restkpisparepart = DB::table('sparepartstok')->select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+                ->where('idsitename', request()->get('xidsitename'))
+                ->get();
+        } else if ($request->filter == "region") {
+            $restkpisparepart = DB::table('sparepartstok')->select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+                ->where('idregion', request()->get('xidregion'))
+                ->get();
+        } else if ($request->filter == "cbu") {
+            $restkpisparepart = DB::table('sparepartstok')->select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
+                ->where('idcbu', request()->get('xidcbu'))
+                ->get();
+        } else {
+            $restkpisparepart = DB::table('sparepartstok')->select(DB::raw('avg((stok/qty)*100) as kpisparepart'))
                 ->get();
         }
         if ($restkpisparepart) {
@@ -165,25 +144,19 @@ class HomeController extends Controller
             $kpisparepart = 0;
         }
 
-        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->where('f_aktif','1')->get();
+        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->where('f_aktif', '1')->get();
         if ($request->filter == "sitename") {
-        $delivery = DB::table('delivery')->where('idsitename', request()->get('xidsitename'))->count('*');
-        $delivered = DB::table('delivery')->where('idsitename', request()->get('xidsitename'))->where('statuscustomer', 'close')->count('*');
-
-
-        }
-        else if ($request->filter == "region") {
-        $delivery = DB::table('delivery')->where('idregion', request()->get('xidregion'))->count('*');
-        $delivered = DB::table('delivery')->where('idregion', request()->get('xidregion'))->where('statuscustomer', 'close')->count('*');
-        }
-        else if ($request->filter == "cbu") {
-        $delivery = DB::table('delivery')->where('idcbu', request()->get('xidcbu'))->count('*');
-        $delivered = DB::table('delivery')->where('idcbu', request()->get('xidcbu'))->where('statuscustomer', 'close')->count('*');
-        }
-        else {
+            $delivery = DB::table('delivery')->where('idsitename', request()->get('xidsitename'))->count('*');
+            $delivered = DB::table('delivery')->where('idsitename', request()->get('xidsitename'))->where('statuscustomer', 'close')->count('*');
+        } else if ($request->filter == "region") {
+            $delivery = DB::table('delivery')->where('idregion', request()->get('xidregion'))->count('*');
+            $delivered = DB::table('delivery')->where('idregion', request()->get('xidregion'))->where('statuscustomer', 'close')->count('*');
+        } else if ($request->filter == "cbu") {
+            $delivery = DB::table('delivery')->where('idcbu', request()->get('xidcbu'))->count('*');
+            $delivered = DB::table('delivery')->where('idcbu', request()->get('xidcbu'))->where('statuscustomer', 'close')->count('*');
+        } else {
             $delivery = 0;
-            $delivered =0;
-
+            $delivered = 0;
         }
         if ($delivery == 0) {
             $kpidelivery = 0;
@@ -192,6 +165,9 @@ class HomeController extends Controller
         }
 
         $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $customer = MCustomer::where('kdcustomer', Session::get('kdcustomer'))->first();
+
+        Session::put('logo', $customer->logo);
 
         $customer = MCustomer::get();
         // dd($sitename);
@@ -212,7 +188,6 @@ class HomeController extends Controller
             $jmlunit = $jmlunit + $k->jmlunit;
             $totalavgkpi = $totalavgkpi + $k->avgpaforklift;
             $counter++;
-
         }
         // dd($totalavgkpi."-".$counter);
         $achievement = $achievement . "]";
@@ -224,7 +199,6 @@ class HomeController extends Controller
             $avgkpi = 0;
         } else {
             $avgkpi = number_format($totalavgkpi / $counter, 2);
-
         }
 
         return view('index', compact('kpi', 'cbu', 'achievement', 'max', 'base', 'kategori', 'sitename', 'customer', 'unit', 'mperiode', 'jmlunit', 'avgkpi', 'arraykpi', 'kpidelivery', 'delivery', 'delivered', 'kpisparepart'));

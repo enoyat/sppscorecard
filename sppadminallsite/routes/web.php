@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\LaporanTransaksi;
 
 
 
@@ -235,7 +237,26 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
         });
 
 
+        Route::group(['prefix' => 'presensi'], function () {
+            Route::get('/', [PresensiController::class, 'index'])->name('presensi.index');
+            Route::get('add', [PresensiController::class, 'add'])->name('presensi.add');
+            Route::post('store', [PresensiController::class, 'store'])->name('presensi.store');
+            Route::get('edit/{id}', [PresensiController::class, 'edit'])->name('presensi.edit');
+            Route::put('update/{id}', [PresensiController::class, 'update'])->name('presensi.update');
+            Route::delete('delete/{id}', [PresensiController::class, 'delete'])->name('presensi.delete');
+        });
 
+        Route::group(['prefix' => 'laporan'], function () {
+            Route::get('rpttransaction', [LaporanTransaksi::class, 'rpttransaction'])->name('laporan.rpttransaction');
+            Route::get('/laporantransaction', [laporanTransaksi::class, 'laporantransaction'])->name('laporan.laporantransaction');
+            Route::get('/presensi', [laporanTransaksi::class, 'presensi'])->name('laporan.presensi');
+            Route::get('viewlaporantransaction', [laporanTransaksi::class, 'viewlaporantransaction'])->name('laporan.viewlaporantransaction');
+
+            Route::get('exporttransaction', [LaporanTransaksi::class, 'exporttransaction'])->name('laporan.exporttransaction');
+            Route::post('laporanexporttransaction', [laporanTransaksi::class, 'laporanexporttransaction'])->name('laporan.laporanexporttransaction');
+
+
+        });
 
 
     });

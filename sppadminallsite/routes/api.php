@@ -7,7 +7,7 @@ use App\Http\Controllers\ApiLokasi;
 use App\Http\Controllers\ApiTrouble;
 use App\Http\Controllers\ApiMaintenance;
 use App\Http\Controllers\ApiSparepart;
-
+use App\Http\Controllers\ApiPresensi;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +41,7 @@ Route::post('maintenance/store', [ApiMaintenance::class, 'store']);
 Route::get('getunit/{id}', [ApiMaintenance::class, 'getunit'])->name('getunit');
 Route::post('sparepart/store', [ApiSparepart::class, 'store']);
 Route::get('searchsparepart/{id}', [ApiSparepart::class, 'searchsparepart'])->name('searchsparepart');
+
+Route::post('presensi/store', [ApiPresensi::class, 'store']);
+Route::get('presensi/listpresensi/{id}', [ApiPresensi::class, 'listpresensi']);
+Route::get('presensi/show/{id}', [ApiPresensi::class, 'show']);

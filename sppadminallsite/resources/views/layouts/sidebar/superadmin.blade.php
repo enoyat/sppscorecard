@@ -141,7 +141,26 @@
                     </a>
                 </li>
                 @if(Session::get('roles_id')==1 || Session::get('roles_id')==5)
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Presensi</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('presensi.index') }}">
+                                <span data-key="t-calendar">Presensi</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('laporan.rpttransaction') }}">
+                                <span data-key="t-chat">Laporan</span>
+                            </a>
+                        </li>
 
+
+                    </ul>
+                </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="grid"></i>
