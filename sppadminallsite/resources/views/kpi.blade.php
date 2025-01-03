@@ -9,106 +9,116 @@
 </script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<form action="#" method="get" >
+<form action="#" method="get">
     @csrf
-<div class="row">
-    <div class="col-md-6">
+    <div class="row">
+        <div class="col-md-6">
 
 
 
-        <div class="input-group mx-1">
+            <div class="input-group mx-1">
 
 
 
-            <input type="text" name="periode" id="periode" value="@if (request()->get('periode') != null)
-            {{ request()->get('periode') }}@endif" placeholder="yyyy-mm" class="form-control">
+                <input type="text" name="periode" id="periode"
+                    value="@if (request()->get('periode') != null) {{ request()->get('periode') }} @endif"
+                    placeholder="yyyy-mm" class="form-control">
 
-            <select name="filter" id="filter" class="form-control">
-                <option value="" {{ request()->get('filter') == '' ? 'selected' : '' }}>
-                    -- select filter --</option>
-                @if (Auth::user()->roles_id == '1')
-                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
-                        SITENAME</option>
-                    <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
-                        REGION</option>
-                    <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
-                        CBU</option>
-
-
-                @elseif (Auth::user()->roles_id == '2')
-                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
-                        SITENAME</option>
-                @elseif (Auth::user()->roles_id == '4')
-
-                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                <select name="filter" id="filter" class="form-control">
+                    <option value="" {{ request()->get('filter') == '' ? 'selected' : '' }}>
+                        -- select filter --</option>
+                    @if (Auth::user()->roles_id == '1')
+                        <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
                             SITENAME</option>
-                @elseif (Auth::user()->roles_id == '5' )
-                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
-                        SITENAME</option>
-                    <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
-                        REGION</option>
-                    <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
-                        CBU</option>
-
-
-                @elseif (Auth::user()->roles_id == '6')
-                    <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
-                        SITENAME</option>
-                    <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
-                        REGION</option>
-                    <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
-                        CBU</option>
-
-
-                @endif
-            </select>
-            <div id="filtersitename" style="width:300px">
-                <select name="xidsitename" id="xidsitename" class="form-control">
-                    @if (request()->get('xidsitename') != null)
-                        <option value="{{ request()->get('xidsitename') }}" selected>
-                            {{ request()->get('xidsitename') }}</option>
+                        <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
+                            REGION</option>
+                        <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
+                            CBU</option>
+                    @elseif (Auth::user()->roles_id == '2')
+                        <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                            SITENAME</option>
+                    @elseif (Auth::user()->roles_id == '4')
+                        <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                            SITENAME</option>
+                    @elseif (Auth::user()->roles_id == '5')
+                        <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                            SITENAME</option>
+                        <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
+                            REGION</option>
+                        <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
+                            CBU</option>
+                    @elseif (Auth::user()->roles_id == '6')
+                        <option value="sitename" {{ request()->get('filter') == 'sitename' ? 'selected' : '' }}>
+                            SITENAME</option>
+                        <option value="region" {{ request()->get('filter') == 'region' ? 'selected' : '' }}>
+                            REGION</option>
+                        <option value="cbu" {{ request()->get('filter') == 'cbu' ? 'selected' : '' }}>
+                            CBU</option>
                     @endif
                 </select>
+                <div id="filtersitename" style="width:300px">
+                    <select name="xidsitename" id="xidsitename" class="form-control">
+                        @if (request()->get('xidsitename') != null)
+                            <option value="{{ request()->get('xidsitename') }}" selected>
+                                {{ request()->get('xidsitename') }}</option>
+                        @endif
+                    </select>
+                </div>
+                <div id="filterregion" style="width:150px">
+                    <select name="xidregion" id="xidregion" class="form-control">
+                        @if (request()->get('xidregion') != null)
+                            <option value="{{ request()->get('xidregion') }}" selected>
+                                {{ request()->get('xidregion') }}</option>
+                        @endif
+                    </select>
+                </div>
+                <div id="filtercbu" style="width:150px">
+
+                    <select class="form-control" aria-label="Default select example" name="xidcbu" id="xidcbu">
+                        @if (request()->get('xidcbu') != null)
+                            <option value="{{ request()->get('xidcbu') }}" selected>
+                                {{ request()->get('xidcbu') }}</option>
+                        @endif
+
+                        <option value="">-- select --</option>
+                        @foreach ($cbu as $itemcbu)
+                            <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
+                        @endforeach
+
+                    </select>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary" id="btnfilter"><i class="fas fa-search"></i></button>
+
             </div>
-            <div id="filterregion" style="width:150px">
-                <select name="xidregion" id="xidregion" class="form-control">
-                    @if (request()->get('xidregion') != null)
-                        <option value="{{ request()->get('xidregion') }}" selected>
-                            {{ request()->get('xidregion') }}</option>
-                    @endif
-                </select>
-            </div>
-            <div id="filtercbu" style="width:150px">
-
-                <select class="form-control" aria-label="Default select example" name="xidcbu" id="xidcbu">
-                    @if (request()->get('xidcbu') != null)
-                        <option value="{{ request()->get('xidcbu')  }}" selected>
-                            {{ request()->get('xidcbu')  }}</option>
-                    @endif
-
-                    <option value="">-- select --</option>
-                    @foreach ($cbu as $itemcbu)
-                        <option value="{{ $itemcbu->id }}">{{ $itemcbu->namasitename }}</option>
-                    @endforeach
-
-                </select>
-            </div>
-
-
-
-            <button type="submit" class="btn btn-primary" id="btnfilter"><i class="fas fa-search"></i></button>
 
         </div>
 
     </div>
-
-</div>
 </form>
 <div id="area-print">
     <table width="100%">
         <tr>
-            <td style="background: white; padding:10px"><img src="{{ URL::asset('img/logo.png') }}" alt=""
-                    height="50">
+            <td style="background: white; padding:10px">
+                @if (!empty(Session::get('logo')))
+                    <a href="{{ route('root') }}" class="logo logo-dark">
+                        <span class="logo-sm">
+                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                                style="max-height:50px">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                                style="max-height:50px">
+                            <span class="logo-txt"></span>
+                        </span>
+                    </a>
+                @else
+                    {{ Session::get('logo') }}
+                @endif
+
+
             </td>
             <td style="background:rgb(9, 136, 153); padding:10px">
                 <div style="font-size: 16px; color: white;"><b>KPI DASHBOARD
@@ -132,7 +142,8 @@
                                 <span class="counter-value" data-target="{{ $jmlunit }}">0</span>
                             </h4>
                         </div>
-                        <div id="pie-chartunit" data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be", "#32a852"]'
+                        <div id="pie-chartunit"
+                            data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be", "#32a852"]'
                             class="e-charts">
                         </div>
 
@@ -191,61 +202,62 @@
 
     </div>
 
-<div class="row">
-    <?php $i = 0; ?>
-    @foreach ($arraykpi as $item)
-        <div class="col-xl-4 col-md-8">
-            <!-- card -->
-            <div class="card card-h-100" style="border:1px solid; ">
-                <!-- card body -->
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-12">
+    <div class="row">
+        <?php $i = 0; ?>
+        @foreach ($arraykpi as $item)
+            <div class="col-xl-4 col-md-8">
+                <!-- card -->
+                <div class="card card-h-100" style="border:1px solid; ">
+                    <!-- card body -->
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <span
+                                    class="text-muted mb-3 lh-1 d-block text-truncate">{{ $item['namaforklifttype'] }}</span>
+                                <h4 class="mb-3">
+                                    <?php $kpi = ($item['sumtotaljamkerja'] / $item['sumplanunitkerja']) * 100; ?>
+
+                                    <span class="counter-value" data-target="{{ number_format($kpi, 2) }}">0</span>%
+                                </h4>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div id="pie-chart{{ $i }}"
+                                data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be"]'
+                                class="e-charts">
+                            </div>
+                            <input type="hidden" name="totalbreakdown{{ $i }}"
+                                id="totalbreakdown{{ $i }}" value="{{ $item['totalbreakdown'] }}">
+
+                            <input type="hidden" name="sumtotaljamkerja{{ $i }}"
+                                id="sumtotaljamkerja{{ $i }}" value="{{ $item['sumtotaljamkerja'] }}">
+
+                        </div>
+                        <div class="text-nowrap">
+                            <span class="badge bg-primary ">{{ number_format($item['jmlunit']) }}</span>
+                            <span class="ms-1 text-muted font-size-13">Units</span>
+                        </div>
+                        <div class="text-nowrap">
+                            <span class="badge bg-primary ">{{ number_format($item['sumplanunitkerja']) }}</span>
+                            <span class="ms-1 text-muted font-size-13">Target Available (Minutes)</span>
+                        </div>
+                        <div class="text-nowrap">
                             <span
-                                class="text-muted mb-3 lh-1 d-block text-truncate">{{ $item['namaforklifttype'] }}</span>
-                            <h4 class="mb-3">
-                                <?php $kpi = ($item['sumtotaljamkerja'] / $item['sumplanunitkerja']) * 100; ?>
-
-                                <span class="counter-value" data-target="{{ number_format($kpi, 2) }}">0</span>%
-                            </h4>
+                                class="badge badge-soft-success text-success">{{ number_format($item['sumtotaljamkerja']) }}</span>
+                            <span class="ms-1 text-muted font-size-13">Total Available (Minutes)</span>
                         </div>
-
-                    </div>
-                    <div class="row">
-                        <div id="pie-chart{{ $i }}"
-                            data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be"]' class="e-charts">
+                        <div class="text-nowrap">
+                            <span
+                                class="badge badge-soft-danger text-success">{{ number_format($item['totalbreakdown']) }}</span>
+                            <span class="ms-1 text-muted font-size-13">Breakdown (Minutes)</span>
                         </div>
-                        <input type="hidden" name="totalbreakdown{{ $i }}"
-                            id="totalbreakdown{{ $i }}" value="{{ $item['totalbreakdown'] }}">
-
-                        <input type="hidden" name="sumtotaljamkerja{{ $i }}"
-                            id="sumtotaljamkerja{{ $i }}" value="{{ $item['sumtotaljamkerja'] }}">
-
-                    </div>
-                    <div class="text-nowrap">
-                        <span class="badge bg-primary ">{{ number_format($item['jmlunit']) }}</span>
-                        <span class="ms-1 text-muted font-size-13">Units</span>
-                    </div>
-                    <div class="text-nowrap">
-                        <span class="badge bg-primary ">{{ number_format($item['sumplanunitkerja']) }}</span>
-                        <span class="ms-1 text-muted font-size-13">Target Available (Minutes)</span>
-                    </div>
-                    <div class="text-nowrap">
-                        <span
-                            class="badge badge-soft-success text-success">{{ number_format($item['sumtotaljamkerja']) }}</span>
-                        <span class="ms-1 text-muted font-size-13">Total Available (Minutes)</span>
-                    </div>
-                    <div class="text-nowrap">
-                        <span
-                            class="badge badge-soft-danger text-success">{{ number_format($item['totalbreakdown']) }}</span>
-                        <span class="ms-1 text-muted font-size-13">Breakdown (Minutes)</span>
-                    </div>
-                </div><!-- end card body -->
-            </div><!-- end card -->
-        </div>
-        <?php $i++; ?>
-    @endforeach
-</div>
+                    </div><!-- end card body -->
+                </div><!-- end card -->
+            </div>
+            <?php $i++; ?>
+        @endforeach
+    </div>
 </div>
 
 

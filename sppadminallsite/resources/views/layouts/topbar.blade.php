@@ -6,24 +6,29 @@
                 @if (!empty(Session::get('logo')))
                     <a href="{{ route('root') }}" class="logo logo-dark">
                         <span class="logo-sm">
-                            <img src="{{ asset('build/images/logo.png') }}" alt="" height="24">
+                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                                style="max-height:50px">
                         </span>
                         <span class="logo-lg">
-                            <img src="{{ asset('build/images/logo.png') }}" alt="" height="24"> <span
-                                class="logo-txt">SPP</span>
+                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                                style="max-height:50px">
+                            <span class="logo-txt"></span>
                         </span>
                     </a>
 
                     <a href="{{ route('root') }}" class="logo logo-light">
                         <span class="logo-sm">
-                            <img src="{{ asset('build/images/logo.png') }}" alt="" height="24">
+                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                                style="max-height:50px">
                         </span>
                         <span class="logo-lg">
-                            <img src="{{ asset('build/images/logo.png') }}" alt="" height="24"> <span
-                                class="logo-txt">SPP</span>
+                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                                style="max-height:50px">
+                            <span class="logo-txt"></span>
                         </span>
                     </a>
                 @else
+                    {{ Session::get('logo') }}
                 @endif
             </div>
 
@@ -99,8 +104,8 @@
 
                     <!-- item-->
                     <a href="{{ url('index/de') }}" class="dropdown-item notify-item language" data-lang="gr">
-                        <img src="{{ URL::asset('build/images/flags/germany.jpg') }}" alt="user-image" class="me-1"
-                            height="12"> <span class="align-middle">German</span>
+                        <img src="{{ URL::asset('build/images/flags/germany.jpg') }}" alt="user-image"
+                            class="me-1" height="12"> <span class="align-middle">German</span>
                     </a>
 
                     <!-- item-->
