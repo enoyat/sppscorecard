@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\MCustomer;
@@ -11,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Symfony\Component\HttpFoundation\Session\Session as SessionSession;
 
 class HomeController extends Controller
 {
@@ -33,11 +31,13 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-        return view('index');
-        // if (view()->exists($request->path())) {
-        //     return view($request->path());
-        // }
-        // return abort(404);
+        $notifications = auth()->user()
+            ->notifications()
+            ->latest()
+            ->take(10)
+            ->get();
+
+        return view('index', compact('notifications'));
     }
     public function root(Request $request)
     {
@@ -45,8 +45,8 @@ class HomeController extends Controller
         if ($request->get('periode')) {
             $mperiode = $request->get('periode');
         } else {
-            $tahun = date('Y');
-            $bulan = date('m');
+            $tahun    = date('Y');
+            $bulan    = date('m');
             $mperiode = $tahun . '-' . $bulan;
         }
         if ($request->get('filter')) {
@@ -55,7 +55,7 @@ class HomeController extends Controller
             $filter = "sitename";
         }
 
-        $arraykpi = array();
+        $arraykpi = [];
         if ($filter == "sitename") {
             $kpi = DB::table('physicalavailable')->join('unit', 'unit.kdunit', '=', 'physicalavailable.kdunit')->join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')->select(DB::raw('idforklifttype, namaforklifttype, count(unit.kdunit) as jmlunit, sum(planunitkerja) as sumplanunitkerja, sum(totaljamkerja) as sumtotaljamkerja, avg(paforklift) as avgpaforklift  '))
                 ->where('periode', 'like', '%' . $mperiode . '%')
@@ -107,16 +107,16 @@ class HomeController extends Controller
                     ->get();
             }
 
-            $arraykpi[$i] = array(
-                'idforklifttype' => $k->idforklifttype,
+            $arraykpi[$i] = [
+                'idforklifttype'   => $k->idforklifttype,
                 'namaforklifttype' => $k->namaforklifttype,
-                'jmlunit' => $k->jmlunit,
+                'jmlunit'          => $k->jmlunit,
                 'sumplanunitkerja' => $k->sumplanunitkerja,
                 'sumtotaljamkerja' => $k->sumtotaljamkerja,
-                'totalbreakdown' => $k->sumplanunitkerja - $k->sumtotaljamkerja,
-                'avgpaforklift' => number_format($k->sumtotaljamkerja / $k->sumplanunitkerja * 100, 2),
-                'dataunit' => $dataunit,
-            );
+                'totalbreakdown'   => $k->sumplanunitkerja - $k->sumtotaljamkerja,
+                'avgpaforklift'    => number_format($k->sumtotaljamkerja / $k->sumplanunitkerja * 100, 2),
+                'dataunit'         => $dataunit,
+            ];
             $i++;
         }
 
@@ -146,16 +146,16 @@ class HomeController extends Controller
 
         $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->where('f_aktif', '1')->get();
         if ($request->filter == "sitename") {
-            $delivery = DB::table('delivery')->where('idsitename', request()->get('xidsitename'))->count('*');
+            $delivery  = DB::table('delivery')->where('idsitename', request()->get('xidsitename'))->count('*');
             $delivered = DB::table('delivery')->where('idsitename', request()->get('xidsitename'))->where('statuscustomer', 'close')->count('*');
         } else if ($request->filter == "region") {
-            $delivery = DB::table('delivery')->where('idregion', request()->get('xidregion'))->count('*');
+            $delivery  = DB::table('delivery')->where('idregion', request()->get('xidregion'))->count('*');
             $delivered = DB::table('delivery')->where('idregion', request()->get('xidregion'))->where('statuscustomer', 'close')->count('*');
         } else if ($request->filter == "cbu") {
-            $delivery = DB::table('delivery')->where('idcbu', request()->get('xidcbu'))->count('*');
+            $delivery  = DB::table('delivery')->where('idcbu', request()->get('xidcbu'))->count('*');
             $delivered = DB::table('delivery')->where('idcbu', request()->get('xidcbu'))->where('statuscustomer', 'close')->count('*');
         } else {
-            $delivery = 0;
+            $delivery  = 0;
             $delivered = 0;
         }
         if ($delivery == 0) {
@@ -171,30 +171,30 @@ class HomeController extends Controller
 
         $customer = MCustomer::get();
         // dd($sitename);
-        $unit = "[";
+        $unit        = "[";
         $achievement = "[";
-        $max = "[";
-        $base = "[";
-        $kategori = "";
-        $jmlunit = 0;
+        $max         = "[";
+        $base        = "[";
+        $kategori    = "";
+        $jmlunit     = 0;
         $totalavgkpi = 0;
-        $counter = 0;
+        $counter     = 0;
         foreach ($kpi as $k) {
             $achievement = $achievement . number_format($k->avgpaforklift, 2) . ',';
-            $max = $max . '100,';
-            $base = $base . '98,';
-            $unit = $unit . $k->jmlunit . ',';
-            $kategori = $kategori . ",'" . $k->namaforklifttype . "'";
-            $jmlunit = $jmlunit + $k->jmlunit;
+            $max         = $max . '100,';
+            $base        = $base . '98,';
+            $unit        = $unit . $k->jmlunit . ',';
+            $kategori    = $kategori . ",'" . $k->namaforklifttype . "'";
+            $jmlunit     = $jmlunit + $k->jmlunit;
             $totalavgkpi = $totalavgkpi + $k->avgpaforklift;
             $counter++;
         }
         // dd($totalavgkpi."-".$counter);
         $achievement = $achievement . "]";
-        $unit = $unit . "]";
-        $max = $max . "]";
-        $base = $base . "]";
-        $kategori = "[" . substr($kategori, 1) . "]";
+        $unit        = $unit . "]";
+        $max         = $max . "]";
+        $base        = $base . "]";
+        $kategori    = "[" . substr($kategori, 1) . "]";
         if ($counter == 0) {
             $avgkpi = 0;
         } else {
@@ -220,17 +220,17 @@ class HomeController extends Controller
 
         // return $request->all();
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'name'   => ['required', 'string', 'max:255'],
+            'email'  => ['required', 'string', 'email', 'max:255'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
         ]);
 
-        $user = User::find($id);
-        $user->name = $request->get('name');
+        $user        = User::find($id);
+        $user->name  = $request->get('name');
         $user->email = $request->get('email');
 
         if ($request->file('avatar')) {
-            $avatar = $request->file('avatar');
+            $avatar     = $request->file('avatar');
             $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
             $avatarPath = public_path('/images/');
             $avatar->move($avatarPath, $avatarName);
@@ -243,14 +243,14 @@ class HomeController extends Controller
             Session::flash('alert-class', 'alert-success');
             return response()->json([
                 'isSuccess' => true,
-                'Message' => "User Details Updated successfully!",
+                'Message'   => "User Details Updated successfully!",
             ], 200); // Status code here
         } else {
             Session::flash('message', 'Something went wrong!');
             Session::flash('alert-class', 'alert-danger');
             return response()->json([
                 'isSuccess' => true,
-                'Message' => "Something went wrong!",
+                'Message'   => "Something went wrong!",
             ], 200); // Status code here
         }
     }
@@ -262,16 +262,16 @@ class HomeController extends Controller
     {
         $request->validate([
             'current_password' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'password'         => ['required', 'string', 'min:6', 'confirmed'],
         ]);
 
-        if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {
+        if (! (Hash::check($request->get('current_password'), Auth::user()->password))) {
             return response()->json([
                 'isSuccess' => false,
-                'Message' => "Your Current password does not matches with the password you provided. Please try again.",
+                'Message'   => "Your Current password does not matches with the password you provided. Please try again.",
             ], 200); // Status code
         } else {
-            $user = User::find($id);
+            $user           = User::find($id);
             $user->password = Hash::make($request->get('password'));
             $user->update();
             if ($user) {
@@ -279,14 +279,14 @@ class HomeController extends Controller
                 Session::flash('alert-class', 'alert-success');
                 return response()->json([
                     'isSuccess' => true,
-                    'Message' => "Password updated successfully!",
+                    'Message'   => "Password updated successfully!",
                 ], 200); // Status code here
             } else {
                 Session::flash('message', 'Something went wrong!');
                 Session::flash('alert-class', 'alert-danger');
                 return response()->json([
                     'isSuccess' => true,
-                    'Message' => "Something went wrong!",
+                    'Message'   => "Something went wrong!",
                 ], 200); // Status code here
             }
         }

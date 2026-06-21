@@ -14,6 +14,7 @@ class ApiPresensi extends Controller
 
     public function store(Request $request)
     {
+        date_default_timezone_set('Asia/Jakarta');
         //cek presensi
         $mekanik=MMekanik::where('userid',$request->idmekanik)->first();
         $idmekanik=$mekanik->id;

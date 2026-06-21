@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\MForklifttype;
 use App\Models\MMaintenanceaction;
 use App\Models\MSitename;
@@ -86,20 +87,19 @@ class UnitController extends Controller
             Session::put('runnamasitename', $sitename->namasitename);
         } else if ($request->filter == "allsn") {
             if (Auth::user()->roles_id == "4" || Auth::user()->roles_id == "5" || Auth::user()->roles_id == "6") {
-            $unit = MUnit::where('idcbu', 'SN')->where('showcustomer', 'Y')->get();
-            }
-            else {
+                $unit = MUnit::where('idcbu', 'SN')->where('showcustomer', 'Y')->get();
+            } else {
                 $unit = MUnit::where('idcbu', 'SN')->get();
             }
         } else if ($request->filter == "allwater") {
             if (Auth::user()->roles_id == "4" || Auth::user()->roles_id == "5" || Auth::user()->roles_id == "6") {
-            $unit = MUnit::where('idcbu', 'Waters')->where('showcustomer', 'Y')->get();
+                $unit = MUnit::where('idcbu', 'Waters')->where('showcustomer', 'Y')->get();
             } else {
                 $unit = MUnit::where('idcbu', 'Waters')->get();
             }
         } else if ($request->filter == "allsnwater") {
             if (Auth::user()->roles_id == "4" || Auth::user()->roles_id == "5" || Auth::user()->roles_id == "6") {
-            $unit = MUnit::where('idcbu', 'SN')->orwhere('idcbu', 'Waters')->where('showcustomer', 'Y')->get();
+                $unit = MUnit::where('idcbu', 'SN')->orwhere('idcbu', 'Waters')->where('showcustomer', 'Y')->get();
             } else {
                 $unit = MUnit::where('idcbu', 'SN')->orwhere('idcbu', 'Waters')->get();
             }
@@ -249,5 +249,16 @@ class UnitController extends Controller
         $listactions = $listactions = MMaintenanceaction::where('kdunit', $request->keyword)->get();
         $listtroubleactions = MTroubleaction::where('kdunit', $request->keyword)->get();
         return view('unit.detail', compact('units', 'listactions', 'listtroubleactions'));
+    }
+
+    public function previewImage(Request $request)
+    {
+       if (!$request->ajax()) {
+            return redirect()->back();
+        }  
+
+        $file = MUnit::where('kdunit', '=', $request->id)->first();
+        $type = $request->type;
+        return view("unit.previewimage", compact("file", "type")); 
     }
 }

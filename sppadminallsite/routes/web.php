@@ -26,7 +26,21 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 Route::get('/registrasi', [App\Http\Controllers\HomeController::class, 'registrasi'])->name('registrasi');
 
+Route::get('/notification/read/{id}', function($id){
 
+    $notification = auth()
+        ->user()
+        ->notifications()
+        ->find($id);
+
+    if($notification)
+    {
+        $notification->markAsRead();
+    }
+
+    return redirect()->route('ticket.index');
+
+})->name('notification.read');
 //Update User Details
 
 
@@ -379,7 +393,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/', [App\Http\Controllers\UnitController::class, 'index'])->name('unit.index');
             Route::get('/getunit', [App\Http\Controllers\UnitController::class, 'getunit'])->name('unit.getunit');
             Route::get('/search', [App\Http\Controllers\UnitController::class, 'search'])->name('unit.search');
-
+            Route::get('/preview-image', [App\Http\Controllers\UnitController::class, 'previewImage'])->name('unit.previewImage');
         });
         Route::group(['prefix' => 'lokasi'], function () {
             Route::get('/getcbu/{id}', [App\Http\Controllers\ApiLokasi::class, 'getcbu'])->name('lokasi.getcbu');

@@ -23,7 +23,15 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 Route::get('/registrasi', [App\Http\Controllers\HomeController::class, 'registrasi'])->name('registrasi');
+Route::get('assets/inventory/{filename}', function ($filename) {
+    $path = public_path('assets/inventory/' . $filename);
 
+    if (file_exists($path)) {
+        return response()->file($path);
+    }
+
+    abort(404);
+});
 
 //Update User Details
 
@@ -32,9 +40,9 @@ Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class,
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 Route::get('restrictpage', [App\Http\Controllers\HomeController::class, 'restrictpage'])->name('restrictpage');
 Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
-    Route::get('kpiavailability',[App\Http\Controllers\HomeController::class, 'kpiavailability'])->name('kpiavailability');
-    Route::get('kpiunit',[App\Http\Controllers\HomeController::class, 'kpiunit'])->name('kpiunit');
-    Route::get('kpisparepart',[App\Http\Controllers\HomeController::class, 'kpisparepart'])->name('kpisparepart');
+    Route::get('kpiavailability', [App\Http\Controllers\HomeController::class, 'kpiavailability'])->name('kpiavailability');
+    Route::get('kpiunit', [App\Http\Controllers\HomeController::class, 'kpiunit'])->name('kpiunit');
+    Route::get('kpisparepart', [App\Http\Controllers\HomeController::class, 'kpisparepart'])->name('kpisparepart');
 
     Route::group(['roles' => ['administrator']], function () {
         Route::get('utility/userlog', [UtilityController::class, 'userlog'])->name('utility.userlog');
@@ -268,7 +276,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
 
 
     });
-    Route::group(['roles' => ['administrator','headofficepart', 'inventorypart']], function () {
+    Route::group(['roles' => ['administrator', 'headofficepart', 'inventorypart']], function () {
         Route::group(['prefix' => 'orders'], function () {
             Route::get('/', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
             Route::get('/history', [App\Http\Controllers\OrderController::class, 'history'])->name('orders.history');
@@ -295,7 +303,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
         });
 
     });
-    Route::group(['roles' => ['administrator', 'manajersite', 'customerallsite', 'customersite','cnp']], function () {
+    Route::group(['roles' => ['administrator', 'manajersite', 'customerallsite', 'customersite', 'cnp']], function () {
         Route::get('/gantipassword', [App\Http\Controllers\HomeController::class, 'gantipassword'])->name('gantipassword');
         Route::post('utility/userpasswordupdate', [UtilityController::class, 'userpasswordupdate'])->name('utility.userpasswordupdate');
         //Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
@@ -387,7 +395,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/', [App\Http\Controllers\UnitController::class, 'index'])->name('unit.index');
             Route::get('/getunit', [App\Http\Controllers\UnitController::class, 'getunit'])->name('unit.getunit');
             Route::get('/search', [App\Http\Controllers\UnitController::class, 'search'])->name('unit.search');
-
+            Route::get('/preview-image', [App\Http\Controllers\UnitController::class, 'previewImage'])->name('unit.previewImage');
         });
         Route::group(['prefix' => 'lokasi'], function () {
             Route::get('/getcbu/{id}', [App\Http\Controllers\ApiLokasi::class, 'getcbu'])->name('lokasi.getcbu');
@@ -402,9 +410,9 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/', [TicketController::class, 'index'])->name('ticket.index');
             Route::get('read/{id}', [TicketController::class, 'read'])->name('ticket.read');
             Route::get('create', [TicketController::class, 'create'])->name('ticket.create');
-            Route::post('sendticket',  [TicketController::class, 'sendticket'])->name('ticket.sendticket');
-            Route::post('replyticket',  [TicketController::class, 'replyticket'])->name('ticket.replyticket');
-            Route::post('close',  [TicketController::class, 'close'])->name('ticket.close');
+            Route::post('sendticket', [TicketController::class, 'sendticket'])->name('ticket.sendticket');
+            Route::post('replyticket', [TicketController::class, 'replyticket'])->name('ticket.replyticket');
+            Route::post('close', [TicketController::class, 'close'])->name('ticket.close');
 
         });
         Route::get('/getsitename', [App\Http\Controllers\SitenameController::class, 'getsitename'])->name('sitename.getsitename');

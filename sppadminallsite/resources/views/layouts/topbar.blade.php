@@ -4,31 +4,31 @@
             <!-- LOGO -->
             <div class="navbar-brand-box">
                 @if (!empty(Session::get('logo')))
-                    <a href="{{ route('root') }}" class="logo logo-dark">
-                        <span class="logo-sm">
-                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
-                                style="max-height:50px">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
-                                style="max-height:50px">
-                            <span class="logo-txt"></span>
-                        </span>
-                    </a>
+                <a href="{{ route('root') }}" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                            style="max-height:50px">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                            style="max-height:50px">
+                        <span class="logo-txt"></span>
+                    </span>
+                </a>
 
-                    <a href="{{ route('root') }}" class="logo logo-light">
-                        <span class="logo-sm">
-                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
-                                style="max-height:50px">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
-                                style="max-height:50px">
-                            <span class="logo-txt"></span>
-                        </span>
-                    </a>
+                <a href="{{ route('root') }}" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                            style="max-height:50px">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                            style="max-height:50px">
+                        <span class="logo-txt"></span>
+                    </span>
+                </a>
                 @else
-                    {{ Session::get('logo') }}
+                {{ Session::get('logo') }}
                 @endif
             </div>
 
@@ -46,8 +46,8 @@
         <div class="d-flex">
 
             <div class="dropdown d-inline-block d-lg-none ms-2">
-                <button type="button" class="btn header-item" id="page-header-search-dropdown"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn header-item" id="page-header-search-dropdown" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                     <i data-feather="search" class="icon-lg"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -70,24 +70,24 @@
                 <button type="button" class="btn header-item" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                     @switch(Session::get('lang'))
-                        @case('ru')
-                            <img src="{{ URL::asset('build/images/flags/russia.jpg') }}" alt="Header Language" height="16">
-                        @break
+                    @case('ru')
+                    <img src="{{ URL::asset('build/images/flags/russia.jpg') }}" alt="Header Language" height="16">
+                    @break
 
-                        @case('it')
-                            <img src="{{ URL::asset('build/images/flags/italy.jpg') }}" alt="Header Language" height="16">
-                        @break
+                    @case('it')
+                    <img src="{{ URL::asset('build/images/flags/italy.jpg') }}" alt="Header Language" height="16">
+                    @break
 
-                        @case('de')
-                            <img src="{{ URL::asset('build/images/flags/germany.jpg') }}" alt="Header Language" height="16">
-                        @break
+                    @case('de')
+                    <img src="{{ URL::asset('build/images/flags/germany.jpg') }}" alt="Header Language" height="16">
+                    @break
 
-                        @case('es')
-                            <img src="{{ URL::asset('build/images/flags/spain.jpg') }}" alt="Header Language" height="16">
-                        @break
+                    @case('es')
+                    <img src="{{ URL::asset('build/images/flags/spain.jpg') }}" alt="Header Language" height="16">
+                    @break
 
-                        @default
-                            <img src="{{ URL::asset('build/images/flags/us.jpg') }}" alt="Header Language" height="16">
+                    @default
+                    <img src="{{ URL::asset('build/images/flags/us.jpg') }}" alt="Header Language" height="16">
                     @endswitch
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
@@ -104,8 +104,8 @@
 
                     <!-- item-->
                     <a href="{{ url('index/de') }}" class="dropdown-item notify-item language" data-lang="gr">
-                        <img src="{{ URL::asset('build/images/flags/germany.jpg') }}" alt="user-image"
-                            class="me-1" height="12"> <span class="align-middle">German</span>
+                        <img src="{{ URL::asset('build/images/flags/germany.jpg') }}" alt="user-image" class="me-1"
+                            height="12"> <span class="align-middle">German</span>
                     </a>
 
                     <!-- item-->
@@ -130,14 +130,36 @@
                 </button>
             </div>
 
+            <style>
+            .notification-item {
+                padding: 10px 15px;
+            }
 
+            .notif-title {
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+
+            .notif-subject {
+                color: #777;
+                font-size: 13px;
+
+                display: block;
+                margin-left: 18px;
+
+                white-space: normal;
+                word-break: break-word;
+                overflow-wrap: break-word;
+                line-height: 1.4;
+            }
+            </style>
 
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon position-relative"
                     id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                     <i data-feather="bell" class="icon-lg"></i>
-                    <span class="badge bg-danger rounded-pill">5</span>
+                    <span class="badge bg-danger rounded-pill">{{ auth()->user()->unreadNotifications->count() }}</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-notifications-dropdown">
@@ -147,7 +169,43 @@
                                 <h6 class="m-0"> Notifications </h6>
                             </div>
                             <div class="col-auto">
-                                <a href="#!" class="small text-reset text-decoration-underline"> Unread (3)</a>
+                                <a href="#!" class="small text-reset text-decoration-underline"> Unread
+                                    ({{ auth()->user()->unreadNotifications->count() }})</a>
+                                <ul>
+                                    @forelse(auth()->user()->unreadNotifications as $notif)
+
+
+                                    <li class="notification-item">
+                                        <a href="{{ route('notification.read', $notif->id) }}" class="dropdown-item">
+
+
+
+                                            <small>
+
+                                                <div class="notif-title">
+                                                    Ticket Baru Dari abc
+                                                </div>
+
+                                                <div class="notif-subject">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    Subject : Mohon diterbitkan Invoice untuk perpanjangan domain telah
+                                                    dibuat
+                                                </div>
+
+                                            </small>
+                                        </a>
+                                    </li>
+
+                                    @empty
+
+                                    <li>
+                                        <span class="dropdown-item">
+                                            Tidak ada notifikasi
+                                        </span>
+                                    </li>
+
+                                    @endforelse
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -170,8 +228,7 @@
 
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item topbar-light bg-light-subtle border-start border-end"
-                    id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
+                    id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user"
                         src="@if (Auth::user()->avatar != '') {{ URL::asset('build/images/users/' . Auth::user()->avatar) }}@else{{ URL::asset('build/images/users/avatar-1.jpg') }} @endif"
                         alt="Header Avatar">
@@ -180,8 +237,8 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="#"><i
-                            class="mdi mdi-face-man font-size-16 align-middle me-1"></i> Profile</a>
+                    <a class="dropdown-item" href="#"><i class="mdi mdi-face-man font-size-16 align-middle me-1"></i>
+                        Profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="javascript:void();"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i

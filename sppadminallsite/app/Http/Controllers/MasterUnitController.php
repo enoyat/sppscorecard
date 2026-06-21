@@ -29,38 +29,42 @@ class MasterUnitController extends Controller
      */
     public function index()
     {
-        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
-        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
-        $unit = MUnit::where('idsitename',Session::get('runidsitename'))->get();
-        return view('master.unit.index', compact('unit','cbu','sitename'));
+        $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+        $unit = MUnit::where('idsitename', Session::get('runidsitename'))->get();
+        return view('master.unit.index', compact('unit', 'cbu', 'sitename'));
     }
     public function create()
     {
-        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $forklifttype = MForklifttype::get();
-        return view('master.unit.create',compact('cbu','forklifttype'));
+        return view('master.unit.create', compact('cbu', 'forklifttype'));
     }
     public function edit($id)
     {
-        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $unit = MUnit::find($id);
         $forklifttype = MForklifttype::get();
-        return view('master.unit.edit',compact('cbu','unit','forklifttype'));
+        return view('master.unit.edit', compact('cbu', 'unit', 'forklifttype'));
     }
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
-            'idcbu'=>'required',
-            'idregion'=>'required',
-            'idsitename'=>'required',
-            'kdunit'=>'required|unique:unit,kdunit',
-            'hm'=>'required',
-            'price'=>'required',
-            'idforklifttype'=>'required',
-            'showcustomer'=>'required',
+            'idcbu' => 'required',
+            'idregion' => 'required',
+            'idsitename' => 'required',
+            'kdunit' => 'required|unique:unit,kdunit',
+            'hm' => 'required',
+            'price' => 'required',
+            'idforklifttype' => 'required',
+            'showcustomer' => 'required',
             'flag_baru' => 'required',
-
-
+            'fileSilo' => 'image'
         ]);
+
+        $filename = '';
+        $siloname = '';
+
         if (!empty($request->filefoto)) {
             $file = $request->filefoto;
             $pathUpload = 'img';
@@ -72,7 +76,14 @@ class MasterUnitController extends Controller
             $filename = 'default.png';
         }
 
+        if (!empty($request->fileSilo)) {
+            $file = $request->fileSilo;
+            $pathSilo = 'img';
 
+            $extension = $file->getClientOriginalExtension();
+            $siloname = time() . "silo." . $extension;
+            $file->move($pathSilo, $siloname);
+        }
 
         $unit = new MUnit;
         $unit->idcbu = $request->idcbu;
@@ -105,6 +116,8 @@ class MasterUnitController extends Controller
         $unit->flag_otif = $request->flag_otif;
         $unit->flag_target = $request->flag_target;
         $unit->flag_actual = $request->flag_actual;
+        $unit->file_silo = $siloname;
+        $unit->date_silo = $request->siloDate;
         $simpan = $unit->save();
 
         if ($simpan) {
@@ -126,10 +139,14 @@ class MasterUnitController extends Controller
     {
 
         $request->validate([
-            'idcbu'=>'required',
-            'idregion'=>'required',
-            'idsitename'=>'required',
+            'idcbu' => 'required',
+            'idregion' => 'required',
+            'idsitename' => 'required',
+            'fileSiloNew' => 'image'
         ]);
+
+        $unit = MUnit::find($id);
+
         if (!empty($request->filefoto)) {
             $file = $request->filefoto;
             $pathUpload = 'img';
@@ -141,9 +158,24 @@ class MasterUnitController extends Controller
             $filename = 'default.png';
         }
 
+        if (!empty($request->fileSiloNew)) {
+            if ($unit->file_silo) {
+                $pathUpload = 'img' . $unit->file_silo;
+                if (file_exists($pathUpload)) {
+                    unlink($pathUpload);
+                }
+            }
 
+            $file = $request->fileSiloNew;
+            $pathSilo = 'img';
 
-        $unit = MUnit::find($id);
+            $extension = $file->getClientOriginalExtension();
+            $siloname = time() . "silo." . $extension;
+            $file->move($pathSilo, $siloname);
+
+            $unit->file_silo = $siloname;
+        }
+
         $unit->idcbu = $request->idcbu;
         $unit->idregion = $request->idregion;
         $unit->idsitename = $request->idsitename;
@@ -172,7 +204,7 @@ class MasterUnitController extends Controller
         $unit->flag_otif = $request->flag_otif;
         $unit->flag_target = $request->flag_target;
         $unit->flag_actual = $request->flag_actual;
-
+        $unit->date_silo = $request->siloDate;
 
         $simpan = $unit->save();
         if ($simpan) {
@@ -211,9 +243,10 @@ class MasterUnitController extends Controller
             return redirect()->back();
         }
     }
-    public function getunit(Request $request){
-        $unit = MUnit::where('idsitename',$request->idsitename)->
-        where('kdunit', 'LIKE', '%'.$request->search.'%')->orderBy('kdunit', 'ASC')->get();
+    public function getunit(Request $request)
+    {
+        $unit = MUnit::where('idsitename', $request->idsitename)->
+            where('kdunit', 'LIKE', '%' . $request->search . '%')->orderBy('kdunit', 'ASC')->get();
 
         $response = array();
         foreach ($unit as $value) {
@@ -226,12 +259,13 @@ class MasterUnitController extends Controller
         return response()->json($response);
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
 
         $units = MUnit::where('kdunit', 'LIKE', '%' . $request->keyword . '%')->orderBy('kdunit', 'ASC')->get();
-        $listactions= $listactions=MMaintenanceaction::where('kdunit',$request->keyword)->get();
-        $listtroubleactions=MTroubleaction::where('kdunit',$request->keyword)->get();
-        return view('masterunit.search', compact('units','listactions','listtroubleactions'));
+        $listactions = $listactions = MMaintenanceaction::where('kdunit', $request->keyword)->get();
+        $listtroubleactions = MTroubleaction::where('kdunit', $request->keyword)->get();
+        return view('masterunit.search', compact('units', 'listactions', 'listtroubleactions'));
     }
 
 }

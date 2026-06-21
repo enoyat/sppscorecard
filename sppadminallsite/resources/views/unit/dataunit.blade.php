@@ -1,43 +1,63 @@
-<table id="example"
-class="display nowrap table table-striped table-bordered scroll-horizontal font-size-11"
-cellspacing="0" style="border-collapse: collapse;  widtd: 100%;">
-<thead>
-    <tr>
-        <th SCOPE="COL">CODE UNIT</th>
-        <th SCOPE="COL">EQUIPMENT</th>
-        <th SCOPE="COL">FORKLIFT TYPE</th>
-        <th SCOPE="COL">MERK</th>
-        <th SCOPE="COL">TYPE</th>
-        <th SCOPE="COL">MODEL</th>
-        <th SCOPE="COL">SERIAL NUMBER</th>
-        <th SCOPE="COL">CAPACITY (KILOGRAM)</th>
-        <th SCOPE="COL">MAST (STAGE)</th>
-        <th SCOPE="COL">HEIGHT (METER)</th>
-        <th SCOPE="COL">IMAGE</th>
-    </tr>
-</thead>
-<tbody>
-    @php $i=1; @endphp
-    @foreach ($units as $key)
+<table id="example" class="display nowrap table table-striped table-bordered scroll-horizontal font-size-11"
+    cellspacing="0" style="border-collapse: collapse;  widtd: 100%;">
+    <thead>
         <tr>
-
-
-
-            <td scope="col">{{ $key->kdunit }}</td>
-            <td scope="col">{{ $key->equipment }}</td>
-            <td scope="col">{{ $key->getforklifttype->namaforklifttype }}</td>
-            <td scope="col">{{ $key->merk }}</td>
-            <td scope="col">{{ $key->type }}</td>
-            <td scope="col">{{ $key->model }}</td>
-            <td scope="col">{{ $key->serialnumber }}</td>
-            {{-- <td scope="col">{{ $key->capcity }}</td> --}}
-            <td scope="col">{{ number_format($key->capcity) }}</td>
-            <td scope="col">{{ round($key->mast,1) }}</td>
-            <td scope="col">{{ round($key->masheight,1) }}</td>
-            <td scope="col"><img src="{{ asset('/img/'.$key->foto) }}" width="100px" ></td>
-
-
+            <th SCOPE="COL">CODE UNIT</th>
+            <th SCOPE="COL">EQUIPMENT</th>
+            <th SCOPE="COL">FORKLIFT TYPE</th>
+            <th SCOPE="COL">MERK</th>
+            <th SCOPE="COL">TYPE</th>
+            <th SCOPE="COL">MODEL</th>
+            <th SCOPE="COL">SERIAL NUMBER</th>
+            <th SCOPE="COL">CAPACITY (KILOGRAM)</th>
+            <th SCOPE="COL">MAST (STAGE)</th>
+            <th SCOPE="COL">HEIGHT (METER)</th>
+            <th SCOPE="COL">IMAGE</th>
+            <th SCOPE="COL">SILO</th>
+            <th SCOPE="COL">SILO DATE</th>
         </tr>
-    @endforeach
-</tbody>
+    </thead>
+    <tbody>
+        @php $i = 1; @endphp
+        @foreach ($units as $key)
+            <tr>
+
+
+
+                <td scope="col">{{ $key->kdunit }}</td>
+                <td scope="col">{{ $key->equipment }}</td>
+                <td scope="col">{{ $key->getforklifttype->namaforklifttype }}</td>
+                <td scope="col">{{ $key->merk }}</td>
+                <td scope="col">{{ $key->type }}</td>
+                <td scope="col">{{ $key->model }}</td>
+                <td scope="col">{{ $key->serialnumber }}</td>
+                {{-- <td scope="col">{{ $key->capcity }}</td> --}}
+                <td scope="col">{{ number_format($key->capcity) }}</td>
+                <td scope="col">{{ round($key->mast, 1) }}</td>
+                <td scope="col">{{ round($key->masheight, 1) }}</td>
+                <td scope="col">
+                    <a href="#" class="imagePreviewForklift" data-id="{{ $key->kdunit }}">
+                        <img src="{{ asset('/img/' . $key->foto) }}"
+                            style="max-height: 50px; border-radius: 8px;">
+                    </a>
+                </td>
+                <td scope="col">
+                    @if ($key->file_silo)
+                        <a href="#" class="imagePreview" data-id="{{ $key->kdunit }}"><img
+                                src="{{ asset('/img/' . $key->file_silo) }}"
+                                style="max-height: 50px; border-radius: 8px;"></a>
+                    @else
+                        <span class="text-muted">No Image</span>
+                    @endif
+                </td>
+                <td scope="col">
+                    @if ($key->date_silo)
+                        {{ date_format(date_create($key->date_silo), 'd M Y') }}
+                    @else
+                        -
+                    @endif
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
 </table>

@@ -238,4 +238,14 @@ class UnitController extends Controller
         return view('unit.detail', compact('units','listactions','listtroubleactions'));
     }
 
+    public function previewImage(Request $request)
+    {
+       if (!$request->ajax()) {
+            return redirect()->back();
+        }  
+
+        $file = MUnit::where('kdunit', '=', $request->id)->first();
+        $type = $request->type;
+        return view("unit.previewimage", compact("file", "type"));
+    }
 }

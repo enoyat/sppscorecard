@@ -198,11 +198,19 @@
                                         <option value="N">No</option>
                                     </select>
                                 </div>
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <label class="form-label">Silo</label>
+                                        <input type="file" name="fileSilo" id="fileSilo" class="form-control" accept="image/*">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label">Tanggal Berlaku Silo</label>
+                                        <input type="date" name="siloDate" id="siloDate" class="form-control">
+                                    </div>
+                                </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
-
                                 </div>
-
                             </div>
                         </div>
 
