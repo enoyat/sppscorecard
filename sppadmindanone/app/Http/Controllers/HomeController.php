@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MSitename;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -27,7 +28,14 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        return view('index');
+         $notifications = auth()->user()
+            ->notifications()
+            ->latest()
+            ->take(10)
+            ->get();
+
+        return view('index', compact('notifications'));
+        
     }
     public function root(Request $request)
     {

@@ -32,8 +32,22 @@ Route::get('assets/inventory/{filename}', function ($filename) {
 
     abort(404);
 });
+Route::get('/notification/read/{id}', function($id){
 
-//Update User Details
+    $notification = auth()
+        ->user()
+        ->notifications()
+        ->find($id);
+
+    if($notification)
+    {
+        $notification->markAsRead();
+    }
+
+    return redirect()->route('ticket.index');
+
+})->name('notification.read');
+
 
 
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');

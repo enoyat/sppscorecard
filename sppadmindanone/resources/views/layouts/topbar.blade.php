@@ -8,7 +8,8 @@
                         <img src="{{ asset('build/images/logo.png') }}" alt="" height="24">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('build/images/logo.png') }}" alt="" height="24"> <span class="logo-txt">SPP</span>
+                        <img src="{{ asset('build/images/logo.png') }}" alt="" height="24"> <span
+                            class="logo-txt">SPP</span>
                     </span>
                 </a>
 
@@ -17,7 +18,8 @@
                         <img src="{{ asset('build/images/logo.png') }}" alt="" height="24">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('build/images/logo.png') }}" alt="" height="24"> <span class="logo-txt">SPP</span>
+                        <img src="{{ asset('build/images/logo.png') }}" alt="" height="24"> <span
+                            class="logo-txt">SPP</span>
                     </span>
                 </a>
             </div>
@@ -25,10 +27,10 @@
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
-            <div  style="margin-top:20px">
+            <div style="margin-top:20px">
                 <span class="logo-txt header-item">{{ Session::get('namacustomer') }}</span>
             </div>
-            <div  style="margin-top:20px">
+            <div style="margin-top:20px">
 
             </div>
         </div>
@@ -60,24 +62,20 @@
                 <button type="button" class="btn header-item" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                     @switch(Session::get('lang'))
-                        @case('ru')
-                            <img src="{{ URL::asset('build/images/flags/russia.jpg') }}" alt="Header Language"
-                                height="16">
-                        @break
-                        @case('it')
-                            <img src="{{ URL::asset('build/images/flags/italy.jpg') }}" alt="Header Language"
-                                height="16">
-                        @break
-                        @case('de')
-                            <img src="{{ URL::asset('build/images/flags/germany.jpg') }}" alt="Header Language"
-                                height="16">
-                        @break
-                        @case('es')
-                            <img src="{{ URL::asset('build/images/flags/spain.jpg') }}" alt="Header Language"
-                                height="16">
-                        @break
-                        @default
-                            <img src="{{ URL::asset('build/images/flags/us.jpg') }}" alt="Header Language" height="16">
+                    @case('ru')
+                    <img src="{{ URL::asset('build/images/flags/russia.jpg') }}" alt="Header Language" height="16">
+                    @break
+                    @case('it')
+                    <img src="{{ URL::asset('build/images/flags/italy.jpg') }}" alt="Header Language" height="16">
+                    @break
+                    @case('de')
+                    <img src="{{ URL::asset('build/images/flags/germany.jpg') }}" alt="Header Language" height="16">
+                    @break
+                    @case('es')
+                    <img src="{{ URL::asset('build/images/flags/spain.jpg') }}" alt="Header Language" height="16">
+                    @break
+                    @default
+                    <img src="{{ URL::asset('build/images/flags/us.jpg') }}" alt="Header Language" height="16">
                     @endswitch
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
@@ -120,14 +118,36 @@
                 </button>
             </div>
 
+            <style>
+            .notification-item {
+                padding: 10px 15px;
+            }
 
+            .notif-title {
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+
+            .notif-subject {
+                color: #777;
+                font-size: 13px;
+
+                display: block;
+                margin-left: 18px;
+
+                white-space: normal;
+                word-break: break-word;
+                overflow-wrap: break-word;
+                line-height: 1.4;
+            }
+            </style>
 
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon position-relative"
                     id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                     <i data-feather="bell" class="icon-lg"></i>
-                    <span class="badge bg-danger rounded-pill">5</span>
+                    <span class="badge bg-danger rounded-pill">{{ auth()->user()->unreadNotifications->count() }}</span>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-notifications-dropdown">
@@ -137,7 +157,43 @@
                                 <h6 class="m-0"> Notifications </h6>
                             </div>
                             <div class="col-auto">
-                                <a href="#!" class="small text-reset text-decoration-underline"> Unread (3)</a>
+                                <a href="#!" class="small text-reset text-decoration-underline"> Unread
+                                    ({{ auth()->user()->unreadNotifications->count() }})</a>
+                                <ul>
+                                    @forelse(auth()->user()->unreadNotifications as $notif)
+
+
+                                    <li class="notification-item">
+                                        <a href="{{ route('notification.read', $notif->id) }}" class="dropdown-item">
+
+
+
+                                            <small>
+
+                                                <div class="notif-title">
+                                                    Ticket Baru Dari abc
+                                                </div>
+
+                                                <div class="notif-subject">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    Subject : Mohon diterbitkan Invoice untuk perpanjangan domain telah
+                                                    dibuat
+                                                </div>
+
+                                            </small>
+                                        </a>
+                                    </li>
+
+                                    @empty
+
+                                    <li>
+                                        <span class="dropdown-item">
+                                            Tidak ada notifikasi
+                                        </span>
+                                    </li>
+
+                                    @endforelse
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -152,11 +208,6 @@
                 </div>
             </div>
 
-            <div class="dropdown d-inline-block">
-                <button type="button" class="btn header-item right-bar-toggle me-2">
-                    <i data-feather="settings" class="icon-lg"></i>
-                </button>
-            </div>
 
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item topbar-light bg-light-subtle border-start border-end"
@@ -169,8 +220,8 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="#"><i
-                            class="mdi mdi-face-man font-size-16 align-middle me-1"></i> Profile</a>
+                    <a class="dropdown-item" href="#"><i class="mdi mdi-face-man font-size-16 align-middle me-1"></i>
+                        Profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="javascript:void();"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
