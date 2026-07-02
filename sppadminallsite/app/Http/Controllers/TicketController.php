@@ -1,114 +1,355 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\MSitename;
 use App\Models\Ticket;
 use App\Models\User;
-use App\Models\UserCustomer;
-use App\Notifications\TransaksiNotification;
+use App\Notifications\TicketNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Session;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
-    public function index()
+    /**
+     * Display listing
+     */
+    public function index(Request $request)
     {
-        $tickets = Ticket::null()->with('getuser')->orderby('id', 'desc')->where('idsitename', Session::get('runidsitename'))->get();
+        $query = Ticket::with(['user']);
 
-        return view('ticket.inbox', ['tickets' => $tickets]);
+        // Search
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+      
+        // Filter Status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Filter Priority
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->priority);
+        }
+
+        $tickets = $query
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+      
+        return view('tickets.index', compact('tickets'));
     }
+
+    /**
+     * Form Create
+     */
+
     public function create()
     {
-        return view('ticket.create');
+        $users = User::orderBy('name')->get();
+        $sites = \App\Models\MSitename::orderBy('namasitename')->get();
+
+        return view('tickets.create', compact('users', 'sites'));
     }
 
-    public function read(Request $request)
+    /**
+     * Save Ticket
+     */
+    public function store(Request $request)
     {
-        $mainticket = Ticket::with('getuser')->where('id', $request->id)->orderby('id', 'desc')->first();
-        $tickets    = Ticket::with('getuser')->where('parentid', $request->id)->orderby('id', 'desc')->get();
-        return view('ticket.read', compact('mainticket', 'tickets'));
+        $request->validate([
+            'title'       => 'required|max:255',
+            'description' => 'required',
+            'priority'    => 'required',
+            'idsitename'  => 'nullable|exists:sitename,id',
+        ]);
 
-    }
-    public function getticket($id)
-    {
+        $ticket = Ticket::create([
+            'user_id'     => auth()->id(),
+            'idsitename'  => $request->idsitename,
+            'title'       => $request->title,
+            'description' => $request->description,
+            'priority'    => $request->priority,
+            'status'      => 'Open',
+        ]);
 
-        $tickets  = Ticket::with('getcustomer')->where('userid', $id)->orderby('id', 'desc')->get();
-        $customer = UserCustomer::with('getusers')->where('id', $id)->first();
-
-        return view('ticket.listticket', ['tickets' => $tickets, 'customer' => $customer]);
-    }
-
-    public function inticket($id)
-    {
-        $tickets   = Ticket::with('getcustomer')->where('userid', $id)->orderby('id', 'desc')->get();
-        $customers = UserCustomer::with('getusers')->get();
-        return view('ticket.ticket', ['customers' => $customers, 'tickets' => $tickets]);
-    }
-    public function sendticket(Request $request)
-    {
-
-        $ticket             = new Ticket();
-        $ticket->userid     = Auth::user()->id;
-        $ticket->subject    = $request->subject;
-        $ticket->message    = $request->message;
-        $ticket->idsitename = $request->search;
-        $ticket->type       = '0';
-        $ticket->status     = 'unread';
-        $ticket->save();
-
-        $admins = User::where('roles_id', '1')->get();
-
-        foreach ($admins as $admin) {
-            $admin->notify(
-                new TransaksiNotification(
-                    'Ticket Baru Dari ' . Auth::user()->name,
-                    'Subject : ' . $ticket->subject . ' telah dibuat',
-                    route('ticket.index')
+        foreach ($ticket->site->users as $user) {
+            $user->notify(
+                new TicketNotification(
+                    $ticket,
+                    "Ticket baru untuk Site " . $ticket->site->namasitename . " telah dibuat."
                 )
             );
         }
-        return redirect()->route('ticket.index');
-    }
-    public function replyticket(Request $request)
-    {
 
-        $ticket          = new Ticket();
-        $ticket->userid  = Auth::user()->id;
-        $ticket->subject = $request->subject;
-        $ticket->message = $request->message;
-        if (Auth::user()->roles_id == '1' || Auth::user()->roles_id == '2') {
-            $mainticket             = Ticket::find($request->parentid);
-            $mainticket->duedate    = $request->duedate;
-            $mainticket->actualdate = $request->actualdate;
-            $mainticket->save();
+        if ($request->hasFile('attachment')) {
 
-            $notification = auth()
-                ->user()
-                ->notifications()
-                ->find($id);
+            $file = $request->file('attachment');
 
-            if ($notification) {
-                $notification->markAsRead();
-            }
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            $file->storeAs(
+                'ticket-attachments',
+                $filename,
+                'public'
+            );
+
+            $ticket->attachment = $filename;
+            $ticket->save();
         }
-        $ticket->type     = '0';
-        $ticket->status   = 'open';
-        $ticket->parentid = $request->parentid;
-        $ticket->datepost = date('Y-m-d H:i:s');
+        return redirect()
+            ->route('tickets.index')
+            ->with('success', 'Ticket berhasil dibuat.');
+    }
+    public function claim(Ticket $ticket)
+    {
+        // Sudah ada PIC
+        if ($ticket->pic_id) {
 
-        $ticket->save();
-        return redirect()->back();
+            return back()->with(
+                'warning',
+                'Ticket sudah diambil oleh ' . $ticket->pic->name
+            );
+
+        }
+
+        DB::beginTransaction();
+
+        try {
+
+            $ticket->update([
+
+                'pic_id' => auth()->id(),
+
+                'status' => 'Progress',
+
+            ]);
+
+            // Notifikasi pembuat ticket
+            $ticket->user->notify(
+
+                new TicketNotification(
+
+                    $ticket,
+
+                    auth()->user()->name . ' mengambil ticket Anda.'
+
+                )
+
+            );
+
+            // Notifikasi semua anggota site
+            foreach ($ticket->site->users as $user) {
+
+                if ($user->id != auth()->id()) {
+
+                    $user->notify(
+
+                        new TicketNotification(
+
+                            $ticket,
+
+                            auth()->user()->name . ' menjadi PIC Ticket #' . $ticket->id
+
+                        )
+
+                    );
+
+                }
+
+            }
+
+            DB::commit();
+
+            return back()->with(
+                'success',
+                'Ticket berhasil diambil.'
+            );
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with(
+                'error',
+                $e->getMessage()
+            );
+
+        }
+
     }
-    public function clearticket($id)
+    /**
+     * Detail Ticket
+     */
+    public function show(Ticket $ticket)
     {
-        $tickets = Ticket::where('userid', $id)->delete();
-        return redirect()->back();
+        $ticket->load([
+            'user',
+            'assignee',
+            'replies.user',
+        ]);
+
+        $users = User::orderBy('name')->get();
+
+        return view('tickets.show', compact(
+            'ticket',
+            'users'
+        ));
     }
-    public function close(Request $request)
+
+    /**
+     * Form Edit
+     */
+
+    public function edit(Ticket $ticket)
     {
-        $ticket         = Ticket::find($request->id);
-        $ticket->status = 'close';
-        $ticket->save();
-        return redirect()->route('ticket.index');
+        if (
+            auth()->id() != $ticket->user_id &&
+            auth()->user()->role != 'Admin'
+        ) {
+            abort(403);
+        }
+
+        if (
+            $ticket->status != 'Open' ||
+            $ticket->pic_id != null
+        ) {
+
+            return back()->with(
+                'warning',
+                'Ticket sudah diproses dan tidak dapat diubah.'
+            );
+
+        }
+
+        $sites = MSitename::orderBy('name')->get();
+
+        return view('tickets.edit', compact(
+            'ticket',
+            'sites'
+        ));
     }
+    /**
+     * Update Ticket
+     */
+    public function update(Request $request, Ticket $ticket)
+    {
+        if (
+            auth()->id() != $ticket->user_id &&
+            auth()->user()->role != 'Admin'
+        ) {
+            abort(403);
+        }
+
+        if (
+            $ticket->status != 'Open' ||
+            $ticket->pic_id
+        ) {
+
+            return back()->with(
+                'warning',
+                'Ticket sudah diproses.'
+            );
+
+        }
+
+        $ticket->update($request->all());
+
+        return redirect()
+            ->route('tickets.show', $ticket)
+            ->with(
+                'success',
+                'Ticket berhasil diperbarui.'
+            );
+    }
+
+    /**
+     * Delete Ticket
+     */
+    public function destroy(Ticket $ticket)
+    {
+        if (
+            auth()->id() != $ticket->user_id &&
+            auth()->user()->role != 'Admin'
+        ) {
+            abort(403);
+        }
+
+        if (
+            $ticket->status != 'Open' ||
+            $ticket->pic_id
+        ) {
+
+            return back()->with(
+                'warning',
+                'Ticket sudah diproses dan tidak dapat dihapus.'
+            );
+
+        }
+
+        $ticket->delete();
+
+        return redirect()
+            ->route('tickets.index')
+            ->with(
+                'success',
+                'Ticket berhasil dihapus.'
+            );
+    }
+    /**
+     * Update Status
+     */
+    public function updateStatus(Request $request, Ticket $ticket)
+    {
+        $request->validate([
+            'status' => 'required',
+        ]);
+
+        $ticket->update([
+            'status' => $request->status,
+        ]);
+
+        // Notifikasi ke pembuat ticket
+        if ($ticket->user) {
+
+            $ticket->user->notify(
+                new TicketNotification(
+                    $ticket,
+                    "Status ticket berubah menjadi {$ticket->status}"
+                )
+            );
+        }
+
+        return back()->with('success', 'Status berhasil diubah.');
+    }
+
+    /**
+     * Assign Teknisi
+     */
+    public function assign(Request $request, Ticket $ticket)
+    {
+        $request->validate([
+            'assigned_to' => 'required|exists:users,id',
+        ]);
+
+        $ticket->update([
+            'assigned_to' => $request->assigned_to,
+        ]);
+
+        $user = User::find($request->assigned_to);
+
+        if ($user) {
+
+            $user->notify(
+                new TicketNotification(
+                    $ticket,
+                    "Ticket baru telah diassign kepada Anda."
+                )
+            );
+        }
+
+        return back()->with('success', 'Ticket berhasil diassign.');
+    }
+
 }

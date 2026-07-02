@@ -52,7 +52,7 @@
 
 <!-- Required datatable js -->
 <script src="{{ URL::asset('build/libs/datatables/datatables.min.js') }}"></script>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
 <!-- init js -->
 <script src="{{ URL::asset('build/js/pages/datatable-pages.init.js') }}"></script>
 <!-- Buttons examples -->

@@ -60,7 +60,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('ticket.index') }}">
+                    <a href="{{ route('tickets.index') }}">
                         <i data-feather="file-text"></i>
                         <span data-key="t-horizontal">Ticket</span>
                     </a>

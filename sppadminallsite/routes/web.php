@@ -7,8 +7,8 @@ use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\LaporanTransaksi;
-
-
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\TicketReplyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,21 +26,6 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 Route::get('/registrasi', [App\Http\Controllers\HomeController::class, 'registrasi'])->name('registrasi');
 
-Route::get('/notification/read/{id}', function($id){
-
-    $notification = auth()
-        ->user()
-        ->notifications()
-        ->find($id);
-
-    if($notification)
-    {
-        $notification->markAsRead();
-    }
-
-    return redirect()->route('ticket.index');
-
-})->name('notification.read');
 //Update User Details
 
 
@@ -48,6 +33,34 @@ Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class,
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 Route::get('restrictpage', [App\Http\Controllers\HomeController::class, 'restrictpage'])->name('restrictpage');
 Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
+    Route::resource('tickets',TicketController::class);
+    Route::post('/tickets/{ticket}/claim', [TicketController::class, 'claim'])
+    ->name('tickets.claim');
+        // Update status ticket
+    Route::post('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])
+        ->name('tickets.status');
+
+    // Assign teknisi
+    Route::post('/tickets/{ticket}/assign', [TicketController::class, 'assign'])
+        ->name('tickets.assign');
+    // Reply ticket
+    Route::post('/tickets/{ticket}/resolve', [TicketReplyController::class, 'resolve'])
+        ->name('tickets.resolve');
+            // Reply ticket
+    Route::post('/tickets/{ticket}/reopen', [TicketReplyController::class, 'reopen'])
+        ->name('tickets.reopen');
+    // Reply ticket
+    Route::post('/tickets/{ticket}/close', [TicketReplyController::class, 'close'])
+        ->name('tickets.close');
+    Route::post('/tickets/{ticket}/reply', [TicketReplyController::class, 'store'])
+        ->name('tickets.reply.store');
+
+        
+    // Notification
+    
+    Route::get('/notifications/unread', [NotificationController::class, 'unread'])->name('notifications.unread');
+    Route::get('/notifications/read/{id}', [NotificationController::class, 'read'])->name('notifications.read');
+    Route::resource('notifications', NotificationController::class);
     Route::get('kpiavailability',[App\Http\Controllers\HomeController::class, 'kpiavailability'])->name('kpiavailability');
     Route::get('kpiunit',[App\Http\Controllers\HomeController::class, 'kpiunit'])->name('kpiunit');
     Route::get('kpisparepart',[App\Http\Controllers\HomeController::class, 'kpisparepart'])->name('kpisparepart');
@@ -404,15 +417,15 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
 
         });
 
-        Route::group(['prefix' => 'ticket'], function () {
-            Route::get('/', [TicketController::class, 'index'])->name('ticket.index');
-            Route::get('read/{id}', [TicketController::class, 'read'])->name('ticket.read');
-            Route::get('create', [TicketController::class, 'create'])->name('ticket.create');
-            Route::post('sendticket',  [TicketController::class, 'sendticket'])->name('ticket.sendticket');
-            Route::post('replyticket',  [TicketController::class, 'replyticket'])->name('ticket.replyticket');
-            Route::post('close',  [TicketController::class, 'close'])->name('ticket.close');
+        // Route::group(['prefix' => 'ticket'], function () {
+        //     Route::get('/', [TicketController::class, 'index'])->name('ticket.index');
+        //     Route::get('read/{id}', [TicketController::class, 'read'])->name('ticket.read');
+        //     Route::get('create', [TicketController::class, 'create'])->name('ticket.create');
+        //     Route::post('sendticket',  [TicketController::class, 'sendticket'])->name('ticket.sendticket');
+        //     Route::post('replyticket',  [TicketController::class, 'replyticket'])->name('ticket.replyticket');
+        //     Route::post('close',  [TicketController::class, 'close'])->name('ticket.close');
 
-        });
+        // });
         Route::get('/getsitename', [App\Http\Controllers\SitenameController::class, 'getsitename'])->name('sitename.getsitename');
         Route::get('/getregion', [App\Http\Controllers\SitenameController::class, 'getregion'])->name('sitename.getregion');
 

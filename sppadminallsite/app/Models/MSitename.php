@@ -45,5 +45,9 @@ class MSitename extends Model
     {
         return $query->where('kategori', $kategori);
     }
+    public function users()
+    {
+        return $this->hasMany(User::class, 'idsitename');
+    }
 
 }

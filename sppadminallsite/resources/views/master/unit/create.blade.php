@@ -16,7 +16,7 @@
             <div class="card-header">
                 <h4 class="card-title">Form Unit </h4>
             </div>
-            <div class="card-body p-4">
+            <div class="card-body p-4"> 
 
                 <form action="{{ route('masterunit.store') }}" method="POST" enctype="multipart/form-data">
                     <div class="row">
@@ -201,7 +201,7 @@
                                 <div class="row mb-3">
                                     <div class="col-6">
                                         <label class="form-label">Silo</label>
-                                        <input type="file" name="fileSilo" id="fileSilo" class="form-control" accept="image/*">
+                                        <input type="file" name="fileSilo" id="fileSilo" class="form-control" accept="image/*,.pdf">
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Tanggal Berlaku Silo</label>

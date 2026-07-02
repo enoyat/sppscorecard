@@ -49,6 +49,16 @@ class MasterUnitController extends Controller
     }
     public function store(Request $request)
     {
+         $unit = MUnit::where('kdunit', $request->kdunit)->first();
+        
+        if ($unit) {
+            return back()
+                ->withErrors([
+                    'kdunit' => "Kode Unit sudah digunakan.           
+            Site Name: {$unit->getsitename->namasitename}",
+                ])
+                ->withInput();
+        }
         $request->validate([
             'idcbu' => 'required',
             'idregion' => 'required',
