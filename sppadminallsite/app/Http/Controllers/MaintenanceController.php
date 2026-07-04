@@ -1,24 +1,17 @@
 <?php
-
 namespace App\Http\Controllers;
-
 
 use App\Models\MDokumenmaintenance;
 use App\Models\MMaintenance;
-use App\Models\MForklifttype;
 use App\Models\MMaintenanceaction;
-use App\Models\MUnit;
-use App\Models\User;
 use App\Models\MSitename;
-use Illuminate\Console\View\Components\Alert as ComponentsAlert;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Session;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\MUnit;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class MaintenanceController extends Controller
 {
@@ -30,13 +23,14 @@ class MaintenanceController extends Controller
      */
     public function index()
     {
-        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
-        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
-        $maintenance = MUnit::where('idsitename',Session::get('runidsitename'))->get();
-        return view('maintenance.index', compact('maintenance','cbu','sitename'));
+        $sitename    = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $cbu         = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+        $maintenance = MUnit::where('idsitename', Session::get('runidsitename'))->get();
+        return view('maintenance.index', compact('maintenance', 'cbu', 'sitename'));
     }
-    public function create(){
-        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+    public function create()
+    {
+        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         return view('maintenance.create', compact('cbu'));
     }
 
@@ -64,18 +58,25 @@ class MaintenanceController extends Controller
     }
     public function listdokumen($id)
     {
-        $dokumenmaintenance=MDokumenmaintenance::where('idaction',$id)->get();
-        return view('maintenance.listdokumen', compact('dokumenmaintenance','id'));
+        $dokumenmaintenance = MDokumenmaintenance::where('idaction', $id)->get();
+        return view('maintenance.listdokumen', compact('dokumenmaintenance', 'id'));
     }
 
     public function dokumendestroy(Request $request)
     {
         try {
-            $id = $request->id;
-            $data=MDokumenmaintenance::where('id', '=', $id)->first();
-            $file=$data->filename;
-            $path = public_path().'/assets/inventory/'.$file;
-            unlink($path);
+            $id   = $request->id;
+            $data = MDokumenmaintenance::where('id', '=', $id)->first();
+            $file = $data->filename;
+
+            $file = public_path('assets/inventory/' . $file);
+
+            if (File::exists($file)) {
+                File::delete($file);
+            }
+
+            // $path = public_path() . '/assets/inventory/' . $file;
+            // unlink($path);
             MDokumenmaintenance::where('id', '=', $id)->delete();
             return redirect()->back();
         } catch (QueryException $ex) {
@@ -85,14 +86,14 @@ class MaintenanceController extends Controller
     public function listaction($id)
     {
 
-        $listactions=MMaintenanceaction::where('kdunit',$id)->get();
+        $listactions = MMaintenanceaction::where('kdunit', $id)->get();
         return view('maintenance.listaction', compact('listactions'));
     }
     public function listactionall()
     {
-        $listactions = MMaintenanceaction::join('unit','unit.kdunit','=','maintenanceaction.kdunit')
-        ->where('unit.idsitename',Session::get('runidsitename'))
-        ->get();
+        $listactions = MMaintenanceaction::join('unit', 'unit.kdunit', '=', 'maintenanceaction.kdunit')
+            ->where('unit.idsitename', Session::get('runidsitename'))
+            ->get();
 
         return view('maintenance.listaction', compact('listactions'));
     }
@@ -108,43 +109,120 @@ class MaintenanceController extends Controller
     }
     public function formstatus(Request $request)
     {
-        $id = $request->id;
+        $id  = $request->id;
         $aid = $request->aid;
-        if($request->aid == 'spp'){
+        if ($request->aid == 'spp') {
             $maintenance = MMaintenanceaction::find($id);
-            return view('maintenance.formstatus', compact('maintenance','aid'));
-        }
-        else {
+            return view('maintenance.formstatus', compact('maintenance', 'aid'));
+        } else {
             $maintenance = MMaintenanceaction::find($id);
-            return view('maintenance.formstatuscustomer', compact('maintenance','aid'));
+            return view('maintenance.formstatuscustomer', compact('maintenance', 'aid'));
         }
 
     }
     public function updatestatus(Request $request)
     {
 
-        $id = $request->id;
+        $id  = $request->id;
         $aid = $request->aid;
-        if($request->aid == 'spp'){
+        if ($request->aid == 'spp') {
             $request->validate([
-                'statusspp'=>'required',
+                'statusspp' => 'required',
             ]);
-            $statusspp = $request->statusspp;
-            $maintenance = MMaintenanceaction::find($id);
+            $statusspp              = $request->statusspp;
+            $maintenance            = MMaintenanceaction::find($id);
             $maintenance->statusspp = $statusspp;
             $maintenance->save();
-        }
-        else {
+        } else {
             $request->validate([
-                'statuscustomer'=>'required',
+                'statuscustomer' => 'required',
             ]);
-            $statuscustomer = $request->statuscustomer;
-            $maintenance = MMaintenanceaction::find($id);
+            $statuscustomer              = $request->statuscustomer;
+            $maintenance                 = MMaintenanceaction::find($id);
             $maintenance->statuscustomer = $statuscustomer;
             $maintenance->save();
         }
 
         return redirect()->back();
     }
+    public function formaction(Request $request)
+    {
+        $maintenance = MMaintenanceaction::findOrFail($request->id);
 
+        return view(
+            'maintenance.formaction',
+            compact('maintenance')
+        );
+    }
+
+    public function actionupdate(Request $request, MMaintenanceaction $maintenance)
+    {
+        $request->validate([
+            'shift'        => 'required',
+            'hm'           => 'required|numeric',
+            'actionplan'   => 'required',
+            'sparepart'    => 'nullable',
+            'tanggalmulai' => 'required',
+            'tanggalakhir' => 'nullable',
+        ]);
+
+        $maintenance->update([
+
+            'shift'        => $request->shift,
+
+            'hm'           => $request->hm,
+
+            'actionplan'   => $request->actionplan,
+
+            'sparepart'    => $request->sparepart,
+
+            'tanggalmulai' => $request->tanggalmulai,
+
+            'tanggalakhir' => $request->tanggalakhir,
+
+        ]);
+
+        return redirect()
+            ->route('maintenance.listactionall')
+            ->with('success', 'Data berhasil diperbarui.');
+    }
+
+    public function dokumenstore(Request $request)
+    {
+        $request->validate([
+
+            'description' => 'required',
+
+            'images'      => 'required',
+
+            'images.*'    => 'image|mimes:jpg,jpeg,png,webp|max:4096',
+
+        ]);
+
+        foreach ($request->file('images') as $image) {
+
+            $filename = time() . '_' . Str::random(5) . '.' . $image->extension();
+
+            $image->move(
+                public_path('assets/inventory'),
+                $filename
+            );
+
+            MDokumenmaintenance::create([
+
+                'idaction'   => $request->maintenance_id,
+
+                'keterangan' => $request->description,
+
+                'filename'   => $filename,
+
+            ]);
+
+        }
+
+        return back()->with(
+            'success',
+            'Foto berhasil diupload.'
+        );
+    }
 }

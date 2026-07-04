@@ -16,31 +16,81 @@ class TicketController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Ticket::with(['user']);
+        $user = auth()->user();
 
-        // Search
+        $query = Ticket::with([
+            'user',
+            'site',
+            'pic',
+        ]);
+    
+        /*
+    |--------------------------------------------------------------------------
+    | Hak Akses
+    |--------------------------------------------------------------------------
+    */
+
+        if ($user->roles_id != 1) {
+           
+            // Admin Site & Teknisi hanya melihat ticket site-nya
+            if (in_array($user->roles_id, [2, 4,5])) {
+
+                $query->where('idsitenameasal', $user->idsitename);
+
+            }
+
+           
+
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Search
+    |--------------------------------------------------------------------------
+    */
+
         if ($request->filled('search')) {
-            $query->where('title', 'like', '%' . $request->search . '%');
-        }
-      
-        // Filter Status
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
+
+            $query->where(function ($q) use ($request) {
+
+                $q->where('title', 'like', "%{$request->search}%")
+                    ->orWhere('description', 'like', "%{$request->search}%");
+
+            });
+
         }
 
-        // Filter Priority
+        /*
+    |--------------------------------------------------------------------------
+    | Status
+    |--------------------------------------------------------------------------
+    */
+
+        if ($request->filled('status')) {
+
+            $query->where('status', $request->status);
+
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Priority
+    |--------------------------------------------------------------------------
+    */
+
         if ($request->filled('priority')) {
+
             $query->where('priority', $request->priority);
+
         }
 
         $tickets = $query
             ->latest()
             ->paginate(10)
             ->withQueryString();
-      
+
         return view('tickets.index', compact('tickets'));
     }
-
     /**
      * Form Create
      */
@@ -63,11 +113,13 @@ class TicketController extends Controller
             'description' => 'required',
             'priority'    => 'required',
             'idsitename'  => 'nullable|exists:sitename,id',
+            'idsitenameasal' => 'nullable|exists:sitename,id',
         ]);
 
         $ticket = Ticket::create([
             'user_id'     => auth()->id(),
             'idsitename'  => $request->idsitename,
+            'idsitenameasal' => auth()->user()->idsitename,
             'title'       => $request->title,
             'description' => $request->description,
             'priority'    => $request->priority,
@@ -78,7 +130,7 @@ class TicketController extends Controller
             $user->notify(
                 new TicketNotification(
                     $ticket,
-                    "Ticket baru untuk Site " . $ticket->site->namasitename . " telah dibuat."
+                    "Ticket baru dari " . $ticket->user->name . " (" . $ticket->user->getsitename->namasitename . ") untuk Site " . $ticket->site->namasitename . " telah dibuat."
                 )
             );
         }

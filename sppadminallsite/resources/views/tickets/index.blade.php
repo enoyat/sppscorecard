@@ -201,7 +201,7 @@
 
                         <td>
 
-                            {{ $ticket->user->name ?? '-' }}
+                            {{ $ticket->user->name  }} ({{ $ticket->user->getsitename->namasitename  }})
 
                         </td>
 

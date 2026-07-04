@@ -1,14 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\MSitename;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
-use App\Models\MCustomer;
-use App\Models\MSitename;
-
 use Session;
 
 class LoginController extends Controller
@@ -44,12 +41,12 @@ class LoginController extends Controller
     }
     public function redirectTo()
     {
-        $roles = Auth::user()->roles_id;
-        $kdcustomer=Auth::user()->kdcustomer;
-        $namacustomer=Auth::user()->getcustomer->namacustomer;
-        $category=Auth::user()->getcustomer->category;
-        $sitename=Auth::user()->idsitename;
-        $namasitename=MSitename::where('id',$sitename)->first();
+        $roles        = Auth::user()->roles_id;
+        $kdcustomer   = Auth::user()->kdcustomer;
+        $namacustomer = Auth::user()->getcustomer->namacustomer;
+        $category     = Auth::user()->getcustomer->category;
+        $sitename     = Auth::user()->idsitename;
+        $namasitename = MSitename::where('id', $sitename)->first();
 
         switch ($roles) {
             case 1:
@@ -74,15 +71,15 @@ class LoginController extends Controller
                 break;
             case 4:
 
-                    Session::put('runidsitename', $sitename);
-                    Session::put('runnamasitename', $namasitename->namasitename);
-                    Session::put('roles_id', $roles);
-                    Session::put('kdcustomer', $kdcustomer);
-                    Session::put('namacustomer', $namacustomer);
-                    Session::put('category', $category);
-                    return route('root');
-                    break;
-                case 5:
+                Session::put('runidsitename', $sitename);
+                Session::put('runnamasitename', $namasitename->namasitename);
+                Session::put('roles_id', $roles);
+                Session::put('kdcustomer', $kdcustomer);
+                Session::put('namacustomer', $namacustomer);
+                Session::put('category', $category);
+                return route('root');
+                break;
+            case 5:
 
                 Session::put('runidsitename', $sitename);
                 Session::put('runnamasitename', $namasitename->namasitename);
@@ -92,16 +89,16 @@ class LoginController extends Controller
                 Session::put('category', $category);
                 return route('root');
                 break;
-                case 6:
+            case 6:
 
-                    Session::put('runidsitename', $sitename);
-                    Session::put('runnamasitename', $namasitename->namasitename);
-                    Session::put('roles_id', $roles);
-                    Session::put('kdcustomer', $kdcustomer);
-                    Session::put('namacustomer', $namacustomer);
-                    Session::put('category', $category);
-                    return route('root');
-                    break;
+                Session::put('runidsitename', $sitename);
+                Session::put('runnamasitename', $namasitename->namasitename);
+                Session::put('roles_id', $roles);
+                Session::put('kdcustomer', $kdcustomer);
+                Session::put('namacustomer', $namacustomer);
+                Session::put('category', $category);
+                return route('root');
+                break;
             default:
                 return redirect()->route('login');
                 break;

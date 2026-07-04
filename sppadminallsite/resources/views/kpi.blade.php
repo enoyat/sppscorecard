@@ -20,9 +20,11 @@
 
 
 
-                <input type="text" name="periode" id="periode"
+                <!-- <input type="text" name="periode" id="periode"
                     value="@if (request()->get('periode') != null) {{ request()->get('periode') }} @endif"
-                    placeholder="yyyy-mm" class="form-control">
+                    placeholder="yyyy-mm" class="form-control"> -->
+                    <input type="month" name="periode" class="form-control"
+                        value="{{ request()->get('periode') ?? now()->format('Y-m') }}" placeholder="yyyy-mm" required>
 
                 <select name="filter" id="filter" class="form-control">
                     <option value="" {{ request()->get('filter') == '' ? 'selected' : '' }}>
@@ -139,7 +141,7 @@
                         <div class="col-12">
                             <span class="text-muted mb-3 lh-1 d-block text-truncate">Total Units</span>
                             <h4 class="mb-3">
-                                <span class="counter-value" data-target="{{ $jmlunit }}">0</span>
+                                <span class="counter-value" data-target="{{ $dashboard->sum('jumlah_unit') }}">0</span>
                             </h4>
                         </div>
                         <div id="pie-chartunit"
@@ -161,7 +163,7 @@
                         <div class="col-12">
                             <span class="text-muted mb-3 lh-1 d-block text-truncate">KPI</span>
                             <h4 class="mb-3">
-                                <span class="counter-value" data-target="{{ $avgkpi }}">0</span>%
+                                <span class="counter-value" data-target="{{ $dashboard->avg('pa') }}">0</span>%
                             </h4>
                         </div>
 
@@ -175,7 +177,7 @@
                         <div class="col-12">
                             <span class="text-muted mb-3 lh-1 d-block text-truncate">Delivery Schedule</span>
                             <h4 class="mb-3">
-                                <span class="counter-value" data-target="{{ $kpidelivery }}">0</span>%
+                                <span class="counter-value" data-target="#">0</span>%
                             </h4>
                         </div>
 
@@ -189,7 +191,7 @@
                         <div class="col-12">
                             <span class="text-muted mb-3 lh-1 d-block text-truncate">Spare Parts</span>
                             <h4 class="mb-3">
-                                <span class="counter-value" data-target="{{ $kpisparepart }}">0</span>%
+                                <span class="counter-value" data-target="">0</span>%
                             </h4>
                         </div>
 
@@ -202,62 +204,7 @@
 
     </div>
 
-    <div class="row">
-        <?php $i = 0; ?>
-        @foreach ($arraykpi as $item)
-            <div class="col-xl-4 col-md-8">
-                <!-- card -->
-                <div class="card card-h-100" style="border:1px solid; ">
-                    <!-- card body -->
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-12">
-                                <span
-                                    class="text-muted mb-3 lh-1 d-block text-truncate">{{ $item['namaforklifttype'] }}</span>
-                                <h4 class="mb-3">
-                                    <?php $kpi = ($item['sumtotaljamkerja'] / $item['sumplanunitkerja']) * 100; ?>
 
-                                    <span class="counter-value" data-target="{{ number_format($kpi, 2) }}">0</span>%
-                                </h4>
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div id="pie-chart{{ $i }}"
-                                data-colors='["#0625c2", "#d7f23a", "#4ba6ef", "#ffbf53", "#5156be"]'
-                                class="e-charts">
-                            </div>
-                            <input type="hidden" name="totalbreakdown{{ $i }}"
-                                id="totalbreakdown{{ $i }}" value="{{ $item['totalbreakdown'] }}">
-
-                            <input type="hidden" name="sumtotaljamkerja{{ $i }}"
-                                id="sumtotaljamkerja{{ $i }}" value="{{ $item['sumtotaljamkerja'] }}">
-
-                        </div>
-                        <div class="text-nowrap">
-                            <span class="badge bg-primary ">{{ number_format($item['jmlunit']) }}</span>
-                            <span class="ms-1 text-muted font-size-13">Units</span>
-                        </div>
-                        <div class="text-nowrap">
-                            <span class="badge bg-primary ">{{ number_format($item['sumplanunitkerja']) }}</span>
-                            <span class="ms-1 text-muted font-size-13">Target Available (Minutes)</span>
-                        </div>
-                        <div class="text-nowrap">
-                            <span
-                                class="badge badge-soft-success text-success">{{ number_format($item['sumtotaljamkerja']) }}</span>
-                            <span class="ms-1 text-muted font-size-13">Total Available (Minutes)</span>
-                        </div>
-                        <div class="text-nowrap">
-                            <span
-                                class="badge badge-soft-danger text-success">{{ number_format($item['totalbreakdown']) }}</span>
-                            <span class="ms-1 text-muted font-size-13">Breakdown (Minutes)</span>
-                        </div>
-                    </div><!-- end card body -->
-                </div><!-- end card -->
-            </div>
-            <?php $i++; ?>
-        @endforeach
-    </div>
 </div>
 
 
@@ -295,14 +242,7 @@
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-            // legend: {
-            //     orient: 'horizontal',
-            //     left: 'left',
-            //     data: {{ $kategori }},
-            //     textStyle: {
-            //         color: '#858d98'
-            //     }
-            // },
+           
             color: pieColors, //['#fd625e', '#2ab57d', '#4ba6ef', '#ffbf53', '#5156be'],
             series: [{
                 name: 'Type',

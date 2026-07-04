@@ -1,23 +1,17 @@
 <?php
-
 namespace App\Http\Controllers;
 
-
-use App\Models\MUnit;
-
+use App\Models\MCbu;
 use App\Models\MForklifttype;
 use App\Models\MPhysical;
-use App\Models\User;
 use App\Models\MSitename;
-use Illuminate\Console\View\Components\Alert as ComponentsAlert;
-use Illuminate\Support\Facades\Auth;
+use App\Models\MUnit;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Validator;
 
 class PhysicalController extends Controller
 {
@@ -27,43 +21,90 @@ class PhysicalController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
-        $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
-        $physical = MPhysical::with('getunit')->where('idsitename', Session::get('runidsitename'))->get();
-        $forklifttype = MForklifttype::get();
-        return view('physical.index', compact('physical', 'forklifttype', 'cbu','sitename'));
+        $sitename = MSitename::member(Session::get('kdcustomer'))
+            ->kategori('sitename')
+            ->get();
+
+        $cbu = MSitename::member(Session::get('kdcustomer'))
+            ->kategori('cbu')
+            ->get();
+
+        $forklifttype = MForklifttype::all();
+
+        // Ambil periode terbaru terlebih dahulu
+        $periodeTerbaru = MPhysical::max('periode');
+
+        $query = MPhysical::with([
+            'getunit',
+            'getcbu',
+            'getregion',
+            'getsitename',
+        ]);
+
+        // Filter Site
+        if (Session::get('runidsitename')) {
+            $query->where('idsitename', Session::get('runidsitename'));
+        }
+
+        // Filter Periode
+        $periode = $request->filled('periode')
+            ? $request->periode
+            : $periodeTerbaru;
+
+        if ($periode) {
+            $query->where('periode', $periode);
+        }
+
+        $physical = $query
+            ->orderBy('kdunit')
+            ->get();
+
+        // Dropdown periode
+        $listPeriode = MPhysical::select('periode')
+            ->distinct()
+            ->orderBy('periode', 'desc')
+            ->pluck('periode');
+
+        return view('physical.index', compact(
+            'physical',
+            'forklifttype',
+            'cbu',
+            'sitename',
+            'listPeriode',
+            'periodeTerbaru',
+            'periode'
+        ));
     }
     public function create()
     {
         if (Session::get('roles_id') == 2) {
-            $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+            $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         } else {
-            $cbu=MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+            $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         }
         $forklifttype = MForklifttype::get();
         return view('physical.create', compact('cbu', 'forklifttype'));
     }
     public function edit($id)
     {
-        $cbu = MCbu::get();
+        $cbu          = MCbu::get();
         $forklifttype = MForklifttype::get();
-        $physical = MPhysical::find($id);
+        $physical     = MPhysical::find($id);
         return view('physical.edit', compact('cbu', 'forklifttype', 'physical'));
     }
     public function store(Request $request)
     {
         $request->validate([
-            'idcbu' => 'required',
-            'idregion' => 'required',
-            'idsitename' => 'required',
-            'periode' => 'required',
-            'pilihunit' => 'required',
-            'harikerja' => 'required',
+            'idcbu'         => 'required',
+            'idregion'      => 'required',
+            'idsitename'    => 'required',
+            'periode'       => 'required',
+            'pilihunit'     => 'required',
+            'harikerja'     => 'required',
             'planunitkerja' => 'required',
         ]);
-
 
         if ($request->pilihunit == "allunit") {
 
@@ -73,16 +114,16 @@ class PhysicalController extends Controller
                 $cek = MPhysical::where('kdunit', $item->kdunit)->where('periode', $request->periode)->count();
                 if ($cek < 1) {
 
-                    $physical = new MPhysical;
-                    $physical->idcbu = $request->idcbu;
-                    $physical->idregion = $request->idregion;
-                    $physical->idsitename = $request->idsitename;
-                    $physical->periode = $request->periode;
-                    $physical->kdunit = $item->kdunit;
-                    $physical->harikerja = $request->harikerja;
+                    $physical                = new MPhysical;
+                    $physical->idcbu         = $request->idcbu;
+                    $physical->idregion      = $request->idregion;
+                    $physical->idsitename    = $request->idsitename;
+                    $physical->periode       = $request->periode;
+                    $physical->kdunit        = $item->kdunit;
+                    $physical->harikerja     = $request->harikerja;
                     $physical->planunitkerja = $request->planunitkerja;
                     $physical->totaljamkerja = $request->planunitkerja;
-                    $physical->paforklift = 100;
+                    $physical->paforklift    = 100;
 
                     $simpan = $physical->save();
                 }
@@ -97,16 +138,16 @@ class PhysicalController extends Controller
                 Session::flash('message', 'Data sudah ada!');
                 return redirect()->back();
             }
-            $physical = new MPhysical;
-            $physical->idcbu = $request->idcbu;
-            $physical->idregion = $request->idregion;
-            $physical->idsitename = $request->idsitename;
-            $physical->periode = $request->periode;
-            $physical->kdunit = $request->kdunit;
-            $physical->harikerja = $request->harikerja;
+            $physical                = new MPhysical;
+            $physical->idcbu         = $request->idcbu;
+            $physical->idregion      = $request->idregion;
+            $physical->idsitename    = $request->idsitename;
+            $physical->periode       = $request->periode;
+            $physical->kdunit        = $request->kdunit;
+            $physical->harikerja     = $request->harikerja;
             $physical->planunitkerja = $request->planunitkerja;
             $physical->totaljamkerja = $request->planunitkerja;
-            $physical->paforklift = 100;
+            $physical->paforklift    = 100;
 
             $simpan = $physical->save();
 
@@ -125,28 +166,26 @@ class PhysicalController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'idcbu' => 'required',
-            'idregion' => 'required',
-            'idsitename' => 'required',
-            'periode' => 'required',
-            'kdunit' => 'required',
-            'harikerja' => 'required',
+            'idcbu'         => 'required',
+            'idregion'      => 'required',
+            'idsitename'    => 'required',
+            'periode'       => 'required',
+            'kdunit'        => 'required',
+            'harikerja'     => 'required',
             'planunitkerja' => 'required',
         ]);
 
-
-
-        $physical = MPhysical::find($id);
-        $physical->idcbu = $request->idcbu;
-        $physical->idregion = $request->idregion;
-        $physical->idsitename = $request->idsitename;
-        $physical->periode = $request->periode;
-        $physical->kdunit = $request->kdunit;
-        $physical->harikerja = $request->harikerja;
-        $physical->planunitkerja = $request->planunitkerja;
+        $physical                 = MPhysical::find($id);
+        $physical->idcbu          = $request->idcbu;
+        $physical->idregion       = $request->idregion;
+        $physical->idsitename     = $request->idsitename;
+        $physical->periode        = $request->periode;
+        $physical->kdunit         = $request->kdunit;
+        $physical->harikerja      = $request->harikerja;
+        $physical->planunitkerja  = $request->planunitkerja;
         $physical->totalbreakdown = $request->totalbreakdown;
-        $physical->totaljamkerja = $request->planunitkerja;
-        $simpan = $physical->save();
+        $physical->totaljamkerja  = $request->planunitkerja;
+        $simpan                   = $physical->save();
 
         if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
@@ -156,7 +195,7 @@ class PhysicalController extends Controller
             Session::flash('alert-class', 'alert-danger');
             return response()->json([
                 'isSuccess' => true,
-                'Message' => "Something went wrong!"
+                'Message'   => "Something went wrong!",
             ], 200); // Status code here
         }
     }
@@ -184,34 +223,43 @@ class PhysicalController extends Controller
     }
     public function formstatus(Request $request)
     {
-        $id = $request->id;
-        $aid = $request->aid;
+        $id       = $request->id;
+        $aid      = $request->aid;
         $physical = MPhysical::find($id);
         return view('physical.formstatus', compact('physical', 'aid'));
     }
     public function updatestatus(Request $request)
     {
 
-        $id = $request->id;
+        $id  = $request->id;
         $aid = $request->aid;
         if ($request->aid == 'spp') {
             $request->validate([
                 'statusspp' => 'required',
             ]);
-            $statusspp = $request->statusspp;
-            $physical = MPhysical::find($id);
+            $statusspp           = $request->statusspp;
+            $physical            = MPhysical::find($id);
             $physical->statusspp = $statusspp;
             $physical->save();
         } else {
             $request->validate([
                 'statuscustomer' => 'required',
             ]);
-            $statuscustomer = $request->statuscustomer;
-            $physical = MPhysical::find($id);
+            $statuscustomer           = $request->statuscustomer;
+            $physical                 = MPhysical::find($id);
             $physical->statuscustomer = $statuscustomer;
             $physical->save();
         }
 
         return redirect()->route('physical.index');
+    }
+    public function generate()
+    {
+        Artisan::call('physical:generate');
+
+        return back()->with(
+            'success',
+            'Generate berhasil.'
+        );
     }
 }

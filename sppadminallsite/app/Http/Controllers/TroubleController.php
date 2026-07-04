@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class TroubleController extends Controller
 {
@@ -222,4 +223,89 @@ class TroubleController extends Controller
 
         return redirect()->back();
     }
+    public function formaction(Request $request)
+    {
+        $trouble = MTroubleaction::findOrFail($request->id);
+
+        return view(
+            'trouble.formaction',
+            compact('trouble')
+        );
+    }
+
+    public function actionupdate(Request $request, MTroubleaction $trouble)
+    {
+       
+        $request->validate([
+            'shift'        => 'required',
+            'periode'     => 'required',
+            'actionplan'   => 'required',
+            'sparepart'    => 'nullable',
+            'tanggalmulai' => 'required',
+            'tanggalakhir' => 'nullable',
+        ]);
+
+        $trouble->update([
+            'periode'      => $request->periode,
+
+            'shift'        => $request->shift,
+
+            'actionplan'   => $request->actionplan,
+
+            'sparepart'    => $request->sparepart,
+
+            'tanggalmulai' => $request->tanggalmulai,
+
+            'tanggalakhir' => $request->tanggalakhir,
+            'lapsetime'    => $request->lapsetime,
+            'terbackup'      => $request->terbackup,
+            'backup_minutes' => $request->backup_minutes,
+
+        ]);
+
+        return redirect()
+            ->route('trouble.index')
+            ->with('success', 'Data berhasil diperbarui.');
+    }
+
+    public function dokumenstore(Request $request)
+    {
+        $request->validate([
+
+            'description' => 'required',
+
+            'images'      => 'required',
+
+            'images.*'    => 'image|mimes:jpg,jpeg,png,webp|max:4096',
+
+        ]);
+
+        foreach ($request->file('images') as $image) {
+
+            $filename = time() . '_' . Str::random(5) . '.' . $image->extension();
+
+            $image->move(
+                public_path('assets/inventory'),
+                $filename
+            );
+
+            MDokumentrouble::create([
+
+                'idaction'   => $request->trouble_id,
+
+                'keterangan' => $request->description,
+
+                'filename'   => $filename,
+
+            ]);
+
+        }
+
+        return back()->with(
+            'success',
+            'Foto berhasil diupload.'
+        );
+    }
+
+
 }

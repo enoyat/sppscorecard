@@ -70,47 +70,72 @@
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">Periode</label>
-                                    <input class="form-control" type="text" value="" name="periode" id="periode" maxlength="7" placeholder="yyyy-mm">
+                                   
+                                    <div class="mb-3">
+                                        <label class="form-label">Periode</label>
+
+                                        <input type="month" class="form-control" id="periode" name="periode"
+                                            value="{{ date('Y-m') }}">
+                                    </div>
+
                                 </div>
                                 <div class="mb-3">
-                                <div>
-                                <h5 class="font-size-14 mb-3">Pilih Unit</h5>
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="radio" name="pilihunit"
-
-                                        id="formRadios1" checked value="allunit">
-                                    <label class="form-check-label" for="formRadios1">
-                                        ALL UNIT
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="pilihunit"
-                                        id="formRadios2" value="itemunit">
-                                    <label class="form-check-label" for="formRadios2">
-                                        ONLY UNIT
-                                    </label>
-                                </div>
-                            </div>
+                                    <div>
+                                        <h5 class="font-size-14 mb-3">Pilih Unit</h5>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" name="pilihunit"
+                                                id="formRadios1" checked value="allunit">
+                                            <label class="form-check-label" for="formRadios1">
+                                                ALL UNIT
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="pilihunit"
+                                                id="formRadios2" value="itemunit">
+                                            <label class="form-check-label" for="formRadios2">
+                                                ONLY UNIT
+                                            </label>
+                                        </div>
+                                    </div>
 
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="example-password-input" class="form-label">Pilih Unit</label>
 
-                                    <select name="kdunit" id="kdunit"  class="form-control"></select>
+                                    <select name="kdunit" id="kdunit" class="form-control"></select>
                                 </div>
 
 
                                 <div class="mb-3">
-                                    <label for="example-tel-input" class="form-label">WORK DAYS</label>
-                                    <input class="form-control" type="tel" value="" name="harikerja" id="harikerja">
+                                   
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Work Days
+
+                                        </label>
+
+                                        <input type="number" id="harikerja" name="harikerja" class="form-control"
+                                            readonly>
+
+                                    </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="example-password-input" class="form-label">PLAN WORK DAYS
-                                        (Minutes)</label>
-                                    <input class="form-control" type="text" value="" name="planunitkerja"
-                                        id="planunitkerja">
+                                    
+                                    <div class="mb-3">
+
+                                        <label class="form-label">
+
+                                            Plan Work Days (Minutes)
+
+                                        </label>
+
+                                        <input type="number" id="planunitkerja" name="planunitkerja"
+                                            class="form-control" readonly>
+
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <button type="submit" class="btn btn-primary w-md">Submit</button>
@@ -134,6 +159,41 @@
 </div>
 <!-- end row -->
 <script>
+function hitungMenit() {
+
+    let periode = $('#periode').val();
+
+    if (periode == '') return;
+
+    let p = periode.split('-');
+
+    let tahun = parseInt(p[0]);
+
+    let bulan = parseInt(p[1]);
+
+    // jumlah hari dalam bulan
+    let jumlahHari = new Date(tahun, bulan, 0).getDate();
+
+    $('#harikerja').val(jumlahHari);
+
+    let menit = jumlahHari * 24 * 60;
+
+    $('#planunitkerja').val(menit.toLocaleString('id-ID'));
+
+}
+
+$('#periode').change(function() {
+
+    hitungMenit();
+
+});
+
+$(document).ready(function() {
+
+    hitungMenit();
+
+});
+
 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 jQuery('#idcbu').change(function() {
     jQuery('#idregion').html('');

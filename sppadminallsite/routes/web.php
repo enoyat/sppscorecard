@@ -7,8 +7,11 @@ use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\LaporanTransaksi;
+use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PhysicalController;
 use App\Http\Controllers\TicketReplyController;
+use App\Http\Controllers\TroubleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,6 +131,21 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::delete('/actiondestroy/{id}', [App\Http\Controllers\TroubleController::class, 'actiondestroy'])->name('trouble.actiondestroy');
         });
 
+Route::get(
+    'trouble/formaction',
+    [TroubleController::class,'formaction']
+);
+
+Route::put(
+    'trouble/actionupdate/{trouble}',
+    [TroubleController::class,'actionupdate']
+)->name('trouble.actionupdate');
+
+Route::post(
+    'trouble/dokumenstore',
+    [TroubleController::class, 'dokumenstore']
+)->name('trouble.dokumenstore');
+
         Route::group(['prefix' => 'beritaacara'], function () {
             Route::get('/', [App\Http\Controllers\BeritaacaraController::class, 'index'])->name('beritaacara.index');
             Route::get('/create', [App\Http\Controllers\BeritaacaraController::class, 'create'])->name('beritaacara.create');
@@ -165,6 +183,20 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/formstatus', [App\Http\Controllers\MaintenanceController::class, 'formstatus'])->name('maintenance.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\MaintenanceController::class, 'updatestatus'])->name('maintenance.updatestatus');
         });
+Route::get(
+    'maintenance/formaction',
+    [MaintenanceController::class,'formaction']
+);
+
+Route::put(
+    'maintenance/actionupdate/{maintenance}',
+    [MaintenanceController::class,'actionupdate']
+)->name('maintenance.actionupdate');
+
+Route::post(
+    'maintenance/dokumenstore',
+    [MaintenanceController::class, 'dokumenstore']
+)->name('maintenance.dokumenstore');
 
         Route::group(['prefix' => 'physical'], function () {
             Route::get('/', [App\Http\Controllers\PhysicalController::class, 'index'])->name('physical.index');
@@ -180,7 +212,10 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::post('/updatestatus', [App\Http\Controllers\PhysicalController::class, 'updatestatus'])->name('physical.updatestatus');
         });
 
-
+Route::post('/physical/generate',
+    [PhysicalController::class,'generate'])
+    ->name('physical.generate');
+    
         Route::group(['prefix' => 'sparepartstok'], function () {
             Route::get('/', [App\Http\Controllers\SparepartstokController::class, 'index'])->name('sparepartstok.index');
             Route::get('/create', [App\Http\Controllers\SparepartstokController::class, 'create'])->name('sparepartstok.create');
