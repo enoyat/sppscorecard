@@ -23,58 +23,27 @@
         @endslot
     @endcomponent
 
-    <div class="row align-items-center">
-        <div class="col-md-6">
+    <div class="row align-items-center g-2 mb-3">
 
+        <div class="col-auto">
+            <ul class="nav nav-pills mb-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ route('sparepartstok.index') }}" data-bs-toggle="tooltip"
+                        title="List">
+                        <i class="bx bx-list-ul"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-auto">
+            <a href="{{ route('sparepartstok.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add
+                New</a>
+        </div>
+        <div class="col-auto">
+            @include('filter_site')
         </div>
 
-        <div class="col-md-6">
-            <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
-                <div>
-                    <ul class="nav nav-pills">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('sparepartstok.index') }}" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
-                        </li>
-
-                    </ul>
-                </div>
-                <div>
-                    <a href="{{ route('sparepartstok.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add
-                        New</a>
-                </div>
-                <form action="" method="GET" class="form-inline form-row">
-
-                    <div class="col">
-                        <div class="input-group mx-1">
-
-                            @include('filter_site')
-
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <!-- <div class="dropdown">
-                        <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bx bx-dots-horizontal-rounded"></i>
-                        </a>
-
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Edit</a></li>
-                            <li><a class="dropdown-item" href="#">Hapus</a></li>
-                        </ul>
-                    </div> -->
-            </div>
-
-        </div>
     </div>
-    <!-- end row -->
-
     <div class="table-responsive mb-4" id="tablecontent">
         @include('sparepartstok.content')
 

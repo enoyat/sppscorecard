@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MCustomer;
+use App\Models\MPhysical;
 use App\Models\MSitename;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,7 +23,6 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
-
     /**
      * Show the application dashboard.
      *
@@ -30,156 +30,178 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-
         $notifications = auth()->user()
             ->notifications()
             ->latest()
             ->take(10)
             ->get();
-
         return view('index', compact('notifications'));
     }
     public function root(Request $request)
     {
+        if ($request->filled('periode')) {
+            $mperiode = $request->periode;
+            $periode  = $request->periode;
+        } else {
+            $mperiode = now()->format('Y-m');
+            $periode  = now()->format('Y-m');
+        }
+        if ($request->get('filterby')) {
+            $filter = $request->get('filterby');
+        } else {
+            $filter = "sitename";
+        }
+        // hitung KPI
+        $query = MPhysical::query()
+            ->join('unit', 'physicalavailable.kdunit', '=', 'unit.kdunit')
+            ->join('forklifttype', 'unit.idforklifttype', '=', 'forklifttype.id')
+            ->where('physicalavailable.periode', $mperiode);
 
-        $periode = '2026-07';
+        $subTrouble = DB::table('troubleaction')
+            ->selectRaw("
+        periode,
+        kdunit,
+        SUM(lapsetime) total_breakdown,
+        SUM(backup_minutes) total_backup
+    ")
+            ->where('periode', $mperiode)
+            ->groupBy('periode', 'kdunit');
+        $query->leftJoinSub($subTrouble, 'tb', function ($join) {
+            $join->on('physicalavailable.kdunit', '=', 'tb.kdunit')
+                ->on('physicalavailable.periode', '=', 'tb.periode');
+        });
+        $query->selectRaw("
+forklifttype.id idforklifttype,
+forklifttype.namaforklifttype,
+count(*) jumlah_unit,
+sum(planunitkerja) total_plan,
+sum(COALESCE(tb.total_breakdown,0)) breakdown_total,
+sum(COALESCE(tb.total_backup,0)) backup_total,
+sum(planunitkerja-COALESCE(tb.total_breakdown,0)) total_work,
+ROUND(
+(sum(planunitkerja-COALESCE(tb.total_breakdown,0)+COALESCE(tb.total_backup,0))
+/
+sum(planunitkerja))
+*100
+,2) pa
+");
+
+        $query->groupBy(
+            'forklifttype.id',
+            'forklifttype.namaforklifttype'
+        );
+
+        switch ($filter) {
+            case 'Site':
+                $query->where(
+                    'physicalavailable.idsitename',
+                    Session::get('runidsitename')
+                );
+                break;
+            case 'Region':
+                $query->where(
+                    'physicalavailable.idregion',
+                    Session::get('runidregion')
+                );
+                break;
+            case 'CBU':
+                $query->where(
+                    'physicalavailable.idcbu',
+                    Session::get('runidcbu')
+                );
+                break;
+            default:
+                $query->where(
+                    'physicalavailable.idsitename',
+                    Session::get('runidsitename')
+                );
+                break;
+        }
+
+        $querykpi = $query->get();
 
         $dashboard = [
-
-            'totalUnit'    => 126,
-            'pa'           => 97,
-            'padelivery'   => 60.25,
-            'pasparepart'  => 85,
-            'working'      => 5620120,
-            'breakdown'    => 18540,
-            'backup'       => 2140,
-            'mttr'         => 1.52,
-            'mtbf'         => 312,
-
-            'bestSite'     => 'Jakarta',
-            'bestSitePA'   => 99.92,
-
-            'worstSite'    => 'Balikpapan',
-            'worstSitePA'  => 96.84,
-
-            'criticalUnit' => 6,
+            'totalUnit'   => $querykpi->sum('jumlah_unit'),
+            'pa'          => $querykpi->avg('pa'),
+            'working'     => $querykpi->sum('total_plan'),
+            'breakdown'   => $querykpi->sum('breakdown_total'),
+            'totalWork'   => $querykpi->sum('total_work'),
+            'backup'      => $querykpi->sum('backup_total'),
+            'mttr'        => 1.52,
 
         ];
 
-        $kpi = [
+        $kpi = [];
+        foreach ($querykpi as $row) {
+            $kpi[] = [
+                'namaforklifttype' => $row->namaforklifttype,
+                'jmlunit'          => $row->jumlah_unit,
+                'sumplanunitkerja' => $row->total_plan,
+                'sumtotaljamkerja' => $row->total_work,
+                'totalbreakdown'   => $row->breakdown_total,
+                'totalbackup'      => $row->backup_total,
+                'avgpaforklift'    => $row->pa,
+            ];
+        }
+        $labels       = collect($kpi)->pluck('namaforklifttype');
+        $dataUnit     = collect($kpi)->pluck('jmlunit');
+        $topBreakdown = $query->orderBy('total_breakdown', 'desc')->take(5)->get();
+        // dd($topBreakdown);
+        // KPI Delivery
+        $querydelivery = DB::table('delivery')
+            ->where('idsitename', Session::get('runidsitename'));
 
-            [
-                'namaforklifttype' => 'Counter Balance',
-                'jmlunit'          => 28,
-                'sumplanunitkerja' => 1249920,
-                'sumtotaljamkerja' => 1247300,
-                'totalbreakdown'   => 2380,
-                'totalbackup'      => 240,
-                'avgpaforklift'    => 99.79,
-            ],
+        $totaldelivery = (clone $querydelivery)->count();
 
-            [
-                'namaforklifttype' => 'Reach Truck',
-                'jmlunit'          => 20,
-                'sumplanunitkerja' => 892800,
-                'sumtotaljamkerja' => 887200,
-                'totalbreakdown'   => 5300,
-                'totalbackup'      => 180,
-                'avgpaforklift'    => 99.37,
-            ],
+        $totalclosed = (clone $querydelivery)
+            ->where('statuscustomer', 'close')
+            ->count();
 
-            [
-                'namaforklifttype' => 'Reach Stacker',
-                'jmlunit'          => 15,
-                'sumplanunitkerja' => 669600,
-                'sumtotaljamkerja' => 664900,
-                'totalbreakdown'   => 4500,
-                'totalbackup'      => 120,
-                'avgpaforklift'    => 99.30,
-            ],
+        $kpiontime = $totaldelivery ? round($totalclosed / $totaldelivery * 100, 2) : 0;
+        if ($totaldelivery > 0) {
+            $kpilate = 100 - $kpiontime;
+        } else {
+            $kpilate = 0;
+        }
 
-            [
-                'namaforklifttype' => 'Electric Pallet',
-                'jmlunit'          => 32,
-                'sumplanunitkerja' => 1428480,
-                'sumtotaljamkerja' => 1426000,
-                'totalbreakdown'   => 2180,
-                'totalbackup'      => 150,
-                'avgpaforklift'    => 99.83,
-            ],
-
-            [
-                'namaforklifttype' => 'Hand Pallet',
-                'jmlunit'          => 18,
-                'sumplanunitkerja' => 803520,
-                'sumtotaljamkerja' => 802900,
-                'totalbreakdown'   => 580,
-                'totalbackup'      => 80,
-                'avgpaforklift'    => 99.92,
-            ],
-
-            [
-                'namaforklifttype' => 'Order Picker',
-                'jmlunit'          => 13,
-                'sumplanunitkerja' => 580320,
-                'sumtotaljamkerja' => 576800,
-                'totalbreakdown'   => 3320,
-                'totalbackup'      => 70,
-                'avgpaforklift'    => 99.39,
-            ],
-
+        $kpidelivery = [
+            'on_time'        => $kpiontime,
+            'total_delivery' => $totaldelivery,
+            'late_delivery'  => $kpilate,
+            'total_closed'   => $totalclosed,
         ];
+        // kpi sparepart
+        $kpisparepartresult = DB::table('sparepartstok')
+            ->where('idsitename', Session::get('runidsitename'))
+            ->selectRaw('COALESCE(AVG((stok / NULLIF(qty, 0)) * 100), 0) AS kpisparepart')
+            ->value('kpisparepart');
+        if ($kpisparepartresult > 0) {
+            $kpisparepart = [
+                'stokavailable' => $kpisparepartresult,
+                'notavailable'  => 100 - $kpisparepartresult,
+            ];
 
-        $topBreakdown = [
+        } else {
+            $kpisparepart = [
+                'stokavailable' => 0,
+                'notavailable'  => 0,
+            ];
+        }
 
-            [
-                'unit'     => 'FD25-001',
-                'kategori' => 'Counter Balance',
-                'site'     => 'Jakarta',
-                'menit'    => 420,
-            ],
-
-            [
-                'unit'     => 'RT20-015',
-                'kategori' => 'Reach Truck',
-                'site'     => 'Bekasi',
-                'menit'    => 385,
-            ],
-
-            [
-                'unit'     => 'ES10-002',
-                'kategori' => 'Electric Stacker',
-                'site'     => 'Surabaya',
-                'menit'    => 310,
-            ],
-
-            [
-                'unit'     => 'CB30-009',
-                'kategori' => 'Counter Balance',
-                'site'     => 'Semarang',
-                'menit'    => 280,
-            ],
-
-            [
-                'unit'     => 'OP15-011',
-                'kategori' => 'Order Picker',
-                'site'     => 'Bandung',
-                'menit'    => 250,
-            ],
-
-        ];
         $cbu      = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->where('f_aktif', '1')->get();
         $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         $customer = MCustomer::where('kdcustomer', Session::get('kdcustomer'))->first();
-
         Session::put('logo', $customer->logo);
-
         $customer     = MCustomer::get();
         $forklifttype = DB::table('forklifttype')->where('f_dashboard', 'Y')->get();
         return view('dashboard.index', compact(
             'periode',
             'dashboard',
             'kpi',
+            'labels',
+            'dataUnit',
+            'kpidelivery',
+            'kpisparepart',
             'topBreakdown',
             'cbu',
             'sitename',
@@ -187,7 +209,6 @@ class HomeController extends Controller
             'forklifttype'
         ));
     }
-
     public function lang($locale)
     {
         if ($locale) {
@@ -201,18 +222,15 @@ class HomeController extends Controller
     }
     public function updateProfile(Request $request, $id)
     {
-
         // return $request->all();
         $request->validate([
             'name'   => ['required', 'string', 'max:255'],
             'email'  => ['required', 'string', 'email', 'max:255'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
         ]);
-
         $user        = User::find($id);
         $user->name  = $request->get('name');
         $user->email = $request->get('email');
-
         if ($request->file('avatar')) {
             $avatar     = $request->file('avatar');
             $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
@@ -220,7 +238,6 @@ class HomeController extends Controller
             $avatar->move($avatarPath, $avatarName);
             $user->avatar = '/images/' . $avatarName;
         }
-
         $user->update();
         if ($user) {
             Session::flash('message', 'User Details Updated successfully!');
@@ -248,7 +265,6 @@ class HomeController extends Controller
             'current_password' => ['required', 'string'],
             'password'         => ['required', 'string', 'min:6', 'confirmed'],
         ]);
-
         if (! (Hash::check($request->get('current_password'), Auth::user()->password))) {
             return response()->json([
                 'isSuccess' => false,

@@ -18,12 +18,12 @@ class customerController extends Controller
      */
     public function listcustomer()
     {
-        $customer = MCustomer::get();
-        $cbu      = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->where('f_aktif', '1')->get();
-        $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
-        $customer = MCustomer::where('kdcustomer', Session::get('kdcustomer'))->first();
-
-        Session::put('logo', $customer->logo);
+        $customer     = MCustomer::get();
+        $cbu          = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->where('f_aktif', '1')->get();
+        $sitename     = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $customerlogo = MCustomer::where('kdcustomer', Session::get('kdcustomer'))->first();
+        // dd($customer);
+        Session::put('logo', $customerlogo->logo);
 
         return view('customer.listcustomer', compact('customer'));
     }

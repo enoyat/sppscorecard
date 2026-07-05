@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\MDelivery;
@@ -31,64 +30,43 @@ class DeliveryController extends Controller
             }
         }
         $this->daysoflapse();
+        if ($request->filled('filterby')) {
+            $filter = $request->filterby;
 
-        if ($request->get('filter')) {
-            $filter = $request->get('filter');
         } else {
-            $filter = "sitename";
+            $filter = 'Site';
+
         }
-        $arraykpi = array();
-        if ($filter == "sitename") {
+
+        $arraykpi = [];
+        if ($filter == "Site") {
 
             $delivery = MDelivery::where('idsitename', Session::get('runidsitename'))->get();
-            if ($request->get('xidsitename') == null) {
-                $id = Session::get('runidsitename');
-            } else {
-                $id = $request->get('xidsitename');
-            }
+            $id       = Session::get('runidsitename');
             $sitename = MSitename::where('id', $id)->first();
-            $region = MSitename::where('id', $sitename->parentid)->first();
-            $cbu = MSitename::where('id', $region->parentid)->first();
-            Session::put('runidcbu', $cbu->id);
-            Session::put('runnamacbu', $cbu->namasitename);
-            Session::put('runidregion', $region->id);
-            Session::put('runnamaregion', $region->namasitename);
-            Session::put('runidsitename', $id);
-            Session::put('runnamasitename', $sitename->namasitename);
-        } else if ($request->filter == "region") {
+            $region   = MSitename::where('id', $sitename->parentid)->first();
+            $cbu      = MSitename::where('id', $region->parentid)->first();
+
+        } else if ($filter == "Region") {
             $delivery = MDelivery::where('idregion', Session::get('runidregion'))->get();
-            $id = $request->get('xidregion');
-            $region = MSitename::where('id', $id)->first();
-            $cbu = MSitename::where('id', $region->parentid)->first();
+            $id       = Session::get('runidregion');
+            $region   = MSitename::where('id', $id)->first();
+            $cbu      = MSitename::where('id', $region->parentid)->first();
             $sitename = MSitename::where('parentid', $id)->first();
-            Session::put('runidcbu', $cbu->id);
-            Session::put('runnamacbu', $cbu->namasitename);
-            Session::put('runidregion', $region->id);
-            Session::put('runnamaregion', $region->namasitename);
-            Session::put('runidsitename', $sitename->id);
-            Session::put('runnamasitename', $sitename->namasitename);
-        } else if ($request->filter == "cbu") {
+
+        } else if ($filter == "CBU") {
+
             $delivery = MDelivery::where('idcbu', Session::get('runidcbu'))->get();
-            $id = $request->get('xidcbu');
-            $cbu = MSitename::where('id', $id)->first();
-            $region = MSitename::where('parentid', $cbu->id)->first();
+
+            $id       = Session::get('runidcbu');
+            $cbu      = MSitename::where('id', $id)->first();
+            $region   = MSitename::where('parentid', $cbu->id)->first();
             $sitename = MSitename::where('parentid', $region->id)->first();
-            Session::put('runidcbu', $cbu->id);
-            Session::put('runnamacbu', $cbu->namasitename);
-            Session::put('runidregion', $region->id);
-            Session::put('runnamaregion', $region->namasitename);
-            Session::put('runidsitename', $sitename->id);
-            Session::put('runnamasitename', $sitename->namasitename);
-        } else if ($request->filter == "allsn") {
-            $delivery = MDelivery::where('idcbu', 'SN')->get();
-        } else if ($request->filter == "allwater") {
-            $delivery = MDelivery::where('idcbu', 'Waters')->get();
-        } else if ($request->filter == "allsnwater") {
-            $delivery = MDelivery::where('idcbu', 'SN')->orwhere('idcbu', 'Waters')->get();
+
         }
         $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
 
-        $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
+        $sitename     = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         $forklifttype = MForklifttype::get();
         return view('delivery.index', compact('delivery', 'forklifttype', 'cbu', 'sitename'));
     }
@@ -104,47 +82,47 @@ class DeliveryController extends Controller
     }
     public function edit($id)
     {
-        $cbu = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
+        $cbu          = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
         $forklifttype = MForklifttype::get();
-        $delivery = MDelivery::find($id);
+        $delivery     = MDelivery::find($id);
         return view('delivery.edit', compact('cbu', 'forklifttype', 'delivery'));
     }
     public function store(Request $request)
     {
         $request->validate([
-            'idcbu' => 'required',
-            'idregion' => 'required',
-            'idsitename' => 'required',
-            'serialnumber' => 'required',
+            'idcbu'          => 'required',
+            'idregion'       => 'required',
+            'idsitename'     => 'required',
+            'serialnumber'   => 'required',
             'idforklifttype' => 'required',
-            'capacity' => 'required',
-            'mast' => 'required',
-            'masheight' => 'required',
-            'dateestimated' => 'required',
-            'statusspp' => 'required',
+            'capacity'       => 'required',
+            'mast'           => 'required',
+            'masheight'      => 'required',
+            'dateestimated'  => 'required',
+            'statusspp'      => 'required',
 
         ]);
 
-        $delivery = new MDelivery;
-        $delivery->idcbu = $request->idcbu;
-        $delivery->idregion = $request->idregion;
-        $delivery->idsitename = $request->idsitename;
-        $delivery->serialnumber = $request->serialnumber;
+        $delivery                 = new MDelivery;
+        $delivery->idcbu          = $request->idcbu;
+        $delivery->idregion       = $request->idregion;
+        $delivery->idsitename     = $request->idsitename;
+        $delivery->serialnumber   = $request->serialnumber;
         $delivery->idforklifttype = $request->idforklifttype;
-        $delivery->capacity = $request->capacity;
-        $delivery->mast = $request->mast;
-        $delivery->masheight = $request->masheight;
-        $delivery->dateestimated = $request->dateestimated;
-        $delivery->reason = $request->reason;
-        $delivery->daterequest = $request->daterequest;
-        $delivery->ponumber = $request->ponumber;
-        $delivery->daysoflapse = $request->daysoflapse;
+        $delivery->capacity       = $request->capacity;
+        $delivery->mast           = $request->mast;
+        $delivery->masheight      = $request->masheight;
+        $delivery->dateestimated  = $request->dateestimated;
+        $delivery->reason         = $request->reason;
+        $delivery->daterequest    = $request->daterequest;
+        $delivery->ponumber       = $request->ponumber;
+        $delivery->daysoflapse    = $request->daysoflapse;
 
         $delivery->dateactual = $request->dateactual;
 
-        $delivery->statusspp = $request->statusspp;
+        $delivery->statusspp      = $request->statusspp;
         $delivery->statuscustomer = "OPEN";
-        $simpan = $delivery->save();
+        $simpan                   = $delivery->save();
 
         if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
@@ -155,44 +133,44 @@ class DeliveryController extends Controller
             Session::flash('alert-class', 'alert-danger');
             return response()->json([
                 'isSuccess' => true,
-                'Message' => "Something went wrong!",
+                'Message'   => "Something went wrong!",
             ], 200); // Status code here
         }
     }
     public function update(Request $request, $id)
     {
         $request->validate([
-            'idcbu' => 'required',
-            'idregion' => 'required',
-            'idsitename' => 'required',
-            'serialnumber' => 'required',
+            'idcbu'          => 'required',
+            'idregion'       => 'required',
+            'idsitename'     => 'required',
+            'serialnumber'   => 'required',
             'idforklifttype' => 'required',
-            'capacity' => 'required',
-            'masheight' => 'required',
-            'mast' => 'required',
-            'dateestimated' => 'required',
-            'statusspp' => 'required',
+            'capacity'       => 'required',
+            'masheight'      => 'required',
+            'mast'           => 'required',
+            'dateestimated'  => 'required',
+            'statusspp'      => 'required',
         ]);
 
-        $delivery = MDelivery::find($id);
-        $delivery->idcbu = $request->idcbu;
-        $delivery->idregion = $request->idregion;
-        $delivery->idsitename = $request->idsitename;
-        $delivery->serialnumber = $request->serialnumber;
+        $delivery                 = MDelivery::find($id);
+        $delivery->idcbu          = $request->idcbu;
+        $delivery->idregion       = $request->idregion;
+        $delivery->idsitename     = $request->idsitename;
+        $delivery->serialnumber   = $request->serialnumber;
         $delivery->idforklifttype = $request->idforklifttype;
-        $delivery->capacity = $request->capacity;
-        $delivery->mast = $request->mast;
-        $delivery->masheight = $request->masheight;
-        $delivery->dateestimated = $request->dateestimated;
-        $delivery->reason = $request->reason;
-        $delivery->daterequest = $request->daterequest;
-        $delivery->ponumber = $request->ponumber;
-        $delivery->daysoflapse = $request->daysoflapse;
+        $delivery->capacity       = $request->capacity;
+        $delivery->mast           = $request->mast;
+        $delivery->masheight      = $request->masheight;
+        $delivery->dateestimated  = $request->dateestimated;
+        $delivery->reason         = $request->reason;
+        $delivery->daterequest    = $request->daterequest;
+        $delivery->ponumber       = $request->ponumber;
+        $delivery->daysoflapse    = $request->daysoflapse;
 
         $delivery->dateactual = $request->dateactual;
 
         $delivery->statusspp = $request->statusspp;
-        $simpan = $delivery->save();
+        $simpan              = $delivery->save();
 
         if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
@@ -203,7 +181,7 @@ class DeliveryController extends Controller
             Session::flash('alert-class', 'alert-danger');
             return response()->json([
                 'isSuccess' => true,
-                'Message' => "Something went wrong!",
+                'Message'   => "Something went wrong!",
             ], 200); // Status code here
         }
     }
@@ -232,7 +210,7 @@ class DeliveryController extends Controller
 
     public function formstatus(Request $request)
     {
-        $id = $request->id;
+        $id  = $request->id;
         $aid = $request->aid;
         if ($request->aid == 'spp') {
             $delivery = MDelivery::find($id);
@@ -246,14 +224,14 @@ class DeliveryController extends Controller
     public function updatestatus(Request $request)
     {
 
-        $id = $request->id;
+        $id  = $request->id;
         $aid = $request->aid;
         if ($request->aid == 'spp') {
             $request->validate([
                 'statusspp' => 'required',
             ]);
-            $statusspp = $request->statusspp;
-            $delivery = MDelivery::find($id);
+            $statusspp           = $request->statusspp;
+            $delivery            = MDelivery::find($id);
             $delivery->statusspp = $statusspp;
             $delivery->save();
         } else {
@@ -262,9 +240,9 @@ class DeliveryController extends Controller
             ]);
             $statuscustomer = $request->statuscustomer;
 
-            $delivery = MDelivery::find($id);
+            $delivery                 = MDelivery::find($id);
             $delivery->statuscustomer = $statuscustomer;
-            $delivery->remarkplan = $request->remarkplan;
+            $delivery->remarkplan     = $request->remarkplan;
             $delivery->save();
         }
 
@@ -278,12 +256,12 @@ class DeliveryController extends Controller
             $date1 = Carbon::parse($value->dateestimated);
             $date2 = Carbon::now();
             if ($date2 > $date1) {
-                $diff = $date1->diffInDays($date2);
-                $delivery = MDelivery::find($value->id);
+                $diff                  = $date1->diffInDays($date2);
+                $delivery              = MDelivery::find($value->id);
                 $delivery->daysoflapse = $diff;
                 $delivery->save();
             } else {
-                $delivery = MDelivery::find($value->id);
+                $delivery              = MDelivery::find($value->id);
                 $delivery->daysoflapse = 0;
                 $delivery->save();
             }

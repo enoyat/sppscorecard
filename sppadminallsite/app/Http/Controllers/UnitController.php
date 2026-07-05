@@ -22,58 +22,37 @@ class UnitController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->get('filter')) {
-            $filter = $request->get('filter');
+        if ($request->filled('filterby')) {
+            $filter = $request->filterby;
+
         } else {
-            $filter = "sitename";
+            $filter = 'Site';
+
         }
         $arraykpi = [];
-        if ($filter == "sitename") {
+        if ($filter == "Site") {
             $unit = MUnit::where('idsitename', Session::get('runidsitename'))->get();
-            if ($request->get('xidsitename') == null) {
-                $id = Session::get('runidsitename');
-            } else {
-                $id = $request->get('xidsitename');
-            }
+
+            $id = Session::get('runidsitename');
+
             $sitename = MSitename::where('id', $id)->first();
             $region   = MSitename::where('id', $sitename->parentid)->first();
             $cbu      = MSitename::where('id', $region->parentid)->first();
-            Session::put('runidcbu', $cbu->id);
-            Session::put('runnamacbu', $cbu->namasitename);
-            Session::put('runidregion', $region->id);
-            Session::put('runnamaregion', $region->namasitename);
-            Session::put('runidsitename', $id);
-            Session::put('runnamasitename', $sitename->namasitename);
-        } else if ($request->filter == "region") {
+
+        } else if ($filter == "Region") {
             $unit     = MUnit::where('idregion', Session::get('runidregion'))->get();
-            $id       = $request->get('xidregion');
+            $id       = Session::get('runidregion');
             $region   = MSitename::where('id', $id)->first();
             $cbu      = MSitename::where('id', $region->parentid)->first();
             $sitename = MSitename::where('parentid', $id)->first();
-            Session::put('runidcbu', $cbu->id);
-            Session::put('runnamacbu', $cbu->namasitename);
-            Session::put('runidregion', $region->id);
-            Session::put('runnamaregion', $region->namasitename);
-            Session::put('runidsitename', $sitename->id);
-            Session::put('runnamasitename', $sitename->namasitename);
-        } else if ($request->filter == "cbu") {
+
+        } else if ($filter == "CBU") {
             $unit     = MUnit::where('idcbu', Session::get('runidcbu'))->get();
-            $id       = $request->get('xidcbu');
+            $id       = Session::get('runidcbu');
             $cbu      = MSitename::where('id', $id)->first();
             $region   = MSitename::where('parentid', $cbu->id)->first();
             $sitename = MSitename::where('parentid', $region->id)->first();
-            Session::put('runidcbu', $cbu->id);
-            Session::put('runnamacbu', $cbu->namasitename);
-            Session::put('runidregion', $region->id);
-            Session::put('runnamaregion', $region->namasitename);
-            Session::put('runidsitename', $sitename->id);
-            Session::put('runnamasitename', $sitename->namasitename);
-        } else if ($request->filter == "allsn") {
-            $unit = MUnit::where('idcbu', 'SN')->get();
-        } else if ($request->filter == "allwater") {
-            $unit = MUnit::where('idcbu', 'Waters')->get();
-        } else if ($request->filter == "allsnwater") {
-            $unit = MUnit::where('idcbu', 'SN')->orwhere('idcbu', 'Waters')->get();
+
         }
         $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         $cbu      = MSitename::member(Session::get('kdcustomer'))->kategori("cbu")->get();
@@ -95,8 +74,6 @@ class UnitController extends Controller
     }
     public function store(Request $request)
     {
-
-       
 
         $request->validate([
             'idcbu'      => 'required',
