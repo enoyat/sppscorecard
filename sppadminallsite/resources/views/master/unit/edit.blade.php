@@ -1,12 +1,18 @@
 @extends('layouts.master')
 
-@section('title') PT. Satria Piranti Perkasa @endsection
+@section('title')
+    PT. Satria Piranti Perkasa
+@endsection
 
 @section('content')
 
     @component('components.breadcrumb')
-    @slot('li_1') Forms @endslot
-    @slot('title') Edit Unit @endslot
+        @slot('li_1')
+            Forms
+        @endslot
+        @slot('title')
+            Edit Unit
+        @endslot
     @endcomponent
 
 
@@ -93,8 +99,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-password-input" class="form-label">CODE Unit</label>
-                                        <input class="form-control" type="text" value="{{ $unit->kdunit }}" name="kdunit"
-                                            id="kdunit">
+                                        <input class="form-control" type="text" value="{{ $unit->kdunit }}"
+                                            name="kdunit" id="kdunit">
                                         <small class="text-danger">CODE Unit tidak boleh sama dan tidak boleh ada
                                             spasi</small>
                                     </div>
@@ -119,23 +125,23 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-password-input" class="form-label">Merk</label>
-                                        <input class="form-control" type="text" value="{{ $unit->merk }}" name="merk"
-                                            id="merk">
+                                        <input class="form-control" type="text" value="{{ $unit->merk }}"
+                                            name="merk" id="merk">
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-password-input" class="form-label">Type</label>
-                                        <input class="form-control" type="text" value="{{ $unit->type }}" name="type"
-                                            id="type">
+                                        <input class="form-control" type="text" value="{{ $unit->type }}"
+                                            name="type" id="type">
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-password-input" class="form-label">Model</label>
-                                        <input class="form-control" type="text" value="{{ $unit->model }}" name="model"
-                                            id="model">
+                                        <input class="form-control" type="text" value="{{ $unit->model }}"
+                                            name="model" id="model">
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-password-input" class="form-label">Capcity</label>
-                                        <input class="form-control" type="text" value="{{ $unit->capcity }}" name="capcity"
-                                            id="capcity">
+                                        <input class="form-control" type="text" value="{{ $unit->capcity }}"
+                                            name="capcity" id="capcity">
                                     </div>
 
 
@@ -152,13 +158,13 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-date-input" class="form-label">Qty</label>
-                                        <input class="form-control" type="number" value="{{ $unit->qty }}" name="qty"
-                                            id="qty" required>
+                                        <input class="form-control" type="number" value="{{ $unit->qty }}"
+                                            name="qty" id="qty" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-password-input" class="form-label">Mast (Stage)</label>
-                                        <input class="form-control" type="text" value="{{ $unit->mast }}" name="mast"
-                                            id="mast">
+                                        <input class="form-control" type="text" value="{{ $unit->mast }}"
+                                            name="mast" id="mast">
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-password-input" class="form-label">Mast Height (meter)</label>
@@ -168,17 +174,18 @@
 
                                     <div class="mb-3">
                                         <label for="example-password-input" class="form-label">Foto Unit</label>
-                                        <input class="form-control" type="file" value="" name="filefoto" id="filefoto">
+                                        <input class="form-control" type="file" value="" name="filefoto"
+                                            id="filefoto">
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-password-input" class="form-label">Price</label>
-                                        <input class="form-control" type="text" value="{{ $unit->price }}" name="price"
-                                            id="price">
+                                        <input class="form-control" type="text" value="{{ $unit->price }}"
+                                            name="price" id="price">
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-date-input" class="form-label">Show Customer (Wajib)</label>
-                                        <select class="form-select" aria-label="Default select example" name="showcustomer"
-                                            id="showcustomer">
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="showcustomer" id="showcustomer">
 
                                             <option value="{{ $unit->showcustomer }}" selected>{{ $unit->showcustomer }}
                                             </option>
@@ -191,7 +198,8 @@
                                         <select class="form-select" aria-label="Default select example" name="flag_baru"
                                             id="flag_baru">
 
-                                            <option value="{{ $unit->flag_baru }}" selected>{{ $unit->flag_baru }}</option>
+                                            <option value="{{ $unit->flag_baru }}" selected>{{ $unit->flag_baru }}
+                                            </option>
                                             <option value="B">B</option>
                                             <option value="L">L</option>
                                         </select>
@@ -213,13 +221,13 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-date-input" class="form-label">Reason</label>
-                                        <input class="form-control" type="text" value="{{ $unit->reason }}" name="reason"
-                                            id="reason">
+                                        <input class="form-control" type="text" value="{{ $unit->reason }}"
+                                            name="reason" id="reason">
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-date-input" class="form-label">Flag Target</label>
-                                        <select class="form-select" aria-label="Default select example" name="flag_target"
-                                            id="flag_target">
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="flag_target" id="flag_target">
 
                                             <option value="{{ $unit->flag_target }}" selected>{{ $unit->flag_target }}
                                             </option>
@@ -229,8 +237,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-date-input" class="form-label">Flag Actual</label>
-                                        <select class="form-select" aria-label="Default select example" name="flag_actual"
-                                            id="flag_actual">
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="flag_actual" id="flag_actual">
 
                                             <option value="{{ $unit->flag_actual }}" selected>{{ $unit->flag_actual }}
                                             </option>
@@ -243,7 +251,8 @@
                                         <select class="form-select" aria-label="Default select example" name="flag_otif"
                                             id="flag_otif">
 
-                                            <option value="{{ $unit->flag_otif }}" selected>{{ $unit->flag_otif }}</option>
+                                            <option value="{{ $unit->flag_otif }}" selected>{{ $unit->flag_otif }}
+                                            </option>
                                             <option value="OTIF">OTIF</option>
                                             <option value="LATE">LATE</option>
                                         </select>
@@ -260,9 +269,10 @@
                                     <div class="row mb-3">
                                         <div class="col-6">
                                             <label class="form-label">Silo<span class="text-danger">*</span></label>
-                                            <input type="file" name="fileSiloNew" id="fileSiloNew" class="form-control"
-                                                accept="image/*">
-                                            <small class="text-secondary"><span class="text-danger">*</span> Kosongkan jika
+                                            <input type="file" name="fileSiloNew" id="fileSiloNew"
+                                                class="form-control" accept="image/*,application/pdf">
+                                            <small class="text-secondary"><span class="text-danger">*</span> Kosongkan
+                                                jika
                                                 tidak ingin merubah file.</small>
                                         </div>
                                         <div class="col-6">
@@ -289,7 +299,7 @@
     </div>
     <!-- end row -->
     <script>
-        jQuery('#idcbu').change(function () {
+        jQuery('#idcbu').change(function() {
             jQuery('#idregion').html('');
             var id = $(this).val();
             var string = "{{ asset('/lokasi/getregion/') }}/" + id;
@@ -300,7 +310,7 @@
                     id: id
                 },
                 dataType: 'json',
-                success: function (data) {
+                success: function(data) {
                     datax = JSON.stringify(data);
                     datax = JSON.parse(datax);
                     var i;
@@ -314,7 +324,7 @@
                 }
             });
         });
-        jQuery('#idregion').change(function () {
+        jQuery('#idregion').change(function() {
             jQuery('#idsitename').html('');
             var id = $(this).val();
             var string = "{{ asset('/lokasi/getsitename/') }}/" + id;
@@ -325,7 +335,7 @@
                     id: id
                 },
                 dataType: 'json',
-                success: function (data) {
+                success: function(data) {
                     datax = JSON.stringify(data);
                     datax = JSON.parse(datax);
                     var i;
@@ -340,7 +350,7 @@
             });
         });
 
-        $(document).on('click', '.previewImage', function () {
+        $(document).on('click', '.previewImage', function() {
             var id = $(this).attr('data-id');
             $.ajax({
                 type: "GET",
@@ -349,7 +359,7 @@
                     type: "siloImage"
                 },
                 url: "{{ route('unit.previewImage') }}",
-                success: function (data) {
+                success: function(data) {
                     $('.modal-body').html(data);
 
                     // show modal
