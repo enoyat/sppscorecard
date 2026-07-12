@@ -67,18 +67,15 @@
                             <a class="nav-link active" href="{{ route('maintenance.index') }}" data-bs-toggle="tooltip"
                                 data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
                         </li>
+
                     </ul>
                 </div>
-                <!-- <div class="dropdown">
-                                            <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="bx bx-dots-horizontal-rounded"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                                <li><a class="dropdown-item" href="#">Hapus</a></li>
-                                            </ul>
-                                        </div> -->
+                <div>
+                    <a href="javascript:void(0)" class="btn btn-info btn-sm btn-action"
+                        data-url="{{ url('maintenance/formcreate') }}">
+                        Add
+                    </a>
+                </div>
             </div>
         </div>
     </div>

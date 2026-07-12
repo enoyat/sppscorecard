@@ -118,6 +118,9 @@
 @endsection
 @section('content')
     <x-dashboard-filter :showCBU="true" :showRegion="true" :showSite="true" />
+    @push('codescripts')
+        <script src="{{ asset('js/dashboard-filter.js') }}"></script>
+    @endpush
     <div class="container-fluid">
         {{-- =========================
         HEADER

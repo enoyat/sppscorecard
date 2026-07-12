@@ -134,7 +134,7 @@ class SitenameController extends Controller
         } else {
             $sitename = MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
         }
-        dd($sitename);
+
         $response = [];
         foreach ($sitename as $value) {
             $response[] = [

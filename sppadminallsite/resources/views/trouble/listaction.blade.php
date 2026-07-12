@@ -78,6 +78,12 @@
 
                     </ul>
                 </div>
+                <div>
+                    <a href="javascript:void(0)" class="btn btn-info btn-sm btn-action"
+                        data-url="{{ url('trouble/formcreate') }}">
+                        Add
+                    </a>
+                </div>
             </div>
 
         </div>

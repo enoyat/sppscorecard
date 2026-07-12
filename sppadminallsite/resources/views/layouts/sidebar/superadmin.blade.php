@@ -63,19 +63,19 @@
                         <i data-feather="battery"></i>
                         <span data-key="t-apps">Sparepart</span>
                     </a>
-                <ul class="sub-menu" aria-expanded="false">
-                    <li>
-                        <a href="{{ route('sparepartstok.index') }}">
-                            <span data-key="t-chat">Spare Part Stock</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('sparepartstoktrans.index') }}">
-                            <span data-key="t-chat">Stock Transaction</span>
-                        </a>
-                    </li>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('sparepartstok.index') }}">
+                                <span data-key="t-chat">Spare Part Stock</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('sparepartstoktrans.index') }}">
+                                <span data-key="t-chat">Stock Transaction</span>
+                            </a>
+                        </li>
 
-                </ul>
+                    </ul>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
@@ -140,69 +140,75 @@
                         <span data-key="t-horizontal">Ticket</span>
                     </a>
                 </li>
-                @if(Session::get('roles_id')==1 || Session::get('roles_id')==5)
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
-                        <span data-key="t-apps">Presensi</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('presensi.index') }}">
-                                <span data-key="t-calendar">Presensi</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('laporan.rpttransaction') }}">
-                                <span data-key="t-chat">Laporan</span>
-                            </a>
-                        </li>
+                @if (Session::get('roles_id') == 1 || Session::get('roles_id') == 5)
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="grid"></i>
+                            <span data-key="t-apps">Presensi</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="{{ route('presensi.index') }}">
+                                    <span data-key="t-calendar">Presensi</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('laporan.rpttransaction') }}">
+                                    <span data-key="t-chat">Laporan</span>
+                                </a>
+                            </li>
 
 
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="grid"></i>
-                        <span data-key="t-apps">@lang('translation.Master')</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li>
-                            <a href="{{ route('masterunit.index') }}">
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="grid"></i>
+                            <span data-key="t-apps">@lang('translation.Master')</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li>
+                                <a href="{{ route('masterunit.index') }}">
 
-                                <span data-key="t-horizontal">Unit</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('customer.listcustomer') }}">
-                                <span data-key="t-calendar">Customer</span>
-                            </a>
-                        </li>
+                                    <span data-key="t-horizontal">Unit</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('mutation.index') }}">
 
-                        <li>
-                            <a href="{{ route('cbu.index') }}">
-                                <span data-key="t-calendar">CBU</span>
-                            </a>
-                        </li>
+                                    <span data-key="t-horizontal">Unit Mutation</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('customer.listcustomer') }}">
+                                    <span data-key="t-calendar">Customer</span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a href="{{ route('region.index') }}">
-                                <span data-key="t-chat">Region</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('sitename.index') }}">
-                                <span data-key="t-chat">Site Name</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('forklifttype.index') }}">
-                                <span data-key="t-chat">Forklift Type</span>
-                            </a>
-                        </li>
+                            <li>
+                                <a href="{{ route('cbu.index') }}">
+                                    <span data-key="t-calendar">CBU</span>
+                                </a>
+                            </li>
 
-                    </ul>
-                </li>
+                            <li>
+                                <a href="{{ route('region.index') }}">
+                                    <span data-key="t-chat">Region</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('sitename.index') }}">
+                                    <span data-key="t-chat">Site Name</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('forklifttype.index') }}">
+                                    <span data-key="t-chat">Forklift Type</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
                 @endif
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
@@ -210,10 +216,13 @@
                         <span data-key="t-authentication">@lang('translation.Authentication')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        @if(Session::get('roles_id')==1 || Session::get('roles_id')==5)
-                        <li><a href="{{ route('utility.userpassword') }}" data-key="t-register">User List</a></li>
-                        <li><a href="{{ route('utility.register') }}"
-                                data-key="t-register">@lang('translation.Register')</a></li>
+                        @if (Session::get('roles_id') == 1 || Session::get('roles_id') == 5)
+                            <li><a href="{{ route('utility.userpassword') }}" data-key="t-register">User List</a>
+                            </li>
+                            <li><a href="{{ route('utility.register') }}" data-key="t-register">@lang('translation.Register')</a>
+                            </li>
+                            <li><a href="{{ route('usersite.index') }}" data-key="t-register">Otorisasi Mekanik</a>
+                            </li>
                         @endif
                         <li><a href="{{ route('gantipassword') }}"
                                 data-key="t-recover-password">@lang('translation.Recover_Password')</a></li>

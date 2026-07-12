@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\MDokumenmaintenance;
@@ -6,6 +7,7 @@ use App\Models\MMaintenance;
 use App\Models\MMaintenanceaction;
 use App\Models\MSitename;
 use App\Models\MUnit;
+use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -118,7 +120,6 @@ class MaintenanceController extends Controller
             $maintenance = MMaintenanceaction::find($id);
             return view('maintenance.formstatuscustomer', compact('maintenance', 'aid'));
         }
-
     }
     public function updatestatus(Request $request)
     {
@@ -154,7 +155,46 @@ class MaintenanceController extends Controller
             compact('maintenance')
         );
     }
+    public function formcreate(Request $request)
+    {
+        $units = MUnit::where('idsitename', Session::get('runidsitename'))->get();
+        $mechanics = User::where('roles_id', '3')->where('kdcustomer', Session::get('kdcustomer'))->get();
 
+
+        return view(
+            'maintenance.formcreate',
+            compact('units', 'mechanics')
+        );
+    }
+    public function createstore(Request $request)
+    {
+        $request->validate([
+            'kdunit' => 'required',
+            'iduser' => 'required|exists:users,id',
+            'shift' => 'required',
+            'hm' => 'numeric',
+            'actionplan' => 'nullable|string',
+            'sparepart' => 'nullable|string',
+            'tanggalmulai' => 'required',
+            'tanggalakhir' => 'required',
+        ]);
+
+        MMaintenanceaction::create([
+            'kdunit'        => $request->kdunit,
+            'iduser'        => $request->iduser,
+            'shift'         => $request->shift,
+            'hm'            => $request->hm,
+            'actionplan'    => $request->actionplan,
+            'sparepart'     => $request->sparepart,
+            'tanggalmulai'  => $request->tanggalmulai,
+            'tanggalakhir'  => $request->tanggalakhir,
+            'statusspp' => 'OPEN',
+            'statusmekanik' => 'OPEN',
+            'statuscustomer' => 'OPEN'
+        ]);
+
+        return redirect()->back()->with('success', 'Data maintenance berhasil ditambahkan.');
+    }
     public function actionupdate(Request $request, MMaintenanceaction $maintenance)
     {
         $request->validate([
@@ -217,7 +257,6 @@ class MaintenanceController extends Controller
                 'filename'   => $filename,
 
             ]);
-
         }
 
         return back()->with(

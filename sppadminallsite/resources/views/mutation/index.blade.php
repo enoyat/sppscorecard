@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    DELIVERY NOTE
+    mutation
 @endsection
 
 @section('css')
@@ -16,34 +16,33 @@
             <script src="{{ asset('js/dashboard-filter.js') }}"></script>
         @endpush
     @endif
-    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">RETUR</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- start page title -->
     @component('components.breadcrumb')
         @slot('li_1')
-            DELIVERY NOTE
+            Contacts
         @endslot
         @slot('title')
-            DELIVERY NOTE
+            mutation
         @endslot
     @endcomponent
 
     <div class="row align-items-center">
         <div class="col-md-6">
+            <div class="d-flex flex-wrap align-items-left left-content-end gap-2 mb-3">
+                <div>
+                    <form action="" method="get">
 
+
+                        <input class="form-control" type="month"
+                            @if (isset($_GET['periode'])) value="{{ $_GET['periode'] }}" @else value="" @endif
+                            name="periode" id="periode">
+
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary ">Filter</button>
+                </div>
+                </form>
+            </div>
         </div>
 
         <div class="col-md-6">
@@ -51,30 +50,28 @@
                 <div>
                     <ul class="nav nav-pills">
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('delivery.index') }}" data-bs-toggle="tooltip"
+                            <a class="nav-link active" href="{{ route('mutation.index') }}" data-bs-toggle="tooltip"
                                 data-bs-placement="top" title="List"><i class="bx bx-list-ul"></i></a>
                         </li>
 
                     </ul>
                 </div>
                 <div>
-                    @if (Auth::user()->roles_id == 1 || Auth::user()->roles_id == 2)
-                        <a href="{{ route('suratjalan.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add
-                            New</a>
-                    @endif
+                    <a href="{{ route('mutation.create') }}" class="btn btn-light"><i class="bx bx-plus me-1"></i> Add
+                        New</a>
                 </div>
 
                 <!-- <div class="dropdown">
-                            <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bx bx-dots-horizontal-rounded"></i>
-                            </a>
+                                                <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bx bx-dots-horizontal-rounded"></i>
+                                                </a>
 
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                <li><a class="dropdown-item" href="#">Hapus</a></li>
-                            </ul>
-                        </div> -->
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                    <li><a class="dropdown-item" href="#">Hapus</a></li>
+                                                </ul>
+                                            </div> -->
             </div>
 
         </div>
@@ -82,7 +79,7 @@
     <!-- end row -->
 
     <div class="table-responsive mb-4" id="tablecontent">
-        @include('suratjalan.content')
+        @include('mutation.content')
 
         <!-- end table -->
     </div>

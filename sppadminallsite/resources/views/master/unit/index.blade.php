@@ -12,6 +12,9 @@
 @section('content')
     @if (Session::get('roles_id') == 1 || Session::get('roles_id') == 5)
         <x-dashboard-filter :showPeriode="true" :showCBU="true" :showRegion="true" :showSite="true" :showForkliftType="false" />
+        @push('codescripts')
+            <script src="{{ asset('js/dashboard-filter.js') }}"></script>
+        @endpush
     @endif
     <!-- start page title -->
     @component('components.breadcrumb')
@@ -46,16 +49,16 @@
 
 
                 <!-- <div class="dropdown">
-                        <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bx bx-dots-horizontal-rounded"></i>
-                        </a>
+                            <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bx bx-dots-horizontal-rounded"></i>
+                            </a>
 
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Edit</a></li>
-                            <li><a class="dropdown-item" href="#">Hapus</a></li>
-                        </ul>
-                    </div> -->
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                <li><a class="dropdown-item" href="#">Hapus</a></li>
+                            </ul>
+                        </div> -->
             </div>
 
         </div>

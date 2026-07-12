@@ -15,6 +15,19 @@ class ApiLokasi extends Controller
         $cbu = MSitename::where('parentid', $id)->get();
         return Response::json($cbu);
     }
+    public function getAllCBU(Request $request)
+    {
+        $query = MSitename::selectRaw('id as id, namasitename as text')
+            ->where('kategori', 'cbu');
+
+        if ($request->filled('q')) {
+            $query->where('namasitename', 'like', '%' . $request->q . '%');
+        }
+
+        return response()->json(
+            $query->orderBy('namasitename')->get()
+        );
+    }
     public function getregion($id)
     {
         $region = MSitename::where('parentid', $id)->get();

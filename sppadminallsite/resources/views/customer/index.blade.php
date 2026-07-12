@@ -145,7 +145,9 @@
             <hr>
 
             <x-dashboard-filter :showPeriode="false" :showCBU="true" :showRegion="true" :showSite="true" :showForkliftType="false" />
-
+            @push('codescripts')
+                <script src="{{ asset('js/dashboard-filter.js') }}"></script>
+            @endpush
         </div>
 
     </div>
