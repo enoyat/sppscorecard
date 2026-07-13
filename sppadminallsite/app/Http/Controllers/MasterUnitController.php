@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\MForklifttype;
@@ -62,7 +63,7 @@ class MasterUnitController extends Controller
             'idforklifttype' => 'required',
             'showcustomer'   => 'required',
             'flag_baru'      => 'required',
-            'fileSilo'       => 'image',
+
         ]);
 
         $filename = '';
@@ -126,7 +127,6 @@ class MasterUnitController extends Controller
         if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('masterunit.index');
-
         } else {
             Session::flash('message', 'Something went wrong!');
             Session::flash('alert-class', 'alert-danger');
@@ -135,7 +135,6 @@ class MasterUnitController extends Controller
                 'Message'   => "Something went wrong!",
             ], 200); // Status code here
         }
-
     }
 
     public function update(Request $request, $id)
@@ -145,7 +144,7 @@ class MasterUnitController extends Controller
             'idcbu'       => 'required',
             'idregion'    => 'required',
             'idsitename'  => 'required',
-            'fileSiloNew' => 'image',
+
         ]);
 
         $unit = MUnit::find($id);
@@ -213,7 +212,6 @@ class MasterUnitController extends Controller
         if ($simpan) {
             Session::flash('message', 'Data berhasil disimpan!');
             return redirect()->route('masterunit.index');
-
         } else {
             Session::flash('message', 'Something went wrong!');
             Session::flash('alert-class', 'alert-danger');
@@ -248,8 +246,7 @@ class MasterUnitController extends Controller
     }
     public function getunit(Request $request)
     {
-        $unit = MUnit::where('idsitename', $request->idsitename)->
-            where('kdunit', 'LIKE', '%' . $request->search . '%')->orderBy('kdunit', 'ASC')->get();
+        $unit = MUnit::where('idsitename', $request->idsitename)->where('kdunit', 'LIKE', '%' . $request->search . '%')->orderBy('kdunit', 'ASC')->get();
 
         $response = [];
         foreach ($unit as $value) {
@@ -270,5 +267,4 @@ class MasterUnitController extends Controller
         $listtroubleactions = MTroubleaction::where('kdunit', $request->keyword)->get();
         return view('masterunit.search', compact('units', 'listactions', 'listtroubleactions'));
     }
-
 }
