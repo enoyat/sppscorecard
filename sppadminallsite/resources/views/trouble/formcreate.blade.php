@@ -1,6 +1,14 @@
 <form action="{{ route('trouble.createstore') }}" method="POST">
     @csrf
-    xx
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="mb-3">
         <label class="form-label">
             Mechanic
@@ -47,11 +55,23 @@
         </select>
     </div>
 
+
     <div class="mb-3">
-        <label class="form-label">Lapse Time (Menit)</label>
-        <input type="number" class="form-control" name="lapsetime" value="{{ old('lapsetime', 0) }}" min="0">
+        <label class="form-label">Tanggal Mulai</label>
+        <input type="datetime-local" class="form-control" id="tanggalmulai" name="tanggalmulai"
+            value="{{ old('tanggalmulai') }}" required>
     </div>
 
+    <div class="mb-3">
+        <label class="form-label">Tanggal Selesai</label>
+        <input type="datetime-local" class="form-control" id="tanggalakhir" name="tanggalakhir"
+            value="{{ old('tanggalakhir') }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Lapse Time (Menit)</label>
+        <input type="number" class="form-control" id="lapsetime" name="lapsetime" value="{{ old('lapsetime', 0) }}"
+            readonly>
+    </div>
     <div class="mb-3">
         <label class="form-label">Backup</label>
         <input type="number" class="form-control" name="terbackup" value="{{ old('terbackup', 0) }}" min="0">
@@ -73,16 +93,7 @@
         <textarea class="form-control" rows="3" name="sparepart">{{ old('sparepart') }}</textarea>
     </div>
 
-    <div class="mb-3">
-        <label class="form-label">Tanggal Mulai</label>
-        <input type="datetime-local" class="form-control" name="tanggalmulai" value="{{ old('tanggalmulai') }}"
-            required>
-    </div>
 
-    <div class="mb-3">
-        <label class="form-label">Tanggal Selesai</label>
-        <input type="datetime-local" class="form-control" name="tanggalakhir" value="{{ old('tanggalakhir') }}">
-    </div>
 
     <div class="text-end">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -95,3 +106,44 @@
         </button>
     </div>
 </form>
+
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            dropdownParent: $('#staticBackdrop'),
+            width: '100%'
+        });
+    });
+
+
+    function hitungLapseTime() {
+
+        const mulai = document.getElementById('tanggalmulai');
+        const selesai = document.getElementById('tanggalakhir');
+        const lapse = document.getElementById('lapsetime');
+
+        if (!mulai || !selesai || !lapse) return;
+
+        if (mulai.value && selesai.value) {
+
+            const start = new Date(mulai.value);
+            const end = new Date(selesai.value);
+
+            const diff = Math.floor((end.getTime() - start.getTime()) / 60000);
+
+            lapse.value = diff >= 0 ? diff : 0;
+
+        } else {
+            lapse.value = 0;
+        }
+    }
+
+    // Akan bekerja walaupun modal baru muncul setelah tombol Add diklik
+    document.addEventListener('change', function(e) {
+
+        if (e.target.id === 'tanggalmulai' || e.target.id === 'tanggalakhir') {
+            hitungLapseTime();
+        }
+
+    });
+</script>

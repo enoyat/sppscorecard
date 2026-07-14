@@ -224,6 +224,7 @@
         </div>
 
     </div>
+
     <script>
         $(document).on('click', '.btn-action', function(e) {
 

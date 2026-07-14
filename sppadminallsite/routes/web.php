@@ -136,6 +136,11 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             'trouble/formaction',
             [TroubleController::class, 'formaction']
         );
+        Route::get(
+            'trouble/formcreate',
+            [TroubleController::class, 'formcreate']
+        );
+
 
         Route::put(
             'trouble/actionupdate/{trouble}',
@@ -284,6 +289,7 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
         });
         Route::group(['prefix' => 'lokasi'], function () {
             Route::get('/getcbu/{id}', [App\Http\Controllers\ApiLokasi::class, 'getcbu'])->name('lokasi.getcbu');
+            Route::get('/getallcbu', [App\Http\Controllers\ApiLokasi::class, 'getallcbu'])->name('lokasi.getallcbu');
             Route::get('/getregion/{id}', [App\Http\Controllers\ApiLokasi::class, 'getregion'])->name('lokasi.getregion');
             Route::get('/getsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'getsitename'])->name('lokasi.getsitename');
             Route::get('/setsitename', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
