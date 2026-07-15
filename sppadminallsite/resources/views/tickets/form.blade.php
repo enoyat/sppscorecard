@@ -12,9 +12,9 @@
             value="{{ old('title', $ticket->title ?? '') }}" placeholder="Masukkan judul ticket">
 
         @error('title')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
         @enderror
     </div>
 
@@ -29,9 +29,9 @@
             placeholder="Jelaskan permasalahan secara lengkap">{{ old('description', $ticket->description ?? '') }}</textarea>
 
         @error('description')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
         @enderror
 
     </div>
@@ -65,9 +65,9 @@
         </select>
 
         @error('priority')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
         @enderror
 
     </div>
@@ -82,8 +82,8 @@
         </label>
 
         <select name="idsitename" class="form-select">
-
-            @foreach($sites as $site)
+            <option value ="999" selected>SITENAME SPP</option>
+            {{-- @foreach ($sites as $site)
 
             <option value="{{ $site->id }}">
 
@@ -91,14 +91,14 @@
 
             </option>
 
-            @endforeach
+            @endforeach --}}
 
         </select>
 
         @error('site_id')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
         @enderror
 
     </div>
@@ -112,7 +112,8 @@
 
         <select name="status" class="form-select @error('status') is-invalid @enderror">
 
-            <option value="Open" {{ old('status', isset($ticket) ? $ticket->status : '') == 'Open' ? 'selected' : '' }}>
+            <option value="Open"
+                {{ old('status', isset($ticket) ? $ticket->status : '') == 'Open' ? 'selected' : '' }}>
                 Open
             </option>
             <option value="Progress"
@@ -128,9 +129,9 @@
         </select>
 
         @error('status')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
         @enderror
 
     </div>
@@ -155,29 +156,27 @@
         </small>
 
         @error('attachment')
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
         @enderror
 
         @isset($ticket)
 
-        @if(!empty($ticket->attachment))
+            @if (!empty($ticket->attachment))
+                <div class="mt-2">
 
-        <div class="mt-2">
+                    <a href="{{ asset('storage/ticket-attachments/' . $ticket->attachment) }}" target="_blank"
+                        class="btn btn-outline-primary btn-sm">
 
-            <a href="{{ asset('storage/ticket-attachments/'.$ticket->attachment) }}" target="_blank"
-                class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-paperclip"></i>
 
-                <i class="fas fa-paperclip"></i>
+                        Lihat Lampiran
 
-                Lihat Lampiran
+                    </a>
 
-            </a>
-
-        </div>
-
-        @endif
+                </div>
+            @endif
 
         @endisset
 
