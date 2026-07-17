@@ -251,6 +251,9 @@ class TroubleController extends Controller {
             'lapsetime'    => $request->lapsetime,
             'terbackup'      => $request->terbackup,
             'backup_minutes' => $request->backup_minutes,
+            'statusspp' => $request->statusspp,
+            'statusmekanik' => $request->statusmekanik,
+            'statuscustomer' => $request->statuscustomer,
 
         ] );
 
@@ -294,9 +297,9 @@ class TroubleController extends Controller {
             'tanggalakhir'  => $request->tanggalakhir,
             'lapsetime'     => $request->lapsetime,
             'backup_minutes' => $request->backup_minutes,
-            'statusspp' => 'OPEN',
-            'statusmekanik' => 'OPEN',
-            'statuscustomer' => 'OPEN'
+            'statusspp' => $request->statusspp,
+            'statusmekanik' => $request->statusmekanik,
+            'statuscustomer' => $request->statuscustomer,
         ] );
 
         return redirect()->back()->with( 'success', 'Data trouble berhasil ditambahkan.' );

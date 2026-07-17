@@ -147,7 +147,51 @@
         <textarea class="form-control" rows="3" name="sparepart">{{ $trouble->sparepart }}</textarea>
 
     </div>
+    <div class="mb-3">
 
+        <label class="form-label">
+
+            Status Mekanik
+
+        </label>
+        <select class="form-select" name="statusmekanik" id="statusmekanik">
+            <option value="{{ $trouble->statusmekanik }}">{{ $trouble->statusmekanik }}</option>
+            <option value="">Select</option>
+            <option value="OPEN">OPEN</option>
+            <option value="CLOSE">CLOSE</option>
+        </select>
+
+    </div>
+    <div class="mb-3">
+
+        <label class="form-label">
+
+            Status SPP
+
+        </label>
+        <select class="form-select" name="statusspp" id="statusspp">
+            <option value="{{ $trouble->statusspp }}">{{ $trouble->statusspp }}</option>
+            <option value="">Select</option>
+            <option value="OPEN">OPEN</option>
+            <option value="CLOSE">CLOSE</option>
+        </select>
+
+    </div>
+    <div class="mb-3">
+
+        <label class="form-label">
+
+            Status Customer
+
+        </label>
+        <select class="form-select" name="statuscustomer" id="statuscustomer">
+            <option value="{{ $trouble->statuscustomer }}">{{ $trouble->statuscustomer }}</option>
+            <option value="">Select</option>
+            <option value="OPEN">OPEN</option>
+            <option value="CLOSE">CLOSE</option>
+        </select>
+
+    </div>
 
     <div class="text-end">
 

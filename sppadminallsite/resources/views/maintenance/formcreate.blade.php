@@ -79,7 +79,51 @@
         </label>
         <input type="datetime-local" class="form-control" name="tanggalakhir" value="{{ old('tanggalakhir') }}">
     </div>
+    <div class="mb-3">
 
+        <label class="form-label">
+
+            Status Mekanik
+
+        </label>
+        <select class="form-select" name="statusmekanik" id="statusmekanik">
+
+            <option value="">Select</option>
+            <option value="OPEN">OPEN</option>
+            <option value="CLOSE">CLOSE</option>
+        </select>
+
+    </div>
+    <div class="mb-3">
+
+        <label class="form-label">
+
+            Status SPP
+
+        </label>
+        <select class="form-select" name="statusspp" id="statusspp">
+
+            <option value="">Select</option>
+            <option value="OPEN">OPEN</option>
+            <option value="CLOSE">CLOSE</option>
+        </select>
+
+    </div>
+    <div class="mb-3">
+
+        <label class="form-label">
+
+            Status Customer
+
+        </label>
+        <select class="form-select" name="statuscustomer" id="statuscustomer">
+
+            <option value="">Select</option>
+            <option value="OPEN">OPEN</option>
+            <option value="CLOSE">CLOSE</option>
+        </select>
+
+    </div>
     <div class="text-end">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Tutup
