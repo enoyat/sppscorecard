@@ -3,10 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PhysicalController;
 use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\TicketController;
-
-
+use App\Http\Controllers\TicketReplyController;
+use App\Http\Controllers\TroubleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,28 +35,36 @@ Route::get('assets/inventory/{filename}', function ($filename) {
 
     abort(404);
 });
-Route::get('/notification/read/{id}', function($id){
-
-    $notification = auth()
-        ->user()
-        ->notifications()
-        ->find($id);
-
-    if($notification)
-    {
-        $notification->markAsRead();
-    }
-
-    return redirect()->route('ticket.index');
-
-})->name('notification.read');
 
 
-
+Route::get('/notifications/unread', [NotificationController::class, 'unread'])->name('notifications.unread');
+Route::get('/notifications/read/{id}', [NotificationController::class, 'read'])->name('notifications.read');
+Route::resource('notifications', NotificationController::class);
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 Route::get('restrictpage', [App\Http\Controllers\HomeController::class, 'restrictpage'])->name('restrictpage');
 Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
+    Route::resource('tickets', TicketController::class);
+    Route::post('/tickets/{ticket}/claim', [TicketController::class, 'claim'])
+        ->name('tickets.claim');
+    // Update status ticket
+    Route::post('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])
+        ->name('tickets.status');
+
+    // Assign teknisi
+    Route::post('/tickets/{ticket}/assign', [TicketController::class, 'assign'])
+        ->name('tickets.assign');
+    // Reply ticket
+    Route::post('/tickets/{ticket}/resolve', [TicketReplyController::class, 'resolve'])
+        ->name('tickets.resolve');
+    // Reply ticket
+    Route::post('/tickets/{ticket}/reopen', [TicketReplyController::class, 'reopen'])
+        ->name('tickets.reopen');
+    // Reply ticket
+    Route::post('/tickets/{ticket}/close', [TicketReplyController::class, 'close'])
+        ->name('tickets.close');
+    Route::post('/tickets/{ticket}/reply', [TicketReplyController::class, 'store'])
+        ->name('tickets.reply.store');
     Route::get('kpiavailability', [App\Http\Controllers\HomeController::class, 'kpiavailability'])->name('kpiavailability');
     Route::get('kpiunit', [App\Http\Controllers\HomeController::class, 'kpiunit'])->name('kpiunit');
     Route::get('kpisparepart', [App\Http\Controllers\HomeController::class, 'kpisparepart'])->name('kpisparepart');
@@ -88,7 +99,6 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/edit/{id}', [App\Http\Controllers\SitenameController::class, 'edit'])->name('sitename.edit');
             Route::put('/update/{id}', [App\Http\Controllers\SitenameController::class, 'update'])->name('sitename.update');
             Route::get('/show/{id}', [App\Http\Controllers\SitenameController::class, 'show'])->name('sitename.show');
-
         });
 
         Route::group(['prefix' => 'delivery'], function () {
@@ -120,6 +130,25 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/listaction/{id}', [App\Http\Controllers\TroubleController::class, 'listaction'])->name('trouble.listaction');
             Route::delete('/actiondestroy/{id}', [App\Http\Controllers\TroubleController::class, 'actiondestroy'])->name('trouble.actiondestroy');
         });
+        Route::get(
+            'trouble/formaction',
+            [TroubleController::class, 'formaction']
+        );
+        Route::get(
+            'trouble/formcreate',
+            [TroubleController::class, 'formcreate']
+        );
+
+
+        Route::put(
+            'trouble/actionupdate/{trouble}',
+            [TroubleController::class, 'actionupdate']
+        )->name('trouble.actionupdate');
+
+        Route::post(
+            'trouble/dokumenstore',
+            [TroubleController::class, 'dokumenstore']
+        )->name('trouble.dokumenstore');
 
         Route::group(['prefix' => 'beritaacara'], function () {
             Route::get('/', [App\Http\Controllers\BeritaacaraController::class, 'index'])->name('beritaacara.index');
@@ -186,7 +215,6 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::put('/update/{id}', [App\Http\Controllers\PenaltyController::class, 'update'])->name('penalty.update');
             Route::get('/show/{id}', [App\Http\Controllers\PenaltyController::class, 'show'])->name('penalty.show');
             Route::get('/getpenalty', [App\Http\Controllers\PenaltyController::class, 'getpenalty'])->name('penalty.getpenalty');
-
         });
         Route::group(['prefix' => 'mutation'], function () {
             Route::get('/', [App\Http\Controllers\MutationController::class, 'index'])->name('mutation.index');
@@ -202,7 +230,11 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::post('/updatestatus', [App\Http\Controllers\PhysicalController::class, 'updatestatus'])->name('physical.updatestatus');
         });
 
-
+        Route::post(
+            '/physical/generate',
+            [PhysicalController::class, 'generate']
+        )
+            ->name('physical.generate');
         Route::group(['prefix' => 'sparepartstok'], function () {
             Route::get('/', [App\Http\Controllers\SparepartstokController::class, 'index'])->name('sparepartstok.index');
             Route::get('/create', [App\Http\Controllers\SparepartstokController::class, 'create'])->name('sparepartstok.create');
@@ -284,11 +316,6 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::put('/update/{id}', [App\Http\Controllers\ForklifttypeController::class, 'update'])->name('forklifttype.update');
             Route::get('/show/{id}', [App\Http\Controllers\ForklifttypeController::class, 'show'])->name('forklifttype.show');
         });
-
-
-
-
-
     });
     Route::group(['roles' => ['administrator', 'headofficepart', 'inventorypart']], function () {
         Route::group(['prefix' => 'orders'], function () {
@@ -302,8 +329,6 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/show/{id}', [App\Http\Controllers\OrderController::class, 'show'])->name('orders.show');
             Route::post('/accsite', [App\Http\Controllers\OrderController::class, 'accsite'])->name('orders.accsite');
             Route::get('/docorder/{id}', [App\Http\Controllers\OrderController::class, 'docorder'])->name('orders.docorder');
-
-
         });
         Route::group(['prefix' => 'sparepart'], function () {
             Route::get('/', [App\Http\Controllers\SparepartController::class, 'index'])->name('sparepart.index');
@@ -315,7 +340,6 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/show/{id}', [App\Http\Controllers\SparepartController::class, 'show'])->name('sparepart.show');
             Route::get('/getsparepart', [App\Http\Controllers\SparepartController::class, 'getsparepart'])->name('sparepart.getsparepart');
         });
-
     });
     Route::group(['roles' => ['administrator', 'manajersite', 'customerallsite', 'customersite', 'cnp']], function () {
         Route::get('/gantipassword', [App\Http\Controllers\HomeController::class, 'gantipassword'])->name('gantipassword');
@@ -346,15 +370,20 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/listaction/{id}', [App\Http\Controllers\TroubleController::class, 'listaction'])->name('trouble.listaction');
             Route::get('/formstatus', [App\Http\Controllers\TroubleController::class, 'formstatus'])->name('trouble.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\TroubleController::class, 'updatestatus'])->name('trouble.updatestatus');
-
         });
+        Route::get(
+            'trouble/formcreate',
+            [TroubleController::class, 'formcreate']
+        );
+        Route::post(
+            'trouble/createstore',
+            [TroubleController::class, 'createstore']
+        )->name('trouble.createstore');
 
         Route::group(['prefix' => 'beritaacara'], function () {
             Route::get('/', [App\Http\Controllers\BeritaacaraController::class, 'index'])->name('beritaacara.index');
             Route::get('/show/{id}', [App\Http\Controllers\BeritaacaraController::class, 'show'])->name('beritaacara.show');
             Route::put('/reply/{id}', [App\Http\Controllers\BeritaacaraController::class, 'reply'])->name('beritaacara.reply');
-
-
         });
         Route::group(['prefix' => 'suratjalan'], function () {
             Route::get('/', [App\Http\Controllers\SuratjalanController::class, 'index'])->name('suratjalan.index');
@@ -366,12 +395,49 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/listdokumen/{id}', [App\Http\Controllers\MaintenanceController::class, 'listdokumen'])->name('maintenance.listdokumen');
             Route::get('/listaction/{id}', [App\Http\Controllers\MaintenanceController::class, 'listaction'])->name('maintenance.listaction');
             Route::get('/listactionall', [App\Http\Controllers\MaintenanceController::class, 'listactionall'])->name('maintenance.listactionall');
-
         });
         Route::group(['prefix' => 'maintenance'], function () {
             Route::get('/formstatus', [App\Http\Controllers\MaintenanceController::class, 'formstatus'])->name('maintenance.formstatus');
             Route::post('/updatestatus', [App\Http\Controllers\MaintenanceController::class, 'updatestatus'])->name('maintenance.updatestatus');
         });
+        Route::group(['prefix' => 'maintenance'], function () {
+            Route::get('/', [App\Http\Controllers\MaintenanceController::class, 'index'])->name('maintenance.index');
+            Route::get('/create', [App\Http\Controllers\MaintenanceController::class, 'create'])->name('maintenance.create');
+            Route::post('/store', [App\Http\Controllers\MaintenanceController::class, 'store'])->name('maintenance.store');
+            Route::delete('/delete/{id}', [App\Http\Controllers\MaintenanceController::class, 'destroy'])->name('maintenance.destroy');
+            Route::get('/edit/{id}', [App\Http\Controllers\MaintenanceController::class, 'edit'])->name('maintenance.edit');
+            Route::put('/update/{id}', [App\Http\Controllers\MaintenanceController::class, 'update'])->name('maintenance.update');
+            Route::get('/show/{id}', [App\Http\Controllers\MaintenanceController::class, 'show'])->name('maintenance.show');
+            Route::get('/listdokumen/{id}', [App\Http\Controllers\MaintenanceController::class, 'listdokumen'])->name('maintenance.listdokumen');
+            Route::delete('/dokumendestroy/{id}', [App\Http\Controllers\MaintenanceController::class, 'dokumendestroy'])->name('maintenance.dokumendestroy');
+            Route::get('/listaction/{id}', [App\Http\Controllers\MaintenanceController::class, 'listaction'])->name('maintenance.listaction');
+            Route::delete('/actiondestroy/{id}', [App\Http\Controllers\MaintenanceController::class, 'actiondestroy'])->name('maintenance.actiondestroy');
+        });
+        Route::group(['prefix' => 'maintenance'], function () {
+            Route::get('/formstatus', [App\Http\Controllers\MaintenanceController::class, 'formstatus'])->name('maintenance.formstatus');
+            Route::post('/updatestatus', [App\Http\Controllers\MaintenanceController::class, 'updatestatus'])->name('maintenance.updatestatus');
+        });
+        Route::get(
+            'maintenance/formaction',
+            [MaintenanceController::class, 'formaction']
+        );
+        Route::get(
+            'maintenance/formcreate',
+            [MaintenanceController::class, 'formcreate']
+        );
+        Route::post(
+            'maintenance/createstore',
+            [MaintenanceController::class, 'createstore']
+        )->name('maintenance.createstore');
+        Route::put(
+            'maintenance/actionupdate/{maintenance}',
+            [MaintenanceController::class, 'actionupdate']
+        )->name('maintenance.actionupdate');
+
+        Route::post(
+            'maintenance/dokumenstore',
+            [MaintenanceController::class, 'dokumenstore']
+        )->name('maintenance.dokumenstore');
 
         Route::group(['prefix' => 'physical'], function () {
             Route::get('/', [App\Http\Controllers\PhysicalController::class, 'index'])->name('physical.index');
@@ -417,7 +483,6 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::get('/getsitename/{id}', [App\Http\Controllers\ApiLokasi::class, 'getsitename'])->name('lokasi.getsitename');
             Route::get('/setsitename', [App\Http\Controllers\ApiLokasi::class, 'setsitename'])->name('lokasi.setsitename');
             Route::get('/filtersite', [App\Http\Controllers\ApiLokasi::class, 'filtersite'])->name('lokasi.filtersite');
-
         });
 
         Route::group(['prefix' => 'ticket'], function () {
@@ -427,13 +492,8 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
             Route::post('sendticket', [TicketController::class, 'sendticket'])->name('ticket.sendticket');
             Route::post('replyticket', [TicketController::class, 'replyticket'])->name('ticket.replyticket');
             Route::post('close', [TicketController::class, 'close'])->name('ticket.close');
-
         });
         Route::get('/getsitename', [App\Http\Controllers\SitenameController::class, 'getsitename'])->name('sitename.getsitename');
         Route::get('/getregion', [App\Http\Controllers\SitenameController::class, 'getregion'])->name('sitename.getregion');
-
-
     });
-
-
 });

@@ -8,14 +8,21 @@
     <meta content="Satria Piranti Perkasa" name="description" />
     <!-- App favicon -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="{{ URL::asset('build/images/favicon.ico') }}">
+
     @include('layouts.head-css')
+
+    <link rel="stylesheet" href="{{ asset('css/dashboard-filter.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    @stack('codescripts')
+
+
 </head>
 
 {{-- @section('body') --}}
 
-<body  class="pace-done">
+<body class="pace-done">
     {{-- @show --}}
     <!-- Begin page -->
     <div id="layout-wrapper">
@@ -45,6 +52,7 @@
 
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
+
 </body>
 
 </html>

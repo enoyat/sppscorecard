@@ -56,53 +56,169 @@ trouble
     </div>
 </div>
 <!-- end row -->
+<div class="card shadow-sm mb-3">
 
+    <div class="card-header bg-primary text-white">
+
+        <i class="fas fa-camera"></i>
+
+        Upload Dokumentasi Trouble
+
+    </div>
+
+    <div class="card-body">
+
+        <form action="{{ route('trouble.dokumenstore') }}" method="POST" enctype="multipart/form-data">
+
+            @csrf
+
+            <input type="hidden" name="trouble_id" value="{{ $id }}">
+
+            <div class="mb-3">
+
+                <label>Jenis Dokumen</label>
+
+                <select name="description" class="form-select">
+
+                    <option>Kegiatan Pengerjaan</option>
+                    <option>Checklist</option>
+                    <option>Service Report</option>
+                    <option>Before Service</option>
+                    <option>After Service</option>
+
+                </select>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label>Upload Foto (bisa upload beberapa foto sekaligus)</label>
+
+                <input type="file" name="images[]" id="images" class="form-control" multiple accept="image/*">
+
+            </div>
+
+            <button class="btn btn-success">
+
+                Upload
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+<div class="text-center mb-3">
+
+    <img id="preview" src="" class="img-thumbnail" style="display:none;max-height:250px;">
+
+</div>
 <div class="table-responsive mb-4" id="tablecontent">
-    <table class="table table-striped dt-responsive nowrap w-100"
-        style="border-collapse: collapse; border-spacing: 0 8px; width: 100%;" id="datatable-buttons">
-        <thead>
+    <table class="table table-sm table-hover align-middle">
+
+        <thead class="table-light">
+
             <tr>
-                <th scope="col" style="width: 50px;">
-                    <div class="form-check font-size-16">
-                        <input type="checkbox" class="form-check-input" id="checkAll">
-                        <label class="form-check-label" for="checkAll"></label>
-                    </div>
-                </th>
-                <th scope="col">DESCRIPTION</th>
-                <th scope="col">IMAGE</th>
-                <th >ACTION</th>
+
+                <th width="60">No</th>
+
+                <th width="150">Kategori</th>
+
+                <th>Preview</th>
+
+                <th width="120">Action</th>
+
             </tr>
+
         </thead>
+
         <tbody>
-            @php $i=1; @endphp
-            @foreach ($dokumentrouble as $key)
+
+            @foreach($dokumentrouble as $doc)
+
             <tr>
-                <th scope="row">
-                    <div class="form-check font-size-16">
-                        <input type="checkbox" class="form-check-input" id="contacusercheck1">
-                        <label class="form-check-label" for="contacusercheck1"></label>
+
+                <td>{{ $loop->iteration }}</td>
+
+                <td>
+
+                    <span class="badge bg-info">
+
+                        {{ $doc->keterangan }}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <a href="{{ asset('assets/inventory/'.$doc->filename) }}" target="_blank">
+
+                        <img src="{{ asset('assets/inventory/'.$doc->filename) }}" class="rounded shadow-sm"
+                            style="width:90px;height:70px;object-fit:cover;">
+
+                    </a>
+
+                </td>
+                <td>
+
+                    <div class="btn-group btn-group-sm">
+
+                        <a href="{{ asset('assets/inventory/'.$doc->filename) }}" target="_blank"
+                            class="btn btn-primary">
+
+                            <i class="fas fa-eye"></i>
+
+                        </a>
+
+                        <form action="{{ route('maintenance.dokumendestroy',$doc->id) }}" method="POST"
+                            class="d-inline">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button class="btn btn-danger" onclick="return confirm('Hapus foto?')">
+
+                                <i class="fas fa-trash"></i>
+
+                            </button>
+
+                        </form>
+
                     </div>
-                </th>
-                <th scope="col">{{ $key->keterangan }}</th>
-                <th scope="col"><img src="{{ asset('assets/inventory/'.$key->filename) }}" width="500" ></th>
-                <th >
-                    @if(Auth::user()->roles_id == '1' || Auth::user()->roles_id == '2')
-                    
-                                <form action="{{ route('trouble.dokumendestroy',$key->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Hapus Data ini?');">Hapus</button>
-                                </form>
-                    @endif
-                </th>
+
+                </td>
+
             </tr>
+
             @endforeach
+
         </tbody>
+
     </table>
 
     <!-- end table -->
 </div>
+<!-- end table responsive -->
+<script>
+$('#image').change(function() {
+
+    let reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        $('#preview')
+            .attr('src', e.target.result)
+            .show();
+
+    }
+
+    reader.readAsDataURL(this.files[0]);
+
+});
+</script>
+
 <!-- end table responsive -->
 @endsection
 

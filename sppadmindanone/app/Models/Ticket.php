@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,19 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 class Ticket extends Model
 {
     use HasFactory;
-    protected $table = 'ticket';
-    protected $primaryKey = 'id';
     protected $guarded = [];
-    function getuser(){
-        return $this->belongsTo(User::class,'userid','id');
-    }
-    function scopeNull($query){
-        return $query->where('parentid',null);
-    }
-    public function getsitename()
+
+    public function user()
     {
-        return $this->belongsTo(MSitename::class,'idsitename','id');
-
+        return $this->belongsTo(User::class);
     }
 
+    public function replies()
+    {
+        return $this->hasMany(TicketReply::class);
+    }
+    public function assignee()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
+    public function site()
+    {
+        return $this->belongsTo(MSitename::class, 'idsitename');
+    }
+
+    public function pic()
+    {
+        return $this->belongsTo(User::class, 'pic_id');
+    }
 }

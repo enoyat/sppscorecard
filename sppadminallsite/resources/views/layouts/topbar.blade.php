@@ -4,31 +4,31 @@
             <!-- LOGO -->
             <div class="navbar-brand-box">
                 @if (!empty(Session::get('logo')))
-                <a href="{{ route('root') }}" class="logo logo-dark">
-                    <span class="logo-sm">
-                        <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
-                            style="max-height:50px">
-                    </span>
-                    <span class="logo-lg">
-                        <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
-                            style="max-height:50px">
-                        <span class="logo-txt"></span>
-                    </span>
-                </a>
+                    <a href="{{ route('root') }}" class="logo logo-dark">
+                        <span class="logo-sm">
+                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                                style="max-height:50px">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                                style="max-height:50px">
+                            <span class="logo-txt"></span>
+                        </span>
+                    </a>
 
-                <a href="{{ route('root') }}" class="logo logo-light">
-                    <span class="logo-sm">
-                        <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
-                            style="max-height:50px">
-                    </span>
-                    <span class="logo-lg">
-                        <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
-                            style="max-height:50px">
-                        <span class="logo-txt"></span>
-                    </span>
-                </a>
+                    <a href="{{ route('root') }}" class="logo logo-light">
+                        <span class="logo-sm">
+                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                                style="max-height:50px">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="{{ asset('img/' . Session::get('logo')) }}" alt="" class="img-fluid"
+                                style="max-height:50px">
+                            <span class="logo-txt"></span>
+                        </span>
+                    </a>
                 @else
-                {{ Session::get('logo') }}
+                    {{ Session::get('logo') }}
                 @endif
             </div>
 
@@ -46,8 +46,8 @@
         <div class="d-flex">
 
             <div class="dropdown d-inline-block d-lg-none ms-2">
-                <button type="button" class="btn header-item" id="page-header-search-dropdown" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn header-item" id="page-header-search-dropdown"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i data-feather="search" class="icon-lg"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -69,27 +69,27 @@
 
 
             <style>
-            .notification-item {
-                padding: 10px 15px;
-            }
+                .notification-item {
+                    padding: 10px 15px;
+                }
 
-            .notif-title {
-                font-weight: 600;
-                margin-bottom: 5px;
-            }
+                .notif-title {
+                    font-weight: 600;
+                    margin-bottom: 5px;
+                }
 
-            .notif-subject {
-                color: #777;
-                font-size: 13px;
+                .notif-subject {
+                    color: #777;
+                    font-size: 13px;
 
-                display: block;
-                margin-left: 18px;
+                    display: block;
+                    margin-left: 18px;
 
-                white-space: normal;
-                word-break: break-word;
-                overflow-wrap: break-word;
-                line-height: 1.4;
-            }
+                    white-space: normal;
+                    word-break: break-word;
+                    overflow-wrap: break-word;
+                    line-height: 1.4;
+                }
             </style>
 
             <div class="dropdown d-inline-block">
@@ -107,41 +107,40 @@
                                 <h6 class="m-0"> Notifications </h6>
                             </div>
                             <div class="col-auto">
-                                <a href="{{ route('notifications.unread') }}" class="small text-reset text-decoration-underline"> Unread
+                                <a href="{{ route('notifications.unread') }}"
+                                    class="small text-reset text-decoration-underline"> Unread
                                     ({{ auth()->user()->unreadNotifications->count() }})</a>
                                 <ul>
                                     @forelse(auth()->user()->unreadNotifications as $notif)
+                                        <li class="notification-item">
+                                            <a href="{{ route('notifications.read', $notif->id) }}"
+                                                class="dropdown-item">
 
 
-                                    <li class="notification-item">
-                                        <a href="{{ route('notifications.read', $notif->id) }}" class="dropdown-item">
 
+                                                <small>
 
+                                                    <div class="notif-title">
+                                                        <i class="fa fa-bell"></i>
+                                                        {{ $notif->data['title'] }}
+                                                    </div>
 
-                                            <small>
+                                                    <div class="notif-subject">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        {{ $notif->data['message'] }}
+                                                    </div>
 
-                                                <div class="notif-title">
-                                                    <i class="fa fa-bell"></i>
-                                                    {{ $notif->data['title'] }} 
-                                                </div>
-
-                                                <div class="notif-subject">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    {{ $notif->data['message'] }}
-                                                </div>
-
-                                            </small>
-                                        </a>
-                                    </li>
+                                                </small>
+                                            </a>
+                                        </li>
 
                                     @empty
 
-                                    <li>
-                                        <span class="dropdown-item">
-                                            Tidak ada notifikasi
-                                        </span>
-                                    </li>
-
+                                        <li>
+                                            <span class="dropdown-item">
+                                                Tidak ada notifikasi
+                                            </span>
+                                        </li>
                                     @endforelse
                                 </ul>
                             </div>
@@ -151,14 +150,15 @@
 
                     </div>
                     <div class="p-2 border-top d-grid">
-                        <a class="btn btn-sm btn-link font-size-14 text-center" href="{{ route('notifications.index') }}">
+                        <a class="btn btn-sm btn-link font-size-14 text-center"
+                            href="{{ route('notifications.index') }}">
                             <i class="mdi mdi-arrow-right-circle me-1"></i> <span>View More..</span>
                         </a>
                     </div>
                 </div>
             </div>
 
-            
+
 
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item topbar-light bg-light-subtle border-start border-end"
@@ -171,7 +171,8 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="#"><i class="mdi mdi-face-man font-size-16 align-middle me-1"></i>
+                    <a class="dropdown-item" href="#"><i
+                            class="mdi mdi-face-man font-size-16 align-middle me-1"></i>
                         Profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="javascript:void();"

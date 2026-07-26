@@ -10,11 +10,17 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('build/images/favicon.ico') }}">
     @include('layouts.head-css')
+
+
+    <link rel="stylesheet" href="{{ asset('css/dashboard-filter.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    @stack('codescripts')
 </head>
 
 @section('body')
+
     <body data-topbar="dark" data-layout="horizontal">
-@show
+    @show
 
     <!-- Begin page -->
     <div id="layout-wrapper">
