@@ -37,13 +37,15 @@
                 <td scope="col">{{ round($key->masheight, 1) }}</td>
                 <td scope="col">
                     <a href="#" class="imagePreviewForklift" data-id="{{ $key->kdunit }}">
-                        <img src="{{ asset('/img/' . $key->foto) }}" style="max-height: 50px; border-radius: 8px;">
+                        <img src="{{ asset('/img/' . $key->foto) }}"
+                            style="max-height: 50px; border-radius: 8px;">
                     </a>
                 </td>
                 <td scope="col">
                     @if ($key->file_silo)
                         <a href="#" class="imagePreview" data-id="{{ $key->kdunit }}"><img
-                                src="{{ asset('/img/' . $key->file_silo) }}" style="max-height: 50px; border-radius: 8px;"></a>
+                                src="{{ asset('/img/' . $key->file_silo) }}"
+                                style="max-height: 50px; border-radius: 8px;"></a>
                     @else
                         <span class="text-muted">No Image</span>
                     @endif

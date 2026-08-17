@@ -53,7 +53,7 @@
             Maintenance
         @endslot
         @slot('title')
-            Maintenance Action X
+            Maintenance Action
         @endslot
     @endcomponent
     <div class="row align-items-center">

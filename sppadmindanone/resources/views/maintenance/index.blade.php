@@ -12,7 +12,10 @@
 @section('content')
     @if (Session::get('roles_id') == 1 || Session::get('roles_id') == 5)
         <x-dashboard-filter :showPeriode="true" :showCBU="true" :showRegion="true" :showSite="true" :showForkliftType="false" />
-    @endif
+           @push('codescripts')
+            <script src="{{ asset('js/dashboard-filter.js') }}"></script>
+        @endpush
+        @endif
     <!-- start page title -->
     @component('components.breadcrumb')
         @slot('li_1')

@@ -5,6 +5,7 @@
         <thead>
             <tr>
                 <TH SCOPE="COL">CODE UNIT</TH>
+                <th SCOPE="COL">SILO</th>
                 <TH SCOPE="COL">EQUIPMENT</TH>
                 <TH SCOPE="COL">FORKLIFT TYPE</TH>
                 <TH SCOPE="COL">MERK</TH>
@@ -31,6 +32,7 @@
 
 
                 <th scope="col"><a href="{{ URL::to("unit/search?keyword=$key->kdunit") }}">{{ $key->kdunit }}</a></th>
+                <th scope="col"><a href="{{ asset('/img/' . $key->file_silo) }}" target="_blank">View Silo</a> date: {{ $key->date_silo }}</th>
                 <th scope="col">{{ $key->equipment }}</th>
                 <th scope="col">{{ $key->getforklifttype->namaforklifttype }}</th>
             <th scope="col">{{ $key->merk }}</th>
