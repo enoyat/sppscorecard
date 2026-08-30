@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MCustomer;
 use App\Models\MLoglogin;
 use App\Models\MSitename;
 use App\Models\User;
@@ -25,8 +26,9 @@ class UtilityController extends Controller
     public function edituser($id){
         $role=Role::orderby('id')->get();
         $sitename=MSitename::orderby('namasitename')->get();
+        $customer=MCustomer::orderby('namacustomer')->get();
         $users=User::where('id',$id)->first();
-        return view ('utility.edituser',compact('users','role','sitename'));
+        return view ('utility.edituser',compact('users','role','sitename','customer'));
 
     }
     public function userlog(){
@@ -36,14 +38,22 @@ class UtilityController extends Controller
     }
     public function register(){
         $role=Role::orderby('id')->get();
-        $sitename=MSitename::member(Session::get('kdcustomer'))->kategori("sitename")->get();
-        return view ('utility.register',compact('sitename','role'));
+        $customer=MCustomer::orderby('namacustomer')->get();
+        $selectedCustomer = Session::get('kdcustomer');
+        $sitename = MSitename::query();
+        if ($selectedCustomer) {
+            $sitename = $sitename->member($selectedCustomer);
+        }
+        $sitename = $sitename->kategori("sitename")->orderby('namasitename')->get();
+        return view ('utility.register',compact('sitename','role','customer'));
     }
     public function postregister(Request $request)
     {
         $rules = [
             'name'                  => 'required|min:3|max:35',
             'email'                 => 'required|email|unique:users,email',
+            'kdcustomer'            => 'required',
+            'idsitename'            => 'required',
             'password'              => 'required|confirmed'
 
         ];
@@ -55,6 +65,8 @@ class UtilityController extends Controller
             'email.required'        => 'Email wajib diisi',
             'email.email'           => 'Email tidak valid',
             'email.unique'          => 'Email sudah terdaftar',
+            'kdcustomer.required'   => 'Customer wajib dipilih',
+            'idsitename.required'   => 'Site Name wajib dipilih',
             'password.required'     => 'Password wajib diisi',
             'password.confirmed'    => 'Password tidak sama dengan konfirmasi password'
         ];
@@ -70,7 +82,7 @@ class UtilityController extends Controller
         $user->email = strtolower($request->email);
         $user->roles_id = $request->role;
         $user->idsitename = $request->idsitename;
-        $user->kdcustomer = Session::get('kdcustomer');
+        $user->kdcustomer = $request->kdcustomer;
         $user->password = Hash::make($request->password);
 
         $simpan = $user->save();
@@ -131,18 +143,20 @@ class UtilityController extends Controller
         Alert::success('Berhasil', 'Password berhasil diubah');
         return redirect()->back();
     }
-    public function updateuser(Request $request)
+    public function updateuser(Request $request, $id)
     {
         $request->validate([
             'name'=>'required',
-            'email'=>'required|email|unique:users,email,'.$request->id,
+            'email'=>'required|email|unique:users,email,'.$id,
             'role'=>'required',
+            'kdcustomer'=>'required',
             'idsitename'=>'required',
         ]);
-        $user = User::find($request->id);
+        $user = User::findOrFail($id);
         $user->name = ucwords(strtolower($request->name));
         $user->email = strtolower($request->email);
         $user->roles_id = $request->role;
+        $user->kdcustomer = $request->kdcustomer;
         $user->idsitename = $request->idsitename;
         $user->save();
 

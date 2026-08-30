@@ -96,12 +96,21 @@
                                 </select>
                             </div>
                             <div class="mb-3">
+                                <label for="kdcustomer" class="form-label">Customer</label>
+                                <select class="form-select" aria-label="Default select example" name="kdcustomer" id="kdcustomer">
+                                    <option value="" {{ old('kdcustomer', session('kdcustomer')) == '' ? 'selected' : '' }}>-- select --</option>
+                                    @foreach ($customer as $itemcustomer)
+                                    <option value="{{ $itemcustomer->kdcustomer }}" data-kdcustomer="{{ $itemcustomer->kdcustomer }}" {{ old('kdcustomer', session('kdcustomer')) == $itemcustomer->kdcustomer ? 'selected' : '' }}>{{ $itemcustomer->namacustomer }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                     <label for="example-text-input" class="form-label">Site Name</label>
                                     <select class="form-select" aria-label="Default select example" name="idsitename"
                                         id="idsitename">
                                         <option value="" selected>select</option>
                                         @foreach ($sitename as $itemsitename)
-                                        <option value="{{ $itemsitename->id }}">{{ $itemsitename->namasitename }}</option>
+                                        <option value="{{ $itemsitename->id }}" data-kdcustomer="{{ $itemsitename->kdcustomer }}" {{ old('idsitename') == $itemsitename->id ? 'selected' : '' }}>{{ $itemsitename->namasitename }}</option>
                                         @endforeach
                                     </select>
 
@@ -140,4 +149,41 @@
 
 <!-- Datatable init js -->
 <script src="{{ URL::asset('build/js/pages/datatables.init.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const customerSelect = document.getElementById('kdcustomer');
+        const sitenameSelect = document.getElementById('idsitename');
+
+        if (customerSelect && sitenameSelect) {
+            const updateSiteNames = function () {
+                const selectedCustomer = customerSelect.value;
+                const currentValue = sitenameSelect.value;
+
+                Array.from(sitenameSelect.options).forEach(function (option) {
+                    const isPlaceholder = option.value === '';
+                    const matchCustomer = !selectedCustomer || option.dataset.kdcustomer === selectedCustomer;
+
+                    option.hidden = !isPlaceholder && !matchCustomer;
+                    option.disabled = !isPlaceholder && !matchCustomer;
+                });
+
+                if (!selectedCustomer) {
+                    sitenameSelect.value = '';
+                    return;
+                }
+
+                const hasCurrentValue = Array.from(sitenameSelect.options).some(function (option) {
+                    return option.value === currentValue && !option.hidden;
+                });
+
+                if (!hasCurrentValue) {
+                    sitenameSelect.value = '';
+                }
+            };
+
+            customerSelect.addEventListener('change', updateSiteNames);
+            updateSiteNames();
+        }
+    });
+</script>
 @endsection
