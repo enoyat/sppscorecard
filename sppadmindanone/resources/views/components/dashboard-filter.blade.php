@@ -4,11 +4,14 @@
 
         <div class="row g-3 align-items-end">
             @php
-                $isAdmin = Auth::check() && in_array(Auth::user()->roles_id, [1, 10]);
+                $isAdmin = Auth::check() && in_array(Auth::user()->roles_id, [1]);
+                $isCustomerSite = Auth::check() && in_array(Auth::user()->roles_id, [5, 6]);
             @endphp
 
 
-            @if ($showCBU && $isAdmin)
+
+            {{-- @if ($showCBU && $isAdmin) --}}
+            @if ($showCBU && ($isAdmin || $isCustomerSite))
 
                 <div class="col-lg-3">
 
@@ -39,8 +42,7 @@
 
 
 
-            @if ($showRegion && $isAdmin)
-
+            @if ($showRegion && ($isAdmin || $isCustomerSite))
                 <div class="col-lg-3">
 
                     <label class="form-label">
